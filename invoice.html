@@ -321,12 +321,10 @@
 
         async fetchOrderDetails(silent = false) {
           try {
-            const res = await fetch(`/api/orders?order_number=${encodeURIComponent(this.orderNumber)}`);
+            const res = await fetch(`/api/order?order_number=${encodeURIComponent(this.orderNumber)}`);
             if (res.ok) {
               const data = await res.json();
-              if (data.success && data.orders && data.orders.length > 0) {
-                this.order = data.orders[0];
-              } else if (data.order) {
+              if (data.success && data.order) {
                 this.order = data.order;
               }
             }

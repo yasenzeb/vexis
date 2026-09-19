@@ -65,10 +65,31 @@ export default async function handler(req, res) {
     return res.status(204).end();
   }
 
+  if (req.method === 'GET') {
+    try {
+      const orderNumber = req.query.order_number || req.query.order;
+      if (!orderNumber) {
+        return res.status(400).json({ success: false, error: 'order_number required' });
+      }
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('order_number', String(orderNumber).trim())
+        .single();
+
+      if (error || !data) {
+        return res.status(404).json({ success: false, error: 'الطلب غير موجود' });
+      }
+      return res.status(200).json({ success: true, order: data });
+    } catch (err) {
+      return res.status(500).json({ success: false, error: safeError(err) });
+    }
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({
       success: false,
-      error: `Method ${req.method} not allowed. Use POST.`,
+      error: `Method ${req.method} not allowed.`,
     });
   }
 
