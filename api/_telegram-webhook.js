@@ -1,6 +1,6 @@
 // api/_telegram-webhook.js — Telegram Bot Webhook endpoint
 import { createClient } from '@supabase/supabase-js';
-import { setCorsHeaders, safeError } from './_auth.js';
+import { setCorsHeaders } from './_auth.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -40,14 +40,12 @@ export default async function handler(req, res) {
 
   try {
     const update = req.body || {};
-    console.log('[TG Webhook] Update:', JSON.stringify(update).substring(0, 500));
 
     // ── 1. Handle Callback Queries (Button Clicks) ──
     if (update.callback_query) {
       const cb = update.callback_query;
       const data = cb.data || '';
       const chatId = cb.message?.chat?.id;
-      const messageId = cb.message?.message_id;
 
       // Answer immediately so the spinner goes away
       await tgRequest('answerCallbackQuery', { callback_query_id: cb.id });
@@ -84,7 +82,6 @@ export default async function handler(req, res) {
           .eq('order_number', orderNumber);
 
         if (dbErr && dbErr.message && dbErr.message.includes('rejection_reason')) {
-          // Fallback if rejection_reason column does not exist
           const res = await supabase
             .from('orders')
             .update({ status })
@@ -153,7 +150,6 @@ export default async function handler(req, res) {
           .eq('order_number', orderNumber);
 
         if (dbErr && dbErr.message && dbErr.message.includes('rejection_reason')) {
-          // Fallback if rejection_reason column does not exist
           const res = await supabase
             .from('orders')
             .update({ status: 'rejected' })
@@ -173,14 +169,83 @@ export default async function handler(req, res) {
         return;
       }
 
-      if (text === '/start') {
-        const helpText = `🔥 <b>أهلاً بك في بوت VEXIS Admin!</b> 🔥\n\n` +
-          `الأوامر المتاحة:\n\n` +
-          `🔹 /orders — أحدث 5 طلبات\n` +
-          `🔹 /pending — الطلبات المعلقة\n` +
-          `🔹 /status [رقم] [حالة] — تغيير حالة طلب\n\n` +
+      if (text === '/start' || text === '/help') {
+        const helpText = `🔥 <b>أهلاً بك في نظام بوت VEXIS الذكي!</b> 🔥\n\n` +
+          `<b>📊 أوامر التحليل والاستخراج:</b>\n` +
+          `🔹 /stats — إحصائيات المبيعات والأرباح والطلبات\n` +
+          `🔹 /today — ملخص طلبات اليوم وإجمالي الأرباح\n` +
+          `🔹 /orders — أحدث 5 طلبات في المتجر\n` +
+          `🔹 /pending — قائمة الطلبات المعلقة تنتظر الإجراء\n` +
+          `🔹 /search [كلمة/رقم] — بحث شامل بالهاتف أو الاسم أو الرقم\n` +
+          `🔹 /status [رقم] [حالة] — تغيير حالة طلب مباشر\n\n` +
           `<i>الحالات: pending, review, shipped, delivered, rejected</i>`;
         await tgRequest('sendMessage', { chat_id: chatId, text: helpText, parse_mode: 'HTML' });
+
+      } else if (text === '/stats' || text === '/today') {
+        let query = supabase.from('orders').select('*');
+        if (text === '/today') {
+          const todayStart = new Date();
+          todayStart.setHours(0, 0, 0, 0);
+          query = query.gte('created_at', todayStart.toISOString());
+        }
+        const { data: orders } = await query;
+        const totalOrders = orders ? orders.length : 0;
+        const totalRevenue = orders ? orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0) : 0;
+        const pendingCount = orders ? orders.filter(o => o.status === 'pending').length : 0;
+        const reviewCount = orders ? orders.filter(o => o.status === 'review').length : 0;
+        const shippedCount = orders ? orders.filter(o => o.status === 'shipped').length : 0;
+        const deliveredCount = orders ? orders.filter(o => o.status === 'delivered').length : 0;
+        const rejectedCount = orders ? orders.filter(o => o.status === 'rejected').length : 0;
+
+        const title = text === '/today' ? '📅 <b>تقرير مبيعات اليوم</b>' : '📊 <b>إحصائيات المبيعات الشاملة</b>';
+        const statsMsg = `${title}\n\n` +
+          `🔢 <b>إجمالي الطلبات:</b> ${totalOrders}\n` +
+          `💰 <b>إجمالي الإيرادات:</b> EGP ${totalRevenue.toLocaleString()}\n\n` +
+          `<b>توزيع الحالات:</b>\n` +
+          `⏳ <b>معلق:</b> ${pendingCount}\n` +
+          `🔍 <b>قيد المراجعة:</b> ${reviewCount}\n` +
+          `🚚 <b>تم الشحن:</b> ${shippedCount}\n` +
+          `🎉 <b>تم التسليم:</b> ${deliveredCount}\n` +
+          `❌ <b>مرفوض:</b> ${rejectedCount}`;
+        await tgRequest('sendMessage', { chat_id: chatId, text: statsMsg, parse_mode: 'HTML' });
+
+      } else if (text.startsWith('/search ')) {
+        const queryTerm = text.substring(8).trim();
+        if (!queryTerm) {
+          await tgRequest('sendMessage', { chat_id: chatId, text: '⚠️ يرجى إدخال كلمة البحث بعد /search' });
+        } else {
+          const { data: orders } = await supabase
+            .from('orders')
+            .select('*')
+            .or(`order_number.ilike.%${queryTerm}%,customer_name.ilike.%${queryTerm}%,phone.ilike.%${queryTerm}%`)
+            .limit(5);
+
+          if (!orders || orders.length === 0) {
+            await tgRequest('sendMessage', { chat_id: chatId, text: `📭 لم يتم العثور على أي نتائج لـ "${queryTerm}"` });
+          } else {
+            await tgRequest('sendMessage', { chat_id: chatId, text: `🔍 <b>نتائج البحث عثرت على ${orders.length} طلبات:</b>`, parse_mode: 'HTML' });
+            for (const ord of orders) {
+              const keyboard = {
+                inline_keyboard: [
+                  [
+                    { text: '✅ قبول (review)', callback_data: `st_${ord.order_number}_review` },
+                    { text: '🚚 شحن (shipped)', callback_data: `st_${ord.order_number}_shipped` }
+                  ],
+                  [
+                    { text: '🎉 تسليم (delivered)', callback_data: `st_${ord.order_number}_delivered` },
+                    { text: '❌ رفض (rejected)', callback_data: `st_${ord.order_number}_rejected` }
+                  ]
+                ]
+              };
+              await tgRequest('sendMessage', {
+                chat_id: chatId,
+                text: `🆔 <b>${ord.order_number}</b>\n👤 ${ord.customer_name} — ${ord.phone}\n📍 ${ord.governorate}\n💰 EGP ${ord.total}\n📌 <b>${ord.status}</b>`,
+                parse_mode: 'HTML',
+                reply_markup: keyboard
+              });
+            }
+          }
+        }
 
       } else if (text === '/orders' || text === '/pending') {
         let query = supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(5);

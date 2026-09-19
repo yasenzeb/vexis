@@ -430,8 +430,37 @@
           this.receiptPreview = URL.createObjectURL(file);
 
           try {
+            // Compress image client-side to make upload ultra-fast (max 1000px width/height, 0.7 quality)
+            const compressedFile = await new Promise((resolve) => {
+              const img = new Image();
+              img.src = this.receiptPreview;
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                const maxDim = 1000;
+                if (width > maxDim || height > maxDim) {
+                  if (width > height) {
+                    height = Math.round((height * maxDim) / width);
+                    width = maxDim;
+                  } else {
+                    width = Math.round((width * maxDim) / height);
+                    height = maxDim;
+                  }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                canvas.toBlob((blob) => {
+                  resolve(blob ? new File([blob], file.name, { type: 'image/jpeg' }) : file);
+                }, 'image/jpeg', 0.75);
+              };
+              img.onerror = () => resolve(file);
+            });
+
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', compressedFile);
             formData.append('order_number', this.orderNumber);
 
             const uploadRes = await fetch('/api/upload-receipt', {
