@@ -125,6 +125,43 @@
 </head>
 <body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100" x-data="store()" x-init="init()">
 
+<!-- INTRO SPLASH SCREEN -->
+<div x-show="showIntro" 
+     x-transition:leave="transition ease-in duration-500 transform"
+     x-transition:leave-start="opacity-100 scale-100"
+     x-transition:leave-end="opacity-0 scale-105"
+     class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-6 text-white overflow-hidden select-none">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 z-0">
+    <img src="intro_tshirt.jpg" alt="VEXIS Intro" class="w-full h-full object-cover object-center opacity-40 filter brightness-75 scale-105 animate-pulse-subtle">
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80"></div>
+  </div>
+  
+  <!-- Content -->
+  <div class="relative z-10 flex flex-col items-center text-center max-w-md mx-auto space-y-6">
+    <div class="w-20 h-20 md:w-24 md:h-24 bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-3 shadow-2xl flex items-center justify-center animate-bounce">
+      <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-contain rounded-2xl">
+    </div>
+    
+    <div>
+      <h1 class="text-4xl md:text-5xl font-black tracking-widest text-white uppercase drop-shadow-md">VEXIS</h1>
+      <p class="text-xs md:text-sm font-bold text-gray-300 tracking-[0.3em] uppercase mt-1">BE VEXIS | BUILT FOR PERFORMANCE</p>
+    </div>
+
+    <p class="text-sm text-gray-300 font-semibold max-w-xs leading-relaxed">
+      أقوى تشكيلة ملابس وتيشرتات رياضية مصممة خصيصاً لتمنحك الأداء والأناقة الفائقة.
+    </p>
+
+    <button @click="dismissIntro()" 
+            class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-black text-black bg-white rounded-2xl overflow-hidden shadow-2xl hover:scale-105 transition duration-300 active:scale-95">
+      <span class="flex items-center gap-2">
+        <span>دخول المتجر</span>
+        <i class="fas fa-arrow-left transition-transform duration-300 group-hover:-translate-x-1"></i>
+      </span>
+    </button>
+  </div>
+</div>
+
 <!-- TOP BAR -->
 <div class="bg-black dark:bg-white text-white dark:text-black text-xs py-2 marquee-wrap">
   <div class="marquee-inner">
@@ -464,6 +501,12 @@ function store() {
     cartCount: 0,
     lang: 'ar',
     isDark: false,
+    showIntro: !sessionStorage.getItem('vexis_intro_seen'),
+
+    dismissIntro() {
+      this.showIntro = false;
+      sessionStorage.setItem('vexis_intro_seen', 'true');
+    },
 
 init() {
   this.cartCount = this.getCart().length;

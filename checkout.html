@@ -122,33 +122,33 @@
           <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">المحافظة / المدينة <span class="text-red-500">*</span></label>
           <select x-model="form.city" @change="updateShipping" required class="w-full border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 bg-gray-50 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-black dark:focus:ring-white outline-none transition border text-gray-900 dark:text-gray-100">
             <option value="">اختر المحافظة</option>
-            <option value="cairo">القاهرة (شحن مجاني)</option>
-            <option value="giza">الجيزة (شحن مجاني)</option>
-            <option value="alex">الإسكندرية (شحن مجاني)</option>
-            <option value="qalyubia">القليوبية (شحن مجاني)</option>
-            <option value="dakahlia">الدقهلية (شحن مجاني)</option>
-            <option value="sharqia">الشرقية (شحن مجاني)</option>
-            <option value="monufia">المنوفية (شحن مجاني)</option>
-            <option value="gharbia">الغربية (شحن مجاني)</option>
-            <option value="beheira">البحيرة (شحن مجاني)</option>
-            <option value="damietta">دمياط (شحن مجاني)</option>
-            <option value="port_said">بورسعيد (شحن مجاني)</option>
-            <option value="ismailia">الإسماعيلية (شحن مجاني)</option>
-            <option value="suez">السويس (شحن مجاني)</option>
-            <option value="kafr_el_sheikh">كفر الشيخ (شحن مجاني)</option>
-            <option value="fayoum">الفيوم (شحن مجاني)</option>
-            <option value="beni_suef">بني سويف (شحن مجاني)</option>
-            <option value="minya">المنيا (شحن مجاني)</option>
-            <option value="asyut">أسيوط (شحن مجاني)</option>
-            <option value="sohag">سوهاج (شحن مجاني)</option>
-            <option value="qena">قنا (شحن مجاني)</option>
-            <option value="luxor">الأقصر (شحن مجاني)</option>
-            <option value="aswan">أسوان (شحن مجاني)</option>
-            <option value="red_sea">البحر الأحمر (شحن مجاني)</option>
-            <option value="new_valley">الوادي الجديد (شحن مجاني)</option>
-            <option value="matrouh">مطروح (شحن مجاني)</option>
-            <option value="north_sinai">شمال سيناء (شحن مجاني)</option>
-            <option value="south_sinai">جنوب سيناء (شحن مجاني)</option>
+            <option value="cairo">القاهرة (45 EGP)</option>
+            <option value="giza">الجيزة (50 EGP)</option>
+            <option value="qalyubia">القليوبية (50 EGP)</option>
+            <option value="monufia">المنوفية (55 EGP)</option>
+            <option value="sharqia">الشرقية (55 EGP)</option>
+            <option value="gharbia">الغربية (55 EGP)</option>
+            <option value="dakahlia">الدقهلية (60 EGP)</option>
+            <option value="kafr_el_sheikh">كفر الشيخ (60 EGP)</option>
+            <option value="beheira">البحيرة (65 EGP)</option>
+            <option value="damietta">دمياط (65 EGP)</option>
+            <option value="port_said">بورسعيد (65 EGP)</option>
+            <option value="ismailia">الإسماعيلية (65 EGP)</option>
+            <option value="suez">السويس (65 EGP)</option>
+            <option value="alex">الإسكندرية (70 EGP)</option>
+            <option value="fayoum">الفيوم (70 EGP)</option>
+            <option value="beni_suef">بني سويف (70 EGP)</option>
+            <option value="minya">المنيا (75 EGP)</option>
+            <option value="asyut">أسيوط (80 EGP)</option>
+            <option value="sohag">سوهاج (85 EGP)</option>
+            <option value="matrouh">مطروح (85 EGP)</option>
+            <option value="qena">قنا (90 EGP)</option>
+            <option value="luxor">الأقصر (95 EGP)</option>
+            <option value="aswan">أسوان (100 EGP)</option>
+            <option value="red_sea">البحر الأحمر (95 EGP)</option>
+            <option value="north_sinai">شمال سيناء (100 EGP)</option>
+            <option value="south_sinai">جنوب سيناء (100 EGP)</option>
+            <option value="new_valley">الوادي الجديد (120 EGP)</option>
           </select>
         </div>
 
@@ -208,11 +208,11 @@
           </div>
           <div class="flex justify-between text-gray-600 dark:text-gray-300">
             <span>مصاريف الشحن:</span>
-            <span class="text-green-600 dark:text-green-400">مجاني بالكامل</span>
+            <span x-text="shippingCost ? (shippingCost + ' ج.م') : 'اختر المحافظة'"></span>
           </div>
           <div class="flex justify-between text-lg font-black pt-2 border-t border-gray-100 dark:border-gray-800">
             <span>الإجمالي:</span>
-            <span class="text-black dark:text-white" x-text="subtotal + ' ج.م'"></span>
+            <span class="text-black dark:text-white" x-text="(subtotal + shippingCost) + ' ج.م'"></span>
           </div>
         </div>
 
@@ -270,6 +270,14 @@ function checkoutPage() {
       notes: ''
     },
     
+    shippingRates: {
+      cairo: 45, giza: 50, qalyubia: 50, monufia: 55, sharqia: 55, gharbia: 55,
+      dakahlia: 60, kafr_el_sheikh: 60, beheira: 65, damietta: 65, port_said: 65,
+      ismailia: 65, suez: 65, alex: 70, fayoum: 70, beni_suef: 70, minya: 75,
+      asyut: 80, sohag: 85, matrouh: 85, qena: 90, luxor: 95, aswan: 100,
+      red_sea: 95, north_sinai: 100, south_sinai: 100, new_valley: 120
+    },
+
     init() {
       try { this.cart = JSON.parse(localStorage.getItem('vexis_cart')||'[]'); } catch { this.cart=[]; }
       if(this.cart.length === 0) {
@@ -277,11 +285,11 @@ function checkoutPage() {
         return;
       }
       this.subtotal = this.cart.reduce((acc, item) => acc + (item.finalPrice * item.qty), 0);
-      this.shippingCost = 0; // Free shipping for all governorates
+      this.updateShipping();
     },
 
     updateShipping() {
-      this.shippingCost = 0; // Always free shipping
+      this.shippingCost = this.shippingRates[this.form.city] || 0;
     },
 
     async submitOrder() {
@@ -312,8 +320,8 @@ function checkoutPage() {
                       city: this.form.city,
                       address: this.form.address,
                       notes: this.form.notes,
-                      total: this.subtotal,
-                      shippingCost: 0,
+                      total: this.subtotal + this.shippingCost,
+                      shippingCost: this.shippingCost,
                       items: this.cart
                   })
               });
@@ -348,8 +356,8 @@ function checkoutPage() {
               quantities: this.cart.map(item => item.qty),
               images: this.cart.map(item => item.image_url || ''),
               prices: this.cart.map(item => item.finalPrice),
-              shipping_cost: 0,
-              total: this.subtotal,
+              shipping_cost: this.shippingCost,
+              total: this.subtotal + this.shippingCost,
               order_number: orderNumber
           };
 
@@ -364,21 +372,14 @@ function checkoutPage() {
 
               if (!response.ok) {
                   console.warn("Email service error (" + response.status + ")");
-              } else {
-                  const data = await response.json();
-                  if (data.success !== true) {
-                      console.warn(data.error || "Failed to send invoice email.");
-                  }
               }
           } catch (emailErr) {
               console.error("Invoice email failed to send:", emailErr);
           }
 
-          // 3. Clear cart and show success modal
-          this.orderNumber = orderNumber;
-          this.showSuccess = true;
+          // 3. Clear cart and redirect to invoice.html
           localStorage.removeItem("vexis_cart");
-          this.cart = [];
+          window.location.href = `invoice.html?order=${orderNumber}`;
 
       } catch (err) {
           console.error(err);

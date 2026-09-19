@@ -1,326 +1,463 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vexis Invoice</title>
-  <style type="text/css">
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap');
-    body, table, td, a { font-family: 'Cairo', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-    /* Reset styles */
-    body { width: 100% !important; height: 100% !important; margin: 0 !important; padding: 0 !important; background-color: #000000; color: #ffffff; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-    table { border-collapse: collapse !important; }
-    
-    /* Mobile responsive */
-    @media screen and (max-width: 600px) {
-      .container { width: 100% !important; padding: 10px !important; }
-      .col-50 { width: 100% !important; display: block !important; margin-bottom: 20px !important; }
-      .col-50-last { margin-bottom: 0 !important; }
-      .table-responsive { overflow-x: auto !important; }
-      .product-img { width: 50px !important; height: 50px !important; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VEXIS | تأكيد الطلب والفاتورة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+        colors: {
+          brandGreen: '#10b981',
+          brandDark: '#0d1117'
+        }
+      }
     }
-  </style>
+  }
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style>
+  * { font-family: 'Cairo', sans-serif; box-sizing: border-box; }
+  body { background-color: #f8fafc; color: #1e293b; }
+  .status-step-done { background-color: #10b981; color: white; border-color: #10b981; }
+  .status-step-active { background-color: #3b82f6; color: white; border-color: #3b82f6; animation: pulse 2s infinite; }
+  .status-step-pending { background-color: #e2e8f0; color: #94a3b8; border-color: #cbd5e1; }
+  .status-step-rejected { background-color: #ef4444; color: white; border-color: #ef4444; }
+</style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #000000; color: #ffffff;">
+<body class="bg-gray-50 text-gray-900 pb-16 min-h-screen" x-data="invoicePage()" x-init="init()">
 
-  <!-- Outer Wrapper Table -->
-  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #000000;">
-    <tr>
-      <td align="center" style="padding: 20px 0;">
-        
-        <!-- Email Container -->
-        <table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background-color: #000000; border: 1px solid #1a1a1a; padding: 30px;">
-          
-          <!-- Logo Header -->
-          <tr>
-            <td align="center" style="padding-bottom: 20px;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: 900; letter-spacing: 6px; font-style: italic;">VEXIS</h1>
-              <p style="color: #888888; margin: 5px 0 0 0; font-size: 10px; letter-spacing: 4px; text-transform: uppercase;">Be Vexis</p>
-            </td>
-          </tr>
-          
-          <!-- Thin Divider Line -->
-          <tr>
-            <td style="padding: 10px 0 30px 0;">
-              <hr style="border: 0; border-top: 1px solid #222222; margin: 0;" />
-            </td>
-          </tr>
-          
-          <!-- Invoice Title & Details block -->
-          <tr>
-            <td>
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <!-- Left Side Info -->
-                  <td width="50%" valign="top" class="col-50" style="padding-right: 15px;">
-                    <h2 style="color: #ffffff; margin: 0 0 10px 0; font-size: 26px; font-weight: 900; letter-spacing: 1px;">INVOICE</h2>
-                    <p style="color: #888888; margin: 0; font-size: 13px; line-height: 1.6;">
-                      Thank you for shopping with VEXIS.<br />
-                      This is your invoice and order confirmation.
-                    </p>
-                  </td>
-                  <!-- Right Side Details Box -->
-                  <td width="50%" valign="top" class="col-50 col-50-last">
-                    <table border="0" cellpadding="10" cellspacing="0" width="100%" style="border: 1px solid #222222; background-color: #050505;">
-                      <tr>
-                        <td style="font-size: 11px; color: #888888; font-weight: 700; border-bottom: 1px solid #111111;">INVOICE #</td>
-                        <td align="right" style="font-size: 11px; color: #ffffff; font-weight: 900; border-bottom: 1px solid #111111;">{{ invoice_number }}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-size: 11px; color: #888888; font-weight: 700; border-bottom: 1px solid #111111;">DATE</td>
-                        <td align="right" style="font-size: 11px; color: #ffffff; font-weight: 900; border-bottom: 1px solid #111111;">{{ date }}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-size: 11px; color: #888888; font-weight: 700; border-bottom: 1px solid #111111;">ORDER #</td>
-                        <td align="right" style="font-size: 11px; color: #ffffff; font-weight: 900; border-bottom: 1px solid #111111;">{{ order_number }}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-size: 11px; color: #888888; font-weight: 700;">PAYMENT METHOD</td>
-                        <td align="right" style="font-size: 11px; color: #ffffff; font-weight: 900;">Cash on Delivery (COD)</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Thin Divider Line -->
-          <tr>
-            <td style="padding: 30px 0;">
-              <hr style="border: 0; border-top: 1px solid #222222; margin: 0;" />
-            </td>
-          </tr>
-          
-          <!-- Billing and Shipping Addresses -->
-          <tr>
-            <td>
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <!-- Billing Address -->
-                  <td width="50%" valign="top" class="col-50" style="padding-right: 15px;">
-                    <div style="font-size: 12px; color: #888888; font-weight: bold; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase;">
-                      <span style="font-size: 14px;">📍</span> BILLING ADDRESS
-                    </div>
-                    <p style="color: #ffffff; margin: 0; font-size: 13px; line-height: 1.7; font-weight: bold;">
-                      {{ customer_name }}<br />
-                      <span style="color: #cccccc; font-weight: normal;">
-                        {{ address }}<br />
-                        {{ city_display }}, Egypt<br />
-                        Phone: {{ phone }}<br />
-                        Email: {{ email }}
-                      </span>
-                    </p>
-                  </td>
-                  <!-- Shipping Address -->
-                  <td width="50%" valign="top" class="col-50 col-50-last">
-                    <div style="font-size: 12px; color: #888888; font-weight: bold; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase;">
-                      <span style="font-size: 14px;">🚚</span> SHIPPING ADDRESS
-                    </div>
-                    <p style="color: #ffffff; margin: 0; font-size: 13px; line-height: 1.7; font-weight: bold;">
-                      {{ customer_name }}<br />
-                      <span style="color: #cccccc; font-weight: normal;">
-                        {{ address }}<br />
-                        {{ city_display }}, Egypt<br />
-                        Phone: {{ phone }}
-                      </span>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Thin Divider Line -->
-          <tr>
-            <td style="padding: 30px 0 10px 0;">
-              <hr style="border: 0; border-top: 1px solid #222222; margin: 0;" />
-            </td>
-          </tr>
-          
-          <!-- Products Table -->
-          <tr>
-            <td>
-              <table border="0" cellpadding="10" cellspacing="0" width="100%">
-                <thead>
-                  <tr style="border-bottom: 1px solid #222222;">
-                    <th align="left" style="color: #888888; font-size: 11px; font-weight: 700; padding: 10px 0; text-transform: uppercase; border-bottom: 1px solid #222222;">PRODUCT</th>
-                    <th align="center" style="color: #888888; font-size: 11px; font-weight: 700; padding: 10px 0; text-transform: uppercase; border-bottom: 1px solid #222222;">SIZE</th>
-                    <th align="center" style="color: #888888; font-size: 11px; font-weight: 700; padding: 10px 0; text-transform: uppercase; border-bottom: 1px solid #222222;">QTY</th>
-                    <th align="right" style="color: #888888; font-size: 11px; font-weight: 700; padding: 10px 0; text-transform: uppercase; border-bottom: 1px solid #222222;">UNIT PRICE</th>
-                    <th align="right" style="color: #888888; font-size: 11px; font-weight: 700; padding: 10px 0; text-transform: uppercase; border-bottom: 1px solid #222222;">TOTAL</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for item in items %}
-                  <tr style="border-bottom: 1px solid #111111;">
-                    <!-- Product details (Image + Name) -->
-                    <td align="left" style="padding: 15px 0; border-bottom: 1px solid #111111; vertical-align: middle;">
-                      <table border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td style="padding-right: 15px; vertical-align: middle;">
-                            <img src="{{ item.image }}" alt="{{ item.name }}" class="product-img" width="60" height="60" style="border-radius: 8px; object-fit: cover; border: 1px solid #222222; background-color: #050505;" />
-                          </td>
-                          <td style="vertical-align: middle;">
-                            <p style="color: #ffffff; margin: 0; font-size: 13px; font-weight: bold; line-height: 1.4;">{{ item.name }}</p>
-                            <p style="color: #888888; margin: 3px 0 0 0; font-size: 11px;">Color: {{ item.color }}</p>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                    <!-- Size -->
-                    <td align="center" style="color: #ffffff; font-size: 13px; font-weight: bold; padding: 15px 0; border-bottom: 1px solid #111111; vertical-align: middle;">
-                      {{ item.size }}
-                    </td>
-                    <!-- Qty -->
-                    <td align="center" style="color: #cccccc; font-size: 13px; padding: 15px 0; border-bottom: 1px solid #111111; vertical-align: middle;">
-                      {{ item.qty }}
-                    </td>
-                    <!-- Unit Price -->
-                    <td align="right" style="color: #cccccc; font-size: 13px; padding: 15px 0; border-bottom: 1px solid #111111; vertical-align: middle; white-space: nowrap;">
-                      {{ item.price }} EGP
-                    </td>
-                    <!-- Line Total -->
-                    <td align="right" style="color: #ffffff; font-size: 13px; font-weight: bold; padding: 15px 0; border-bottom: 1px solid #111111; vertical-align: middle; white-space: nowrap;">
-                      {{ item.line_total }} EGP
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Pricing summary -->
-          <tr>
-            <td style="padding-top: 20px;">
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td width="50%">&nbsp;</td>
-                  <td width="50%">
-                    <table border="0" cellpadding="8" cellspacing="0" width="100%" style="font-size: 13px; color: #cccccc;">
-                      <tr>
-                        <td style="color: #888888;">SUBTOTAL</td>
-                        <td align="right" style="color: #ffffff; font-weight: bold;">{{ subtotal }} EGP</td>
-                      </tr>
-                      <tr>
-                        <td style="color: #888888;">SHIPPING</td>
-                        <td align="right" style="color: #ffffff; font-weight: bold;">{{ shipping_cost }} EGP</td>
-                      </tr>
-                      <tr style="border-top: 1px solid #222222; font-size: 16px;">
-                        <td style="color: #ffffff; font-weight: 900; padding-top: 15px; border-top: 1px solid #222222;">TOTAL</td>
-                        <td align="right" style="color: #ffffff; font-weight: 900; padding-top: 15px; border-top: 1px solid #222222; font-size: 18px;">{{ total }} EGP</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Thin Divider Line -->
-          <tr>
-            <td style="padding: 20px 0 30px 0;">
-              <hr style="border: 0; border-top: 1px solid #222222; margin: 0;" />
-            </td>
-          </tr>
-          
-          <!-- Notes and Help Block -->
-          <tr>
-            <td>
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <!-- Order Notes Box -->
-                  <td width="48%" valign="top" class="col-50" style="padding-right: 10px;">
-                    <table border="0" cellpadding="15" cellspacing="0" width="100%" style="border: 1px solid #1a1a1a; background-color: #030303; border-radius: 8px;">
-                      <tr>
-                        <td>
-                          <div style="font-size: 12px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">
-                            ℹ️ ORDER NOTES
-                          </div>
-                          <p style="color: #888888; margin: 0; font-size: 11px; line-height: 1.6;">
-                            We are preparing your order with care. You will receive another email with tracking information once your order has been shipped.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                  <td width="4%">&nbsp;</td>
-                  <!-- Help Box -->
-                  <td width="48%" valign="top" class="col-50 col-50-last">
-                    <table border="0" cellpadding="15" cellspacing="0" width="100%" style="border: 1px solid #1a1a1a; background-color: #030303; border-radius: 8px;">
-                      <tr>
-                        <td>
-                          <div style="font-size: 12px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">
-                            🎧 NEED HELP?
-                          </div>
-                          <p style="color: #888888; margin: 0; font-size: 11px; line-height: 1.6;">
-                            If you have any questions about your order, please contact us at <a href="mailto:support@vexis.fit" style="color: #ffffff; text-decoration: underline;">support@vexis.fit</a>
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Track Order Row -->
-          <tr>
-            <td style="padding-top: 25px;">
-              <table border="0" cellpadding="15" cellspacing="0" width="100%" style="border: 1px solid #1a1a1a; background-color: #050505; text-align: center; border-radius: 8px;">
-                <tr>
-                  <td align="center">
-                    <span style="font-size: 20px; vertical-align: middle; margin-right: 8px;">📦</span>
-                    <span style="color: #ffffff; font-size: 12px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; vertical-align: middle;">TRACK YOUR ORDER</span>
-                    <div style="margin-top: 12px;">
-                      <a href="http://www.vexis.fit" target="_blank" style="background-color: #ffffff; color: #000000; padding: 10px 25px; border-radius: 4px; font-weight: 900; font-size: 11px; text-decoration: none; display: inline-block; letter-spacing: 1px; text-transform: uppercase;">TRACK NOW</a>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Thin Divider Line -->
-          <tr>
-            <td style="padding: 30px 0 20px 0;">
-              <hr style="border: 0; border-top: 1px solid #222222; margin: 0;" />
-            </td>
-          </tr>
-          
-          <!-- Footer Section -->
-          <tr>
-            <td>
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <!-- Social Links -->
-                  <td width="33%" align="left" class="col-50" style="font-size: 14px;">
-                    <a href="https://instagram.com" style="color: #ffffff; text-decoration: none; margin-right: 15px;">📷</a>
-                    <a href="https://tiktok.com" style="color: #ffffff; text-decoration: none; margin-right: 15px;">🎵</a>
-                    <a href="https://facebook.com" style="color: #ffffff; text-decoration: none;">👤</a>
-                  </td>
-                  <!-- Mid Slogan -->
-                  <td width="34%" align="center" class="col-50" style="color: #888888; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;">
-                    BE VEXIS
-                  </td>
-                  <!-- Link -->
-                  <td width="33%" align="right" class="col-50 col-50-last" style="font-size: 11px;">
-                    <a href="http://www.vexis.fit" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold; letter-spacing: 1px;">www.vexis.fit</a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-        </table> <!-- Container Table -->
-        
-      </td>
-    </tr>
-  </table> <!-- Wrapper Table -->
+  <!-- NAVBAR / HEADER -->
+  <nav class="bg-white border-b border-gray-100 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold text-sm">التأكيد</span>
+        <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+        <span class="text-gray-400 text-sm">الطلب</span>
+        <i class="fas fa-chevron-left text-xs text-gray-400"></i>
+        <span class="text-gray-400 text-sm">السلة</span>
+      </div>
+      <!-- VEXIS BRAND -->
+      <a href="index.html" class="bg-black text-white font-black px-3 py-1 rounded-lg text-sm tracking-widest flex items-center gap-1.5">
+        <img src="logo.jpeg" alt="Vexis" class="w-5 h-5 rounded-full">
+        <span>VEXIS</span>
+      </a>
+    </div>
+  </nav>
 
+  <main class="max-w-md mx-auto px-4 pt-6 space-y-6">
+
+    <!-- SUCCESS ICON & ORDER NUMBER -->
+    <div class="text-center space-y-3">
+      <div class="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20 text-3xl">
+        <i class="fas fa-check"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-black text-gray-900 flex items-center justify-center gap-2">
+          تم استلام طلبك! 🎉
+        </h1>
+        <p class="text-xs font-bold text-gray-500 mt-1">رقم الطلب</p>
+        <div class="mt-1 inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-xl border border-emerald-200 font-extrabold text-sm tracking-wider select-all shadow-sm">
+          <span x-text="'# ' + (order.order_number || '...')"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPORTANT INFO BOX -->
+    <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-4 text-xs space-y-2.5 shadow-sm">
+      <div class="flex items-center gap-2 font-bold text-amber-800 text-sm mb-1">
+        <i class="fas fa-exclamation-circle text-amber-600"></i>
+        <span>معلومات هامة عن طلبك</span>
+      </div>
+      <div class="flex items-center gap-2 text-amber-900 font-semibold">
+        <i class="fas fa-check-circle text-emerald-600"></i>
+        <span>تم حجز طلبك بالفعل وهو محجوز باسمك</span>
+      </div>
+      <div class="flex items-center gap-2 text-amber-900 font-semibold">
+        <i class="fas fa-box text-blue-600"></i>
+        <span>جاري تجهيز الطلب للشحن الآن</span>
+      </div>
+      <div class="flex items-center gap-2 text-amber-900 font-semibold">
+        <i class="fas fa-truck text-amber-600"></i>
+        <span>شركة الشحن تشترط سداد رسوم الشحن مقدماً</span>
+      </div>
+      <div class="bg-amber-100/70 border border-amber-300/60 rounded-xl p-2.5 flex items-center justify-between font-black text-amber-950 text-sm mt-2">
+        <span>رسوم الشحن المستحقة:</span>
+        <span class="text-base text-amber-900" x-text="'EGP ' + (order.shipping_cost || 0)"></span>
+      </div>
+    </div>
+
+    <!-- ORDER STATUS TRACKER -->
+    <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-4">
+      <h3 class="text-sm font-black text-gray-900 flex items-center gap-2">
+        <i class="fas fa-route text-cyan-600"></i> تتبع حالة الطلب
+      </h3>
+      
+      <!-- Tracker Steps -->
+      <div class="relative py-2">
+        <!-- Progress Bar Background Line -->
+        <div class="absolute top-1/2 left-4 right-4 h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
+        <!-- Progress Bar Active Line -->
+        <div class="absolute top-1/2 right-4 h-1 bg-emerald-500 -translate-y-1/2 z-0 transition-all duration-500" :style="'width: ' + statusProgressWidth + '%'"></div>
+
+        <div class="relative z-10 flex justify-between items-center text-center">
+          <!-- Step 1: Pending -->
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition"
+                 :class="getStepClass('pending')">
+              <i class="fas fa-clock" x-show="currentStatusIndex === 0"></i>
+              <i class="fas fa-check" x-show="currentStatusIndex > 0"></i>
+            </div>
+            <span class="text-[11px] font-bold text-gray-700">معلق</span>
+          </div>
+
+          <!-- Step 2: Under Review -->
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition"
+                 :class="getStepClass('review')">
+              <i class="fas fa-search" x-show="currentStatusIndex === 1"></i>
+              <i class="fas fa-check" x-show="currentStatusIndex > 1 && order.status !== 'rejected'"></i>
+              <i class="fas fa-times" x-show="order.status === 'rejected'"></i>
+            </div>
+            <span class="text-[11px] font-bold text-gray-700">جاري المراجعة</span>
+          </div>
+
+          <!-- Step 3: Shipped -->
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition"
+                 :class="getStepClass('shipped')">
+              <i class="fas fa-truck-fast"></i>
+            </div>
+            <span class="text-[11px] font-bold text-gray-700">خرج للشحن</span>
+          </div>
+
+          <!-- Step 4: Delivered / Rejected -->
+          <div class="flex flex-col items-center gap-1.5">
+            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition"
+                 :class="getStepClass('delivered')">
+              <i class="fas fa-check-double" x-show="order.status !== 'rejected'"></i>
+              <i class="fas fa-ban" x-show="order.status === 'rejected'"></i>
+            </div>
+            <span class="text-[11px] font-bold" :class="order.status === 'rejected' ? 'text-red-600' : 'text-gray-700'" x-text="order.status === 'rejected' ? 'مرفوض' : 'تم التسليم'"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Status Badge Text -->
+      <div class="bg-gray-50 rounded-xl p-3 text-center border border-gray-100 text-xs font-bold text-gray-700">
+        حالة الطلب الحالية: 
+        <span class="px-2.5 py-1 rounded-full text-white font-extrabold mr-1 inline-block" :class="getStatusBadgeClass()" x-text="getStatusLabel()"></span>
+      </div>
+    </div>
+
+    <!-- PAYMENT METHODS -->
+    <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-4">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-sm">
+          <i class="fas fa-wallet"></i>
+        </div>
+        <div>
+          <h2 class="text-sm font-black text-gray-900">وسائل الدفع المتاحة</h2>
+          <p class="text-[11px] text-gray-400 font-semibold">حول رسوم الشحن عبر أي من الأرقام التالية ثم ارفع صورة الإيصال</p>
+        </div>
+      </div>
+
+      <!-- Vodafone Cash Card -->
+      <div class="bg-red-50/50 border border-red-100 rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-red-600 text-white rounded-xl flex items-center justify-center font-black text-xs shadow-md">
+            VF
+          </div>
+          <div>
+            <span class="text-xs font-black text-red-950 block">Vodafone Cash</span>
+            <span class="text-[10px] text-gray-500 font-bold">محفظة فودافون كاش</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-sm text-gray-900 tracking-wider">01001982117</span>
+          <button @click="copyText('01001982117')" class="bg-red-100 hover:bg-red-200 text-red-700 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1">
+            <i class="fas fa-copy text-[10px]"></i> نسخ
+          </button>
+        </div>
+      </div>
+
+      <!-- InstaPay Card -->
+      <div class="bg-blue-50/50 border border-blue-100 rounded-2xl p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-purple-700 text-white rounded-xl flex items-center justify-center font-black text-[10px] italic shadow-md">
+            IP
+          </div>
+          <div>
+            <span class="text-xs font-black text-purple-950 block">InstaPay</span>
+            <span class="text-[10px] text-gray-500 font-bold">انستا باي</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-sm text-gray-900 tracking-wider">01001982117</span>
+          <button @click="copyText('01001982117')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1">
+            <i class="fas fa-copy text-[10px]"></i> نسخ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECEIPT UPLOAD SECTION -->
+    <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-3">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-sm">
+          <i class="fas fa-image"></i>
+        </div>
+        <div>
+          <h2 class="text-sm font-black text-gray-900">إرسال صورة التحويل <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full font-bold ml-1">اختياري</span></h2>
+          <p class="text-[11px] text-gray-400 font-semibold">ارفع إيصال التحويل لتسريع تجهيز وشحن طلبك</p>
+        </div>
+      </div>
+
+      <!-- Upload Zone -->
+      <label class="block border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50/20 transition relative">
+        <input type="file" @change="uploadReceipt($event)" accept="image/*" class="hidden" :disabled="isUploading">
+        
+        <template x-if="!receiptPreview && !order.receipt_url">
+          <div class="space-y-2">
+            <div class="w-12 h-12 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mx-auto text-xl">
+              <i class="fas fa-cloud-upload-alt" x-show="!isUploading"></i>
+              <i class="fas fa-spinner fa-spin text-purple-600" x-show="isUploading"></i>
+            </div>
+            <p class="text-xs font-extrabold text-gray-700" x-text="isUploading ? 'جاري رفع الإيصال...' : 'اضغط هنا لرفع صورة الإيصال'"></p>
+            <p class="text-[10px] text-gray-400">JPG, PNG, GIF, WEBP — حتى 10 MB</p>
+          </div>
+        </template>
+
+        <template x-if="receiptPreview || order.receipt_url">
+          <div class="space-y-3">
+            <img :src="receiptPreview || order.receipt_url" alt="Receipt" class="h-32 object-contain mx-auto rounded-xl border">
+            <span class="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">
+              <i class="fas fa-check-circle ml-1"></i> تم رفع الإيصال بنجاح
+            </span>
+          </div>
+        </template>
+      </label>
+    </div>
+
+    <!-- ORDER SUMMARY -->
+    <div class="bg-gray-900 text-white rounded-3xl p-6 shadow-xl space-y-4">
+      <h3 class="text-sm font-black tracking-wider text-gray-200 border-b border-gray-800 pb-3 flex items-center gap-2">
+        <i class="fas fa-receipt text-emerald-400"></i> ملخص الطلب
+      </h3>
+
+      <div class="space-y-2 text-xs">
+        <div class="flex justify-between">
+          <span class="text-gray-400 font-bold">الاسم</span>
+          <span class="font-extrabold text-gray-100" x-text="order.customer_name || '—'"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-400 font-bold">الهاتف</span>
+          <span class="font-extrabold text-gray-100" x-text="order.phone || '—'"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-400 font-bold">المحافظة</span>
+          <span class="font-extrabold text-gray-100" x-text="order.governorate || '—'"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-400 font-bold">طريقة الدفع</span>
+          <span class="font-extrabold text-gray-100">عند الاستلام</span>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-3 flex justify-between items-center">
+        <span class="text-xs font-bold text-gray-400">إجمالي رسوم الشحن</span>
+        <span class="text-emerald-400 font-black text-lg" x-text="'EGP ' + (order.shipping_cost || 0)"></span>
+      </div>
+
+      <div class="border-t border-gray-800 pt-3 flex justify-between items-center">
+        <span class="text-xs font-bold text-gray-400">الإجمالي الكلي للطلب</span>
+        <span class="text-white font-black text-xl" x-text="'EGP ' + (order.total || 0)"></span>
+      </div>
+    </div>
+
+    <!-- RETURN BUTTON & FOOTER -->
+    <div class="text-center space-y-4">
+      <a href="index.html" class="block w-full bg-black text-white font-black py-4 rounded-2xl text-sm shadow-xl hover:opacity-90 transition flex items-center justify-center gap-2">
+        <i class="fas fa-home"></i> العودة للمتجر
+      </a>
+      <p class="text-[11px] text-gray-400 font-semibold flex items-center justify-center gap-1">
+        <i class="fas fa-headset text-emerald-500"></i> ستتواصل معك عروضنا قريباً لتأكيد الطلب
+      </p>
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div x-show="toastShow" x-transition class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-black text-white font-bold px-5 py-2.5 rounded-full shadow-2xl text-xs z-50 flex items-center gap-2">
+    <i class="fas fa-info-circle text-emerald-400"></i>
+    <span x-text="toastMessage"></span>
+  </div>
+
+  <script>
+    function invoicePage() {
+      return {
+        order: {},
+        orderNumber: '',
+        receiptPreview: '',
+        isUploading: false,
+        toastShow: false,
+        toastMessage: '',
+
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          this.orderNumber = params.get('order') || '';
+          if (this.orderNumber) {
+            this.fetchOrderDetails();
+            // Auto poll order status every 7 seconds
+            setInterval(() => this.fetchOrderDetails(true), 7000);
+          }
+        },
+
+        async fetchOrderDetails(silent = false) {
+          try {
+            const res = await fetch(`/api/orders?order_number=${encodeURIComponent(this.orderNumber)}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.success && data.orders && data.orders.length > 0) {
+                this.order = data.orders[0];
+              } else if (data.order) {
+                this.order = data.order;
+              }
+            }
+          } catch (e) {
+            if (!silent) console.error('Fetch order error:', e);
+          }
+        },
+
+        get currentStatusIndex() {
+          const st = (this.order.status || 'pending').toLowerCase();
+          if (st === 'pending') return 0;
+          if (st === 'review' || st === 'under_review' || st === 'processing') return 1;
+          if (st === 'shipped' || st === 'out_for_delivery') return 2;
+          if (st === 'delivered' || st === 'completed' || st === 'rejected') return 3;
+          return 0;
+        },
+
+        get statusProgressWidth() {
+          const idx = this.currentStatusIndex;
+          if (idx === 0) return 0;
+          if (idx === 1) return 33;
+          if (idx === 2) return 66;
+          return 100;
+        },
+
+        getStepClass(stepName) {
+          const idx = this.currentStatusIndex;
+          const isRejected = this.order.status === 'rejected';
+
+          if (stepName === 'pending') {
+            return idx >= 0 ? 'status-step-done' : 'status-step-pending';
+          }
+          if (stepName === 'review') {
+            if (isRejected) return 'status-step-rejected';
+            if (idx > 1) return 'status-step-done';
+            if (idx === 1) return 'status-step-active';
+            return 'status-step-pending';
+          }
+          if (stepName === 'shipped') {
+            if (isRejected) return 'status-step-pending';
+            if (idx > 2) return 'status-step-done';
+            if (idx === 2) return 'status-step-active';
+            return 'status-step-pending';
+          }
+          if (stepName === 'delivered') {
+            if (isRejected) return 'status-step-rejected';
+            if (idx === 3) return 'status-step-done';
+            return 'status-step-pending';
+          }
+          return 'status-step-pending';
+        },
+
+        getStatusBadgeClass() {
+          const st = (this.order.status || 'pending').toLowerCase();
+          if (st === 'pending') return 'bg-amber-500';
+          if (st === 'review' || st === 'under_review' || st === 'processing') return 'bg-blue-600';
+          if (st === 'shipped' || st === 'out_for_delivery') return 'bg-purple-600';
+          if (st === 'delivered' || st === 'completed') return 'bg-emerald-600';
+          if (st === 'rejected') return 'bg-red-600';
+          return 'bg-gray-500';
+        },
+
+        getStatusLabel() {
+          const st = (this.order.status || 'pending').toLowerCase();
+          if (st === 'pending') return 'معلق';
+          if (st === 'review' || st === 'under_review' || st === 'processing') return 'جاري المراجعة';
+          if (st === 'shipped' || st === 'out_for_delivery') return 'خرج للشحن';
+          if (st === 'delivered' || st === 'completed') return 'تم التسليم';
+          if (st === 'rejected') return 'مرفوض';
+          return 'معلق';
+        },
+
+        copyText(text) {
+          navigator.clipboard.writeText(text);
+          this.showToast('تم نسخ الرقم بنجاح');
+        },
+
+        showToast(msg) {
+          this.toastMessage = msg;
+          this.toastShow = true;
+          setTimeout(() => this.toastShow = false, 2500);
+        },
+
+        async uploadReceipt(event) {
+          const file = event.target.files[0];
+          if (!file) return;
+
+          this.isUploading = true;
+          this.receiptPreview = URL.createObjectURL(file);
+
+          try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('order_number', this.orderNumber);
+
+            const uploadRes = await fetch('/api/upload-receipt', {
+              method: 'POST',
+              body: formData
+            });
+
+            const uploadData = await uploadRes.json();
+            if (!uploadRes.ok || !uploadData.success) {
+              throw new Error(uploadData.error || 'فشل رفع الصورة');
+            }
+
+            const receiptUrl = uploadData.url;
+
+            // Save receipt url to order database
+            const updateRes = await fetch('/api/order-receipt', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                order_number: this.orderNumber,
+                receipt_url: receiptUrl
+              })
+            });
+
+            const updateData = await updateRes.json();
+            if (updateData.success) {
+              this.order.receipt_url = receiptUrl;
+              this.showToast('تم إرسال إيصال التحويل بنجاح!');
+            }
+          } catch (err) {
+            console.error('Receipt upload error:', err);
+            this.showToast('حدث خطأ في رفع الإيصال: ' + err.message);
+          } finally {
+            this.isUploading = false;
+          }
+        }
+      }
+    }
+  </script>
 </body>
 </html>

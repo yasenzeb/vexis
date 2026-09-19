@@ -13,6 +13,7 @@ import sendInvoice from './_send_invoice.js';
 import uploadReceipt from './_upload-receipt.js';
 import upload from './_upload.js';
 import whatsappWebhook from './_whatsapp-webhook.js';
+import telegramWebhook from './_telegram-webhook.js';
 
 export default async function handler(req, res) {
   let { __path } = req.query;
@@ -62,6 +63,8 @@ export default async function handler(req, res) {
     targetHandler = upload;
   } else if (__path === 'whatsapp-webhook') {
     targetHandler = whatsappWebhook;
+  } else if (__path === 'telegram-webhook') {
+    targetHandler = telegramWebhook;
   }
 
   if (targetHandler) {

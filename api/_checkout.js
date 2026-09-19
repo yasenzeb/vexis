@@ -14,15 +14,17 @@ function generateOrderNumber() {
   return `VNT-${date}-${rand}`;
 }
 
-async function sendTelegram(message) {
+async function sendTelegram(message, replyMarkup = null) {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
   try {
+    const body = { chat_id: chatId, text: message, parse_mode: 'HTML' };
+    if (replyMarkup) body.reply_markup = replyMarkup;
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text: message }),
+      body: JSON.stringify(body),
     });
   } catch (e) {
     console.error('[Telegram]', e.message);
@@ -119,11 +121,33 @@ export default async function handler(req, res) {
       .map(i => `• ${i.name} [${i.size || 'N/A'}] ×${i.qty} = EGP ${i.finalPrice * i.qty}`)
       .join('\n');
 
+    const inlineKeyboard = {
+      inline_keyboard: [
+        [
+          { text: '✅ مراجعة وموافقة (review)', callback_data: `st_${orderNumber}_review` },
+          { text: '🚚 خرج للشحن (shipped)', callback_data: `st_${orderNumber}_shipped` }
+        ],
+        [
+          { text: '🎉 تم التسليم (delivered)', callback_data: `st_${orderNumber}_delivered` },
+          { text: '❌ رفض (rejected)', callback_data: `st_${orderNumber}_rejected` }
+        ]
+      ]
+    };
+
     sendTelegram(
-      `━━━━━━━━━━━━━━ 🛒 طلب جديد ━━━━━━━━━━━━━━\n` +
-      `🆔 ${orderNumber}\n👤 ${name}\n📞 ${phone}\n📍 ${gov}\n🏠 ${address}\n` +
-      `💳 ${payment}\n📝 ${notes || 'لا يوجد'}\n\n📦 المنتجات:\n${itemsText}\n\n` +
-      `💰 المجموع: EGP ${calcSubtotal}\n🚚 الشحن: EGP ${parsedShipping}\n✅ الإجمالي: EGP ${parsedTotal}`
+      `━━━━━━━━━━━━━━ 🛒 <b>طلب جديد!</b> ━━━━━━━━━━━━━━\n` +
+      `🆔 <b>رقم الطلب:</b> <code>${orderNumber}</code>\n` +
+      `👤 <b>العميل:</b> ${name}\n` +
+      `📞 <b>الهاتف:</b> ${phone}\n` +
+      `📍 <b>المحافظة:</b> ${gov}\n` +
+      `🏠 <b>العنوان:</b> ${address}\n` +
+      `💳 <b>طريقة الدفع:</b> ${payment}\n` +
+      `📝 <b>ملاحظات:</b> ${notes || 'لا يوجد'}\n\n` +
+      `📦 <b>المنتجات:</b>\n${itemsText}\n\n` +
+      `💰 <b>المجموع:</b> EGP ${calcSubtotal}\n` +
+      `🚚 <b>الشحن:</b> EGP ${parsedShipping}\n` +
+      `✅ <b>الإجمالي:</b> EGP ${parsedTotal}`,
+      inlineKeyboard
     );
 
     return res.status(201).json({

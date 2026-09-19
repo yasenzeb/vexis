@@ -53,12 +53,52 @@ export default async function handler(req, res) {
       .from('orders')
       .update({ receipt_url: receipt_url.substring(0, 1000) })
       .eq('order_number', safeOrderNumber)
-      .select('order_number')
+      .select('*')
       .single();
 
     if (error) throw error;
     if (!data) {
       return res.status(404).json({ success: false, error: 'الطلب غير موجود.' });
+    }
+
+    // Telegram photo notification with inline action buttons
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    if (token && chatId) {
+      try {
+        const caption = `🧾 <b>إيصال تحويل جديد!</b>\n` +
+          `🆔 <b>رقم الطلب:</b> <code>${data.order_number}</code>\n` +
+          `👤 <b>العميل:</b> ${data.customer_name}\n` +
+          `📞 <b>الهاتف:</b> ${data.phone}\n` +
+          `💰 <b>الإجمالي:</b> EGP ${data.total}`;
+
+        const inlineKeyboard = {
+          inline_keyboard: [
+            [
+              { text: '✅ مراجعة وموافقة (review)', callback_data: `st_${data.order_number}_review` },
+              { text: '🚚 خرج للشحن (shipped)', callback_data: `st_${data.order_number}_shipped` }
+            ],
+            [
+              { text: '🎉 تم التسليم (delivered)', callback_data: `st_${data.order_number}_delivered` },
+              { text: '❌ رفض (rejected)', callback_data: `st_${data.order_number}_rejected` }
+            ]
+          ]
+        };
+
+        await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            photo: receipt_url,
+            caption: caption,
+            parse_mode: 'HTML',
+            reply_markup: inlineKeyboard
+          })
+        });
+      } catch (tgErr) {
+        console.error('[Telegram Receipt Photo Error]', tgErr);
+      }
     }
 
     return res.status(200).json({
