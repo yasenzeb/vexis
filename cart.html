@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VENTO | عربة التسوق وسلة المشتريات</title>
-<meta name="description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VENTO وأكمل طلبك الآن.">
-<meta name="keywords" content="تيشرتات جيم, تيشرتات رياضية في مصر, تيشرت جيم كاترون, تيشرتات تمرين مريحة, ملابس جيم علوية, تيشرتات كمال أجسام, VENTO">
+<title>VEXIS | عربة التسوق وسلة المشتريات</title>
+<meta name="description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن.">
+<meta name="keywords" content="تيشرتات جيم, تيشرتات رياضية في مصر, تيشرت جيم كاترون, تيشرتات تمرين مريحة, ملابس جيم علوية, تيشرتات كمال أجسام, VEXIS">
 
 <!-- Favicon & Touch Icons -->
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
@@ -16,30 +16,30 @@
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="VENTO | سلة مشتريات الملابس الرياضية" />
-<meta property="og:description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VENTO وأكمل طلبك الآن." />
-<meta property="og:url" content="https://vento-wear.vercel.app" />
-<meta property="og:image" content="https://vento-wear.vercel.app/logo.jpeg" />
+<meta property="og:title" content="VEXIS | سلة مشتريات الملابس الرياضية" />
+<meta property="og:description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن." />
+<meta property="og:url" content="https://vexis-wear.vercel.app" />
+<meta property="og:image" content="https://vexis-wear.vercel.app/logo.jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="VENTO | سلة مشتريات الملابس الرياضية" />
-<meta name="twitter:description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VENTO وأكمل طلبك الآن." />
-<meta name="twitter:image" content="https://vento-wear.vercel.app/logo.jpeg" />
+<meta name="twitter:title" content="VEXIS | سلة مشتريات الملابس الرياضية" />
+<meta name="twitter:description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن." />
+<meta name="twitter:image" content="https://vexis-wear.vercel.app/logo.jpeg" />
 
 <!-- JSON-LD Structured Data Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Shopping Cart - VENTO",
-  "description": "راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VENTO وأكمل طلبك الآن.",
+  "name": "Shopping Cart - VEXIS",
+  "description": "راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن.",
   "publisher": {
     "@type": "Organization",
-    "name": "VENTO",
-    "logo": "https://vento-wear.vercel.app/logo.jpeg"
+    "name": "VEXIS",
+    "logo": "https://vexis-wear.vercel.app/logo.jpeg"
   }
 }
 </script>
@@ -58,7 +58,7 @@
 </script>
 <script>
   // Restore theme immediately before render
-  if (localStorage.getItem('vento_theme') === 'dark') {
+  if (localStorage.getItem('vexis_theme') === 'dark') {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
@@ -77,8 +77,8 @@
   <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-14 md:h-16">
     <a href="index.html" class="flex items-center">
       <div class="bg-black dark:bg-white rounded-lg px-2 py-1 md:px-3 flex items-center gap-2">
-        <img src="logo.jpeg" alt="Vento" class="w-6 h-6 md:w-8 md:h-8 rounded-full">
-        <span class="text-white dark:text-black font-black text-base md:text-lg tracking-widest">VENTO</span>
+        <img src="logo.jpeg" alt="Vexis" class="w-6 h-6 md:w-8 md:h-8 rounded-full">
+        <span class="text-white dark:text-black font-black text-base md:text-lg tracking-widest">VEXIS</span>
       </div>
     </a>
     <a href="index.html" class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"><i class="fas fa-home ml-1"></i>العودة للمتجر</a>
@@ -161,7 +161,7 @@ function cartPage() {
       this.loadCart();
     },
     loadCart() {
-      try { this.cart = JSON.parse(localStorage.getItem('vento_cart')||'[]'); } catch { this.cart=[]; }
+      try { this.cart = JSON.parse(localStorage.getItem('vexis_cart')||'[]'); } catch { this.cart=[]; }
       this.calc();
     },
     calc() {
@@ -177,7 +177,7 @@ function cartPage() {
       this.saveCart();
     },
     saveCart() {
-      localStorage.setItem('vento_cart', JSON.stringify(this.cart));
+      localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
       this.calc();
     }
   }

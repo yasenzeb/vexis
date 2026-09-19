@@ -77,7 +77,7 @@ export default async function handler(req, res) {
       const templateRow = loopMatch[1];
       items.forEach(item => {
         let rowHtml = templateRow
-          .replace(/\{\{\s*item\.image\s*\}\}/g, item.image || 'https://placehold.co/60x60/111/eab308?text=Vento')
+          .replace(/\{\{\s*item\.image\s*\}\}/g, item.image || 'https://placehold.co/60x60/111/eab308?text=Vexis')
           .replace(/\{\{\s*item\.name\s*\}\}/g, item.name)
           .replace(/\{\{\s*item\.color\s*\}\}/g, item.color)
           .replace(/\{\{\s*item\.size\s*\}\}/g, item.size)
@@ -107,8 +107,8 @@ export default async function handler(req, res) {
       .replace(/\{\{\s*total\s*\}\}/g, total || 0);
 
     // 3. Send via Brevo API (no npm package needed — just fetch)
-    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'oovento26@gmail.com';
-    const senderName = process.env.BREVO_SENDER_NAME || 'Vento Store';
+    const senderEmail = process.env.BREVO_SENDER_EMAIL || 'oovexis26@gmail.com';
+    const senderName = process.env.BREVO_SENDER_NAME || 'Vexis Store';
 
     const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -120,7 +120,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         sender: { name: senderName, email: senderEmail },
         to: [{ email: email, name: customer_name }],
-        subject: `VENTO - فاتورة وتأكيد الطلب #${order_number || ''}`,
+        subject: `VEXIS - فاتورة وتأكيد الطلب #${order_number || ''}`,
         htmlContent: htmlContent
       })
     });

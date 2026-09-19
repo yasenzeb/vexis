@@ -48,7 +48,7 @@ export default async function handler(req, res) {
     }
 
     const timestamp = Math.round(Date.now() / 1000);
-    const folder = 'vento-store';
+    const folder = 'vexis-store';
 
     const { createHash } = await import('crypto');
     const sig = createHash('sha1')
