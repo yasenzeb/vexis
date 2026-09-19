@@ -150,6 +150,28 @@ export default async function handler(req, res) {
       inlineKeyboard
     );
 
+    // Check total tax threshold on every new order (3 EGP tax / order)
+    try {
+      const { count } = await supabase.from('orders').select('*', { count: 'exact', head: true });
+      const currentTax = (count || 0) * 3;
+      if (currentTax >= 100) {
+        const waUrl = `https://wa.me/201061927815?text=${encodeURIComponent(`مرحباً، أود سداد الضريبة المستحقة قدرها ${currentTax} ج.م الخاصة بمتجر VEXIS.`)}`;
+        sendTelegram(
+          `🚨 <b>تنبيه عاجل: تجاوزت قيمة الضريبة المستحقة 100 ج.م!</b> 🚨\n\n` +
+          `إجمالي عدد الطلبات: <b>${count}</b> طلبات\n` +
+          `إجمالي الضريبة المستحقة: <b>${currentTax} ج.م</b>\n\n` +
+          `اضغط على زر "ادفع الآن" لفتح الواتساب وسداد المستحق مباشرة.`,
+          {
+            inline_keyboard: [
+              [{ text: `💳 ادفع الآن (${currentTax} ج.م)`, url: waUrl }]
+            ]
+          }
+        );
+      }
+    } catch (taxErr) {
+      console.error('[Tax Threshold Check Error]', taxErr);
+    }
+
     return res.status(201).json({
       success:      true,
       id:           data.id,

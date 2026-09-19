@@ -189,25 +189,50 @@ export default async function handler(req, res) {
           query = query.gte('created_at', todayStart.toISOString());
         }
         const { data: orders } = await query;
-        const totalOrders = orders ? orders.length : 0;
-        const totalRevenue = orders ? orders.reduce((sum, o) => sum + (Number(o.total) || 0), 0) : 0;
-        const pendingCount = orders ? orders.filter(o => o.status === 'pending').length : 0;
-        const reviewCount = orders ? orders.filter(o => o.status === 'review').length : 0;
-        const shippedCount = orders ? orders.filter(o => o.status === 'shipped').length : 0;
-        const deliveredCount = orders ? orders.filter(o => o.status === 'delivered').length : 0;
-        const rejectedCount = orders ? orders.filter(o => o.status === 'rejected').length : 0;
+        const allOrdersList = orders || [];
+        const totalOrders = allOrdersList.length;
+        
+        // Revenue calculated ONLY on shipped or delivered orders
+        const shippedOrDelivered = allOrdersList.filter(o => o.status === 'shipped' || o.status === 'delivered');
+        const shippedRevenue = shippedOrDelivered.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
 
-        const title = text === '/today' ? '📅 <b>تقرير مبيعات اليوم</b>' : '📊 <b>إحصائيات المبيعات الشاملة</b>';
-        const statsMsg = `${title}\n\n` +
-          `🔢 <b>إجمالي الطلبات:</b> ${totalOrders}\n` +
-          `💰 <b>إجمالي الإيرادات:</b> EGP ${totalRevenue.toLocaleString()}\n\n` +
+        // Tax calculation: 3 EGP per total order (matching admin panel logic)
+        const totalTax = totalOrders * 3;
+
+        const pendingCount = allOrdersList.filter(o => o.status === 'pending').length;
+        const reviewCount = allOrdersList.filter(o => o.status === 'review').length;
+        const shippedCount = allOrdersList.filter(o => o.status === 'shipped').length;
+        const deliveredCount = allOrdersList.filter(o => o.status === 'delivered').length;
+        const rejectedCount = allOrdersList.filter(o => o.status === 'rejected').length;
+
+        const title = text === '/today' ? '📅 <b>تقرير مبيعات اليوم</b>' : '📊 <b>إحصائيات المبيعات والضرائب</b>';
+        
+        let statsMsg = `${title}\n\n` +
+          `🔢 <b>إجمالي عدد الطلبات:</b> ${totalOrders}\n` +
+          `🚚 <b>إيرادات الشحن والتسليم فقط:</b> EGP ${shippedRevenue.toLocaleString()}\n` +
+          `🧾 <b>إجمالي قيمة الضريبة (3 ج.م / طلب):</b> EGP ${totalTax}\n\n` +
           `<b>توزيع الحالات:</b>\n` +
           `⏳ <b>معلق:</b> ${pendingCount}\n` +
           `🔍 <b>قيد المراجعة:</b> ${reviewCount}\n` +
           `🚚 <b>تم الشحن:</b> ${shippedCount}\n` +
           `🎉 <b>تم التسليم:</b> ${deliveredCount}\n` +
           `❌ <b>مرفوض:</b> ${rejectedCount}`;
-        await tgRequest('sendMessage', { chat_id: chatId, text: statsMsg, parse_mode: 'HTML' });
+
+        const inlineKeyboard = [];
+        if (totalTax >= 100) {
+          statsMsg += `\n\n⚠️ <b>تنبيه عاجل:</b> تجاوزت قيمة الضريبة المستحقة 100 ج.م (${totalTax} ج.م)! يرجى السداد الآن.`;
+          const waUrl = `https://wa.me/201061927815?text=${encodeURIComponent(`مرحباً، أود سداد الضريبة المستحقة قدرها ${totalTax} ج.م الخاصة بمتجر VEXIS.`)}`;
+          inlineKeyboard.push([
+            { text: `💳 ادفع الآن (${totalTax} ج.م)`, url: waUrl }
+          ]);
+        }
+
+        await tgRequest('sendMessage', {
+          chat_id: chatId,
+          text: statsMsg,
+          parse_mode: 'HTML',
+          reply_markup: inlineKeyboard.length ? { inline_keyboard: inlineKeyboard } : undefined
+        });
 
       } else if (text.startsWith('/search ')) {
         const queryTerm = text.substring(8).trim();
