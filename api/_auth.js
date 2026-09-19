@@ -38,8 +38,5 @@ export function requireAdmin(req) {
 
 // ── Safe Error (never leak internals in production) ──
 export function safeError(err) {
-  if (process.env.NODE_ENV === 'development') {
-    return err?.message || String(err);
-  }
-  return 'حدث خطأ داخلي.';
+  return err?.message || String(err) || 'حدث خطأ غير متوقع.';
 }

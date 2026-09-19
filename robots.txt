@@ -1,6 +1,7 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 Disallow: /admin.html
 Disallow: /api/
 
-Sitemap: https://vento-wear.vercel.app/sitemap.xml
+Sitemap: https://vexis-wear.vercel.app/sitemap.xml
+

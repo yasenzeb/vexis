@@ -20,16 +20,27 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, error: 'رقم الهاتف مطلوب' });
     }
 
+    const rawPhone = String(phone).replace(/\D/g, '');
+    const cleanPhone = rawPhone.length > 10 ? rawPhone.slice(-10) : rawPhone;
+
     const { data, error } = await supabase
       .from('orders')
       .select('order_number, customer_name, phone, governorate, status, shipping_cost, total, created_at, receipt_url, items, rejection_reason')
-      .eq('phone', String(phone).trim())
       .order('created_at', { ascending: false })
-      .limit(20);
+      .limit(100);
 
     if (error) throw error;
 
-    return res.status(200).json({ success: true, orders: data || [] });
+    // Filter matching phone numbers flexibly (handle country code differences like +20, 010..., etc)
+    const filteredOrders = (data || []).filter(ord => {
+      if (!ord.phone) return false;
+      const p = String(ord.phone).replace(/\D/g, '');
+      if (p === rawPhone) return true;
+      if (cleanPhone && cleanPhone.length >= 8 && p.endsWith(cleanPhone)) return true;
+      return false;
+    });
+
+    return res.status(200).json({ success: true, orders: filteredOrders });
   } catch (err) {
     console.error('[API /orders-by-phone]', err);
     return res.status(500).json({ success: false, error: safeError(err) });
