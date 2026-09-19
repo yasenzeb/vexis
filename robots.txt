@@ -3,5 +3,6 @@ Allow: /
 Disallow: /admin.html
 Disallow: /api/
 
-Sitemap: https://vexis-wear.vercel.app/sitemap.xml
+Sitemap: https://vexis1.store/sitemap.xml
+
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -18,8 +18,8 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="VEXIS | إتمام الدفع الآمن" />
 <meta property="og:description" content="أدخل بيانات الشحن والتوصيل لإتمام شراء تيشرتات الجيم وتيشرتات التمرين للرجال من متجر VEXIS. الدفع عند الاستلام لجميع محافظات مصر." />
-<meta property="og:url" content="https://vexis-wear.vercel.app" />
-<meta property="og:image" content="https://vexis-wear.vercel.app/logo.jpeg" />
+<meta property="og:url" content="https://vexis1.store" />
+<meta property="og:image" content="https://vexis1.store/logo.jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
@@ -27,7 +27,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="VEXIS | إتمام الدفع الآمن" />
 <meta name="twitter:description" content="أدخل بيانات الشحن والتوصيل لإتمام شراء تيشرتات الجيم وتيشرتات التمرين للرجال من متجر VEXIS. الدفع عند الاستلام لجميع محافظات مصر." />
-<meta name="twitter:image" content="https://vexis-wear.vercel.app/logo.jpeg" />
+<meta name="twitter:image" content="https://vexis1.store/logo.jpeg" />
 
 <!-- JSON-LD Structured Data Schema -->
 <script type="application/ld+json">
@@ -39,7 +39,7 @@
   "publisher": {
     "@type": "Organization",
     "name": "VEXIS",
-    "logo": "https://vexis-wear.vercel.app/logo.jpeg"
+    "logo": "https://vexis1.store/logo.jpeg"
   }
 }
 </script>
@@ -114,8 +114,8 @@
         </div>
 
         <div>
-          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">البريد الإلكتروني <span class="text-red-500">*</span></label>
-          <input type="email" x-model="form.email" required class="w-full border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 bg-gray-50 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-black dark:focus:ring-white outline-none transition border text-gray-900 dark:text-gray-100" placeholder="example@domain.com">
+          <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">البريد الإلكتروني <span class="text-xs text-gray-400 font-normal">(اختياري)</span></label>
+          <input type="email" x-model="form.email" class="w-full border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 bg-gray-50 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-black dark:focus:ring-white outline-none transition border text-gray-900 dark:text-gray-100" placeholder="example@domain.com (اختياري)">
         </div>
 
         <div>
@@ -295,12 +295,14 @@ function checkoutPage() {
     async submitOrder() {
       this.isSubmitting = true;
 
-      // Validate email format
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(this.form.email)) {
-          alert("يرجى إدخال بريد إلكتروني صحيح");
-          this.isSubmitting = false;
-          return;
+      // Validate email format if provided
+      if (this.form.email && this.form.email.trim() !== '') {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(this.form.email.trim())) {
+            alert("يرجى إدخال بريد إلكتروني صحيح أو تركه فارغاً");
+            this.isSubmitting = false;
+            return;
+        }
       }
 
       try {
@@ -397,4 +399,5 @@ function checkoutPage() {
 </script>
 </body>
 </html>
+
 
