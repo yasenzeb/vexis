@@ -15,6 +15,7 @@ import upload from './_upload.js';
 import whatsappWebhook from './_whatsapp-webhook.js';
 import telegramWebhook from './_telegram-webhook.js';
 import setWebhook from './_set-webhook.js';
+import ordersByPhone from './_orders-by-phone.js';
 
 export default async function handler(req, res) {
   let { __path } = req.query;
@@ -68,6 +69,8 @@ export default async function handler(req, res) {
     targetHandler = telegramWebhook;
   } else if (__path === 'set-webhook') {
     targetHandler = setWebhook;
+  } else if (__path === 'orders-by-phone') {
+    targetHandler = ordersByPhone;
   }
 
   if (targetHandler) {

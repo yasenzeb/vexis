@@ -18,8 +18,8 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="VEXIS | إتمام الدفع الآمن" />
 <meta property="og:description" content="أدخل بيانات الشحن والتوصيل لإتمام شراء تيشرتات الجيم وتيشرتات التمرين للرجال من متجر VEXIS. الدفع عند الاستلام لجميع محافظات مصر." />
-<meta property="og:url" content="https://vexis-wear.vercel.app" />
-<meta property="og:image" content="https://vexis-wear.vercel.app/logo.jpeg" />
+<meta property="og:url" content="https://vento-wear.vercel.app" />
+<meta property="og:image" content="https://vento-wear.vercel.app/logo.jpeg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
@@ -27,7 +27,7 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="VEXIS | إتمام الدفع الآمن" />
 <meta name="twitter:description" content="أدخل بيانات الشحن والتوصيل لإتمام شراء تيشرتات الجيم وتيشرتات التمرين للرجال من متجر VEXIS. الدفع عند الاستلام لجميع محافظات مصر." />
-<meta name="twitter:image" content="https://vexis-wear.vercel.app/logo.jpeg" />
+<meta name="twitter:image" content="https://vento-wear.vercel.app/logo.jpeg" />
 
 <!-- JSON-LD Structured Data Schema -->
 <script type="application/ld+json">
@@ -39,7 +39,7 @@
   "publisher": {
     "@type": "Organization",
     "name": "VEXIS",
-    "logo": "https://vexis-wear.vercel.app/logo.jpeg"
+    "logo": "https://vento-wear.vercel.app/logo.jpeg"
   }
 }
 </script>
@@ -377,8 +377,9 @@ function checkoutPage() {
               console.error("Invoice email failed to send:", emailErr);
           }
 
-          // 3. Clear cart and redirect to invoice.html
+          // 3. Clear cart, save phone, redirect to invoice.html
           localStorage.removeItem("vexis_cart");
+          localStorage.setItem("vexis_customer_phone", this.form.phone);
           window.location.href = `invoice.html?order=${orderNumber}`;
 
       } catch (err) {

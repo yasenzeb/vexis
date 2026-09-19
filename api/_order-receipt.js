@@ -75,12 +75,10 @@ export default async function handler(req, res) {
         const inlineKeyboard = {
           inline_keyboard: [
             [
-              { text: '✅ مراجعة وموافقة (review)', callback_data: `st_${data.order_number}_review` },
-              { text: '🚚 خرج للشحن (shipped)', callback_data: `st_${data.order_number}_shipped` }
+              { text: '✅ قبول الإيصال وتأكيد الطلب', callback_data: `acc_${data.order_number}` },
             ],
             [
-              { text: '🎉 تم التسليم (delivered)', callback_data: `st_${data.order_number}_delivered` },
-              { text: '❌ رفض (rejected)', callback_data: `st_${data.order_number}_rejected` }
+              { text: '❌ رفض الإيصال', callback_data: `rej_${data.order_number}` }
             ]
           ]
         };
