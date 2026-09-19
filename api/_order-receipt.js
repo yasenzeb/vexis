@@ -49,14 +49,30 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, error: 'رابط الإيصال غير مسموح به.' });
     }
 
-    const { data, error } = await supabase
+    // Try updating receipt_url if column exists, otherwise update status
+    let data;
+    const { data: updateData, error: updateErr } = await supabase
       .from('orders')
-      .update({ receipt_url: receipt_url.substring(0, 1000) })
+      .update({ receipt_url: receipt_url.substring(0, 1000), status: 'review' })
       .eq('order_number', safeOrderNumber)
-      .select('*')
-      .single();
+      .select('order_number, customer_name, phone, total')
+      .maybeSingle();
 
-    if (error) throw error;
+    if (updateErr) {
+      // Fallback if receipt_url column doesn't exist in Supabase table schema
+      console.warn('[order-receipt] receipt_url update failed, fallback to status update:', updateErr.message);
+      const { data: fallbackData, error: fallbackErr } = await supabase
+        .from('orders')
+        .update({ status: 'review' })
+        .eq('order_number', safeOrderNumber)
+        .select('order_number, customer_name, phone, total')
+        .single();
+      if (fallbackErr) throw fallbackErr;
+      data = fallbackData;
+    } else {
+      data = updateData;
+    }
+
     if (!data) {
       return res.status(404).json({ success: false, error: 'الطلب غير موجود.' });
     }

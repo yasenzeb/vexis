@@ -78,10 +78,19 @@ export default async function handler(req, res) {
         }
 
         // Update status in DB
-        const { error: dbErr } = await supabase
+        let { error: dbErr } = await supabase
           .from('orders')
           .update({ status, rejection_reason: null })
           .eq('order_number', orderNumber);
+
+        if (dbErr && dbErr.message && dbErr.message.includes('rejection_reason')) {
+          // Fallback if rejection_reason column does not exist
+          const res = await supabase
+            .from('orders')
+            .update({ status })
+            .eq('order_number', orderNumber);
+          dbErr = res.error;
+        }
 
         if (dbErr) {
           await tgRequest('sendMessage', {
@@ -138,10 +147,19 @@ export default async function handler(req, res) {
         const { orderNumber } = pendingRejection[chatId];
         delete pendingRejection[chatId];
 
-        const { error: dbErr } = await supabase
+        let { error: dbErr } = await supabase
           .from('orders')
           .update({ status: 'rejected', rejection_reason: text })
           .eq('order_number', orderNumber);
+
+        if (dbErr && dbErr.message && dbErr.message.includes('rejection_reason')) {
+          // Fallback if rejection_reason column does not exist
+          const res = await supabase
+            .from('orders')
+            .update({ status: 'rejected' })
+            .eq('order_number', orderNumber);
+          dbErr = res.error;
+        }
 
         if (dbErr) {
           await tgRequest('sendMessage', { chat_id: chatId, text: `❌ خطأ في الرفض: ${dbErr.message}` });
