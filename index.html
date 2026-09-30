@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -163,17 +163,6 @@
       </a>
     </div>
     <div class="flex items-center gap-2 md:gap-3">
-      <!-- Language Toggle -->
-      <button @click="toggleLang()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition" :title="lang==='ar'?'Switch to English':'التبديل للعربية'">
-        <span x-text="lang==='ar'?'EN':'عربي'" class="text-xs font-black"></span>
-        <i class="fas fa-globe text-xs"></i>
-      </button>
-      
-      <!-- Theme Toggle -->
-      <button @click="toggleTheme()" class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" :title="isDark?'Light Mode':'Dark Mode'">
-        <i :class="isDark ? 'fas fa-sun text-yellow-400' : 'fas fa-moon'" class="text-base"></i>
-      </button>
-      
       <!-- Cart -->
       <a href="cart.html" class="relative p-2">
         <i class="fas fa-shopping-bag text-lg text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white transition"></i>
@@ -207,16 +196,15 @@
 </nav>
 
 <!-- HERO BANNER -->
-<section class="bg-black dark:bg-gray-950 text-white relative overflow-hidden border-b dark:border-gray-800">
-  <!-- بدايه.jpeg Background -->
+<section class="bg-black text-white relative overflow-hidden border-b border-gray-800">
   <div class="relative w-full overflow-hidden">
-    <img src="بدايه.jpeg" alt="VEXIS Collection" class="w-full h-auto object-cover object-center min-h-[300px] md:min-h-[500px] block">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-12 text-right">
+    <img src="بدايه.jpeg" alt="VEXIS Collection" class="w-full h-auto max-h-[75vh] min-h-[220px] sm:min-h-[320px] md:min-h-[480px] object-contain sm:object-cover object-center mx-auto block transition-all duration-300">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-8 md:p-12 text-left sm:text-left">
       <div class="max-w-xl">
-        <h1 class="text-3xl md:text-6xl font-black tracking-widest text-white uppercase drop-shadow-md mb-2">VEXIS</h1>
-        <p class="text-sm md:text-lg text-gray-200 font-bold mb-4 drop-shadow">THE ALL-NEW VEXIS COLLECTION IS HERE</p>
-        <a href="#products" class="inline-flex items-center gap-2 bg-white text-black font-black px-6 py-3 rounded-full text-xs md:text-sm hover:bg-cyan-400 transition shadow-xl transform hover:scale-105">
-          <span>تسوق الآن</span> <i class="fas fa-arrow-down text-xs"></i>
+        <h1 class="text-2xl sm:text-4xl md:text-6xl font-black tracking-widest text-white uppercase drop-shadow-md mb-1 sm:mb-2">VEXIS</h1>
+        <p class="text-xs sm:text-base md:text-lg text-gray-200 font-bold mb-3 sm:mb-5 drop-shadow leading-snug">THE ALL-NEW VEXIS COLLECTION IS HERE</p>
+        <a href="#products" class="inline-flex items-center gap-2 bg-white text-black font-black px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm hover:bg-cyan-400 transition shadow-xl transform hover:scale-105">
+          <span>Shop Now</span> <i class="fas fa-arrow-down text-xs"></i>
         </a>
       </div>
     </div>
@@ -469,7 +457,7 @@ function store() {
     mobileMenu: false,
     cartCount: 0,
     hasOrders: false,
-    lang: 'ar',
+    lang: 'en',
     isDark: false,
     showIntro: !sessionStorage.getItem('vexis_intro_seen'),
 
@@ -480,23 +468,16 @@ function store() {
 
 init() {
   this.cartCount = this.getCart().length;
-  // Check if customer has previous orders (phone saved)
   this.hasOrders = !!localStorage.getItem('vexis_customer_phone');
 
-  // Load saved lang
-  const savedLang = localStorage.getItem('vexis_lang');
-  if (savedLang) this.lang = savedLang;
-  this.applyLang();
+  // Enforce English language and LTR layout
+  this.lang = 'en';
+  document.documentElement.setAttribute('lang', 'en');
+  document.documentElement.setAttribute('dir', 'ltr');
 
-  // Load saved theme
-  const savedTheme = localStorage.getItem('vexis_theme');
-  if (savedTheme === 'dark') {
-    this.isDark = true;
-    document.documentElement.classList.add('dark');
-  } else {
-    this.isDark = false;
-    document.documentElement.classList.remove('dark');
-  }
+  // Enforce Light Theme
+  this.isDark = false;
+  document.documentElement.classList.remove('dark');
 
   // products.js loads data asynchronously — pull it in once ready
   if (window.productsReady) {

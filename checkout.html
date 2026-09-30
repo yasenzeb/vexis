@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -206,13 +206,17 @@
             <span>المجموع:</span>
             <span x-text="subtotal + ' ج.م'"></span>
           </div>
+          <div x-show="promoDiscount > 0" class="flex justify-between text-emerald-600">
+            <span>خصم كود الخصم (<span x-text="appliedPromo?.code"></span>):</span>
+            <span x-text="'- ' + promoDiscount + ' ج.م'"></span>
+          </div>
           <div class="flex justify-between text-gray-600 dark:text-gray-300">
             <span>مصاريف الشحن:</span>
             <span x-text="shippingCost ? (shippingCost + ' ج.م') : 'اختر المحافظة'"></span>
           </div>
           <div class="flex justify-between text-lg font-black pt-2 border-t border-gray-100 dark:border-gray-800">
             <span>الإجمالي:</span>
-            <span class="text-black dark:text-white" x-text="(subtotal + shippingCost) + ' ج.م'"></span>
+            <span class="text-black dark:text-white" x-text="finalTotal + ' ج.م'"></span>
           </div>
         </div>
 
@@ -257,6 +261,8 @@ function checkoutPage() {
     cart: [],
     subtotal: 0,
     shippingCost: 0,
+    appliedPromo: null,
+    promoDiscount: 0,
     isSubmitting: false,
     showSuccess: false,
     orderNumber: '',
@@ -278,6 +284,11 @@ function checkoutPage() {
       north_sinai: 145, south_sinai: 145, red_sea: 145, matrouh: 145, new_valley: 145
     },
 
+    get finalTotal() {
+      const discountedSubtotal = Math.max(0, this.subtotal - this.promoDiscount);
+      return discountedSubtotal + (this.shippingCost || 0);
+    },
+
     init() {
       try { this.cart = JSON.parse(localStorage.getItem('vexis_cart')||'[]'); } catch { this.cart=[]; }
       if(this.cart.length === 0) {
@@ -285,7 +296,35 @@ function checkoutPage() {
         return;
       }
       this.subtotal = this.cart.reduce((acc, item) => acc + (item.finalPrice * item.qty), 0);
+      
+      const savedPromo = localStorage.getItem('vexis_promo');
+      if (savedPromo) {
+        try {
+          this.appliedPromo = JSON.parse(savedPromo);
+          this.calcPromoDiscount();
+        } catch {}
+      }
+
       this.updateShipping();
+    },
+
+    calcPromoDiscount() {
+      if (!this.appliedPromo) {
+        this.promoDiscount = 0;
+        return;
+      }
+      const p = this.appliedPromo;
+      if (p.min_spend && this.subtotal < p.min_spend) {
+        this.promoDiscount = 0;
+        return;
+      }
+      if (p.discount_type === 'percent') {
+        this.promoDiscount = Math.round((this.subtotal * p.discount_value) / 100);
+      } else if (p.discount_type === 'fixed' || p.discount_type === 'amount') {
+        this.promoDiscount = Math.min(this.subtotal, p.discount_value);
+      } else {
+        this.promoDiscount = 0;
+      }
     },
 
     updateShipping() {
@@ -321,8 +360,8 @@ function checkoutPage() {
                       email: this.form.email,
                       city: this.form.city,
                       address: this.form.address,
-                      notes: this.form.notes,
-                      total: this.subtotal + this.shippingCost,
+                      notes: this.form.notes + (this.appliedPromo ? ` [Promo: ${this.appliedPromo.code}]` : ''),
+                      total: this.finalTotal,
                       shippingCost: this.shippingCost,
                       items: this.cart
                   })

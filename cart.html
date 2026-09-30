@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
@@ -121,9 +121,24 @@
       </div>
 
       <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 mb-6">
+        <!-- PROMO CODE BOX -->
+        <div class="mb-4">
+          <label class="block text-xs font-bold text-gray-600 mb-1">كود الخصم (Promo Code)</label>
+          <div class="flex gap-2">
+            <input type="text" x-model="promoInput" placeholder="أدخل البرومو كoid" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold uppercase focus:outline-none focus:border-black" :disabled="appliedPromo">
+            <button @click="applyPromo()" class="bg-black text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-gray-800 transition" x-show="!appliedPromo">تطبيق</button>
+            <button @click="removePromo()" class="bg-red-500 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-600 transition" x-show="appliedPromo">إزالة</button>
+          </div>
+          <p x-show="promoMsg" :class="promoSuccess ? 'text-green-600' : 'text-red-500'" class="text-[11px] font-bold mt-1.5" x-text="promoMsg"></p>
+        </div>
+
         <div class="flex justify-between items-center mb-3 text-gray-600 dark:text-gray-300">
           <span>المجموع الفرعي:</span>
           <span class="font-bold text-gray-900 dark:text-white" x-text="subtotal + ' EGP'"></span>
+        </div>
+        <div x-show="discountAmount > 0" class="flex justify-between items-center mb-3 text-emerald-600 font-bold">
+          <span>خصم البرومو كود (<span x-text="appliedPromo?.code"></span>):</span>
+          <span x-text="'- ' + discountAmount + ' EGP'"></span>
         </div>
         <div class="flex justify-between items-center mb-4 text-gray-600 dark:text-gray-300">
           <span>الشحن:</span>
@@ -132,7 +147,7 @@
         <hr class="border-gray-100 dark:border-gray-800 mb-4">
         <div class="flex justify-between items-center mb-6">
           <span class="font-black text-lg">الإجمالي:</span>
-          <span class="font-black text-2xl text-black dark:text-white" x-text="subtotal + ' EGP'"></span>
+          <span class="font-black text-2xl text-black dark:text-white" x-text="finalTotal + ' EGP'"></span>
         </div>
         <a href="checkout.html" class="block w-full bg-black dark:bg-white text-white dark:text-black text-center font-black py-4 rounded-xl hover:opacity-90 transition shadow-lg text-lg">
           متابعة للدفع <i class="fas fa-arrow-left mr-2"></i>
@@ -157,25 +172,109 @@ function cartPage() {
   return {
     cart: [],
     subtotal: 0,
+    promoInput: '',
+    appliedPromo: null,
+    promoMsg: '',
+    promoSuccess: false,
+    discountAmount: 0,
+
+    get finalTotal() {
+      return Math.max(0, this.subtotal - this.discountAmount);
+    },
+
     init() {
       this.loadCart();
+      const savedPromo = localStorage.getItem('vexis_promo');
+      if (savedPromo) {
+        try {
+          this.appliedPromo = JSON.parse(savedPromo);
+          this.calcDiscount();
+        } catch {}
+      }
     },
+
     loadCart() {
       try { this.cart = JSON.parse(localStorage.getItem('vexis_cart')||'[]'); } catch { this.cart=[]; }
       this.calc();
     },
+
     calc() {
       this.subtotal = this.cart.reduce((acc, item) => acc + (item.finalPrice * item.qty), 0);
+      this.calcDiscount();
     },
+
+    calcDiscount() {
+      if (!this.appliedPromo) {
+        this.discountAmount = 0;
+        return;
+      }
+      const p = this.appliedPromo;
+      if (p.min_spend && this.subtotal < p.min_spend) {
+        this.discountAmount = 0;
+        this.promoMsg = `الحد الأدنى لتطبيق الخصم هو ${p.min_spend} EGP`;
+        this.promoSuccess = false;
+        return;
+      }
+
+      if (p.discount_type === 'percent') {
+        this.discountAmount = Math.round((this.subtotal * p.discount_value) / 100);
+      } else if (p.discount_type === 'fixed' || p.discount_type === 'amount') {
+        this.discountAmount = Math.min(this.subtotal, p.discount_value);
+      } else {
+        this.discountAmount = 0;
+      }
+    },
+
+    async applyPromo() {
+      const code = this.promoInput.trim().toUpperCase();
+      if (!code) {
+        this.promoMsg = 'يرجى أدخل كود الخصم أولاً';
+        this.promoSuccess = false;
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/promocodes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })
+        });
+        const data = await res.json();
+        if (data.success && data.promocode) {
+          this.appliedPromo = data.promocode;
+          localStorage.setItem('vexis_promo', JSON.stringify(data.promocode));
+          this.calcDiscount();
+          this.promoMsg = `✓ تم تطبيق كود الخصم (${data.promocode.code}) بنجاح!`;
+          this.promoSuccess = true;
+        } else {
+          this.promoMsg = data.error || 'كود الخصم غير صالح أو منتهي';
+          this.promoSuccess = false;
+        }
+      } catch (e) {
+        this.promoMsg = 'عفواً، تعذر التحقق من كود الخصم حالياً';
+        this.promoSuccess = false;
+      }
+    },
+
+    removePromo() {
+      this.appliedPromo = null;
+      this.promoInput = '';
+      this.promoMsg = '';
+      this.discountAmount = 0;
+      localStorage.removeItem('vexis_promo');
+    },
+
     updateQty(idx, val) {
       this.cart[idx].qty += val;
       if(this.cart[idx].qty < 1) this.cart[idx].qty = 1;
       this.saveCart();
     },
+
     removeItem(idx) {
       this.cart.splice(idx, 1);
       this.saveCart();
     },
+
     saveCart() {
       localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
       this.calc();

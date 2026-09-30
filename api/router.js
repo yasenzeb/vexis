@@ -71,6 +71,8 @@ export default async function handler(req, res) {
     targetHandler = setWebhook;
   } else if (__path === 'orders-by-phone') {
     targetHandler = ordersByPhone;
+  } else if (__path === 'promocodes') {
+    targetHandler = (await import('./_promocodes.js')).default;
   }
 
   if (targetHandler) {

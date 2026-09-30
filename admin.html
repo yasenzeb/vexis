@@ -263,6 +263,7 @@ tbody td{padding:12px 14px;vertical-align:middle}
       <div class="nav-section">الطلبات</div>
       <div class="nav-item" data-panel="orders" onclick="switchPanel(this)"><i class="fas fa-shopping-bag"></i> الطلبات</div>
       <div class="nav-section">الإعدادات</div>
+      <div class="nav-item" data-panel="promocodes" onclick="switchPanel(this)"><i class="fas fa-ticket-alt"></i> أكواد الخصم (Promo)</div>
       <div class="nav-item" data-panel="categories" onclick="switchPanel(this)"><i class="fas fa-tags"></i> إدارة الفئات</div>
       <div class="nav-item" data-panel="reviews" onclick="switchPanel(this)"><i class="fas fa-star"></i> إدارة الآراء</div>
     </nav>
@@ -324,6 +325,10 @@ tbody td{padding:12px 14px;vertical-align:middle}
             <label>سعر التكلفة بالجملة (ج.م) *</label>
             <input type="number" id="f-cost-price" placeholder="1500" min="0">
             <div class="form-error" id="err-cost-price"></div>
+          </div>
+          <div class="form-group full">
+            <label>وصف المنتج (اختياري)</label>
+            <textarea id="f-desc" placeholder="اكتب وصفاً مفصلاً للمنتج (الخامة، الأداء، الاستخدام)..."></textarea>
           </div>
           <div class="form-group">
             <label>الخصم (اختياري)</label>
@@ -394,6 +399,53 @@ tbody td{padding:12px 14px;vertical-align:middle}
         <div class="pagination" id="pagination">
           <span id="page-info"></span>
           <div class="page-btns" id="page-btns"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROMO CODES -->
+    <section class="panel" id="panel-promocodes">
+      <div class="form-card">
+        <h3><i class="fas fa-ticket-alt"></i> إنشاء كود خصم جديد (Promo Code)</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>كود الخصم (Promo Code) *</label>
+            <input type="text" id="promo-code" placeholder="مثال: VEXIS10" dir="ltr" style="text-transform:uppercase">
+            <div class="form-error" id="err-promo-code"></div>
+          </div>
+          <div class="form-group">
+            <label>نوع الخصم *</label>
+            <select id="promo-type">
+              <option value="percent">نسبة مئوية (%)</option>
+              <option value="fixed">مبلغ ثابت (ج.م)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>قيمة الخصم *</label>
+            <input type="number" id="promo-value" placeholder="مثال: 15 أو 100" min="1">
+            <div class="form-error" id="err-promo-value"></div>
+          </div>
+          <div class="form-group">
+            <label>الحد الأدنى لطلب الخصم (ج.م)</label>
+            <input type="number" id="promo-min-spend" placeholder="0 (بدون حد أدنى)" min="0">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" onclick="submitAddPromoCode()" id="btn-promo-submit"><i class="fas fa-plus"></i> إضافة البرومو كود</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <h3 style="font-weight:900;font-size:.95rem"><i class="fas fa-tags" style="color:var(--gold);margin-left:8px"></i> أكواد الخصم النشطة</h3>
+          <button class="btn btn-ghost btn-sm" onclick="loadPromoCodes()"><i class="fas fa-sync-alt"></i> تحديث</button>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead><tr><th>الكود</th><th>نوع الخصم</th><th>القيمة</th><th>أقل مبلغ</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+            <tbody id="promocodes-table-body">
+              <tr><td colspan="6"><div class="empty-state"><i class="fas fa-spinner fa-spin" style="color:var(--gold)"></i>جارٍ التحميل...</div></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -718,6 +770,7 @@ async function showApp(){
   await loadAllProducts();
   loadReviews();
   loadOrders();
+  loadPromoCodes();
 }
 function doLogout(){localStorage.removeItem(SESSION_KEY);location.reload();}
 /* ══ SIDEBAR ══ */
@@ -734,6 +787,7 @@ function switchPanel(el){
   const p=el.dataset.panel;
   if(p==='manage'||p==='dashboard')loadAllProducts();
   if(p==='categories')loadCategories();
+  if(p==='promocodes')loadPromoCodes();
   if(p==='reviews')loadReviews();
   if(p==='orders')loadOrders();
 }
@@ -1196,6 +1250,7 @@ async function submitAddProduct(){
     type:document.getElementById('f-type').value,
     price:parseInt(document.getElementById('f-price').value),
     cost_price:parseInt(document.getElementById('f-cost-price').value||0),
+    description:document.getElementById('f-desc')?document.getElementById('f-desc').value.trim():null,
     image_url:mainImgUrl||null,
     discount_type:discountType,
     discount_value:discountValue,
@@ -1471,6 +1526,121 @@ async function updateOrderStatus(id,status){
     renderOrdersTable();
     toast('✓ تم تحديث حالة الطلب','success');
   }catch(err){toast('خطأ: '+err.message,'error');loadOrders();}
+}
+
+/* ── PROMO CODES LOGIC ── */
+var allPromoCodes = [];
+async function loadPromoCodes() {
+  try {
+    const data = await api('GET', '/api/promocodes');
+    allPromoCodes = data.promocodes || [];
+    renderPromoCodesTable();
+  } catch (err) {
+    allPromoCodes = [];
+    renderPromoCodesTable();
+  }
+}
+
+function renderPromoCodesTable() {
+  const tbody = document.getElementById('promocodes-table-body');
+  if (!tbody) return;
+  if (!allPromoCodes.length) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fas fa-ticket-alt"></i>لا توجد أكواد خصم حالية</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = allPromoCodes.map(p => {
+    const isPercent = p.discount_type === 'percent';
+    const valText = isPercent ? `${p.discount_value}%` : `${p.discount_value} ج.م`;
+    const minSpendText = p.min_spend ? `${p.min_spend} ج.م` : 'بدون حد أدنى';
+    const activeBadge = p.is_active
+      ? '<span class="badge" style="background:rgba(34,197,94,.15);color:#22c55e">نشط</span>'
+      : '<span class="badge" style="background:rgba(239,68,68,.15);color:#ef4444">معطل</span>';
+    return `<tr>
+      <td><strong style="letter-spacing:1px;font-family:monospace;font-size:.95rem">${htmlEsc(p.code)}</strong></td>
+      <td>${isPercent ? 'نسبة مئوية' : 'مبلغ ثابت'}</td>
+      <td><strong style="color:var(--gold)">${valText}</strong></td>
+      <td>${minSpendText}</td>
+      <td>${activeBadge}</td>
+      <td>
+        <div class="actions-col">
+          <button class="btn ${p.is_active ? 'btn-red' : 'btn-green'} btn-sm" onclick="togglePromoStatus('${htmlEsc(p.code)}', ${!p.is_active})">
+            ${p.is_active ? 'تعطيل' : 'تفعيل'}
+          </button>
+          <button class="btn btn-red btn-sm" onclick="deletePromoCode('${htmlEsc(p.code)}')"><i class="fas fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+async function submitAddPromoCode() {
+  const code = document.getElementById('promo-code').value.trim().toUpperCase();
+  const type = document.getElementById('promo-type').value;
+  const value = document.getElementById('promo-value').value;
+  const minSpend = document.getElementById('promo-min-spend').value;
+
+  document.getElementById('err-promo-code').textContent = '';
+  document.getElementById('err-promo-value').textContent = '';
+
+  let ok = true;
+  if (!code) { document.getElementById('err-promo-code').textContent = 'الكود مطلوب'; ok = false; }
+  if (!value || Number(value) <= 0) { document.getElementById('err-promo-value').textContent = 'قيمة غير صحيحة'; ok = false; }
+  if (!ok) return;
+
+  const btn = document.getElementById('btn-promo-submit');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الحفظ...';
+
+  try {
+    const data = await api('PUT', '/api/promocodes', {
+      code,
+      discount_type: type,
+      discount_value: Number(value),
+      min_spend: Number(minSpend || 0),
+      is_active: true
+    });
+
+    if (!data.success) throw new Error(data.error);
+    toast('✓ تم إضافة كود الخصم بنجاح', 'success');
+    document.getElementById('promo-code').value = '';
+    document.getElementById('promo-value').value = '';
+    document.getElementById('promo-min-spend').value = '';
+    await loadPromoCodes();
+  } catch (err) {
+    toast('خطأ: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus"></i> إضافة البرومو كود';
+  }
+}
+
+async function togglePromoStatus(code, isActive) {
+  try {
+    const p = allPromoCodes.find(x => x.code === code);
+    if (!p) return;
+    const data = await api('PUT', '/api/promocodes', {
+      code: p.code,
+      discount_type: p.discount_type,
+      discount_value: p.discount_value,
+      min_spend: p.min_spend,
+      is_active: isActive
+    });
+    if (!data.success) throw new Error(data.error);
+    toast('✓ تم تحديث حالة الكود', 'success');
+    await loadPromoCodes();
+  } catch (err) {
+    toast('خطأ: ' + err.message, 'error');
+  }
+}
+
+async function deletePromoCode(code) {
+  if (!confirm(`هل أنت تأكد من حذف كود الخصم ${code}؟`)) return;
+  try {
+    const data = await api('DELETE', `/api/promocodes?code=${encodeURIComponent(code)}`);
+    if (!data.success) throw new Error(data.error);
+    toast('✓ تم حذف كود الخصم', 'success');
+    await loadPromoCodes();
+  } catch (err) {
+    toast('خطأ: ' + err.message, 'error');
+  }
 }
 
 /* ── Auto-slug ── */
