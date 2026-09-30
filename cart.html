@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | عربة التسوق وسلة المشتريات</title>
-<meta name="description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن.">
-<meta name="keywords" content="تيشرتات جيم, تيشرتات رياضية في مصر, تيشرت جيم كاترون, تيشرتات تمرين مريحة, ملابس جيم علوية, تيشرتات كمال أجسام, VEXIS">
+<title>VEXIS | Shopping Cart</title>
+<meta name="description" content="Review your VEXIS gym sportswear purchases in your shopping cart and complete your order now.">
+<meta name="keywords" content="gym t-shirts, men's sportswear Egypt, training clothes, VEXIS">
 
 <!-- Favicon & Touch Icons -->
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
@@ -16,8 +16,8 @@
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="VEXIS | سلة مشتريات الملابس الرياضية" />
-<meta property="og:description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن." />
+<meta property="og:title" content="VEXIS | Shopping Cart" />
+<meta property="og:description" content="Review your VEXIS gym sportswear purchases and complete your order now." />
 <meta property="og:url" content="https://vexis1.store" />
 <meta property="og:image" content="https://vexis1.store/logo.jpeg" />
 <meta property="og:image:width" content="1200" />
@@ -25,8 +25,8 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="VEXIS | سلة مشتريات الملابس الرياضية" />
-<meta name="twitter:description" content="راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن." />
+<meta name="twitter:title" content="VEXIS | Shopping Cart" />
+<meta name="twitter:description" content="Review your VEXIS gym sportswear purchases and complete your order now." />
 <meta name="twitter:image" content="https://vexis1.store/logo.jpeg" />
 
 <!-- JSON-LD Structured Data Schema -->
@@ -35,7 +35,7 @@
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Shopping Cart - VEXIS",
-  "description": "راجع مشترياتك من تيشرتات الجيم وتيشرتات التمرين الرياضية للرجال في سلة تسوق VEXIS وأكمل طلبك الآن.",
+  "description": "Review your VEXIS gym sportswear purchases and complete your order now.",
   "publisher": {
     "@type": "Organization",
     "name": "VEXIS",
@@ -81,13 +81,13 @@
         <span class="text-white dark:text-black font-black text-base md:text-lg tracking-widest">VEXIS</span>
       </div>
     </a>
-    <a href="index.html" class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"><i class="fas fa-home ml-1"></i>العودة للمتجر</a>
+    <a href="index.html" class="text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"><i class="fas fa-home mr-1"></i>Back to Store</a>
   </div>
 </nav>
 
 <div class="max-w-3xl mx-auto px-4 py-8 flex-1 w-full">
   <h1 class="text-2xl md:text-3xl font-black mb-6 flex items-center gap-2">
-    <i class="fas fa-shopping-cart text-gray-850 dark:text-gray-250"></i> سلة المشتريات
+    <i class="fas fa-shopping-cart text-gray-850 dark:text-gray-250"></i> Shopping Cart
   </h1>
 
   <template x-if="cart.length > 0">
@@ -104,8 +104,8 @@
             <div class="flex-1 text-right">
               <h3 class="font-bold text-sm md:text-base leading-tight mb-1 pr-6" x-text="item.name"></h3>
               <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 flex gap-3">
-                <span x-show="item.size" x-text="'المقاس: '+item.size"></span>
-                <span x-show="item.color" x-text="'اللون: '+item.color"></span>
+                <span x-show="item.size" x-text="'Size: '+item.size"></span>
+                <span x-show="item.color" x-text="'Color: '+item.color"></span>
               </div>
               <div class="flex items-center justify-between">
                 <div class="text-black dark:text-white font-black text-sm md:text-base" x-text="(item.finalPrice*item.qty) + ' EGP'"></div>
@@ -123,34 +123,34 @@
       <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 mb-6">
         <!-- PROMO CODE BOX -->
         <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1">كود الخصم (Promo Code)</label>
+          <label class="block text-xs font-bold text-gray-600 mb-1">Promo Code</label>
           <div class="flex gap-2">
-            <input type="text" x-model="promoInput" placeholder="أدخل البرومو كoid" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold uppercase focus:outline-none focus:border-black" :disabled="appliedPromo">
-            <button @click="applyPromo()" class="bg-black text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-gray-800 transition" x-show="!appliedPromo">تطبيق</button>
-            <button @click="removePromo()" class="bg-red-500 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-600 transition" x-show="appliedPromo">إزالة</button>
+            <input type="text" x-model="promoInput" placeholder="Enter promo code" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold uppercase focus:outline-none focus:border-black" :disabled="appliedPromo">
+            <button @click="applyPromo()" class="bg-black text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-gray-800 transition" x-show="!appliedPromo">Apply</button>
+            <button @click="removePromo()" class="bg-red-500 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-600 transition" x-show="appliedPromo">Remove</button>
           </div>
           <p x-show="promoMsg" :class="promoSuccess ? 'text-green-600' : 'text-red-500'" class="text-[11px] font-bold mt-1.5" x-text="promoMsg"></p>
         </div>
 
         <div class="flex justify-between items-center mb-3 text-gray-600 dark:text-gray-300">
-          <span>المجموع الفرعي:</span>
+          <span>Subtotal:</span>
           <span class="font-bold text-gray-900 dark:text-white" x-text="subtotal + ' EGP'"></span>
         </div>
         <div x-show="discountAmount > 0" class="flex justify-between items-center mb-3 text-emerald-600 font-bold">
-          <span>خصم البرومو كود (<span x-text="appliedPromo?.code"></span>):</span>
+          <span>Promo Discount (<span x-text="appliedPromo?.code"></span>):</span>
           <span x-text="'- ' + discountAmount + ' EGP'"></span>
         </div>
         <div class="flex justify-between items-center mb-4 text-gray-600 dark:text-gray-300">
-          <span>الشحن:</span>
-          <span class="text-green-600 dark:text-green-400 font-bold">حسب المحافظه</span>
+          <span>Shipping:</span>
+          <span class="text-green-600 dark:text-green-400 font-bold">Based on governorate</span>
         </div>
         <hr class="border-gray-100 dark:border-gray-800 mb-4">
         <div class="flex justify-between items-center mb-6">
-          <span class="font-black text-lg">الإجمالي:</span>
+          <span class="font-black text-lg">Total:</span>
           <span class="font-black text-2xl text-black dark:text-white" x-text="finalTotal + ' EGP'"></span>
         </div>
         <a href="checkout.html" class="block w-full bg-black dark:bg-white text-white dark:text-black text-center font-black py-4 rounded-xl hover:opacity-90 transition shadow-lg text-lg">
-          متابعة للدفع <i class="fas fa-arrow-left mr-2"></i>
+          Proceed to Checkout <i class="fas fa-arrow-right ml-2"></i>
         </a>
       </div>
     </div>
@@ -159,9 +159,9 @@
   <template x-if="cart.length === 0">
     <div class="text-center py-20">
       <i class="fas fa-shopping-basket text-6xl text-gray-200 dark:text-gray-800 mb-4"></i>
-      <p class="text-gray-500 dark:text-gray-400 font-bold text-lg mb-6">سلتك فارغة تماماً</p>
+      <p class="text-gray-500 dark:text-gray-400 font-bold text-lg mb-6">Your cart is empty</p>
       <a href="index.html" class="bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-full font-bold hover:opacity-90 transition inline-block">
-        تصفح المنتجات
+        Browse Products
       </a>
     </div>
   </template>
@@ -211,7 +211,7 @@ function cartPage() {
       const p = this.appliedPromo;
       if (p.min_spend && this.subtotal < p.min_spend) {
         this.discountAmount = 0;
-        this.promoMsg = `الحد الأدنى لتطبيق الخصم هو ${p.min_spend} EGP`;
+        this.promoMsg = `Minimum spend for this discount is ${p.min_spend} EGP`;
         this.promoSuccess = false;
         return;
       }
@@ -228,7 +228,7 @@ function cartPage() {
     async applyPromo() {
       const code = this.promoInput.trim().toUpperCase();
       if (!code) {
-        this.promoMsg = 'يرجى أدخل كود الخصم أولاً';
+        this.promoMsg = 'Please enter a promo code first';
         this.promoSuccess = false;
         return;
       }
@@ -244,14 +244,14 @@ function cartPage() {
           this.appliedPromo = data.promocode;
           localStorage.setItem('vexis_promo', JSON.stringify(data.promocode));
           this.calcDiscount();
-          this.promoMsg = `✓ تم تطبيق كود الخصم (${data.promocode.code}) بنجاح!`;
+          this.promoMsg = `✓ Promo code (${data.promocode.code}) applied successfully!`;
           this.promoSuccess = true;
         } else {
-          this.promoMsg = data.error || 'كود الخصم غير صالح أو منتهي';
+          this.promoMsg = data.error || 'Invalid or expired promo code';
           this.promoSuccess = false;
         }
       } catch (e) {
-        this.promoMsg = 'عفواً، تعذر التحقق من كود الخصم حالياً';
+        this.promoMsg = 'Sorry, could not verify promo code right now';
         this.promoSuccess = false;
       }
     },

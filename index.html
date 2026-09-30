@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>VEXIS | تيشرتات جيم رياضية للرجال — أقوى ملابس تمرين في مصر</title>
-<meta name="description" content="متجر VEXIS لأفضل تيشرتات الجيم وملابس التمرين الرياضية للرجال في مصر. خامات ممتازة، تصاميم عصرية، شحن لجميع المحافظات والدفع عند الاستلام.">
-<meta name="keywords" content="VEXIS, تيشرتات جيم, ملابس رياضية للرجال, تيشرتات تمرين, ملابس جيم مصر, تيشرت رياضي, ملابس كمال اجسام">
+<title>VEXIS | Premium Gym Sportswear for Men — Egypt's Best Training Clothes</title>
+<meta name="description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, nationwide shipping and cash on delivery.">
+<meta name="keywords" content="VEXIS, gym t-shirts, men's sportswear, training clothes, gym wear Egypt, sport t-shirt, bodybuilding clothes">
 
 <!-- Favicon & Touch Icons -->
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
@@ -16,8 +16,8 @@
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="VEXIS | تيشرتات جيم رياضية للرجال" />
-<meta property="og:description" content="متجر VEXIS لأفضل تيشرتات الجيم وملابس التمرين الرياضية للرجال في مصر. خامات ممتازة، تصاميم عصرية، وشحن لجميع المحافظات." />
+<meta property="og:title" content="VEXIS | Premium Gym Sportswear for Men" />
+<meta property="og:description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, and nationwide shipping." />
 <meta property="og:url" content="https://vexis1.store" />
 <meta property="og:image" content="https://vexis1.store/logo.jpeg" />
 <meta property="og:image:width" content="1200" />
@@ -25,8 +25,8 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="VEXIS | تيشرتات جيم رياضية للرجال" />
-<meta name="twitter:description" content="متجر VEXIS لأفضل تيشرتات الجيم وملابس التمرين الرياضية للرجال في مصر. خامات ممتازة، شحن لجميع المحافظات." />
+<meta name="twitter:title" content="VEXIS | Premium Gym Sportswear for Men" />
+<meta name="twitter:description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, nationwide shipping." />
 <meta name="twitter:image" content="https://vexis1.store/logo.jpeg" />
 
 <!-- JSON-LD Structured Data Schema -->
@@ -37,7 +37,7 @@
   "name": "VEXIS",
   "url": "https://vexis1.store",
   "logo": "https://vexis1.store/logo.jpeg",
-  "description": "متجر VEXIS لأفضل تيشرتات الجيم وملابس التمرين الرياضية للرجال في مصر. خامات ممتازة، تصاميم عصرية، وشحن لجميع المحافظات.",
+  "description": "VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, nationwide shipping.",
   "image": "https://vexis1.store/logo.jpeg",
   "priceRange": "EGP",
   "address": {
@@ -159,7 +159,7 @@
       <a href="#products" class="nav-link text-gray-600 dark:text-gray-300" x-text="t('nav_products')"></a>
       <a href="#about" class="nav-link text-gray-600 dark:text-gray-300" x-text="t('nav_about')"></a>
       <a href="my-orders.html" class="nav-link text-gray-600 dark:text-gray-300 flex items-center gap-1" x-show="hasOrders">
-        <i class="fas fa-box-open text-xs"></i> طلباتي
+        <i class="fas fa-box-open text-xs"></i> My Orders
       </a>
     </div>
     <div class="flex items-center gap-2 md:gap-3">
@@ -185,8 +185,8 @@
     <a href="#about" @click="mobileMenu=false" class="text-gray-600 dark:text-gray-300 flex items-center gap-2"><i class="fas fa-info-circle w-5"></i><span x-text="t('nav_about')"></span></a>
     <a href="my-orders.html" x-show="hasOrders" class="text-emerald-600 dark:text-emerald-400 flex items-center gap-2 font-black">
       <i class="fas fa-box-open w-5"></i>
-      طلباتي
-      <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">جديد</span>
+      My Orders
+      <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">New</span>
     </a>
     <a href="cart.html" class="bg-black dark:bg-white text-white dark:text-black font-black py-3 rounded-xl text-center flex items-center justify-center gap-2">
       <i class="fas fa-shopping-bag"></i> <span x-text="t('nav_cart')"></span>
@@ -370,7 +370,7 @@
     </a>
     <a href="my-orders.html" x-show="hasOrders" class="flex flex-col items-center gap-0.5 text-emerald-500 relative">
       <i class="fas fa-box-open text-lg"></i>
-      <span class="text-[10px] font-bold">طلباتي</span>
+      <span class="text-[10px] font-bold">My Orders</span>
       <span class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full"></span>
     </a>
     <a href="cart.html" class="flex flex-col items-center gap-0.5 text-gray-400 dark:text-gray-500 relative">
@@ -571,24 +571,22 @@ init() {
 }
 </script>
 
-<!-- SEO LSI Keywords Indexing Map -->
+<!-- SEO Keywords Indexing Map -->
 <div style="display: none;" aria-hidden="true">
-  <h2>تيشرتات جيم وتمرين للرجال والرياضيين في مصر</h2>
-  <p>تسوق أفضل ملابس رياضية علوية وتيشرتات كمال أجسام وتيشرت جيم كاترون عالي الجودة من VEXIS.</p>
+  <h2>Gym T-Shirts and Training Clothes for Men and Athletes in Egypt</h2>
+  <p>Shop the best men's sportswear, bodybuilding t-shirts, and premium gym t-shirts from VEXIS.</p>
   <ul>
-    <li>تيشرتات جيم</li>
-    <li>تيشرتات رياضية في مصر</li>
-    <li>تيشرت جيم كاترون</li>
-    <li>تيشرتات تمرين مريحة</li>
-    <li>ملابس جيم علوية</li>
-    <li>تيشرتات كمال أجسام</li>
-    <li>vexis ملابس رياضيه</li>
-    <li>vexis sports wear</li>
+    <li>gym t-shirts</li>
+    <li>men's sportswear Egypt</li>
+    <li>gym t-shirt cotton</li>
+    <li>comfortable training t-shirts</li>
+    <li>gym tops for men</li>
+    <li>bodybuilding t-shirts</li>
     <li>vexis sportswear</li>
-    <li>تيشرتات سبور رجالي</li>
-    <li>لبس سبور رجالي</li>
-    <li>طقم رجالي سبور</li>
-    <li>ملابس التنس للرجال</li>
+    <li>vexis sports wear</li>
+    <li>men's sport t-shirts</li>
+    <li>men's sport sets</li>
+    <li>men's tennis clothes</li>
   </ul>
 </div>
 </body>
