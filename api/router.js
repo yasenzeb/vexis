@@ -16,6 +16,7 @@ import whatsappWebhook from './_whatsapp-webhook.js';
 import telegramWebhook from './_telegram-webhook.js';
 import setWebhook from './_set-webhook.js';
 import ordersByPhone from './_orders-by-phone.js';
+import promocodes from './_promocodes.js';
 
 export default async function handler(req, res) {
   let { __path } = req.query;
@@ -72,7 +73,7 @@ export default async function handler(req, res) {
   } else if (__path === 'orders-by-phone') {
     targetHandler = ordersByPhone;
   } else if (__path === 'promocodes') {
-    targetHandler = (await import('./_promocodes.js')).default;
+    targetHandler = promocodes;
   }
 
   if (targetHandler) {
