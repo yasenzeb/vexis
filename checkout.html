@@ -434,20 +434,19 @@ function checkoutPage() {
         });
         const data = await res.json();
         if (data.success) {
-          this.orderNumber = data.order_number || data.order_id || 'VX-' + Math.floor(100000 + Math.random() * 900000);
+          const orderNum = data.order_number || data.order_id || ('VNT-' + Date.now().toString(36).toUpperCase());
           localStorage.removeItem('vexis_cart');
           localStorage.removeItem('vexis_promo');
           localStorage.setItem('vexis_customer_phone', this.form.phone.trim());
-          this.showSuccess = true;
+          
+          // الانتقال فوراً لصفحة تتبع حالة الطلب (شريط أمازون الحي)
+          window.location.href = `my-orders.html?phone=${encodeURIComponent(this.form.phone.trim())}&order=${encodeURIComponent(orderNum)}`;
         } else {
           alert(data.error || 'حدث خطأ أثناء حفظ الطلب');
         }
-      } catch {
-        this.orderNumber = 'VX-' + Math.floor(100000 + Math.random() * 900000);
-        localStorage.removeItem('vexis_cart');
-        localStorage.removeItem('vexis_promo');
-        localStorage.setItem('vexis_customer_phone', this.form.phone.trim());
-        this.showSuccess = true;
+      } catch (err) {
+        console.error('Checkout error:', err);
+        alert('تعذر إرسال الطلب، تأكد من الاتصال بالإنترنت وحاول مجدداً');
       } finally {
         this.isSubmitting = false;
       }

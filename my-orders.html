@@ -542,10 +542,16 @@ function myOrders() {
     statusOrder: ['pending', 'review', 'shipped', 'delivered'],
 
     init() {
+      // Check URL parameters first (e.g. ?phone=01xxxxxxxxx or ?order=VNT-...)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlPhone = urlParams.get('phone');
       const saved = localStorage.getItem('vexis_customer_phone');
-      if (saved) {
-        this.phone      = saved;
-        this.inputPhone = saved;
+      
+      const phoneToUse = urlPhone || saved;
+      if (phoneToUse) {
+        this.phone      = phoneToUse;
+        this.inputPhone = phoneToUse;
+        localStorage.setItem('vexis_customer_phone', phoneToUse);
         this.fetchOrders();
       }
     },
