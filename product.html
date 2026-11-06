@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | تفاصيل المنتج الرياضي وتيشرتات التمرين</title>
+<title>VEXIS | تفاصيل المنتج الرياضي — المجموعة الرسمية</title>
 <meta name="description" content="تسوق أفضل تيشرتات الجيم والملابس الرياضية الرجالية بتصاميم مريحة وجودة عالمية من VEXIS.">
 <meta name="keywords" content="تيشرتات جيم, ملابس رياضية رجالية, VEXIS, تيشرت كمال أجسام, ملابس تمرين مصر">
 
@@ -17,589 +17,505 @@
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="VEXIS | أفضل تيشرتات الجيم والملابس الرياضية" />
-<meta property="og:description" content="تسوق أفضل تيشرتات الجيم والملابس الرياضية الرجالية بتصاميم مريحة وجودة عالية من VEXIS." />
+<meta property="og:description" content="تسوق أفضل تيشرتات الجيم والملابس الرياضية الرجالية بتصاميم مريحة وجودة عالمية من VEXIS." />
 <meta property="og:url" content="https://vexis1.store" />
 <meta property="og:image" content="https://vexis1.store/logo.jpeg" />
 
 <!-- Fonts & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
-        fontFamily: {
-          cairo: ['Cairo', 'sans-serif'],
-          montserrat: ['Montserrat', 'sans-serif']
+        colors: {
+          'gallery-white': '#ffffff',
+          'studio-mist': '#f5f5f7',
+          'paper-frost': '#fafafc',
+          'hairline-silver': '#d6d6d6',
+          'control-gray': '#e6e6e8',
+          'ink': '#1d1d1f',
+          'slate-apple': '#707070',
+          'steel-apple': '#86868b',
+          'apple-blue': '#0066cc',
+          'pricing-blue': '#0071e3',
+          'launch-orange': '#b64400'
         },
+        borderRadius: {
+          '28': '28px',
+          '36': '36px',
+          '980': '980px',
+        }
       }
     }
-  }
-</script>
-<script>
-  if (localStorage.getItem('vexis_theme') === 'dark') {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
   }
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <style>
-* { font-family: 'Cairo', sans-serif; box-sizing: border-box; }
-.font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+:root {
+  --color-gallery-white: #ffffff;
+  --color-studio-mist: #f5f5f7;
+  --color-paper-frost: #fafafc;
+  --color-hairline-silver: #d6d6d6;
+  --color-control-gray: #e6e6e8;
+  --color-ink: #1d1d1f;
+  --color-slate: #707070;
+  --color-steel: #86868b;
+  --color-apple-blue: #0066cc;
+  --color-pricing-blue: #0071e3;
+  --color-launch-orange: #b64400;
+
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cairo", sans-serif;
+}
+
+* {
+  font-family: var(--font-apple);
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-gallery-white);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
-.dark ::-webkit-scrollbar-thumb { background: #444; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
 
-/* Global Smooth Transitions */
-body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea {
-  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
-}
-
-/* Luxury micro-interactions */
-.btn-brand-primary {
-  background: #000;
-  color: #fff;
-  transition: all .2s cubic-bezier(.4, 0, .2, 1);
-}
-.btn-brand-primary:hover {
-  background: #222;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.18);
-}
-.dark .btn-brand-primary {
-  background: #fff;
-  color: #000;
-}
-.dark .btn-brand-primary:hover {
-  background: #eee;
-  box-shadow: 0 10px 25px rgba(255,255,255,0.15);
+/* Apple-style typography */
+.headline-editorial {
+  letter-spacing: -0.025em;
+  line-height: 1.08;
 }
 
-.btn-brand-secondary {
-  background: #f4f4f5;
-  color: #18181b;
-  border: 1px solid #e4e4e7;
-  transition: all .2s cubic-bezier(.4, 0, .2, 1);
+.body-editorial {
+  letter-spacing: -0.015em;
+  line-height: 1.47;
 }
-.btn-brand-secondary:hover {
-  background: #e4e4e7;
-  transform: translateY(-1px);
+
+/* Apple Buttons */
+.apple-pricing-pill {
+  background-color: var(--color-pricing-blue);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
 }
-.dark .btn-brand-secondary {
-  background: #27272a;
-  color: #f4f4f5;
-  border-color: #3f3f46;
+.apple-pricing-pill:hover {
+  background-color: #0077ed;
+  transform: scale(1.01);
 }
-.dark .btn-brand-secondary:hover {
-  background: #3f3f46;
+
+.apple-explore-pill {
+  background-color: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-steel);
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-explore-pill:hover {
+  border-color: var(--color-ink);
+  background-color: var(--color-studio-mist);
+}
+
+.apple-ink-pill {
+  background-color: var(--color-ink);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-ink-pill:hover {
+  background-color: #333336;
+}
+
+/* Apple Inputs */
+.apple-input {
+  background-color: #ffffff;
+  border: 1px solid var(--color-steel);
+  border-radius: 980px;
+  padding: 10px 18px;
+  font-size: 14px;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.apple-input:focus {
+  border-color: var(--color-pricing-blue);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+}
+
+/* Feature Cards: 28px radius, flat & shadowless */
+.apple-card {
+  background-color: #ffffff;
+  border-radius: 28px;
+  border: 1px solid var(--color-hairline-silver);
 }
 
 /* Image Thumbnails */
-.thumb-box {
-  transition: all .2s ease;
+.thumb-frame {
+  border-radius: 18px;
+  border: 1px solid var(--color-hairline-silver);
+  transition: all .15s ease;
   cursor: pointer;
-  border: 2px solid transparent;
 }
-.thumb-box:hover {
-  transform: translateY(-2px);
-  border-color: #d1d5db;
+.thumb-frame:hover {
+  border-color: var(--color-steel);
 }
-.thumb-box.active {
-  border-color: #000 !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.dark .thumb-box.active {
-  border-color: #fff !important;
-  box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+.thumb-frame.active {
+  border-color: var(--color-ink) !important;
+  box-shadow: 0 0 0 1px var(--color-ink);
 }
 
-/* Size buttons */
-.size-btn {
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+/* Size Pill Selector */
+.size-pill {
+  border-radius: 9999px;
+  border: 1px solid var(--color-hairline-silver);
+  background-color: #ffffff;
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all .15s ease;
 }
-.size-btn:hover:not(.active) {
-  border-color: #000;
-  transform: translateY(-1px);
+.size-pill:hover:not(.active) {
+  border-color: var(--color-ink);
 }
-.dark .size-btn:hover:not(.active) {
-  border-color: #fff;
-}
-.size-btn.active {
-  background-color: #000 !important;
-  color: #fff !important;
-  border-color: #000 !important;
-}
-.dark .size-btn.active {
-  background-color: #fff !important;
-  color: #000 !important;
-  border-color: #fff !important;
+.size-pill.active {
+  background-color: var(--color-ink) !important;
+  color: #ffffff !important;
+  border-color: var(--color-ink) !important;
 }
 
-/* Color Circles */
-.color-swatch {
-  transition: transform .2s ease, box-shadow .2s ease;
+/* Color Circle */
+.color-circle {
+  transition: transform .18s ease, box-shadow .18s ease;
 }
-.color-swatch:hover {
-  transform: scale(1.12);
-}
-.color-swatch.active {
-  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
+.color-circle:hover {
   transform: scale(1.1);
 }
-.dark .color-swatch.active {
-  box-shadow: 0 0 0 2px #18181b, 0 0 0 4px #fff;
+.color-circle.active {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3.5px var(--color-ink);
+  transform: scale(1.08);
 }
 
-/* Inputs */
-.clean-input {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 11px 14px;
-  font-size: 14px;
-  font-weight: 600;
-  width: 100%;
-  color: #0f172a;
-  outline: none;
-  transition: border-color .2s, box-shadow .2s, background-color .2s;
+/* Modal Fade Scale */
+.modal-enter-apple {
+  animation: modalApple .2s cubic-bezier(.16, 1, .3, 1) forwards;
 }
-.clean-input:focus {
-  background: #fff;
-  border-color: #000;
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
-}
-.dark .clean-input {
-  background: #18181b;
-  border-color: #27272a;
-  color: #f8fafc;
-}
-.dark .clean-input:focus {
-  background: #09090b;
-  border-color: #fff;
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
-}
-
-/* Trust Pill */
-.trust-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 8px 14px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 100px;
-  color: #475569;
-}
-.dark .trust-badge {
-  background: #18181b;
-  border-color: #27272a;
-  color: #94a3b8;
-}
-
-/* Verification Laurel Badge */
-.verified-laurel-badge {
-  border: 1.5px solid #0f766e;
-  background: rgba(15, 118, 110, 0.04);
-  color: #0f766e;
-  border-radius: 100px;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 800;
-}
-.dark .verified-laurel-badge {
-  border-color: #2dd4bf;
-  color: #2dd4bf;
-  background: rgba(45, 212, 191, 0.08);
-}
-
-/* Modal Animation */
-.modal-fade-scale {
-  animation: modalScale .2s cubic-bezier(.16, 1, .3, 1) forwards;
-}
-@keyframes modalScale {
-  from { opacity: 0; transform: scale(.97) translateY(8px); }
+@keyframes modalApple {
+  from { opacity: 0; transform: scale(.98) translateY(6px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 </style>
 </head>
-<body class="bg-white text-gray-900 dark:bg-black dark:text-gray-100 min-h-screen flex flex-col selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black" x-data="productPage()" x-init="init()">
+<body class="bg-gallery-white text-ink min-h-screen flex flex-col" x-data="productPage()" x-init="init()">
 
 <!-- ============================================== -->
-<!-- TOP ANNOUNCEMENT BAR                           -->
+<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
 <!-- ============================================== -->
-<div class="bg-black text-white dark:bg-zinc-900 text-xs py-2 px-4 border-b border-zinc-800">
-  <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] md:text-xs font-bold tracking-wider">
-    <div class="flex items-center gap-2">
-      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span>شحن سريع لجميع محافظات مصر | دفع عند الاستلام</span>
-    </div>
-    <div class="hidden sm:flex items-center gap-4 text-zinc-400">
-      <span>ضمان استبدال واسترجاع سهل</span>
-      <span>•</span>
-      <span>أعلى معايير الجودة الرياضية</span>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================== -->
-<!-- NAVBAR (International Brand Header - Image 3)  -->
-<!-- ============================================== -->
-<nav class="bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-gray-150 dark:border-zinc-800 sticky top-0 z-40 transition-all">
-  <div class="max-w-7xl mx-auto px-4 h-16 md:h-18 flex items-center justify-between">
+<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50 transition-all">
+  <div class="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between text-xs font-normal">
     
-    <!-- Right side (RTL start): Brand Logo -->
-    <div class="flex items-center gap-6">
-      <a href="index.html" class="flex items-center gap-2 group">
-        <div class="bg-black text-white dark:bg-white dark:text-black rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm group-hover:scale-102 transition">
-          <img src="logo.jpeg" alt="VEXIS" class="w-6 h-6 md:w-7 md:h-7 rounded-full object-cover">
-          <span class="font-brand font-black text-base md:text-lg tracking-widest">VEXIS</span>
-        </div>
-      </a>
-
-      <!-- Desktop nav links -->
-      <div class="hidden lg:flex items-center gap-6 text-sm font-bold text-gray-600 dark:text-gray-300">
-        <a href="index.html" class="hover:text-black dark:hover:text-white transition">الرئيسية</a>
-        <a href="index.html#products" class="hover:text-black dark:hover:text-white transition">المنتجات</a>
-        <button type="button" @click="showSizeChart = true" class="hover:text-black dark:hover:text-white transition flex items-center gap-1.5">
-          <i class="fas fa-ruler-horizontal text-xs"></i> دليل المقاسات
-        </button>
-        <a href="#reviews-section" class="hover:text-black dark:hover:text-white transition flex items-center gap-1.5">
-          <i class="fas fa-star text-amber-400 text-xs"></i> آراء العملاء
-        </a>
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center gap-2 group">
+      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
+        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
       </div>
-    </div>
+      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
+    </a>
 
-    <!-- Left side (RTL end): EGYPT + Account + Cart (Image 3) -->
-    <div class="flex items-center gap-2 md:gap-4">
+    <!-- Nav Links (Compact Apple SF Pro Text 12px) -->
+    <nav class="hidden md:flex items-center gap-8 text-[12px] text-slate-apple">
+      <a href="index.html" class="hover:text-ink transition">الرئيسية</a>
+      <a href="index.html#products" class="hover:text-ink transition">المنتجات</a>
+      <button type="button" @click="showSizeChart = true" class="hover:text-ink transition">دليل المقاسات</button>
+      <a href="#reviews-section" class="hover:text-ink transition">آراء العملاء</a>
+      <a href="my-orders.html" class="hover:text-ink transition">طلباتي</a>
+    </nav>
+
+    <!-- Controls (EGYPT indicator + Account + Cart) -->
+    <div class="flex items-center gap-3">
       
-      <!-- Country / Currency indicator: EGYPT (As shown in user's image) -->
-      <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-zinc-800 text-xs font-bold text-gray-700 dark:text-gray-300 hover:border-black dark:hover:border-white transition cursor-default">
-        <span class="text-sm">🇪🇬</span>
-        <span class="font-brand font-black text-xs tracking-wider">EGYPT</span>
-        <i class="fas fa-chevron-down text-[9px] text-gray-400 ml-0.5"></i>
+      <!-- Country indicator: EGYPT (Image 3) -->
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
+        <span>🇪🇬</span>
+        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
+        <i class="fas fa-chevron-down text-[8px] text-steel-apple ml-0.5"></i>
       </div>
 
-      <!-- Account / My Orders icon (Silhouette of person) -->
+      <!-- Account Icon -->
       <a href="my-orders.html"
          title="حسابي / طلباتي"
-         class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 transition relative">
-        <i class="far fa-user text-lg"></i>
+         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition">
+        <i class="far fa-user text-sm"></i>
       </a>
 
-      <!-- Shopping Bag Cart icon with item badge -->
+      <!-- Shopping Bag -->
       <a href="cart.html"
          title="سلة المشتريات"
-         class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 transition relative">
-        <i class="fas fa-shopping-bag text-lg"></i>
+         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition relative">
+        <i class="fas fa-shopping-bag text-sm"></i>
         <span x-show="cartCount > 0"
               x-text="cartCount"
-              class="absolute 0.5 top-1 -left-0.5 bg-black text-white dark:bg-white dark:text-black font-brand font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+              class="absolute -top-0.5 -left-0.5 bg-pricing-blue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
         </span>
       </a>
 
     </div>
+
   </div>
-</nav>
+</header>
 
 <!-- ============================================== -->
-<!-- BREADCRUMBS                                    -->
+<!-- PRODUCT LOCAL SUB-NAVIGATION                   -->
 <!-- ============================================== -->
-<div class="max-w-7xl mx-auto px-4 pt-5 pb-2 text-xs font-semibold text-gray-400 dark:text-gray-500 flex items-center gap-2">
-  <a href="index.html" class="hover:text-black dark:hover:text-white transition">الرئيسية</a>
-  <span>/</span>
-  <a href="index.html#products" class="hover:text-black dark:hover:text-white transition">المنتجات</a>
-  <span>/</span>
-  <span class="text-gray-800 dark:text-gray-200 font-bold truncate max-w-xs" x-text="product.name || 'تفاصيل المنتج'"></span>
+<div class="border-b border-hairline-silver bg-gallery-white/90 backdrop-blur-md sticky top-12 z-40 py-2.5">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between text-xs">
+    
+    <div class="flex items-center gap-3 truncate">
+      <span class="font-semibold text-sm text-ink truncate" x-text="product.name || 'VEXIS Athletic Wear'"></span>
+      <span class="text-launch-orange font-medium text-[11px] hidden sm:inline">جديد</span>
+    </div>
+
+    <div class="flex items-center gap-3 flex-shrink-0">
+      <div class="text-sm font-semibold text-ink" x-text="calcPrice() + ' EGP'"></div>
+      <button type="button"
+              @click="buyNow()"
+              class="apple-pricing-pill text-[12px] px-4 py-1.5">
+        شراء
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <!-- ============================================== -->
-<!-- MAIN PRODUCT DETAIL SECTION                    -->
+<!-- MAIN PRODUCT GALLERY STAGE                     -->
 <!-- ============================================== -->
-<main class="max-w-7xl mx-auto px-4 py-6 md:py-10 flex-1">
+<main class="max-w-6xl mx-auto px-4 py-10 md:py-16">
   <template x-if="product && product.id">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
       <!-- ========================================== -->
-      <!-- LEFT: IMAGE GALLERY (5 cols on lg)         -->
+      <!-- LEFT: WHITE GALLERY HERO PHOTOGRAPHY       -->
       <!-- ========================================== -->
-      <div class="lg:col-span-6 lg:sticky lg:top-24 space-y-4">
+      <div class="lg:col-span-7 lg:sticky lg:top-28 space-y-4">
         
-        <!-- Main Image Display -->
-        <div class="relative w-full rounded-3xl overflow-hidden bg-gray-50 dark:bg-zinc-900 border border-gray-150 dark:border-zinc-800 aspect-square flex items-center justify-center group shadow-sm">
+        <!-- Enormous Product Stage (28px radius, shadowless) -->
+        <div class="bg-studio-mist rounded-28 border border-hairline-silver aspect-square flex items-center justify-center p-8 relative overflow-hidden group">
           <img :src="activeImage"
                :alt="product.name"
-               class="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"/>
+               class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-102"/>
 
-          <!-- Discount badge -->
+          <!-- Launch tag / Discount -->
           <template x-if="product.discount_value > 0">
-            <div class="absolute top-4 right-4 bg-black text-white dark:bg-white dark:text-black font-brand font-black text-xs px-3 py-1.5 rounded-xl shadow-lg tracking-wider"
-                 x-text="product.discount_type === 'percent' ? '-' + product.discount_value + '%' : '-' + product.discount_value + ' EGP'">
-            </div>
+            <span class="absolute top-5 right-5 text-launch-orange font-semibold text-xs tracking-wider"
+                  x-text="product.discount_type === 'percent' ? 'وفر ' + product.discount_value + '%' : 'خصم ' + product.discount_value + ' EGP'">
+            </span>
           </template>
-
-          <!-- Quick view zoom indicator -->
-          <button @click="openImageModal = true" class="absolute bottom-4 left-4 w-9 h-9 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md flex items-center justify-center text-gray-700 dark:text-gray-200 opacity-0 group-hover:opacity-100 transition shadow">
-            <i class="fas fa-expand text-xs"></i>
-          </button>
         </div>
 
-        <!-- Thumbnails row -->
-        <div x-show="allImages.length > 1" class="flex gap-3 overflow-x-auto pb-2 pt-1">
+        <!-- Thumbnails row (28px media cards concept) -->
+        <div x-show="allImages.length > 1" class="flex gap-3 overflow-x-auto pb-1 pt-1">
           <template x-for="(img, idx) in allImages" :key="idx">
             <div @click="activeImage = img"
-                 :class="activeImage === img ? 'thumb-box active' : 'thumb-box'"
-                 class="w-20 h-20 rounded-2xl overflow-hidden bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 flex-shrink-0 flex items-center justify-center p-1">
-              <img :src="img" :alt="'صورة ' + (idx + 1)" class="w-full h-full object-cover rounded-xl"/>
+                 :class="activeImage === img ? 'thumb-frame active' : 'thumb-frame'"
+                 class="w-20 h-20 rounded-2xl bg-studio-mist flex-shrink-0 flex items-center justify-center p-2">
+              <img :src="img" :alt="'معاينة ' + (idx + 1)" class="w-full h-full object-contain rounded-xl"/>
             </div>
           </template>
         </div>
 
-        <!-- Brand features bar below image -->
-        <div class="grid grid-cols-3 gap-3 pt-3">
-          <div class="text-center p-3 rounded-2xl bg-gray-50 dark:bg-zinc-900/60 border border-gray-150 dark:border-zinc-800">
-            <i class="fas fa-feather text-gray-500 dark:text-gray-400 mb-1 text-sm block"></i>
-            <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300 block">خامة قطن ممشط</span>
+        <!-- Editorial feature statements row -->
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-hairline-silver">
+          <div class="text-center p-3">
+            <span class="text-xs font-semibold text-ink block">قطن مضغوط 100%</span>
+            <span class="text-[11px] text-slate-apple block mt-0.5">مرونة تدوم طويلاً</span>
           </div>
-          <div class="text-center p-3 rounded-2xl bg-gray-50 dark:bg-zinc-900/60 border border-gray-150 dark:border-zinc-800">
-            <i class="fas fa-dumbbell text-gray-500 dark:text-gray-400 mb-1 text-sm block"></i>
-            <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300 block">قصّة رياضية محكمة</span>
+          <div class="text-center p-3 border-x border-hairline-silver">
+            <span class="text-xs font-semibold text-ink block">قصّة Compression</span>
+            <span class="text-[11px] text-slate-apple block mt-0.5">ثبات محكم أثناء التمرين</span>
           </div>
-          <div class="text-center p-3 rounded-2xl bg-gray-50 dark:bg-zinc-900/60 border border-gray-150 dark:border-zinc-800">
-            <i class="fas fa-shield-alt text-gray-500 dark:text-gray-400 mb-1 text-sm block"></i>
-            <span class="text-[11px] font-bold text-gray-600 dark:text-gray-300 block">ثبات ألوان 100%</span>
+          <div class="text-center p-3">
+            <span class="text-xs font-semibold text-ink block">شحن لكل مصر</span>
+            <span class="text-[11px] text-slate-apple block mt-0.5">دفع عند الاستلام</span>
           </div>
         </div>
+
       </div>
 
       <!-- ========================================== -->
-      <!-- RIGHT: PRODUCT BUY BOX (7 cols on lg)       -->
+      <!-- RIGHT: EDITORIAL BUY BOX                   -->
       <!-- ========================================== -->
-      <div class="lg:col-span-6 space-y-6">
+      <div class="lg:col-span-5 space-y-8">
 
-        <!-- Title, Rating, Brand -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-brand font-black uppercase tracking-widest text-gray-400 dark:text-gray-500">VEXIS ATHLETIC WEAR</span>
-            <!-- Stock status -->
-            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> متوفر بالمخزن
-            </span>
-          </div>
-
-          <h1 class="text-2xl md:text-4xl font-black text-gray-950 dark:text-white leading-tight mb-3" x-text="product.name"></h1>
+        <!-- Kicker & Title -->
+        <div class="space-y-2">
+          <p class="text-launch-orange text-xs font-semibold tracking-wide">جديد • NEW RELEASE</p>
+          <h1 class="text-3xl md:text-4xl font-semibold text-ink headline-editorial" x-text="product.name"></h1>
           
-          <!-- Rating Stars & Reviews anchor -->
-          <div class="flex items-center gap-3">
-            <div class="flex items-center text-amber-400 text-sm">
+          <!-- Rating link in Apple Blue -->
+          <div class="flex items-center gap-2 pt-1">
+            <div class="flex text-amber-400 text-xs">
               <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
             </div>
-            <a href="#reviews-section" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white underline underline-offset-4">
-              4.82 من 5 (بناءً على 151 تقييم موثق)
+            <a href="#reviews-section" class="text-apple-blue hover:underline text-xs font-normal">
+              4.82 من 5 (151 تقييم موثق)
             </a>
           </div>
         </div>
 
-        <!-- Price block -->
-        <div class="flex items-baseline gap-4 py-1 border-b border-gray-150 dark:border-zinc-800 pb-5">
-          <div class="text-3xl md:text-4xl font-brand font-black text-black dark:text-white" x-text="calcPrice() + ' EGP'"></div>
+        <!-- Price display -->
+        <div class="py-2 border-y border-hairline-silver flex items-baseline gap-3">
+          <span class="text-3xl font-semibold text-ink" x-text="calcPrice() + ' EGP'"></span>
           <template x-if="product.discount_value > 0">
-            <div class="text-lg font-brand font-bold text-gray-400 line-through" x-text="product.price + ' EGP'"></div>
-          </template>
-          <template x-if="product.discount_value > 0">
-            <span class="bg-red-500 text-white text-[11px] font-black px-2 py-0.5 rounded-md uppercase">وفر الآن</span>
+            <span class="text-base text-slate-apple line-through" x-text="product.price + ' EGP'"></span>
           </template>
         </div>
 
         <!-- Description -->
-        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-medium" x-text="product.description"></p>
+        <p class="text-sm text-slate-apple body-editorial" x-text="product.description"></p>
 
         <!-- ========================================== -->
-        <!-- COLOR SELECTOR                             -->
+        <!-- COLOR SELECTION                            -->
         <!-- ========================================== -->
         <div x-show="colors && colors.length > 0" class="space-y-3">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase tracking-wider text-gray-800 dark:text-gray-200">
-              اللون: <span class="font-bold text-black dark:text-white" x-text="selectedColor || 'اختر اللون'"></span>
-            </span>
+          <div class="text-xs text-slate-apple">
+            اللون — <span class="text-ink font-semibold" x-text="selectedColor || 'اختر اللون'"></span>
           </div>
-
           <div class="flex items-center gap-3 flex-wrap">
             <template x-for="c in colors" :key="c.name">
               <button type="button"
                       @click="selectedColor = c.name; colorError = false"
                       :style="'background-color: ' + (c.hex || '#ffffff')"
                       :title="c.name"
-                      :class="selectedColor === c.name ? 'color-swatch active' : 'color-swatch'"
-                      class="w-10 h-10 rounded-full border-2 border-gray-200 dark:border-zinc-700 flex items-center justify-center shadow-sm relative">
+                      :class="selectedColor === c.name ? 'color-circle active' : 'color-circle'"
+                      class="w-8 h-8 rounded-full border border-hairline-silver flex items-center justify-center relative">
                 <template x-if="selectedColor === c.name">
-                  <i class="fas fa-check text-xs" :class="isLightColor(c.hex || c.name) ? 'text-black' : 'text-white'"></i>
+                  <i class="fas fa-check text-[10px]" :class="isLightColor(c.hex || c.name) ? 'text-ink' : 'text-white'"></i>
                 </template>
               </button>
             </template>
           </div>
-          <p x-show="colorError" class="text-red-500 text-xs font-bold flex items-center gap-1.5 animate-bounce">
-            <i class="fas fa-exclamation-circle"></i> يرجى اختيار اللون أولاً
-          </p>
+          <p x-show="colorError" class="text-launch-orange text-xs">يرجى تحديد اللون للمتابعة</p>
         </div>
 
         <!-- ========================================== -->
-        <!-- SIZE SELECTOR                              -->
+        <!-- SIZE SELECTION                             -->
         <!-- ========================================== -->
-        <div x-show="sizes && sizes.length > 0" class="space-y-3 pt-2">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-black uppercase tracking-wider text-gray-800 dark:text-gray-200">المقاس:</span>
-              <span class="font-brand font-black text-sm text-black dark:text-white" x-text="selectedSize || 'اختر المقاس'"></span>
-              <template x-if="finderRecommendedSize">
-                <span class="bg-zinc-100 dark:bg-zinc-800 text-[10px] font-bold px-2 py-0.5 rounded-full text-zinc-600 dark:text-zinc-300">
-                  المقترح لك: <strong class="text-black dark:text-white" x-text="finderRecommendedSize"></strong>
-                </span>
-              </template>
-            </div>
-            
-            <!-- Open Size Chart Button -->
+        <div x-show="sizes && sizes.length > 0" class="space-y-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-apple">
+              المقاس — <span class="text-ink font-semibold" x-text="selectedSize || 'اختر المقاس'"></span>
+            </span>
             <button type="button"
                     @click="showSizeChart = true"
-                    class="text-xs font-bold text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white underline underline-offset-4 flex items-center gap-1">
-              <i class="fas fa-ruler-horizontal text-xs"></i> جدول مقاسات المنتج
+                    class="text-apple-blue hover:underline text-xs flex items-center gap-1">
+              جدول المقاسات
             </button>
           </div>
 
-          <!-- Size buttons row -->
-          <div class="flex items-center gap-2.5 flex-wrap">
+          <div class="flex items-center gap-2 flex-wrap">
             <template x-for="s in sizes" :key="s">
               <button type="button"
                       @click="selectedSize = s; sizeError = false"
-                      :class="selectedSize === s ? 'size-btn active font-black' : 'size-btn bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-zinc-700 font-bold'"
-                      class="min-w-[56px] h-12 px-4 rounded-xl border text-sm flex flex-col items-center justify-center relative">
-                <span x-text="s" class="font-brand text-sm"></span>
-                <!-- Indicator dot if this is the recommended size -->
-                <template x-if="finderRecommendedSize === s && selectedSize !== s">
-                  <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-cyan-500 rounded-full border-2 border-white dark:border-black"></span>
-                </template>
+                      :class="selectedSize === s ? 'size-pill active' : 'size-pill'"
+                      class="min-w-[52px] h-10 px-4 flex items-center justify-center">
+                <span x-text="s"></span>
               </button>
             </template>
           </div>
-          <p x-show="sizeError" class="text-red-500 text-xs font-bold flex items-center gap-1.5 animate-bounce">
-            <i class="fas fa-exclamation-circle"></i> يرجى اختيار المقاس أولاً
-          </p>
+          <p x-show="sizeError" class="text-launch-orange text-xs">يرجى تحديد المقاس المناسب</p>
         </div>
 
         <!-- ======================================================== -->
-        <!-- "ساعدني أختار مقاسي" CARD (Matching Image 1 Exactly!)    -->
+        <!-- SMART SIZE FINDER (Apple 28px Card - Image 1 Spec)      -->
         <!-- ======================================================== -->
-        <div class="bg-gray-50 dark:bg-zinc-900/90 rounded-2xl p-5 border border-gray-200 dark:border-zinc-800 space-y-4 shadow-sm">
+        <div class="bg-studio-mist rounded-28 p-6 border border-hairline-silver space-y-4">
           
-          <!-- Card Header with Icon -->
-          <div class="flex items-start justify-between">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 rounded-xl bg-black text-white dark:bg-white dark:text-black flex items-center justify-center text-xs">
-                <i class="fas fa-tshirt"></i>
-              </div>
-              <div>
-                <h3 class="font-black text-sm md:text-base text-gray-900 dark:text-white">ساعدني أختار مقاسي</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">الطول · الوزن · شكل اللبس اللي بتحبه</p>
-              </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-ruler-combined text-slate-apple text-xs"></i>
+              <h3 class="font-semibold text-sm text-ink">ساعدني أختار مقاسي</h3>
             </div>
-            <i class="far fa-compass text-gray-400 text-lg"></i>
+            <p class="text-xs text-slate-apple">الطول · الوزن · شكل اللبس اللي بتحبه</p>
           </div>
 
-          <!-- Description text as in user screenshot -->
-          <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+          <p class="text-xs text-slate-apple leading-relaxed">
             نقطة بداية من جدول مقاسات المنتج نفسه. شكل الجسم وقَصّة القطعة بيأثروا كمان على المقاس المناسب.
           </p>
 
-          <!-- Input Fields: Height and Weight -->
+          <!-- Input fields with Apple 980px pill radius -->
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">الطول (سم)</label>
+              <label class="block text-[11px] font-medium text-slate-apple mb-1">الطول (سم)</label>
               <input type="number"
                      x-model="finderHeight"
                      @input="autoCalculateFit()"
-                     placeholder="مثال: 178"
-                     class="clean-input font-brand"
+                     placeholder="178"
+                     class="apple-input w-full text-center text-xs"
                      min="140" max="220"/>
             </div>
             <div>
-              <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">الوزن (كجم)</label>
+              <label class="block text-[11px] font-medium text-slate-apple mb-1">الوزن (كجم)</label>
               <input type="number"
                      x-model="finderWeight"
                      @input="autoCalculateFit()"
-                     placeholder="مثال: 74"
-                     class="clean-input font-brand"
+                     placeholder="74"
+                     class="apple-input w-full text-center text-xs"
                      min="40" max="160"/>
             </div>
           </div>
 
-          <!-- Fit preference selector -->
+          <!-- Fit preference -->
           <div>
-            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">بتحب اللبس يكون إزاي؟</label>
-            <div class="relative">
-              <select x-model="finderFitPreference"
-                      @change="autoCalculateFit()"
-                      class="clean-input appearance-none cursor-pointer pr-4 pl-10 font-bold text-xs md:text-sm">
-                <option value="regular">زي قصة المنتج الأصلية</option>
-                <option value="oversize">أوفر سايز (واسع ومريح)</option>
-                <option value="slim">سليم فيت (مشدود على الجسم)</option>
-              </select>
-              <div class="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 text-xs">
-                <i class="fas fa-chevron-down"></i>
-              </div>
-            </div>
+            <label class="block text-[11px] font-medium text-slate-apple mb-1">بتحب اللبس يكون إزاي؟</label>
+            <select x-model="finderFitPreference"
+                    @change="autoCalculateFit()"
+                    class="apple-input w-full text-xs cursor-pointer bg-white">
+              <option value="regular">زي قصة المنتج الأصلية</option>
+              <option value="oversize">أوفر سايز (واسع ومريح)</option>
+              <option value="slim">سليم فيت (مشدود على الجسم)</option>
+            </select>
           </div>
 
-          <!-- Button: اعرف المقاس المبدئي -->
+          <!-- Calculate Button -->
           <button type="button"
                   @click="calculateFitButton()"
-                  class="w-full bg-black text-white dark:bg-white dark:text-black font-black py-3 rounded-xl text-sm hover:opacity-90 transition flex items-center justify-center gap-2 shadow-sm">
-            <i class="fas fa-magic text-xs"></i> اعرف المقاس المبدئي
+                  class="apple-ink-pill w-full py-2.5 text-xs">
+            اعرف المقاس المبدئي
           </button>
 
-          <!-- Subtext under button as in Image 1 -->
-          <p class="text-[11px] text-gray-400 dark:text-gray-500 text-center font-medium">
+          <p class="text-[11px] text-steel-apple text-center">
             قياساتك بتفضل في الصفحة دي، والمساعد مش بيحفظها.
           </p>
 
-          <!-- Real-time recommendation result display -->
+          <!-- Live Result Box -->
           <div x-show="finderRecommendedSize"
-               x-transition:enter="transition ease-out duration-200"
-               x-transition:enter-start="opacity-0 -translate-y-2"
-               x-transition:enter-end="opacity-100 translate-y-0"
-               class="bg-white dark:bg-zinc-800 rounded-xl p-4 border-2 border-black dark:border-white space-y-2 text-center">
-            <span class="text-xs font-bold text-gray-500 dark:text-gray-400 block">المقاس الأنسب لك بناءً على جدول القياسات:</span>
-            <div class="text-3xl font-brand font-black text-black dark:text-white" x-text="finderRecommendedSize"></div>
-            <p class="text-xs text-gray-600 dark:text-gray-300 font-medium" x-text="finderExplanation"></p>
-            
+               x-transition
+               class="bg-gallery-white rounded-2xl p-4 border border-hairline-silver text-center space-y-2">
+            <span class="text-xs text-slate-apple block">المقاس المقترح لك:</span>
+            <div class="text-3xl font-semibold text-ink" x-text="finderRecommendedSize"></div>
+            <p class="text-[11px] text-slate-apple" x-text="finderExplanation"></p>
             <button type="button"
                     @click="applyRecommendedSize()"
-                    class="mt-2 inline-flex items-center gap-1.5 bg-black text-white dark:bg-white dark:text-black font-black text-xs px-5 py-2 rounded-lg hover:opacity-90 transition">
-              <i class="fas fa-check text-[10px]"></i> اختيار مقاس <span x-text="finderRecommendedSize" class="font-brand font-black ml-1"></span>
+                    class="apple-pricing-pill text-xs px-4 py-1.5 mt-1 inline-flex items-center gap-1">
+              <span>تأكيد اختيار مقاس</span> <span x-text="finderRecommendedSize"></span>
             </button>
           </div>
 
-          <!-- "عن قصة القطعة" Box as shown in user's image 1 -->
-          <div class="pt-3 border-t border-gray-200 dark:border-zinc-800 space-y-2">
+          <!-- Editorial: About the cut -->
+          <div class="pt-3 border-t border-hairline-silver space-y-1 text-xs">
             <div class="flex items-center justify-between">
-              <h4 class="font-bold text-xs text-gray-900 dark:text-gray-100 flex items-center gap-1.5">
-                <i class="fas fa-info-circle text-gray-400"></i> عن قصّة القطعة
-              </h4>
-              <button type="button" @click="showSizeChart = true" class="text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white flex items-center gap-1">
-                <i class="fas fa-ruler"></i> جدول مقاسات المنتج
-              </button>
+              <span class="font-semibold text-ink">عن قصّة القطعة</span>
+              <button type="button" @click="showSizeChart = true" class="text-apple-blue hover:underline text-[11px]">جدول القياسات</button>
             </div>
-            <p class="text-[11.5px] text-gray-500 dark:text-gray-400 leading-relaxed font-mono">
+            <p class="text-[11.5px] text-slate-apple font-mono leading-relaxed">
               body-hugging compression cut through the chest and waist. Choose this style for a defined silhouette; use the size guide to select your fit rather than relying on your usual T-shirt size.
             </p>
           </div>
@@ -607,54 +523,46 @@ body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea
         </div>
 
         <!-- ========================================== -->
-        <!-- QUANTITY & CTA BUTTONS                     -->
+        <!-- QUANTITY & CTA PILLS                       -->
         <!-- ========================================== -->
         <div class="space-y-4 pt-2">
           
-          <div class="flex items-center gap-4">
-            <div class="text-xs font-black uppercase tracking-wider text-gray-800 dark:text-gray-200">الكمية:</div>
-            
-            <div class="flex items-center border border-gray-300 dark:border-zinc-700 rounded-xl overflow-hidden bg-white dark:bg-zinc-900">
+          <!-- Quantity Row -->
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-slate-apple">الكمية</span>
+            <div class="flex items-center border border-hairline-silver rounded-full overflow-hidden bg-studio-mist">
               <button type="button"
                       @click="qty = Math.max(1, qty - 1)"
-                      class="w-10 h-10 flex items-center justify-center font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition">
+                      class="w-9 h-8 flex items-center justify-center text-slate-apple hover:text-ink transition">
                 −
               </button>
-              <span class="w-10 text-center font-brand font-black text-sm text-gray-900 dark:text-white" x-text="qty"></span>
+              <span class="w-8 text-center text-xs font-semibold text-ink" x-text="qty"></span>
               <button type="button"
                       @click="qty++"
-                      class="w-10 h-10 flex items-center justify-center font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition">
+                      class="w-9 h-8 flex items-center justify-center text-slate-apple hover:text-ink transition">
                 +
               </button>
             </div>
-
-            <!-- Total live calculation -->
-            <div class="mr-auto text-left">
-              <span class="text-xs text-gray-400 font-semibold block">الإجمالي</span>
-              <span class="text-xl font-brand font-black text-black dark:text-white" x-text="(calcPrice() * qty) + ' EGP'"></span>
-            </div>
           </div>
 
-          <!-- Add to cart & Buy now -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <button type="button"
-                    @click="addToCart()"
-                    class="btn-brand-secondary font-black py-4 px-6 rounded-2xl text-sm md:text-base flex items-center justify-center gap-2">
-              <i class="fas fa-shopping-bag"></i> أضف للسلة
-            </button>
+          <!-- Primary & Secondary CTA Pills -->
+          <div class="space-y-2 pt-1">
             <button type="button"
                     @click="buyNow()"
-                    class="btn-brand-primary font-black py-4 px-6 rounded-2xl text-sm md:text-base flex items-center justify-center gap-2">
-              <i class="fas fa-bolt"></i> اشتري الآن
+                    class="apple-pricing-pill w-full py-3.5 text-sm flex items-center justify-center gap-2">
+              <i class="fas fa-bolt text-xs"></i> اشتري الآن
+            </button>
+            <button type="button"
+                    @click="addToCart()"
+                    class="apple-explore-pill w-full py-3 text-sm flex items-center justify-center gap-2">
+              <i class="fas fa-shopping-bag text-xs"></i> أضف إلى حقيبة التسوق
             </button>
           </div>
 
-          <!-- Trust Badges Strip -->
-          <div class="flex items-center gap-2 flex-wrap pt-2">
-            <div class="trust-badge"><i class="fas fa-truck text-xs text-gray-700 dark:text-gray-300"></i> شحن سريع لمصر كلها</div>
-            <div class="trust-badge"><i class="fas fa-shield-alt text-xs text-gray-700 dark:text-gray-300"></i> خامات قطنية بريميوم</div>
-            <div class="trust-badge"><i class="fas fa-exchange-alt text-xs text-gray-700 dark:text-gray-300"></i> استبدال مرن وسهل</div>
-            <div class="trust-badge"><i class="fas fa-hand-holding-usd text-xs text-gray-700 dark:text-gray-300"></i> الدفع عند الاستلام</div>
+          <!-- Subtle Trust Footnote -->
+          <div class="text-[11px] text-slate-apple text-center space-y-1 pt-2">
+            <div>شحن لجميع المحافظات • دفع عند الاستلام • إمكانية المعاينة قبل الاستلام</div>
+            <div class="text-steel-apple">ضمان استبدال واسترجاع خلال 14 يوماً</div>
           </div>
 
         </div>
@@ -663,189 +571,136 @@ body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea
 
     </div>
   </template>
+</main>
 
-  <!-- Empty state fallback -->
-  <template x-if="!product || !product.id">
-    <div class="text-center py-24 space-y-4">
-      <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-zinc-900 mx-auto flex items-center justify-center text-gray-400 text-2xl">
-        <i class="fas fa-box-open"></i>
-      </div>
-      <h2 class="text-xl font-black text-gray-900 dark:text-white">لم يتم تحديد المنتج</h2>
-      <p class="text-xs text-gray-500 font-semibold">يرجى اختيار منتج من صفحة المنتجات الرئيسية</p>
-      <a href="index.html" class="inline-block bg-black text-white dark:bg-white dark:text-black font-black text-xs px-6 py-3 rounded-full hover:opacity-90 transition">
-        تصفح كل المنتجات
-      </a>
-    </div>
-  </template>
-
-  <!-- ======================================================== -->
-  <!-- CUSTOMER REVIEWS SECTION (Matching Image 2 Exactly!)     -->
-  <!-- ======================================================== -->
-  <section id="reviews-section" class="mt-20 pt-12 border-t border-gray-200 dark:border-zinc-800 space-y-10">
+<!-- ======================================================== -->
+<!-- CUSTOMER REVIEWS (Apple Studio Mist Highlights Stage)    -->
+<!-- ======================================================== -->
+<section id="reviews-section" class="bg-studio-mist py-16 md:py-24 border-t border-hairline-silver mt-16">
+  <div class="max-w-6xl mx-auto px-4 space-y-12">
     
-    <!-- Section Title & Review Summary Header -->
-    <div class="space-y-6">
+    <!-- Stage Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-hairline-silver pb-6">
+      <div>
+        <span class="text-xs text-slate-apple uppercase tracking-wider block mb-1">Ratings & Reviews</span>
+        <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">آراء العملاء — CUSTOMER REVIEWS</h2>
+      </div>
+
+      <button type="button"
+              @click="showWriteReviewModal = true"
+              class="apple-pricing-pill text-xs px-5 py-2.5 self-start md:self-auto">
+        Write a review • كتابة تقييم
+      </button>
+    </div>
+
+    <!-- Rating Summary 28px White Card -->
+    <div class="bg-gallery-white rounded-28 border border-hairline-silver p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
       
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <!-- Big Score -->
+      <div class="md:col-span-4 text-center md:text-right border-b md:border-b-0 md:border-l border-hairline-silver pb-6 md:pb-0 md:pl-8 space-y-2">
+        <div class="text-5xl font-semibold text-ink">4.82</div>
+        <div class="flex items-center justify-center md:justify-start text-amber-400 text-sm gap-1">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+        </div>
+        <div class="text-xs text-slate-apple">من 5 نجوم (بناءً على 151 تقييم)</div>
+      </div>
+
+      <!-- Star Distribution Bars -->
+      <div class="md:col-span-8 space-y-2 text-xs">
+        <!-- 5 Stars -->
+        <div class="flex items-center gap-3">
+          <span class="w-12 text-slate-apple font-mono">5 نجوم</span>
+          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
+            <div class="bg-ink h-full rounded-full" style="width: 77%"></div>
+          </div>
+          <span class="w-8 text-left text-steel-apple font-mono">116</span>
+        </div>
+        <!-- 4 Stars -->
+        <div class="flex items-center gap-3">
+          <span class="w-12 text-slate-apple font-mono">4 نجوم</span>
+          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
+            <div class="bg-ink h-full rounded-full" style="width: 12%"></div>
+          </div>
+          <span class="w-8 text-left text-steel-apple font-mono">18</span>
+        </div>
+        <!-- 3 Stars -->
+        <div class="flex items-center gap-3">
+          <span class="w-12 text-slate-apple font-mono">3 نجوم</span>
+          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
+            <div class="bg-ink h-full rounded-full" style="width: 2%"></div>
+          </div>
+          <span class="w-8 text-left text-steel-apple font-mono">2</span>
+        </div>
+        <!-- 2 Stars -->
+        <div class="flex items-center gap-3">
+          <span class="w-12 text-slate-apple font-mono">نجمتان</span>
+          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
+            <div class="bg-ink h-full rounded-full" style="width: 2%"></div>
+          </div>
+          <span class="w-8 text-left text-steel-apple font-mono">3</span>
+        </div>
+        <!-- 1 Star -->
+        <div class="flex items-center gap-3">
+          <span class="w-12 text-slate-apple font-mono">نجمة</span>
+          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
+            <div class="bg-ink h-full rounded-full" style="width: 8%"></div>
+          </div>
+          <span class="w-8 text-left text-steel-apple font-mono">12</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Verified Authenticity Badges (Image 2) -->
+    <div class="flex items-center justify-center gap-6 flex-wrap">
+      
+      <div class="flex items-center gap-3 bg-gallery-white px-5 py-2.5 rounded-full border border-hairline-silver text-xs">
+        <i class="fas fa-shield-check text-emerald-600 text-sm"></i>
         <div>
-          <h2 class="font-brand font-black text-2xl md:text-3xl uppercase tracking-widest text-black dark:text-white">CUSTOMER REVIEWS</h2>
-          <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 mt-1">تجارب وتقييمات العملاء الحقيقية بعد الشراء والاستخدام</p>
+          <span class="font-semibold text-ink block">100% AUTHENTICITY</span>
+          <span class="text-[10px] text-slate-apple">92.7 Verified Reviews</span>
         </div>
-
-        <!-- Write a Review Button (Matches black button in Image 2) -->
-        <button type="button"
-                @click="showWriteReviewModal = true"
-                class="bg-black text-white dark:bg-white dark:text-black font-black text-sm px-6 py-3.5 rounded-xl hover:opacity-90 transition flex items-center justify-center gap-2 self-start md:self-auto shadow-sm">
-          <i class="far fa-edit"></i> Write a review
-        </button>
       </div>
 
-      <!-- Rating Score & Breakdown Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-gray-50 dark:bg-zinc-900/60 p-6 md:p-8 rounded-3xl border border-gray-150 dark:border-zinc-800">
-        
-        <!-- Score Column -->
-        <div class="md:col-span-4 text-center md:text-right space-y-2 border-b md:border-b-0 md:border-l border-gray-200 dark:border-zinc-800 pb-6 md:pb-0 md:pl-6">
-          <div class="flex items-center justify-center md:justify-start gap-3">
-            <span class="text-4xl md:text-5xl font-brand font-black text-black dark:text-white">4.82</span>
-            <div>
-              <div class="flex text-amber-400 text-sm">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-              </div>
-              <span class="text-xs text-gray-400 font-semibold">out of 5</span>
-            </div>
-          </div>
-          <div class="flex items-center justify-center md:justify-start gap-1.5 text-xs text-gray-500 dark:text-gray-400 font-semibold">
-            <span>Based on 151 reviews</span>
-            <i class="fas fa-check-circle text-emerald-500 text-xs"></i>
-          </div>
+      <div class="flex items-center gap-3 bg-gallery-white px-5 py-2.5 rounded-full border border-hairline-silver text-xs">
+        <i class="fas fa-medal text-cyan-600 text-sm"></i>
+        <div>
+          <span class="font-semibold text-ink block">PLATINUM TRANSPARENCY</span>
+          <span class="text-[10px] text-slate-apple">99.3% Verified Transparency</span>
         </div>
-
-        <!-- Star Distribution Bars -->
-        <div class="md:col-span-8 space-y-2 text-xs font-bold text-gray-600 dark:text-gray-300">
-          <!-- 5 Stars -->
-          <div class="flex items-center gap-3">
-            <span class="w-14 text-amber-500 flex items-center gap-1 font-brand">★★★★★</span>
-            <div class="flex-1 bg-gray-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-              <div class="bg-black dark:bg-white h-full rounded-full" style="width: 77%"></div>
-            </div>
-            <span class="w-8 text-left font-brand font-semibold text-gray-400">116</span>
-          </div>
-          <!-- 4 Stars -->
-          <div class="flex items-center gap-3">
-            <span class="w-14 text-amber-500 flex items-center gap-1 font-brand">★★★★☆</span>
-            <div class="flex-1 bg-gray-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-              <div class="bg-black dark:bg-white h-full rounded-full" style="width: 12%"></div>
-            </div>
-            <span class="w-8 text-left font-brand font-semibold text-gray-400">18</span>
-          </div>
-          <!-- 3 Stars -->
-          <div class="flex items-center gap-3">
-            <span class="w-14 text-amber-500 flex items-center gap-1 font-brand">★★★☆☆</span>
-            <div class="flex-1 bg-gray-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-              <div class="bg-black dark:bg-white h-full rounded-full" style="width: 2%"></div>
-            </div>
-            <span class="w-8 text-left font-brand font-semibold text-gray-400">2</span>
-          </div>
-          <!-- 2 Stars -->
-          <div class="flex items-center gap-3">
-            <span class="w-14 text-amber-500 flex items-center gap-1 font-brand">★★☆☆☆</span>
-            <div class="flex-1 bg-gray-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-              <div class="bg-black dark:bg-white h-full rounded-full" style="width: 2%"></div>
-            </div>
-            <span class="w-8 text-left font-brand font-semibold text-gray-400">3</span>
-          </div>
-          <!-- 1 Star -->
-          <div class="flex items-center gap-3">
-            <span class="w-14 text-amber-500 flex items-center gap-1 font-brand">★☆☆☆☆</span>
-            <div class="flex-1 bg-gray-200 dark:bg-zinc-800 h-2.5 rounded-full overflow-hidden">
-              <div class="bg-black dark:bg-white h-full rounded-full" style="width: 8%"></div>
-            </div>
-            <span class="w-8 text-left font-brand font-semibold text-gray-400">12</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Trust Badges (Matching Laurel wreath seals from Image 2) -->
-      <div class="flex items-center justify-center gap-4 md:gap-8 flex-wrap pt-2">
-        
-        <!-- Authenticity Badge -->
-        <div class="verified-laurel-badge group relative cursor-help">
-          <i class="fas fa-award text-base"></i>
-          <div class="text-right">
-            <div class="text-[10px] uppercase tracking-wider font-brand">100% AUTHENTICITY</div>
-            <div class="text-[11px] font-black">92.7 Verified <i class="fas fa-check-circle text-[10px]"></i></div>
-          </div>
-        </div>
-
-        <!-- Platinum Transparency Badge -->
-        <div class="verified-laurel-badge group relative cursor-help">
-          <i class="fas fa-certificate text-base"></i>
-          <div class="text-right">
-            <div class="text-[10px] uppercase tracking-wider font-brand">PLATINUM TRANSPARENCY</div>
-            <div class="text-[11px] font-black">99.3 Verified <i class="fas fa-check-circle text-[10px]"></i></div>
-          </div>
-          <!-- Tooltip from image 2 -->
-          <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] py-1 px-3 rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none shadow-lg">
-            Platinum Transparent Shop. Published at least 99% of verified reviews received in total
-          </div>
-        </div>
-
       </div>
 
     </div>
 
-    <!-- Review Filter Controls -->
-    <div class="flex items-center justify-between border-b border-gray-150 dark:border-zinc-800 pb-4">
-      <span class="text-xs font-bold text-gray-500 dark:text-gray-400" x-text="reviewsList.length + ' تقييم'"></span>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-gray-400">الترتيب:</span>
-        <select x-model="reviewSort" class="bg-transparent text-xs font-bold text-gray-700 dark:text-gray-300 outline-none cursor-pointer">
-          <option value="recent">Most Recent (الأحدث)</option>
-          <option value="highest">Highest Rating (الأعلى)</option>
-          <option value="lowest">Lowest Rating (الأقل)</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Review Cards List (Includes Image 2 Exact Reviews!) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- Reviews Grid (28px White Cards, shadowless) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <template x-for="(rev, idx) in sortedReviews" :key="idx">
-        <div class="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-gray-150 dark:border-zinc-800 shadow-sm flex flex-col justify-between space-y-4 hover:shadow-md transition">
+        <div class="bg-gallery-white rounded-28 border border-hairline-silver p-6 flex flex-col justify-between space-y-4">
           
           <div class="space-y-3">
-            <!-- Stars & Date -->
             <div class="flex items-center justify-between">
-              <div class="text-amber-400 text-xs flex gap-0.5 font-brand">
+              <div class="text-amber-400 text-xs flex gap-0.5">
                 <template x-for="n in 5">
                   <i :class="n <= rev.rating ? 'fas fa-star' : 'far fa-star'"></i>
                 </template>
               </div>
-              <span class="text-[11px] text-gray-400 font-brand font-semibold" x-text="rev.date"></span>
+              <span class="text-[11px] text-steel-apple font-mono" x-text="rev.date"></span>
             </div>
 
-            <!-- Author & Verified Badge -->
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-[10px] text-gray-600 dark:text-gray-300">
-                <i class="far fa-user"></i>
-              </div>
-              <span class="text-xs font-bold text-gray-900 dark:text-white" x-text="rev.author"></span>
-              <span x-show="rev.verified" class="bg-black text-white dark:bg-white dark:text-black text-[9px] font-black px-1.5 py-0.5 rounded tracking-wider">
+            <div class="flex items-center gap-2 text-xs">
+              <span class="font-semibold text-ink" x-text="rev.author"></span>
+              <span x-show="rev.verified" class="text-[10px] text-slate-apple bg-studio-mist px-2 py-0.5 rounded-full border border-hairline-silver">
                 Verified
               </span>
             </div>
 
-            <!-- Review Title -->
-            <h4 class="font-black text-sm text-gray-950 dark:text-white leading-snug" x-text="rev.title"></h4>
-
-            <!-- Review Body -->
-            <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-medium" x-text="rev.content"></p>
+            <h4 class="font-semibold text-sm text-ink" x-text="rev.title"></h4>
+            <p class="text-xs text-slate-apple leading-relaxed body-editorial" x-text="rev.content"></p>
           </div>
 
-          <!-- Bottom micro-interaction -->
-          <div class="pt-3 border-t border-gray-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] text-gray-400">
+          <div class="pt-3 border-t border-hairline-silver flex items-center justify-between text-[11px] text-steel-apple">
             <span>مشتري موثق للقطعة</span>
-            <button @click="rev.helpful = (rev.helpful || 0) + 1" class="hover:text-black dark:hover:text-white transition flex items-center gap-1">
+            <button @click="rev.helpful = (rev.helpful || 0) + 1" class="hover:text-ink transition flex items-center gap-1">
               <i class="far fa-thumbs-up"></i> مفيد (<span x-text="rev.helpful || 0"></span>)
             </button>
           </div>
@@ -854,133 +709,124 @@ body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea
       </template>
     </div>
 
-  </section>
-
-</main>
+  </div>
+</section>
 
 <!-- ======================================================== -->
-<!-- SIZE CHART MODAL (Image 4 Exact Data & Brand Layout)     -->
+<!-- SIZE CHART MODAL (Apple 28px Gallery Modal - Image 4)    -->
 <!-- ======================================================== -->
 <div x-show="showSizeChart"
-     x-transition:enter="transition ease-out duration-200"
-     x-transition:enter-start="opacity-0"
-     x-transition:enter-end="opacity-100"
-     x-transition:leave="transition ease-in duration-150"
-     x-transition:leave-start="opacity-100"
-     x-transition:leave-end="opacity-0"
-     class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-5"
+     x-transition.opacity.duration.150ms
+     class="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
      style="display:none;"
      @click.self="showSizeChart = false">
 
-  <!-- Modal Content Box -->
-  <div class="bg-black text-white max-w-xl w-full rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden modal-fade-scale" @click.stop>
+  <div class="bg-gallery-white text-ink max-w-lg w-full rounded-28 border border-hairline-silver shadow-2xl overflow-hidden modal-enter-apple" @click.stop>
     
-    <!-- Header -->
-    <div class="flex items-center justify-between px-6 py-5 border-b border-zinc-800/80">
-      <div class="text-right">
-        <h3 class="font-brand font-black text-xl tracking-widest uppercase">VEXIS</h3>
-        <p class="text-[10px] font-brand tracking-widest text-zinc-400 uppercase">BE VEXIS</p>
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between px-6 py-4 border-b border-hairline-silver">
+      <div>
+        <h3 class="font-semibold text-base text-ink tracking-widest uppercase">VEXIS</h3>
+        <p class="text-[10px] text-slate-apple tracking-widest uppercase">BE VEXIS • SIZE GUIDE</p>
       </div>
 
       <button type="button"
               @click="showSizeChart = false"
-              class="w-9 h-9 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800 flex items-center justify-center transition">
-        <i class="fas fa-times text-sm"></i>
+              class="w-8 h-8 rounded-full bg-studio-mist hover:bg-control-gray flex items-center justify-center text-slate-apple hover:text-ink transition">
+        <i class="fas fa-times text-xs"></i>
       </button>
     </div>
 
-    <!-- Table Container (Exact Layout from Image 4) -->
+    <!-- Table Body (Image 4 Data) -->
     <div class="p-6 space-y-4">
       
-      <div class="overflow-hidden rounded-2xl border border-zinc-800">
-        <table class="w-full text-center border-collapse">
+      <div class="overflow-hidden rounded-2xl border border-hairline-silver">
+        <table class="w-full text-center border-collapse text-xs">
           <thead>
-            <tr class="bg-zinc-900/90 border-b border-zinc-800 text-xs">
-              <th class="py-3 px-3 border-l border-zinc-800">
-                <div class="font-bold text-white text-xs">المقاس</div>
-                <div class="font-brand font-semibold text-[10px] text-zinc-400 tracking-wider">SIZE</div>
+            <tr class="bg-studio-mist border-b border-hairline-silver text-[11px]">
+              <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
+                <div>المقاس</div>
+                <div class="text-[9px] text-steel-apple uppercase">SIZE</div>
               </th>
-              <th class="py-3 px-3 border-l border-zinc-800">
-                <div class="font-bold text-white text-xs">العرض (سم)</div>
-                <div class="font-brand font-semibold text-[10px] text-zinc-400 tracking-wider">WIDTH (CM)</div>
+              <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
+                <div>العرض (سم)</div>
+                <div class="text-[9px] text-steel-apple uppercase">WIDTH (CM)</div>
               </th>
-              <th class="py-3 px-3 border-l border-zinc-800">
-                <div class="font-bold text-white text-xs">الطول (سم)</div>
-                <div class="font-brand font-semibold text-[10px] text-zinc-400 tracking-wider">LENGTH (CM)</div>
+              <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
+                <div>الطول (سم)</div>
+                <div class="text-[9px] text-steel-apple uppercase">LENGTH (CM)</div>
               </th>
-              <th class="py-3 px-3">
-                <div class="font-bold text-white text-xs">الوزن المقترح (كجم)</div>
-                <div class="font-brand font-semibold text-[10px] text-zinc-400 tracking-wider">WEIGHT (KG)</div>
+              <th class="py-3 px-3 font-semibold text-ink">
+                <div>الوزن المقترح (كجم)</div>
+                <div class="text-[9px] text-steel-apple uppercase">WEIGHT (KG)</div>
               </th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-zinc-800 font-brand text-sm">
+          <tbody class="divide-y divide-hairline-silver font-mono text-xs">
             <!-- S -->
-            <tr :class="finderRecommendedSize === 'S' ? 'bg-zinc-800/80 font-black' : 'hover:bg-zinc-900/50'" class="transition">
-              <td class="py-3.5 px-3 border-l border-zinc-800 font-black text-base">
+            <tr :class="finderRecommendedSize === 'S' ? 'bg-studio-mist font-bold' : ''">
+              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 S
-                <span x-show="finderRecommendedSize === 'S'" class="block text-[9px] text-emerald-400 font-cairo">✓ مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'S'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
               </td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">48.5</td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">66.5</td>
-              <td class="py-3.5 px-3 text-zinc-200">50 – 60</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">48.5</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">66.5</td>
+              <td class="py-3 px-3">50 – 60</td>
             </tr>
             <!-- M -->
-            <tr :class="finderRecommendedSize === 'M' ? 'bg-zinc-800/80 font-black' : 'hover:bg-zinc-900/50'" class="transition">
-              <td class="py-3.5 px-3 border-l border-zinc-800 font-black text-base">
+            <tr :class="finderRecommendedSize === 'M' ? 'bg-studio-mist font-bold' : ''">
+              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 M
-                <span x-show="finderRecommendedSize === 'M'" class="block text-[9px] text-emerald-400 font-cairo">✓ مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'M'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
               </td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">51</td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">68</td>
-              <td class="py-3.5 px-3 text-zinc-200">60 – 70</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">51</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">68</td>
+              <td class="py-3 px-3">60 – 70</td>
             </tr>
             <!-- L -->
-            <tr :class="finderRecommendedSize === 'L' ? 'bg-zinc-800/80 font-black' : 'hover:bg-zinc-900/50'" class="transition">
-              <td class="py-3.5 px-3 border-l border-zinc-800 font-black text-base">
+            <tr :class="finderRecommendedSize === 'L' ? 'bg-studio-mist font-bold' : ''">
+              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 L
-                <span x-show="finderRecommendedSize === 'L'" class="block text-[9px] text-emerald-400 font-cairo">✓ مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'L'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
               </td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">53.5</td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">69.5</td>
-              <td class="py-3.5 px-3 text-zinc-200">70 – 80</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">53.5</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">69.5</td>
+              <td class="py-3 px-3">70 – 80</td>
             </tr>
             <!-- XL -->
-            <tr :class="finderRecommendedSize === 'XL' ? 'bg-zinc-800/80 font-black' : 'hover:bg-zinc-900/50'" class="transition">
-              <td class="py-3.5 px-3 border-l border-zinc-800 font-black text-base">
+            <tr :class="finderRecommendedSize === 'XL' ? 'bg-studio-mist font-bold' : ''">
+              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 XL
-                <span x-show="finderRecommendedSize === 'XL'" class="block text-[9px] text-emerald-400 font-cairo">✓ مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'XL'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
               </td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">56</td>
-              <td class="py-3.5 px-3 border-l border-zinc-800 text-zinc-200">71</td>
-              <td class="py-3.5 px-3 text-zinc-200">80 – 90</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">56</td>
+              <td class="py-3 px-3 border-l border-hairline-silver">71</td>
+              <td class="py-3 px-3">80 – 90</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Quick select action if recommended size exists -->
-      <template x-if="finderRecommendedSize && sizes.includes(finderRecommendedSize)">
-        <div class="flex items-center justify-between bg-zinc-900 p-3 rounded-xl border border-zinc-800">
-          <span class="text-xs text-zinc-300">المقاس المقترح بناءً على بياناتك: <strong class="text-white" x-text="finderRecommendedSize"></strong></span>
+      <template x-if="finderRecommendedSize">
+        <div class="flex items-center justify-between bg-studio-mist p-3 rounded-xl border border-hairline-silver text-xs">
+          <span>المقاس الأنسب لك: <strong class="text-ink" x-text="finderRecommendedSize"></strong></span>
           <button type="button"
                   @click="applyRecommendedSize(); showSizeChart = false;"
-                  class="bg-white text-black font-black text-xs px-4 py-1.5 rounded-lg hover:bg-zinc-200 transition">
-            تأكيد الاختيار
+                  class="apple-pricing-pill text-xs px-3 py-1">
+            اختيار هذا المقاس
           </button>
         </div>
       </template>
 
-      <!-- Note -->
-      <p class="text-[11px] text-zinc-500 text-center leading-relaxed">
-        * القياسات مأخوذة بشكل مسطح على القطعة نفسها. إذا كنت تفضل مقاساً مريحاً واسعاً، ننصح باختيار مقاس أكبر.
+      <p class="text-[11px] text-slate-apple text-center leading-relaxed">
+        * المقاسات مأخوذة بشكل مسطح على القطعة نفسها. في حال كنت بين مقاسين، نوصي باختيار المقاس الأكبر.
       </p>
 
     </div>
 
     <!-- Modal Footer -->
-    <div class="px-6 py-4 bg-zinc-950 border-t border-zinc-900 text-center">
-      <span class="font-brand font-black text-xs tracking-widest text-zinc-600 uppercase">BE VEXIS</span>
+    <div class="px-6 py-3 bg-studio-mist border-t border-hairline-silver text-center">
+      <span class="text-[11px] text-steel-apple tracking-widest uppercase">BE VEXIS</span>
     </div>
 
   </div>
@@ -990,31 +836,25 @@ body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea
 <!-- WRITE REVIEW MODAL                                       -->
 <!-- ======================================================== -->
 <div x-show="showWriteReviewModal"
-     x-transition:enter="transition ease-out duration-200"
-     x-transition:enter-start="opacity-0"
-     x-transition:enter-end="opacity-100"
-     x-transition:leave="transition ease-in duration-150"
-     x-transition:leave-start="opacity-100"
-     x-transition:leave-end="opacity-0"
-     class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+     x-transition.opacity.duration.150ms
+     class="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
      style="display:none;"
      @click.self="showWriteReviewModal = false">
 
-  <div class="bg-white dark:bg-zinc-900 text-gray-900 dark:text-white max-w-md w-full rounded-3xl border border-gray-200 dark:border-zinc-800 shadow-2xl p-6 space-y-5 modal-fade-scale" @click.stop>
+  <div class="bg-gallery-white text-ink max-w-md w-full rounded-28 border border-hairline-silver shadow-2xl p-6 space-y-4 modal-enter-apple" @click.stop>
     
-    <div class="flex items-center justify-between border-b border-gray-150 dark:border-zinc-800 pb-4">
-      <h3 class="font-black text-lg">كتابة تقييم للمنتج</h3>
-      <button @click="showWriteReviewModal = false" class="text-gray-400 hover:text-black dark:hover:text-white">
-        <i class="fas fa-times"></i>
+    <div class="flex items-center justify-between border-b border-hairline-silver pb-3">
+      <h3 class="font-semibold text-sm text-ink">كتابة تقييم للمنتج</h3>
+      <button @click="showWriteReviewModal = false" class="text-slate-apple hover:text-ink">
+        <i class="fas fa-times text-xs"></i>
       </button>
     </div>
 
-    <form @submit.prevent="submitReview()" class="space-y-4">
+    <form @submit.prevent="submitReview()" class="space-y-3">
       
-      <!-- Rating Stars Picker -->
       <div>
-        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">التقييم العام</label>
-        <div class="flex gap-2 text-2xl text-amber-400 cursor-pointer">
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">التقييم العام</label>
+        <div class="flex gap-2 text-xl text-amber-400 cursor-pointer">
           <template x-for="n in 5" :key="n">
             <i :class="n <= newReviewRating ? 'fas fa-star' : 'far fa-star'"
                @click="newReviewRating = n"
@@ -1023,25 +863,22 @@ body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea
         </div>
       </div>
 
-      <!-- Reviewer Name -->
       <div>
-        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">الاسم</label>
-        <input type="text" x-model="newReviewAuthor" placeholder="مثال: عمر خليل أو Anonymous" required class="clean-input text-xs"/>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">الاسم</label>
+        <input type="text" x-model="newReviewAuthor" placeholder="مثال: عمر خليل أو Anonymous" required class="apple-input w-full text-xs"/>
       </div>
 
-      <!-- Review Title -->
       <div>
-        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">عنوان التقييم</label>
-        <input type="text" x-model="newReviewTitle" placeholder="مثال: خامة ممتازة وتوصيل سريع" required class="clean-input text-xs"/>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">عنوان التقييم</label>
+        <input type="text" x-model="newReviewTitle" placeholder="مثال: خامة ممتازة ومريحة" required class="apple-input w-full text-xs"/>
       </div>
 
-      <!-- Review Body -->
       <div>
-        <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5">رأيك وتفاصيل تجربتك</label>
-        <textarea x-model="newReviewContent" rows="3" placeholder="اكتب رأيك بصراحة عن جودة القطعة والمقاس..." required class="clean-input text-xs resize-none"></textarea>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">تفاصيل تجربتك</label>
+        <textarea x-model="newReviewContent" rows="3" placeholder="اكتب رأيك عن جودة الخامة والمقاس..." required class="apple-input w-full text-xs rounded-2xl resize-none"></textarea>
       </div>
 
-      <button type="submit" class="w-full bg-black text-white dark:bg-white dark:text-black font-black py-3 rounded-xl text-sm hover:opacity-90 transition">
+      <button type="submit" class="apple-pricing-pill w-full py-2.5 text-xs">
         نشر التقييم
       </button>
 
@@ -1053,19 +890,14 @@ body, nav, section, div, a, span, p, h1, h2, h3, button, input, select, textarea
 <!-- TOAST NOTIFICATION                             -->
 <!-- ============================================== -->
 <div x-show="toast"
-     x-transition:enter="transition ease-out duration-200"
-     x-transition:enter-start="opacity-0 translate-y-4"
-     x-transition:enter-end="opacity-100 translate-y-0"
-     x-transition:leave="transition ease-in duration-150"
-     x-transition:leave-start="opacity-100"
-     x-transition:leave-end="opacity-0 translate-y-2"
-     class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-black text-white dark:bg-white dark:text-black font-bold px-6 py-3 rounded-full shadow-2xl z-50 text-sm flex items-center gap-2 border border-zinc-700">
-  <i class="fas fa-check-circle text-emerald-400 dark:text-emerald-600"></i>
+     x-transition.opacity.duration.200ms
+     class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-ink text-gallery-white text-xs font-medium px-5 py-2.5 rounded-full shadow-lg z-50 flex items-center gap-2">
+  <i class="fas fa-check-circle text-emerald-400"></i>
   <span x-text="toastMessage"></span>
 </div>
 
 <!-- ============================================== -->
-<!-- ALPINE.JS APPLICATION LOGIC                    -->
+<!-- ALPINE.JS LOGIC                                -->
 <!-- ============================================== -->
 <script>
 function productPage() {
@@ -1078,7 +910,6 @@ function productPage() {
     colorError: false,
     showSizeChart: false,
     showWriteReviewModal: false,
-    openImageModal: false,
     toast: false,
     toastMessage: '',
     cartCount: 0,
@@ -1095,7 +926,6 @@ function productPage() {
     finderExplanation: '',
 
     // Reviews state (Image 2)
-    reviewSort: 'recent',
     newReviewRating: 5,
     newReviewAuthor: '',
     newReviewTitle: '',
@@ -1136,34 +966,22 @@ function productPage() {
         title: 'مقاس مظبوط بالملي',
         content: 'استخدمت حاسبة المقاسات وطلع المقاس L مناسب جداً لطولي ووزني زي ما مكتوب في الشارت.',
         helpful: 11
-      },
-      {
-        rating: 5,
-        date: '08/04/2026',
-        author: 'Karim Youssef',
-        verified: true,
-        title: 'أفضل تيشرت جيم مصري',
-        content: 'القصة tight على الصدر وواسعة شوية عند البطن، بتبرز العضلات بشكل احترافي.',
-        helpful: 8
       }
     ],
 
     init() {
-      // 1. Load product from localStorage
       try {
         this.product = JSON.parse(localStorage.getItem('vexis_product') || '{}');
       } catch (e) {
         this.product = {};
       }
 
-      // Sizes setup (Ensure standard sizes fallback if empty)
       if (Array.isArray(this.product.sizes) && this.product.sizes.length) {
         this.sizes = this.product.sizes;
       } else {
         this.sizes = ['S', 'M', 'L', 'XL'];
       }
 
-      // Colors setup
       if (Array.isArray(this.product.colors) && this.product.colors.length) {
         this.colors = this.product.colors;
         if (this.colors.length > 0) {
@@ -1171,7 +989,6 @@ function productPage() {
         }
       }
 
-      // Images setup
       const gallery = Array.isArray(this.product.gallery) ? this.product.gallery.filter(Boolean) : [];
       const mainImg = this.product.image_url || null;
       const seen = new Set();
@@ -1183,10 +1000,8 @@ function productPage() {
       this.allImages = imgs.length ? imgs : ['logo.jpeg'];
       this.activeImage = this.allImages[0];
 
-      // Cart count
       this.cartCount = this.getCart().length;
 
-      // Load custom reviews from localStorage if any
       try {
         const savedReviews = JSON.parse(localStorage.getItem('vexis_user_reviews') || '[]');
         if (Array.isArray(savedReviews) && savedReviews.length) {
@@ -1232,7 +1047,7 @@ function productPage() {
 
       localStorage.setItem('vexis_cart', JSON.stringify(cart));
       this.cartCount = cart.length;
-      this.showToast('✅ تمت الإضافة إلى السلة بنجاح!');
+      this.showToast('تمت الإضافة إلى حقيبة التسوق بنجاح');
       return true;
     },
 
@@ -1246,7 +1061,7 @@ function productPage() {
     showToast(msg) {
       this.toastMessage = msg;
       this.toast = true;
-      setTimeout(() => { this.toast = false; }, 3000);
+      setTimeout(() => { this.toast = false; }, 2500);
     },
 
     isLightColor(val) {
@@ -1255,9 +1070,8 @@ function productPage() {
       return ['#ffffff', '#fff', 'white', 'ابيض', 'أبيض', 'فضي', '#f8fafc', '#eee'].includes(clean);
     },
 
-    // ==========================================
-    // AUTO SIZE FINDER LOGIC (Image 1 & Image 4)
-    // ==========================================
+    // Image 4 Measurements:
+    // S: 50-60 kg | M: 60-70 kg | L: 70-80 kg | XL: 80-90 kg
     autoCalculateFit() {
       const h = parseFloat(this.finderHeight);
       const w = parseFloat(this.finderWeight);
@@ -1268,8 +1082,6 @@ function productPage() {
         return;
       }
 
-      // Base size matching Image 4 Table:
-      // S: 50 - 60 kg | M: 60 - 70 kg | L: 70 - 80 kg | XL: 80 - 90+ kg
       let baseSize = 'L';
       if (w < 60) baseSize = 'S';
       else if (w < 70) baseSize = 'M';
@@ -1279,41 +1091,32 @@ function productPage() {
       const sizesList = ['S', 'M', 'L', 'XL'];
       let idx = sizesList.indexOf(baseSize);
 
-      // Height modifiers:
-      // If tall (> 185 cm) shift up for length
-      if (h >= 185 && idx < sizesList.length - 1) {
-        idx++;
-      } else if (h <= 165 && idx > 0 && w < 65) {
-        idx--;
-      }
+      if (h >= 185 && idx < sizesList.length - 1) idx++;
+      else if (h <= 165 && idx > 0 && w < 65) idx--;
 
-      // Fit preference modifiers:
-      if (this.finderFitPreference === 'oversize' && idx < sizesList.length - 1) {
-        idx++;
-      } else if (this.finderFitPreference === 'slim' && idx > 0) {
-        idx--;
-      }
+      if (this.finderFitPreference === 'oversize' && idx < sizesList.length - 1) idx++;
+      else if (this.finderFitPreference === 'slim' && idx > 0) idx--;
 
       this.finderRecommendedSize = sizesList[idx];
 
       const fitLabels = {
-        regular: 'مقاس مناسب ومريح يبرز تفاصيل الجسم',
-        oversize: 'مقاس أوفر سايز فضفاض وعصري',
-        slim: 'مقاس سليم فيت محكم ومشدود'
+        regular: 'مقاس يمنحك التوازن والراحة الأصلية',
+        oversize: 'مقاس واسع وعصري',
+        slim: 'مقاس سليم فيت محكم'
       };
 
-      this.finderExplanation = `بناءً على وزن (${w} كجم) وطول (${h} سم) وتفضيل (${fitLabels[this.finderFitPreference] || ''}).`;
+      this.finderExplanation = `بناءً على وزن (${w} كجم) وطول (${h} سم) ونمط (${fitLabels[this.finderFitPreference] || ''}).`;
     },
 
     calculateFitButton() {
       if (!this.finderHeight || !this.finderWeight) {
-        this.showToast('⚠️ يرجى إدخال الطول والوزن أولاً');
+        this.showToast('يرجى إدخال الطول والوزن');
         return;
       }
       this.autoCalculateFit();
       if (this.finderRecommendedSize) {
         this.applyRecommendedSize();
-        this.showToast(`✨ تم تحديد المقاس المقترح: ${this.finderRecommendedSize}`);
+        this.showToast(`المقاس المقترح: ${this.finderRecommendedSize}`);
       }
     },
 
@@ -1324,19 +1127,8 @@ function productPage() {
       }
     },
 
-    // ==========================================
-    // REVIEWS LOGIC (Image 2)
-    // ==========================================
     get sortedReviews() {
-      const list = [...this.reviewsList];
-      if (this.reviewSort === 'highest') {
-        return list.sort((a, b) => b.rating - a.rating);
-      }
-      if (this.reviewSort === 'lowest') {
-        return list.sort((a, b) => a.rating - b.rating);
-      }
-      // 'recent' by default
-      return list;
+      return [...this.reviewsList];
     },
 
     submitReview() {
@@ -1360,21 +1152,19 @@ function productPage() {
 
       this.reviewsList.unshift(newRev);
 
-      // Persist in localStorage
       try {
         const stored = JSON.parse(localStorage.getItem('vexis_user_reviews') || '[]');
         stored.unshift(newRev);
         localStorage.setItem('vexis_user_reviews', JSON.stringify(stored));
       } catch (e) {}
 
-      // Reset form & close modal
       this.newReviewAuthor = '';
       this.newReviewTitle = '';
       this.newReviewContent = '';
       this.newReviewRating = 5;
       this.showWriteReviewModal = false;
 
-      this.showToast('🎉 شكراً لك! تم نشر تقييمك بنجاح.');
+      this.showToast('شكراً لك، تم نشر تقييمك');
     }
   }
 }

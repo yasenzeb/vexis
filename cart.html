@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | Shopping Cart</title>
+<title>VEXIS | Shopping Bag — Review Your Order</title>
 <meta name="description" content="Review your VEXIS gym sportswear purchases in your shopping cart and complete your order now.">
 <meta name="keywords" content="gym t-shirts, men's sportswear Egypt, training clothes, VEXIS">
 
@@ -14,168 +14,277 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 <link rel="manifest" href="site.webmanifest" />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="VEXIS | Shopping Cart" />
-<meta property="og:description" content="Review your VEXIS gym sportswear purchases and complete your order now." />
-<meta property="og:url" content="https://vexis1.store" />
-<meta property="og:image" content="https://vexis1.store/logo.jpeg" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="VEXIS | Shopping Cart" />
-<meta name="twitter:description" content="Review your VEXIS gym sportswear purchases and complete your order now." />
-<meta name="twitter:image" content="https://vexis1.store/logo.jpeg" />
-
-<!-- JSON-LD Structured Data Schema -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Shopping Cart - VEXIS",
-  "description": "Review your VEXIS gym sportswear purchases and complete your order now.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "VEXIS",
-    "logo": "https://vexis1.store/logo.jpeg"
-  }
-}
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
-        fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+        colors: {
+          'gallery-white': '#ffffff',
+          'studio-mist': '#f5f5f7',
+          'paper-frost': '#fafafc',
+          'hairline-silver': '#d6d6d6',
+          'control-gray': '#e6e6e8',
+          'ink': '#1d1d1f',
+          'slate-apple': '#707070',
+          'steel-apple': '#86868b',
+          'apple-blue': '#0066cc',
+          'pricing-blue': '#0071e3',
+          'launch-orange': '#b64400'
+        },
+        borderRadius: {
+          '28': '28px',
+          '36': '36px',
+          '980': '980px',
+        }
       }
     }
   }
 </script>
-<script>
-  // Restore theme immediately before render
-  if (localStorage.getItem('vexis_theme') === 'dark') {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
-</script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 <style>
-* { font-family:'Cairo',sans-serif; }
-::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-thumb{background:#22d3ee;border-radius:3px}
+:root {
+  --color-gallery-white: #ffffff;
+  --color-studio-mist: #f5f5f7;
+  --color-paper-frost: #fafafc;
+  --color-hairline-silver: #d6d6d6;
+  --color-control-gray: #e6e6e8;
+  --color-ink: #1d1d1f;
+  --color-slate: #707070;
+  --color-steel: #86868b;
+  --color-apple-blue: #0066cc;
+  --color-pricing-blue: #0071e3;
+  --color-launch-orange: #b64400;
+
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cairo", sans-serif;
+}
+
+* {
+  font-family: var(--font-apple);
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-studio-mist);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
+
+/* Apple Buttons */
+.apple-pricing-pill {
+  background-color: var(--color-pricing-blue);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-pricing-pill:hover {
+  background-color: #0077ed;
+  transform: scale(1.01);
+}
+
+.apple-explore-pill {
+  background-color: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-steel);
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-explore-pill:hover {
+  border-color: var(--color-ink);
+  background-color: var(--color-gallery-white);
+}
+
+.apple-input {
+  background-color: #ffffff;
+  border: 1px solid var(--color-steel);
+  border-radius: 980px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color .15s ease;
+}
+.apple-input:focus {
+  border-color: var(--color-pricing-blue);
+}
+
+/* 28px Card */
+.apple-card {
+  background-color: #ffffff;
+  border-radius: 28px;
+  border: 1px solid var(--color-hairline-silver);
+}
 </style>
 </head>
-<body class="bg-gray-50 text-black dark:bg-gray-950 dark:text-gray-100 min-h-screen flex flex-col" x-data="cartPage()" x-init="init()">
+<body class="bg-studio-mist text-ink min-h-screen flex flex-col" x-data="cartPage()" x-init="init()">
 
-<!-- NAVBAR -->
-<nav class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-14 md:h-16">
-    <a href="index.html" class="flex items-center">
-      <div class="bg-black dark:bg-white rounded-lg px-2 py-1 md:px-3 flex items-center gap-2">
-        <img src="logo.jpeg" alt="Vexis" class="w-6 h-6 md:w-8 md:h-8 rounded-full">
-        <span class="text-white dark:text-black font-black text-base md:text-lg tracking-widest">VEXIS</span>
+<!-- ============================================== -->
+<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
+<!-- ============================================== -->
+<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
+  <div class="max-w-4xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
+    
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center gap-2 group">
+      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
+        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
       </div>
+      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
-    <div class="flex items-center gap-2 md:gap-3">
-      <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-800 text-xs font-bold text-gray-700 dark:text-gray-300 cursor-default">
-        <span class="text-xs">🇪🇬</span>
-        <span class="font-black text-xs tracking-wider">EGYPT</span>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
+        <span>🇪🇬</span>
+        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
       </div>
-      <a href="my-orders.html" class="p-2 text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white transition" title="My Orders / Account">
-        <i class="far fa-user text-base"></i>
+
+      <a href="my-orders.html" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition" title="My Orders">
+        <i class="far fa-user text-sm"></i>
       </a>
-      <a href="index.html" class="text-xs md:text-sm font-bold text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white flex items-center gap-1">
-        <i class="fas fa-store text-xs"></i> Store
+
+      <a href="index.html" class="text-xs text-apple-blue hover:underline">
+        Back to Store
       </a>
     </div>
-  </div>
-</nav>
 
-<div class="max-w-3xl mx-auto px-4 py-8 flex-1 w-full">
-  <h1 class="text-2xl md:text-3xl font-black mb-6 flex items-center gap-2">
-    <i class="fas fa-shopping-cart text-gray-850 dark:text-gray-250"></i> Shopping Cart
-  </h1>
+  </div>
+</header>
+
+<div class="max-w-3xl mx-auto px-4 py-12 flex-1 w-full space-y-8">
+  
+  <div class="border-b border-hairline-silver pb-4">
+    <h1 class="text-3xl font-semibold text-ink tracking-tight">Review your Bag.</h1>
+    <p class="text-xs text-slate-apple mt-1">Free delivery and flexible exchange on all orders across Egypt.</p>
+  </div>
 
   <template x-if="cart.length > 0">
-    <div>
-      <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden mb-6">
+    <div class="space-y-6">
+      
+      <!-- Items 28px White Card -->
+      <div class="apple-card overflow-hidden">
         <template x-for="(item, idx) in cart" :key="item._key">
-          <div class="p-4 flex gap-4 border-b border-gray-50 dark:border-gray-800 last:border-0 relative group">
-            <button @click="removeItem(idx)" class="absolute top-4 left-4 text-gray-300 hover:text-red-500 transition">
-              <i class="fas fa-trash-alt"></i>
+          <div class="p-6 flex items-start gap-5 border-b border-hairline-silver last:border-0 relative">
+            
+            <!-- Remove Button -->
+            <button @click="removeItem(idx)"
+                    class="absolute top-5 right-5 text-steel-apple hover:text-launch-orange transition text-xs"
+                    title="Remove item">
+              <i class="fas fa-times"></i>
             </button>
-            <div class="w-20 h-20 md:w-24 md:h-24 bg-gray-100 dark:bg-gray-850 rounded-xl overflow-hidden flex-shrink-0">
-              <img :src="item.image_url || 'logo.jpeg'" alt="" class="w-full h-full object-cover">
+
+            <!-- Image Frame -->
+            <div class="w-20 h-20 md:w-24 md:h-24 bg-studio-mist rounded-2xl border border-hairline-silver flex items-center justify-center p-2 flex-shrink-0">
+              <img :src="item.image_url || 'logo.jpeg'" alt="" class="w-full h-full object-contain">
             </div>
-            <div class="flex-1 text-right">
-              <h3 class="font-bold text-sm md:text-base leading-tight mb-1 pr-6" x-text="item.name"></h3>
-              <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 flex gap-3">
-                <span x-show="item.size" x-text="'Size: '+item.size"></span>
-                <span x-show="item.color" x-text="'Color: '+item.color"></span>
+
+            <!-- Details -->
+            <div class="flex-1 space-y-2 pr-6">
+              <h3 class="font-semibold text-sm md:text-base text-ink" x-text="item.name"></h3>
+              
+              <div class="text-xs text-slate-apple flex gap-4">
+                <span x-show="item.size" x-text="'Size: ' + item.size"></span>
+                <span x-show="item.color" x-text="'Color: ' + item.color"></span>
               </div>
-              <div class="flex items-center justify-between">
-                <div class="text-black dark:text-white font-black text-sm md:text-base" x-text="(item.finalPrice*item.qty) + ' EGP'"></div>
-                <div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700">
-                  <button @click="updateQty(idx, -1)" class="w-8 h-8 flex items-center justify-center font-bold text-gray-500 hover:text-black hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition">−</button>
-                  <span class="w-4 text-center text-sm font-bold" x-text="item.qty"></span>
-                  <button @click="updateQty(idx, 1)" class="w-8 h-8 flex items-center justify-center font-bold text-gray-500 hover:text-black hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition">+</button>
+
+              <div class="flex items-center justify-between pt-2">
+                <div class="text-base font-semibold text-ink" x-text="(item.finalPrice * item.qty) + ' EGP'"></div>
+                
+                <!-- Qty Pill -->
+                <div class="flex items-center border border-hairline-silver rounded-full overflow-hidden bg-studio-mist">
+                  <button @click="updateQty(idx, -1)" class="w-8 h-7 flex items-center justify-center text-slate-apple hover:text-ink transition text-xs">−</button>
+                  <span class="w-6 text-center text-xs font-semibold text-ink" x-text="item.qty"></span>
+                  <button @click="updateQty(idx, 1)" class="w-8 h-7 flex items-center justify-center text-slate-apple hover:text-ink transition text-xs">+</button>
                 </div>
               </div>
             </div>
+
           </div>
         </template>
       </div>
 
-      <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 mb-6">
-        <!-- PROMO CODE BOX -->
-        <div class="mb-4">
-          <label class="block text-xs font-bold text-gray-600 mb-1">Promo Code</label>
+      <!-- Summary 28px White Card -->
+      <div class="apple-card p-6 md:p-8 space-y-6">
+        
+        <!-- Promo Code Pill Box -->
+        <div>
+          <label class="block text-xs text-slate-apple mb-1.5 font-medium">Do you have a promo code?</label>
           <div class="flex gap-2">
-            <input type="text" x-model="promoInput" placeholder="Enter promo code" class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-xs font-bold uppercase focus:outline-none focus:border-black" :disabled="appliedPromo">
-            <button @click="applyPromo()" class="bg-black text-white px-4 py-2 rounded-xl text-xs font-black hover:bg-gray-800 transition" x-show="!appliedPromo">Apply</button>
-            <button @click="removePromo()" class="bg-red-500 text-white px-3 py-2 rounded-xl text-xs font-bold hover:bg-red-600 transition" x-show="appliedPromo">Remove</button>
+            <input type="text"
+                   x-model="promoInput"
+                   placeholder="Enter code"
+                   class="apple-input flex-1 text-xs uppercase font-mono"
+                   :disabled="appliedPromo">
+            <button @click="applyPromo()"
+                    class="apple-ink-pill px-5 py-2 text-xs"
+                    x-show="!appliedPromo">
+              Apply
+            </button>
+            <button @click="removePromo()"
+                    class="text-launch-orange text-xs px-3 hover:underline"
+                    x-show="appliedPromo">
+              Remove
+            </button>
           </div>
-          <p x-show="promoMsg" :class="promoSuccess ? 'text-green-600' : 'text-red-500'" class="text-[11px] font-bold mt-1.5" x-text="promoMsg"></p>
+          <p x-show="promoMsg" :class="promoSuccess ? 'text-emerald-600' : 'text-launch-orange'" class="text-[11px] mt-1.5 font-medium" x-text="promoMsg"></p>
         </div>
 
-        <div class="flex justify-between items-center mb-3 text-gray-600 dark:text-gray-300">
-          <span>Subtotal:</span>
-          <span class="font-bold text-gray-900 dark:text-white" x-text="subtotal + ' EGP'"></span>
+        <div class="space-y-3 text-xs border-t border-hairline-silver pt-4">
+          <div class="flex justify-between items-center text-slate-apple">
+            <span>Subtotal</span>
+            <span class="text-ink font-semibold" x-text="subtotal + ' EGP'"></span>
+          </div>
+
+          <div x-show="discountAmount > 0" class="flex justify-between items-center text-emerald-600 font-medium">
+            <span>Discount (<span x-text="appliedPromo?.code"></span>)</span>
+            <span x-text="'- ' + discountAmount + ' EGP'"></span>
+          </div>
+
+          <div class="flex justify-between items-center text-slate-apple">
+            <span>Shipping</span>
+            <span class="text-emerald-600 font-medium">Calculated at checkout</span>
+          </div>
+
+          <div class="border-t border-hairline-silver pt-4 flex justify-between items-center">
+            <span class="text-base font-semibold text-ink">Total</span>
+            <span class="text-2xl font-semibold text-ink" x-text="finalTotal + ' EGP'"></span>
+          </div>
         </div>
-        <div x-show="discountAmount > 0" class="flex justify-between items-center mb-3 text-emerald-600 font-bold">
-          <span>Promo Discount (<span x-text="appliedPromo?.code"></span>):</span>
-          <span x-text="'- ' + discountAmount + ' EGP'"></span>
-        </div>
-        <div class="flex justify-between items-center mb-4 text-gray-600 dark:text-gray-300">
-          <span>Shipping:</span>
-          <span class="text-green-600 dark:text-green-400 font-bold">Based on governorate</span>
-        </div>
-        <hr class="border-gray-100 dark:border-gray-800 mb-4">
-        <div class="flex justify-between items-center mb-6">
-          <span class="font-black text-lg">Total:</span>
-          <span class="font-black text-2xl text-black dark:text-white" x-text="finalTotal + ' EGP'"></span>
-        </div>
-        <a href="checkout.html" class="block w-full bg-black dark:bg-white text-white dark:text-black text-center font-black py-4 rounded-xl hover:opacity-90 transition shadow-lg text-lg">
-          Proceed to Checkout <i class="fas fa-arrow-right ml-2"></i>
+
+        <!-- Checkout Button: Apple Pricing Blue Pill -->
+        <a href="checkout.html"
+           class="apple-pricing-pill w-full py-4 text-sm flex items-center justify-center gap-2 text-center">
+          <span>Check Out</span> <i class="fas fa-chevron-right text-xs"></i>
+        </a>
+
+      </div>
+
+    </div>
+  </template>
+
+  <!-- Empty Bag -->
+  <template x-if="cart.length === 0">
+    <div class="apple-card p-12 text-center space-y-4">
+      <i class="fas fa-shopping-bag text-4xl text-steel-apple"></i>
+      <h2 class="text-xl font-semibold text-ink">Your Bag is empty.</h2>
+      <p class="text-xs text-slate-apple max-w-sm mx-auto">Items added to your bag will appear here.</p>
+      <div class="pt-2">
+        <a href="index.html" class="apple-pricing-pill px-6 py-2.5 text-xs inline-block">
+          Continue Shopping
         </a>
       </div>
     </div>
   </template>
 
-  <template x-if="cart.length === 0">
-    <div class="text-center py-20">
-      <i class="fas fa-shopping-basket text-6xl text-gray-200 dark:text-gray-800 mb-4"></i>
-      <p class="text-gray-500 dark:text-gray-400 font-bold text-lg mb-6">Your cart is empty</p>
-      <a href="index.html" class="bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-full font-bold hover:opacity-90 transition inline-block">
-        Browse Products
-      </a>
-    </div>
-  </template>
 </div>
 
 <script>
@@ -219,81 +328,54 @@ function cartPage() {
         this.discountAmount = 0;
         return;
       }
-      const p = this.appliedPromo;
-      if (p.min_spend && this.subtotal < p.min_spend) {
-        this.discountAmount = 0;
-        this.promoMsg = `Minimum spend for this discount is ${p.min_spend} EGP`;
-        this.promoSuccess = false;
-        return;
-      }
-
-      if (p.discount_type === 'percent') {
-        this.discountAmount = Math.round((this.subtotal * p.discount_value) / 100);
-      } else if (p.discount_type === 'fixed' || p.discount_type === 'amount') {
-        this.discountAmount = Math.min(this.subtotal, p.discount_value);
+      if (this.appliedPromo.discount_type === 'percent') {
+        this.discountAmount = Math.round(this.subtotal * (this.appliedPromo.discount_value / 100));
       } else {
-        this.discountAmount = 0;
+        this.discountAmount = Math.min(this.subtotal, Number(this.appliedPromo.discount_value || 0));
       }
     },
 
-    async applyPromo() {
-      const code = this.promoInput.trim().toUpperCase();
-      if (!code) {
-        this.promoMsg = 'Please enter a promo code first';
-        this.promoSuccess = false;
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/promocodes', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code })
-        });
-        const data = await res.json();
-        if (data.success && data.promocode) {
-          this.appliedPromo = data.promocode;
-          localStorage.setItem('vexis_promo', JSON.stringify(data.promocode));
-          this.calcDiscount();
-          this.promoMsg = `✓ Promo code (${data.promocode.code}) applied successfully!`;
-          this.promoSuccess = true;
-        } else {
-          this.promoMsg = data.error || 'Invalid or expired promo code';
-          this.promoSuccess = false;
+    updateQty(idx, change) {
+      if (this.cart[idx]) {
+        this.cart[idx].qty += change;
+        if (this.cart[idx].qty <= 0) {
+          this.cart.splice(idx, 1);
         }
-      } catch (e) {
-        this.promoMsg = 'Sorry, could not verify promo code right now';
-        this.promoSuccess = false;
+        localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
+        this.calc();
       }
-    },
-
-    removePromo() {
-      this.appliedPromo = null;
-      this.promoInput = '';
-      this.promoMsg = '';
-      this.discountAmount = 0;
-      localStorage.removeItem('vexis_promo');
-    },
-
-    updateQty(idx, val) {
-      this.cart[idx].qty += val;
-      if(this.cart[idx].qty < 1) this.cart[idx].qty = 1;
-      this.saveCart();
     },
 
     removeItem(idx) {
       this.cart.splice(idx, 1);
-      this.saveCart();
-    },
-
-    saveCart() {
       localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
       this.calc();
+    },
+
+    async applyPromo() {
+      const code = this.promoInput.trim().toUpperCase();
+      if (!code) return;
+      try {
+        const res = await fetch('/api/checkout?action=validate_promo&code=' + encodeURIComponent(code));
+        const data = await res.json();
+        if (data.success && data.promo) {
+          this.appliedPromo = data.promo;
+          localStorage.setItem('vexis_promo', JSON.stringify(data.promo));
+          this.promoSuccess = true;
+          this.promoMsg = 'Promo code applied!';
+          this.calcDiscount();
+        } else {
+          this.promoSuccess = false;
+          this.promoMsg = data.error || 'Invalid promo code';
+        }
+      } catch {
+        this.promoSuccess = false;
+        this.promoMsg = 'Failed to validate code';
+      }
     }
   }
 }
 </script>
+
 </body>
 </html>
-
-

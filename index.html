@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>VEXIS | Premium Gym Sportswear for Men — Egypt's Best Training Clothes</title>
+<title>VEXIS | Premium Gym Sportswear for Men — Official Store</title>
 <meta name="description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, nationwide shipping and cash on delivery.">
 <meta name="keywords" content="VEXIS, gym t-shirts, men's sportswear, training clothes, gym wear Egypt, sport t-shirt, bodybuilding clothes">
 
@@ -29,7 +29,7 @@
 <meta name="twitter:description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, nationwide shipping." />
 <meta name="twitter:image" content="https://vexis1.store/logo.jpeg" />
 
-<!-- JSON-LD Structured Data Schema -->
+<!-- JSON-LD -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,359 +46,511 @@
   }
 }
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
-    darkMode: 'class',
     theme: {
       extend: {
-        fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+        colors: {
+          'gallery-white': '#ffffff',
+          'studio-mist': '#f5f5f7',
+          'paper-frost': '#fafafc',
+          'hairline-silver': '#d6d6d6',
+          'control-gray': '#e6e6e8',
+          'ink': '#1d1d1f',
+          'slate-apple': '#707070',
+          'steel-apple': '#86868b',
+          'apple-blue': '#0066cc',
+          'pricing-blue': '#0071e3',
+          'launch-orange': '#b64400'
+        },
+        borderRadius: {
+          '28': '28px',
+          '36': '36px',
+          '980': '980px',
+        }
       }
     }
   }
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 <style>
-  * { font-family: 'Cairo', sans-serif; box-sizing: border-box; }
-  html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
-  
-  /* Card hover */
-  .card-hover { transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s; }
-  @media(hover:hover){ .card-hover:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.15); } }
-  
-  /* Skeleton loader */
-  .skeleton { background: linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%); background-size:200% 100%; animation: shimmer 1.5s infinite; }
-  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-  
-  /* Marquee */
-  .marquee-wrap { overflow:hidden; }
-  .marquee-inner { display:inline-flex; animation: marquee 22s linear infinite; white-space:nowrap; }
-  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-  
-  /* Scrollbar */
-  ::-webkit-scrollbar{width:4px}
-  ::-webkit-scrollbar-thumb{background:#555;border-radius:2px}
-  .dark ::-webkit-scrollbar-thumb{background:#888;}
-  
-  /* Line clamp */
-  .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-  
-  /* Nav link */
-  .nav-link { transition: color .2s, transform .2s; position: relative; }
-  .nav-link::after { content:''; position:absolute; bottom:-2px; right:0; width:0; height:2px; background:#000; transition: width .3s; }
-  .nav-link:hover::after { width:100%; }
-  .dark .nav-link::after { background:#fff; }
-  
-  /* Image hover flip */
-  .product-img-container { position: relative; overflow: hidden; }
-  .product-img-front, .product-img-back { transition: opacity .5s ease, transform .5s ease; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .product-img-front { z-index: 2; opacity: 1; }
-  .product-img-back { z-index: 1; opacity: 0; transform: scale(1.05); }
-  .product-img-container:hover .product-img-front { opacity: 0; transform: scale(1.05); }
-  .product-img-container:hover .product-img-back { opacity: 1; transform: scale(1); }
-  
-  /* Pulse animation */
-  @keyframes pulse-subtle { 0%,100%{opacity:1} 50%{opacity:.7} }
-  .pulse-subtle { animation: pulse-subtle 2s ease-in-out infinite; }
-  
-  /* Fade in animation */
-  @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
-  .fade-in-up { animation: fadeInUp .6s ease forwards; }
-  
-  /* Product grid mobile */
-  @media(max-width:640px){
-    .product-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; gap: 10px !important; }
-  }
-  
-  /* Dark mode transitions */
-  body, nav, section, footer, div, a, span, p, h1, h2, h3, button, input, select, textarea {
-    transition: background-color .3s, color .3s, border-color .3s;
-  }
-  
-  /* Toggle switch */
-  .toggle-switch { width:44px; height:24px; border-radius:12px; position:relative; cursor:pointer; transition: background .3s; }
-  .toggle-switch::after { content:''; position:absolute; width:18px; height:18px; border-radius:50%; top:3px; left:3px; background:#fff; transition: transform .3s; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
-  .toggle-switch.active::after { transform: translateX(20px); }
+:root {
+  --color-gallery-white: #ffffff;
+  --color-studio-mist: #f5f5f7;
+  --color-paper-frost: #fafafc;
+  --color-hairline-silver: #d6d6d6;
+  --color-control-gray: #e6e6e8;
+  --color-ink: #1d1d1f;
+  --color-slate: #707070;
+  --color-steel: #86868b;
+  --color-apple-blue: #0066cc;
+  --color-pricing-blue: #0071e3;
+  --color-launch-orange: #b64400;
+
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cairo", sans-serif;
+}
+
+* {
+  font-family: var(--font-apple);
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-gallery-white);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
+
+/* Apple-style typography */
+.headline-editorial {
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.body-editorial {
+  letter-spacing: -0.015em;
+  line-height: 1.47;
+}
+
+/* Apple Buttons */
+.apple-pricing-pill {
+  background-color: var(--color-pricing-blue);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-pricing-pill:hover {
+  background-color: #0077ed;
+  transform: scale(1.01);
+}
+
+.apple-explore-pill {
+  background-color: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-steel);
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-explore-pill:hover {
+  border-color: var(--color-ink);
+  background-color: var(--color-studio-mist);
+}
+
+.apple-ink-pill {
+  background-color: var(--color-ink);
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 500;
+  transition: all .18s cubic-bezier(.4, 0, .2, 1);
+}
+.apple-ink-pill:hover {
+  background-color: #333336;
+}
+
+/* 28px Media & Product Cards (Shadowless) */
+.apple-card {
+  background-color: #ffffff;
+  border-radius: 28px;
+  border: 1px solid var(--color-hairline-silver);
+  transition: border-color .2s ease;
+}
+.apple-card:hover {
+  border-color: var(--color-steel);
+}
+
+/* Line clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Product img flip */
+.product-img-container { position: relative; overflow: hidden; border-radius: 24px; }
+.product-img-front, .product-img-back {
+  transition: opacity .4s ease, transform .4s ease;
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 12px;
+}
+.product-img-front { z-index: 2; opacity: 1; }
+.product-img-back { z-index: 1; opacity: 0; transform: scale(1.03); }
+.product-img-container:hover .product-img-front { opacity: 0; transform: scale(1.03); }
+.product-img-container:hover .product-img-back { opacity: 1; transform: scale(1); }
+
+/* Marquee */
+.marquee-wrap { overflow: hidden; }
+.marquee-inner { display: inline-flex; animation: marquee 26s linear infinite; white-space: nowrap; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 </style>
 </head>
-<body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100" x-data="store()" x-init="init()">
+<body class="bg-gallery-white text-ink min-h-screen flex flex-col" x-data="store()" x-init="init()">
 
-<!-- TOP BAR -->
-<div class="bg-black dark:bg-white text-white dark:text-black text-xs py-2 marquee-wrap">
-  <div class="marquee-inner">
+<!-- ============================================== -->
+<!-- TOP ANNOUNCEMENT TICKER (Subtle Apple Bar)     -->
+<!-- ============================================== -->
+<div class="bg-studio-mist border-b border-hairline-silver text-xs py-2 text-slate-apple marquee-wrap">
+  <div class="marquee-inner text-[11px] font-medium tracking-wide">
     <span class="px-4">🚚 <span x-text="t('topbar_shipping')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
-    <span class="px-4">🔥 <span x-text="t('topbar_quality')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
-    <span class="px-4">✅ <span x-text="t('topbar_guarantee')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
+    <span class="px-3 text-steel-apple">|</span>
+    <span class="px-4">⚡ <span x-text="t('topbar_quality')"></span></span>
+    <span class="px-3 text-steel-apple">|</span>
+    <span class="px-4">✓ <span x-text="t('topbar_guarantee')"></span></span>
+    <span class="px-3 text-steel-apple">|</span>
     <span class="px-4">📞 <span x-text="t('topbar_support')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
+    <span class="px-3 text-steel-apple">|</span>
     <span class="px-4">🚚 <span x-text="t('topbar_shipping')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
-    <span class="px-4">✅ <span x-text="t('topbar_guarantee')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
+    <span class="px-3 text-steel-apple">|</span>
+    <span class="px-4">⚡ <span x-text="t('topbar_quality')"></span></span>
+    <span class="px-3 text-steel-apple">|</span>
+    <span class="px-4">✓ <span x-text="t('topbar_guarantee')"></span></span>
+    <span class="px-3 text-steel-apple">|</span>
     <span class="px-4">📞 <span x-text="t('topbar_support')"></span></span>
-    <span class="px-4 text-gray-500 dark:text-gray-400">|</span>
+    <span class="px-3 text-steel-apple">|</span>
   </div>
 </div>
 
-<!-- NAVBAR -->
-<nav class="bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 shadow-sm backdrop-blur-md bg-opacity-95 dark:bg-opacity-95">
-  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-14 md:h-16">
-    <a href="index.html" class="flex items-center">
-      <div class="bg-black dark:bg-white rounded-xl px-3 py-1.5 flex items-center gap-2">
-        <img src="logo.jpeg" alt="Vexis" class="w-7 h-7 rounded-full">
-        <span class="text-white dark:text-black font-black text-base md:text-lg tracking-widest">VEXIS</span>
+<!-- ============================================== -->
+<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
+<!-- ============================================== -->
+<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
+  <div class="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
+    
+    <!-- Brand Logo -->
+    <a href="index.html" class="flex items-center gap-2 group">
+      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
+        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
       </div>
+      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
-    <div class="hidden md:flex items-center gap-6 text-sm font-bold">
-      <a href="index.html" class="nav-link text-gray-900 dark:text-white" x-text="t('nav_home')"></a>
-      <a href="#products" class="nav-link text-gray-600 dark:text-gray-300" x-text="t('nav_products')"></a>
-      <a href="#about" class="nav-link text-gray-600 dark:text-gray-300" x-text="t('nav_about')"></a>
-      <a href="my-orders.html" class="nav-link text-gray-600 dark:text-gray-300 flex items-center gap-1" x-show="hasOrders">
-        <i class="fas fa-box-open text-xs"></i> My Orders
-      </a>
-    </div>
-    <div class="flex items-center gap-2 md:gap-3">
-      <!-- Cart -->
-      <!-- EGYPT Country/Currency (Image 3) -->
-      <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-800 text-xs font-bold text-gray-700 dark:text-gray-300 cursor-default">
-        <span class="text-xs">🇪🇬</span>
-        <span class="font-black text-xs tracking-wider">EGYPT</span>
-        <i class="fas fa-chevron-down text-[9px] text-gray-400 ml-0.5"></i>
-      </div>
 
-      <!-- Account Icon (Image 3) -->
-      <a href="my-orders.html" class="p-2 text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white transition" title="My Orders / Account">
-        <i class="far fa-user text-lg"></i>
-      </a>
+    <!-- Nav Links (Compact SF Pro Text 12px) -->
+    <nav class="hidden md:flex items-center gap-8 text-[12px] text-slate-apple">
+      <a href="index.html" class="text-ink font-semibold">Store</a>
+      <a href="#products" class="hover:text-ink transition">T-Shirts</a>
+      <a href="#features" class="hover:text-ink transition">Performance</a>
+      <a href="#about" class="hover:text-ink transition">About</a>
+      <a href="my-orders.html" x-show="hasOrders" class="hover:text-ink transition">My Orders</a>
+    </nav>
 
-      <!-- Cart -->
-      <a href="cart.html" class="relative p-2">
-        <i class="fas fa-shopping-bag text-lg text-gray-700 dark:text-gray-200 hover:text-black dark:hover:text-white transition"></i>
-        <span x-show="cartCount>0" x-text="cartCount"
-          class="absolute -top-0.5 -left-0.5 bg-black dark:bg-white text-white dark:text-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-black leading-none"></span>
-      </a>
+    <!-- Controls (EGYPT indicator + Account + Cart) -->
+    <div class="flex items-center gap-3">
       
-      <!-- Mobile menu toggle -->
-      <button @click="mobileMenu=!mobileMenu" class="md:hidden p-2 text-gray-700 dark:text-gray-200">
-        <i :class="mobileMenu ? 'fa-times' : 'fa-bars'" class="fas text-xl"></i>
-      </button>
-    </div>
-  </div>
-  <!-- Mobile Menu -->
-  <div x-show="mobileMenu" x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-    class="md:hidden bg-white dark:bg-gray-950 border-t dark:border-gray-800 px-5 py-4 flex flex-col gap-4 text-sm font-bold shadow-lg" style="display:none;">
-    <a href="index.html" class="text-gray-800 dark:text-gray-100 flex items-center gap-2"><i class="fas fa-home w-5"></i><span x-text="t('nav_home')"></span></a>
-    <a href="#products" @click="mobileMenu=false" class="text-gray-600 dark:text-gray-300 flex items-center gap-2"><i class="fas fa-box w-5"></i><span x-text="t('nav_products')"></span></a>
-    <a href="#about" @click="mobileMenu=false" class="text-gray-600 dark:text-gray-300 flex items-center gap-2"><i class="fas fa-info-circle w-5"></i><span x-text="t('nav_about')"></span></a>
-    <a href="my-orders.html" x-show="hasOrders" class="text-emerald-600 dark:text-emerald-400 flex items-center gap-2 font-black">
-      <i class="fas fa-box-open w-5"></i>
-      My Orders
-      <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">New</span>
-    </a>
-    <a href="cart.html" class="bg-black dark:bg-white text-white dark:text-black font-black py-3 rounded-xl text-center flex items-center justify-center gap-2">
-      <i class="fas fa-shopping-bag"></i> <span x-text="t('nav_cart')"></span>
-      <span x-show="cartCount>0" class="bg-white dark:bg-black text-black dark:text-white text-xs w-5 h-5 rounded-full flex items-center justify-center" x-text="cartCount"></span>
-    </a>
-  </div>
-</nav>
+      <!-- Country / Currency indicator: EGYPT (Image 3) -->
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
+        <span>🇪🇬</span>
+        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
+        <i class="fas fa-chevron-down text-[8px] text-steel-apple ml-0.5"></i>
+      </div>
 
-<!-- HERO BANNER -->
-<section class="bg-black text-white relative overflow-hidden border-b border-gray-800">
-  <div class="relative w-full overflow-hidden">
-    <img src="بدايه.jpeg" alt="VEXIS Collection" class="w-full h-auto max-h-[75vh] min-h-[220px] sm:min-h-[320px] md:min-h-[480px] object-contain sm:object-cover object-center mx-auto block transition-all duration-300">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-8 md:p-12 text-left sm:text-left">
-      <div class="max-w-xl">
-        <h1 class="text-2xl sm:text-4xl md:text-6xl font-black tracking-widest text-white uppercase drop-shadow-md mb-1 sm:mb-2">VEXIS</h1>
-        <p class="text-xs sm:text-base md:text-lg text-gray-200 font-bold mb-3 sm:mb-5 drop-shadow leading-snug">THE ALL-NEW VEXIS COLLECTION IS HERE</p>
-        <a href="#products" class="inline-flex items-center gap-2 bg-white text-black font-black px-5 sm:px-7 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm hover:bg-cyan-400 transition shadow-xl transform hover:scale-105">
-          <span>Shop Now</span> <i class="fas fa-arrow-down text-xs"></i>
+      <!-- Account Icon -->
+      <a href="my-orders.html"
+         title="My Orders / Account"
+         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition">
+        <i class="far fa-user text-sm"></i>
+      </a>
+
+      <!-- Shopping Bag -->
+      <a href="cart.html"
+         title="Shopping Bag"
+         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition relative">
+        <i class="fas fa-shopping-bag text-sm"></i>
+        <span x-show="cartCount > 0"
+              x-text="cartCount"
+              class="absolute -top-0.5 -left-0.5 bg-pricing-blue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+        </span>
+      </a>
+
+      <!-- Mobile menu toggle -->
+      <button @click="mobileMenu = !mobileMenu" class="md:hidden w-8 h-8 flex items-center justify-center text-slate-apple">
+        <i :class="mobileMenu ? 'fa-times' : 'fa-bars'" class="fas text-sm"></i>
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div x-show="mobileMenu"
+       x-transition
+       class="md:hidden bg-paper-frost border-b border-hairline-silver px-6 py-4 flex flex-col gap-3 text-xs font-medium"
+       style="display:none;">
+    <a href="index.html" class="text-ink font-semibold py-1">Store</a>
+    <a href="#products" @click="mobileMenu = false" class="text-slate-apple py-1">T-Shirts & Apparel</a>
+    <a href="#features" @click="mobileMenu = false" class="text-slate-apple py-1">Performance Details</a>
+    <a href="#about" @click="mobileMenu = false" class="text-slate-apple py-1">About VEXIS</a>
+    <a href="my-orders.html" class="text-slate-apple py-1">My Orders</a>
+    <a href="cart.html" class="apple-pricing-pill py-2 text-center text-xs mt-2">
+      View Bag (<span x-text="cartCount"></span>)
+    </a>
+  </div>
+</header>
+
+<!-- ============================================== -->
+<!-- HERO LAUNCH STAGE (Apple White Gallery Hero)   -->
+<!-- ============================================== -->
+<section class="bg-gallery-white text-ink text-center pt-14 pb-16 md:pt-20 md:pb-24 border-b border-hairline-silver relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 space-y-4">
+    
+    <!-- Launch status label -->
+    <p class="text-launch-orange text-xs font-semibold tracking-wider">NEW COLLECTION • الإصدار الجديد</p>
+    
+    <!-- Hero display statement: SF Pro Display 80px/600 -->
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-semibold text-ink headline-editorial tracking-tight">
+      VEXIS. Engineered for Form.
+    </h1>
+
+    <p class="text-base sm:text-lg text-slate-apple body-editorial max-w-xl mx-auto">
+      Ultra-dense combed cotton compression wear. Designed to define your silhouette with uncompromising comfort.
+    </p>
+
+    <!-- Hero CTA Buttons -->
+    <div class="flex items-center justify-center gap-3 pt-2">
+      <a href="#products" class="apple-pricing-pill px-6 py-2.5 text-xs sm:text-sm">
+        Explore Collection
+      </a>
+      <a href="product.html" class="apple-explore-pill px-6 py-2.5 text-xs sm:text-sm">
+        Buy Featured T-Shirt
+      </a>
+    </div>
+
+    <!-- Center Product Render -->
+    <div class="pt-8 relative max-w-2xl mx-auto">
+      <div class="aspect-[16/10] flex items-center justify-center">
+        <img src="intro_tshirt.jpg" alt="VEXIS Athletic Wear" class="w-full h-full object-contain rounded-28 border border-hairline-silver bg-studio-mist"/>
+      </div>
+
+      <!-- Floating Pricing Callout Capsule (Apple 28px Capsule) -->
+      <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-gallery-white px-6 py-3 rounded-full border border-hairline-silver flex items-center gap-4 text-xs">
+        <div>
+          <span class="text-ink font-semibold">From 399 EGP</span>
+          <span class="text-slate-apple text-[11px] block">Free exchange nationwide</span>
+        </div>
+        <a href="#products" class="apple-pricing-pill px-4 py-1.5 text-[11px]">
+          Order
         </a>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- FEATURES BAR -->
-<section class="bg-gray-50 dark:bg-gray-900 py-5 md:py-7 border-b border-gray-100 dark:border-gray-800">
-  <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 text-center">
-    <div class="flex flex-col items-center gap-1 md:gap-2 py-2">
-      <div class="w-10 h-10 md:w-12 md:h-12 bg-black dark:bg-white text-white dark:text-black rounded-xl flex items-center justify-center mb-1">
-        <i class="fas fa-truck text-lg"></i>
-      </div>
-      <span class="font-bold text-sm" x-text="t('feat_shipping')"></span>
-      <span class="text-gray-500 dark:text-gray-400 text-xs hidden md:block" x-text="t('feat_shipping_sub')"></span>
+<!-- ============================================== -->
+<!-- FEATURES STAGE (Studio Mist 28px Cards)        -->
+<!-- ============================================== -->
+<section id="features" class="bg-studio-mist py-16 md:py-20 border-b border-hairline-silver">
+  <div class="max-w-6xl mx-auto px-4">
+    
+    <div class="mb-10 text-center max-w-xl mx-auto space-y-2">
+      <span class="text-xs text-slate-apple uppercase tracking-wider">Engineering Standards</span>
+      <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">Built without compromise.</h2>
+      <p class="text-xs text-slate-apple">كل تفصيلة في ملابس VEXIS مصممة لتواكب تمارينك اليومية بأعلى جودة وثبات.</p>
     </div>
-    <div class="flex flex-col items-center gap-1 md:gap-2 py-2">
-      <div class="w-10 h-10 md:w-12 md:h-12 bg-black dark:bg-white text-white dark:text-black rounded-xl flex items-center justify-center mb-1">
-        <i class="fas fa-money-bill-wave text-lg"></i>
-      </div>
-      <span class="font-bold text-sm" x-text="t('feat_cod')"></span>
-      <span class="text-gray-500 dark:text-gray-400 text-xs hidden md:block" x-text="t('feat_cod_sub')"></span>
-    </div>
-    <div class="flex flex-col items-center gap-1 md:gap-2 py-2">
-      <div class="w-10 h-10 md:w-12 md:h-12 bg-black dark:bg-white text-white dark:text-black rounded-xl flex items-center justify-center mb-1">
-        <i class="fas fa-star text-lg"></i>
-      </div>
-      <span class="font-bold text-sm" x-text="t('feat_quality')"></span>
-      <span class="text-gray-500 dark:text-gray-400 text-xs hidden md:block" x-text="t('feat_quality_sub')"></span>
-    </div>
-    <div class="flex flex-col items-center gap-1 md:gap-2 py-2">
-      <div class="w-10 h-10 md:w-12 md:h-12 bg-black dark:bg-white text-white dark:text-black rounded-xl flex items-center justify-center mb-1">
-        <i class="fas fa-undo text-lg"></i>
-      </div>
-      <span class="font-bold text-sm" x-text="t('feat_return')"></span>
-      <span class="text-gray-500 dark:text-gray-400 text-xs hidden md:block" x-text="t('feat_return_sub')"></span>
-    </div>
-  </div>
-</section>
 
-<!-- PRODUCTS -->
-<section id="products" class="py-10 md:py-16 px-4 bg-white dark:bg-gray-950">
-  <div class="max-w-7xl mx-auto">
-    <div class="flex items-start md:items-center justify-between mb-8 flex-col md:flex-row gap-4">
-      <div>
-        <h2 class="text-2xl md:text-3xl font-black" x-text="t('products_title')"></h2>
-        <div class="w-12 h-1 bg-black dark:bg-white mt-2 rounded-full"></div>
-      </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
       
-      <!-- Filter tabs -->
-      <div class="flex gap-2 flex-wrap">
+      <!-- Card 1 -->
+      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
+        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
+          <i class="fas fa-truck"></i>
+        </div>
+        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_shipping')"></h3>
+        <p class="text-xs text-slate-apple" x-text="t('feat_shipping_sub')"></p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
+        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
+          <i class="fas fa-hand-holding-usd"></i>
+        </div>
+        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_cod')"></h3>
+        <p class="text-xs text-slate-apple" x-text="t('feat_cod_sub')"></p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
+        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
+          <i class="fas fa-gem"></i>
+        </div>
+        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_quality')"></h3>
+        <p class="text-xs text-slate-apple" x-text="t('feat_quality_sub')"></p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
+        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
+          <i class="fas fa-sync-alt"></i>
+        </div>
+        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_return')"></h3>
+        <p class="text-xs text-slate-apple" x-text="t('feat_return_sub')"></p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- PRODUCTS COLLECTION (Apple 28px Product Cards) -->
+<!-- ============================================== -->
+<section id="products" class="py-16 md:py-24 bg-gallery-white border-b border-hairline-silver">
+  <div class="max-w-6xl mx-auto px-4 space-y-10">
+    
+    <!-- Section Header & Filter Pills -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-hairline-silver pb-6">
+      <div>
+        <span class="text-xs text-slate-apple uppercase tracking-wider block mb-1">Catalog</span>
+        <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">The Collection</h2>
+      </div>
+
+      <!-- Filter pills (9999px pills) -->
+      <div class="flex items-center gap-2 flex-wrap">
         <template x-for="cat in categories" :key="cat.slug">
           <button @click="activeFilter = cat.slug"
-            :class="activeFilter===cat.slug ? 'bg-black dark:bg-white text-white dark:text-black shadow-lg' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'"
-            class="px-5 py-2 rounded-full text-xs font-bold transition-all duration-200"
-            x-text="cat.name">
+                  :class="activeFilter === cat.slug ? 'apple-ink-pill px-4 py-1.5 text-xs' : 'apple-explore-pill px-4 py-1.5 text-xs text-slate-apple'"
+                  x-text="cat.name">
           </button>
         </template>
       </div>
     </div>
 
     <!-- Products Grid -->
-    <div class="product-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
       <template x-for="(p, pIdx) in filteredProducts" :key="p.id">
-        <div class="card-hover bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-600 cursor-pointer group transition-all duration-300"
-             :style="'animation-delay:'+(pIdx*80)+'ms'"
+        <div class="apple-card p-4 flex flex-col justify-between cursor-pointer group"
              @click="goToProduct(p)">
-          <!-- Image with hover flip -->
-          <div class="product-img-container h-48 md:h-56 bg-gray-100 dark:bg-gray-800">
+          
+          <!-- Image Box (Apple-like clean render) -->
+          <div class="product-img-container aspect-square bg-studio-mist mb-4 flex items-center justify-center relative">
             <img :src="p.image_url" :alt="p.name" class="product-img-front"/>
             <template x-if="p.image_hover">
-              <img :src="p.image_hover" :alt="p.name + ' - back'" class="product-img-back"/>
+              <img :src="p.image_hover" :alt="p.name + ' - alternate'" class="product-img-back"/>
             </template>
+
+            <!-- New badge -->
             <template x-if="isNew(p)">
-              <span class="absolute top-2 left-2 z-10 bg-black dark:bg-white text-white dark:text-black text-[10px] font-black px-2 py-0.5 rounded-full" x-text="t('badge_new')"></span>
+              <span class="absolute top-3 left-3 text-launch-orange text-[11px] font-semibold tracking-wide">
+                New
+              </span>
             </template>
+            <!-- Discount -->
             <template x-if="hasDiscount(p)">
-              <span class="absolute top-2 right-2 z-10 bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded-full" x-text="discountBadge(p)"></span>
+              <span class="absolute top-3 right-3 text-slate-apple text-[11px] font-mono" x-text="discountBadge(p)"></span>
             </template>
           </div>
-          <div class="p-3 md:p-4">
-            <h3 class="font-bold text-xs md:text-sm leading-snug mb-2 line-clamp-2" x-text="p.name"></h3>
-            <div class="flex items-center gap-2 flex-wrap mb-3">
-              <span class="font-black text-black dark:text-white text-sm md:text-base" x-text="calcPrice(p) + ' EGP'"></span>
+
+          <!-- Title & Price -->
+          <div class="space-y-2">
+            <h3 class="font-semibold text-xs sm:text-sm text-ink leading-snug line-clamp-2" x-text="p.name"></h3>
+            
+            <div class="flex items-baseline gap-2">
+              <span class="text-sm sm:text-base font-semibold text-ink" x-text="calcPrice(p) + ' EGP'"></span>
               <template x-if="hasDiscount(p)">
-                <span class="text-gray-400 line-through text-xs" x-text="p.price + ' EGP'"></span>
+                <span class="text-xs text-slate-apple line-through" x-text="p.price + ' EGP'"></span>
               </template>
             </div>
-            <button @click.stop="goToProduct(p)"
-              class="w-full bg-black dark:bg-white text-white dark:text-black text-xs py-2.5 rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition font-bold flex items-center justify-center gap-1.5 active:scale-95 transform">
-              <i class="fas fa-eye text-xs"></i> <span x-text="t('btn_view')"></span>
+
+            <!-- Apple Pricing Blue Action Button -->
+            <button type="button"
+                    @click.stop="goToProduct(p)"
+                    class="apple-pricing-pill w-full py-2 text-xs mt-2 flex items-center justify-center gap-1.5">
+              <span>View details</span> <i class="fas fa-chevron-right text-[9px]"></i>
             </button>
           </div>
+
         </div>
       </template>
-      <div x-show="filteredProducts.length===0" class="col-span-2 md:col-span-5 text-center py-16 text-gray-400">
-        <i class="fas fa-box-open text-5xl mb-4 block text-gray-200 dark:text-gray-700"></i>
-        <p class="font-bold" x-text="t('no_products')"></p>
+
+      <!-- Empty state -->
+      <div x-show="filteredProducts.length === 0" class="col-span-2 md:col-span-4 text-center py-20 text-slate-apple">
+        <p class="text-sm">لا توجد منتجات حالياً في هذا القسم</p>
       </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- EDITORIAL CHAPTER (Apple Storytelling Section) -->
+<!-- ============================================== -->
+<section id="about" class="bg-studio-mist py-20 md:py-28 border-b border-hairline-silver">
+  <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
+    <p class="text-xs text-slate-apple uppercase tracking-wider">The Philosophy</p>
+    <h2 class="text-3xl md:text-4xl font-semibold text-ink headline-editorial">
+      Clothes that elevate your discipline.
+    </h2>
+    <p class="text-sm md:text-base text-slate-apple body-editorial max-w-2xl mx-auto" x-text="t('about_text')">
+    </p>
+    <div class="pt-2">
+      <a href="product.html" class="text-apple-blue hover:underline text-sm font-medium inline-flex items-center gap-1">
+        <span>Learn more about VEXIS compression</span> <i class="fas fa-chevron-right text-xs"></i>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="py-14 md:py-20 px-4 bg-gray-50 dark:bg-gray-900">
-  <div class="max-w-3xl mx-auto text-center">
-    <h2 class="text-2xl md:text-3xl font-black mb-4" x-text="t('about_title')"></h2>
-    <div class="w-12 h-1 bg-black dark:bg-white mx-auto mb-8 rounded-full"></div>
-    <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-base" x-text="t('about_text')"></p>
-  </div>
-</section>
+<!-- ============================================== -->
+<!-- FOOTER (Apple Studio Mist Footer Surface)      -->
+<!-- ============================================== -->
+<footer class="bg-studio-mist py-12 px-4 text-xs text-slate-apple">
+  <div class="max-w-6xl mx-auto space-y-8">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-hairline-silver">
+      <div class="space-y-2">
+        <span class="font-semibold text-sm text-ink tracking-widest uppercase block">VEXIS</span>
+        <p class="text-xs text-slate-apple">Built for Performance. Designed for Confidence. Made for Athletes in Egypt.</p>
+      </div>
 
-<!-- FOOTER -->
-<footer class="bg-black dark:bg-white text-white dark:text-black pt-12 pb-6 px-4">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-    <div>
-      <div class="flex items-center gap-3 mb-4">
-        <img src="logo.jpeg" alt="Vexis" class="w-10 h-10 rounded-full border-2 border-gray-700 dark:border-gray-300">
-        <div class="text-2xl md:text-3xl font-black tracking-wider">VEXIS</div>
+      <div class="space-y-2">
+        <span class="font-semibold text-xs text-ink block">Navigation</span>
+        <div class="flex flex-col gap-1.5 text-xs">
+          <a href="#products" class="hover:text-ink transition">T-Shirts Collection</a>
+          <a href="cart.html" class="hover:text-ink transition">Shopping Bag</a>
+          <a href="my-orders.html" class="hover:text-ink transition">Order Tracking</a>
+        </div>
       </div>
-      <p class="text-gray-400 dark:text-gray-500 text-sm leading-relaxed">Built for Performance. Designed for Confidence. Made for Athletes.</p>
-    </div>
-    <div>
-      <h3 class="font-black text-base mb-4 text-gray-300 dark:text-gray-600" x-text="t('footer_links')"></h3>
-      <div class="flex flex-col gap-3 text-gray-400 dark:text-gray-500 text-sm">
-        <a href="#products" class="hover:text-white dark:hover:text-black transition" x-text="t('nav_products')"></a>
-        <a href="cart.html" class="hover:text-white dark:hover:text-black transition" x-text="t('nav_cart')"></a>
-        <a href="#about" class="hover:text-white dark:hover:text-black transition" x-text="t('nav_about')"></a>
-      </div>
-    </div>
-    <div>
-      <h3 class="font-black text-base mb-4 text-gray-300 dark:text-gray-600" x-text="t('footer_contact')"></h3>
-      <!-- Social Icons - SIDE BY SIDE -->
-      <div class="flex items-center gap-3">
-        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" class="w-10 h-10 bg-gray-800 dark:bg-gray-200 rounded-full flex items-center justify-center text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-300 transition hover:-translate-y-1 transform">
-          <i class="fab fa-tiktok text-lg"></i>
-        </a>
-        <a href="https://wa.me/201007720554" target="_blank" class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white hover:bg-green-500 transition hover:-translate-y-1 transform">
-          <i class="fab fa-whatsapp text-lg"></i>
-        </a>
-        <a href="https://instagram.com/vexisoo.eg" target="_blank" class="w-10 h-10 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-full flex items-center justify-center text-white hover:opacity-90 transition hover:-translate-y-1 transform">
-          <i class="fab fa-instagram text-lg"></i>
-        </a>
-      </div>
-    </div>
-  </div>
 
-  <div class="border-t border-gray-800 dark:border-gray-200 pt-5 text-center text-gray-500 dark:text-gray-400 text-xs md:text-sm">
-    © 2026 Vexis. <span x-text="t('footer_rights')"></span>
+      <div class="space-y-2">
+        <span class="font-semibold text-xs text-ink block">Connect</span>
+        <div class="flex items-center gap-2">
+          <a href="https://wa.me/201007720554" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="https://instagram.com/vexisoo.eg" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-steel-apple">
+      <div>Copyright © 2026 VEXIS Inc. All rights reserved.</div>
+      <div class="flex items-center gap-4">
+        <span>Cairo, Egypt</span>
+        <span>•</span>
+        <span>Cash on Delivery</span>
+      </div>
+    </div>
+
   </div>
 </footer>
 
-<!-- BOTTOM NAV (Mobile) -->
-<div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 md:hidden z-50 shadow-lg">
-  <div class="flex items-center justify-around py-2">
-    <a href="index.html" class="flex flex-col items-center gap-0.5 text-black dark:text-white">
-      <i class="fas fa-home text-lg"></i>
-      <span class="text-[10px] font-bold" x-text="t('nav_home')"></span>
-    </a>
-    <a href="#products" class="flex flex-col items-center gap-0.5 text-gray-400 dark:text-gray-500">
-      <i class="fas fa-box text-lg"></i>
-      <span class="text-[10px] font-bold" x-text="t('nav_products')"></span>
-    </a>
-    <a href="my-orders.html" x-show="hasOrders" class="flex flex-col items-center gap-0.5 text-emerald-500 relative">
-      <i class="fas fa-box-open text-lg"></i>
-      <span class="text-[10px] font-bold">My Orders</span>
-      <span class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full"></span>
-    </a>
-    <a href="cart.html" class="flex flex-col items-center gap-0.5 text-gray-400 dark:text-gray-500 relative">
-      <i class="fas fa-shopping-bag text-lg"></i>
-      <span class="text-[10px] font-bold" x-text="t('nav_cart')"></span>
-      <span x-show="cartCount>0" x-text="cartCount"
-        class="absolute -top-1 right-2 bg-black dark:bg-white text-white dark:text-black text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-bold leading-none"></span>
-    </a>
-  </div>
-</div>
-<div class="h-16 md:hidden"></div>
-
 <script src="products.js"></script>
 <script>
-// ── Translations ──
 const translations = {
   ar: {
     topbar_shipping: 'شحن لجميع المحافظات',
@@ -409,56 +561,36 @@ const translations = {
     nav_products: 'المنتجات',
     nav_about: 'من نحن',
     nav_cart: 'السلة',
-    hero_badge: 'تشكيلة جديدة متاحة الآن',
-    hero_desc: 'أقوى تشكيلة ملابس جيم وتيشرتات رياضية للرجال. خامات تمرين ممتازة للياقة البدنية.',
-    hero_cta: 'تسوق الآن',
     feat_shipping: 'شحن سريع',
-    feat_shipping_sub: 'لجميع المحافظات',
-    feat_cod: 'الدفع عند الاستلام',
-    feat_cod_sub: 'ادفع بعد المعاينة',
-    feat_quality: 'خامات ممتازة',
-    feat_quality_sub: 'جودة عالية مضمونة',
+    feat_shipping_sub: 'لجميع محافظات مصر',
+    feat_cod: 'دفع عند الاستلام',
+    feat_cod_sub: 'معاينة قبل الدفع',
+    feat_quality: 'خامات بريميوم',
+    feat_quality_sub: 'قطن عالي الجودة',
     feat_return: 'استبدال مرن',
-    feat_return_sub: 'خلال 14 يوم بسلاسة',
-    products_title: '— المنتجات —',
-    badge_new: 'جديد',
-    btn_view: 'عرض المنتج',
-    no_products: 'لا توجد منتجات حالياً في هذا القسم',
-    about_title: '— من نحن —',
-    about_text: 'في VEXIS احنا بنؤمن أن الملابس الرياضية مش مجرد لبس وقت التمرين، هو جزء من رحلتك للتطور. عشان كدا عملنا VEXIS اهتمينا بالراحة، والشكل ، عشان نديك الثقه في كل تمرين VEXIS مش مجرد فكره دي بدايه جديده في عالم الرياضه',
-    footer_links: 'روابط سريعة',
-    footer_contact: 'تواصل معنا',
-    footer_rights: 'جميع الحقوق محفوظة.',
+    feat_return_sub: 'خلال 14 يوماً بسلاسة',
+    products_title: 'التشكيلة الكاملة',
+    about_text: 'في VEXIS احنا بنؤمن أن الملابس الرياضية مش مجرد لبس وقت التمرين، هو جزء من رحلتك للتطور. عشان كدا عملنا VEXIS اهتمينا بالراحة، والشكل، عشان نديك الثقة في كل تمرين. VEXIS مش مجرد فكرة، دي بداية جديدة في عالم الرياضة.',
   },
   en: {
-    topbar_shipping: 'Shipping to all governorates',
-    topbar_quality: 'World-class fabric quality',
+    topbar_shipping: 'Nationwide shipping across Egypt',
+    topbar_quality: 'World-class fabric standards',
     topbar_guarantee: '100% Quality Guaranteed',
-    topbar_support: '24/7 Customer Support via WhatsApp',
+    topbar_support: '24/7 Support via WhatsApp',
     nav_home: 'Home',
     nav_products: 'Products',
     nav_about: 'About',
-    nav_cart: 'Cart',
-    hero_badge: 'New Collection Available Now',
-    hero_desc: 'The ultimate sportswear collection. Premium fabric for better workouts.',
-    hero_cta: 'Shop Now',
-    feat_shipping: 'Fast Shipping',
-    feat_shipping_sub: 'All governorates',
+    nav_cart: 'Bag',
+    feat_shipping: 'Fast Delivery',
+    feat_shipping_sub: 'Nationwide shipping',
     feat_cod: 'Cash on Delivery',
-    feat_cod_sub: 'Pay after inspection',
-    feat_quality: 'Premium Quality',
-    feat_quality_sub: 'Guaranteed high quality',
-    feat_return: 'Easy Returns',
-    feat_return_sub: '14 days smooth exchange',
-    products_title: '— Products —',
-    badge_new: 'New',
-    btn_view: 'View Product',
-    no_products: 'No products in this category',
-    about_title: '— About Us —',
+    feat_cod_sub: 'Inspect before paying',
+    feat_quality: 'Premium Cotton',
+    feat_quality_sub: 'Compression durability',
+    feat_return: 'Flexible Returns',
+    feat_return_sub: '14-day hassle-free',
+    products_title: 'The Collection',
     about_text: "At VEXIS, we believe sportswear isn't just clothes for the gym — it's part of your journey to evolve. That's why we built VEXIS with a focus on comfort and style, to give you confidence in every workout. VEXIS isn't just an idea, it's a new beginning in the world of sports.",
-    footer_links: 'Quick Links',
-    footer_contact: 'Contact Us',
-    footer_rights: 'All rights reserved.',
   }
 };
 
@@ -471,77 +603,32 @@ function store() {
     cartCount: 0,
     hasOrders: false,
     lang: 'en',
-    isDark: false,
-    showIntro: !sessionStorage.getItem('vexis_intro_seen'),
 
-    dismissIntro() {
-      this.showIntro = false;
-      sessionStorage.setItem('vexis_intro_seen', 'true');
+    init() {
+      this.cartCount = this.getCart().length;
+      this.hasOrders = !!localStorage.getItem('vexis_customer_phone');
+
+      if (window.productsReady) {
+        this.products = window.mockProducts || [];
+      }
+      if (window.categoriesReady) {
+        this.categories = window.mockCategories || [];
+      }
+      window.addEventListener('productsLoaded', (e) => {
+        this.products = e.detail || [];
+      });
+      window.addEventListener('categoriesLoaded', (e) => {
+        this.categories = e.detail || [];
+      });
+
+      setInterval(() => {
+        if (typeof loadProducts === 'function') loadProducts();
+        if (typeof loadCategories === 'function') loadCategories();
+      }, 5000);
     },
-
-init() {
-  this.cartCount = this.getCart().length;
-  this.hasOrders = !!localStorage.getItem('vexis_customer_phone');
-
-  // Enforce English language and LTR layout
-  this.lang = 'en';
-  document.documentElement.setAttribute('lang', 'en');
-  document.documentElement.setAttribute('dir', 'ltr');
-
-  // Enforce Light Theme
-  this.isDark = false;
-  document.documentElement.classList.remove('dark');
-
-  // products.js loads data asynchronously — pull it in once ready
-  if (window.productsReady) {
-    this.products = window.mockProducts || [];
-  }
-  if (window.categoriesReady) {
-    this.categories = window.mockCategories || [];
-  }
-  window.addEventListener('productsLoaded', (e) => {
-    this.products = e.detail || [];
-  });
-  window.addEventListener('categoriesLoaded', (e) => {
-    this.categories = e.detail || [];
-  });
-
-  // Auto-refresh products and categories every 5 seconds
-  setInterval(() => {
-    if (typeof loadProducts === 'function') loadProducts();
-    if (typeof loadCategories === 'function') loadCategories();
-  }, 5000);
-},
 
     t(key) {
       return translations[this.lang]?.[key] || translations['ar'][key] || key;
-    },
-
-    toggleLang() {
-      this.lang = this.lang === 'ar' ? 'en' : 'ar';
-      localStorage.setItem('vexis_lang', this.lang);
-      this.applyLang();
-    },
-
-    applyLang() {
-      if (this.lang === 'en') {
-        document.documentElement.setAttribute('lang', 'en');
-        document.documentElement.setAttribute('dir', 'ltr');
-      } else {
-        document.documentElement.setAttribute('lang', 'ar');
-        document.documentElement.setAttribute('dir', 'rtl');
-      }
-    },
-
-    toggleTheme() {
-      this.isDark = !this.isDark;
-      if (this.isDark) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('vexis_theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('vexis_theme', 'light');
-      }
     },
 
     get filteredProducts() {
@@ -551,7 +638,7 @@ init() {
 
     calcPrice(p) {
       if (!p.discount_type || p.discount_type === 'none' || !p.discount_value) return p.price;
-      if (p.discount_type === 'amount')  return Math.max(p.price - p.discount_value, 0);
+      if (p.discount_type === 'amount') return Math.max(p.price - p.discount_value, 0);
       if (p.discount_type === 'percent') return Math.max(Math.round(p.price - (p.price * p.discount_value / 100)), 0);
       return p.price;
     },
@@ -563,13 +650,13 @@ init() {
     discountBadge(p) {
       if (!this.hasDiscount(p)) return '';
       if (p.discount_type === 'percent') return `-${p.discount_value}%`;
-      if (p.discount_type === 'amount')  return `-${p.discount_value} EGP`;
+      if (p.discount_type === 'amount') return `-${p.discount_value} EGP`;
       return '';
     },
 
     isNew(p) {
       if (!p.created_at) return false;
-      return (Date.now() - new Date(p.created_at)) < 7*24*60*60*1000;
+      return (Date.now() - new Date(p.created_at)) < 7 * 24 * 60 * 60 * 1000;
     },
 
     goToProduct(p) {
@@ -584,25 +671,5 @@ init() {
 }
 </script>
 
-<!-- SEO Keywords Indexing Map -->
-<div style="display: none;" aria-hidden="true">
-  <h2>Gym T-Shirts and Training Clothes for Men and Athletes in Egypt</h2>
-  <p>Shop the best men's sportswear, bodybuilding t-shirts, and premium gym t-shirts from VEXIS.</p>
-  <ul>
-    <li>gym t-shirts</li>
-    <li>men's sportswear Egypt</li>
-    <li>gym t-shirt cotton</li>
-    <li>comfortable training t-shirts</li>
-    <li>gym tops for men</li>
-    <li>bodybuilding t-shirts</li>
-    <li>vexis sportswear</li>
-    <li>vexis sports wear</li>
-    <li>men's sport t-shirts</li>
-    <li>men's sport sets</li>
-    <li>men's tennis clothes</li>
-  </ul>
-</div>
 </body>
 </html>
-
-
