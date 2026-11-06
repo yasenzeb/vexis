@@ -1022,12 +1022,36 @@ function productPage() {
 
       this.cartCount = this.getCart().length;
 
+      // Load reviews from Supabase, merge with fallback list
+      this.loadReviewsFromAPI();
+    },
+
+    async loadReviewsFromAPI() {
       try {
-        const savedReviews = JSON.parse(localStorage.getItem('vexis_user_reviews') || '[]');
-        if (Array.isArray(savedReviews) && savedReviews.length) {
-          this.reviewsList = [...savedReviews, ...this.reviewsList];
+        const res = await fetch('/api/reviews');
+        if (!res.ok) throw new Error('API error');
+        const data = await res.json();
+        if (data.success && Array.isArray(data.reviews) && data.reviews.length) {
+          // Convert Supabase rows to display format
+          const apiReviews = data.reviews.map(r => ({
+            rating:   r.rating,
+            date:     new Date(r.created_at).toLocaleDateString('en-GB').replace(/\//g, '/'),
+            author:   r.name,
+            verified: true,
+            title:    r.text.length > 60 ? r.text.substring(0, 60) + '…' : r.text,
+            content:  r.text,
+            helpful:  0,
+            id:       r.id
+          }));
+          // Merge API reviews at top, then static fallbacks (deduplicate by id)
+          const existingIds = new Set(apiReviews.map(r => r.id));
+          const staticFallbacks = this.reviewsList.filter(r => !r.id || !existingIds.has(r.id));
+          this.reviewsList = [...apiReviews, ...staticFallbacks];
         }
-      } catch (e) {}
+      } catch (e) {
+        // If API fails, keep static fallback reviews
+        console.warn('[Reviews] Failed to fetch from API, using fallback.', e.message);
+      }
     },
 
     calcPrice() {
@@ -1160,31 +1184,39 @@ function productPage() {
       const year = today.getFullYear();
       const dateStr = `${day}/${month}/${year}`;
 
+      const reviewText = [this.newReviewTitle.trim(), this.newReviewContent.trim()].filter(Boolean).join(' — ');
+
       const newRev = {
-        rating: this.newReviewRating,
-        date: dateStr,
-        author: this.newReviewAuthor.trim(),
+        rating:   this.newReviewRating,
+        date:     dateStr,
+        author:   this.newReviewAuthor.trim(),
         verified: true,
-        title: this.newReviewTitle.trim(),
-        content: this.newReviewContent.trim(),
-        helpful: 0
+        title:    this.newReviewTitle.trim(),
+        content:  this.newReviewContent.trim(),
+        helpful:  0
       };
 
+      // Optimistic UI update immediately
       this.reviewsList.unshift(newRev);
 
-      try {
-        const stored = JSON.parse(localStorage.getItem('vexis_user_reviews') || '[]');
-        stored.unshift(newRev);
-        localStorage.setItem('vexis_user_reviews', JSON.stringify(stored));
-      } catch (e) {}
-
-      this.newReviewAuthor = '';
-      this.newReviewTitle = '';
+      this.newReviewAuthor  = '';
+      this.newReviewTitle   = '';
       this.newReviewContent = '';
-      this.newReviewRating = 5;
+      this.newReviewRating  = 5;
       this.showWriteReviewModal = false;
+      this.showToast('شكراً! تم إرسال تقييمك بنجاح');
 
-      this.showToast('شكراً لك، تم نشر تقييمك');
+      // Persist to Supabase via API (fire & forget)
+      fetch('/api/reviews', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          name:   newRev.author,
+          title:  newRev.title,
+          text:   reviewText,
+          rating: newRev.rating
+        })
+      }).catch(e => console.warn('[submitReview] API error:', e.message));
     }
   }
 }

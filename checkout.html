@@ -382,23 +382,46 @@ function checkoutPage() {
 
     async submitOrder() {
       if (this.isSubmitting) return;
+
+      // Client-side validation before sending
+      const fullName = (this.form.firstName.trim() + ' ' + this.form.lastName.trim()).trim();
+      if (!fullName) { alert('برجاء كتابة الاسم الأول والأخير'); return; }
+      if (!this.form.phone.trim()) { alert('برجاء إدخال رقم الهاتف'); return; }
+      if (!this.form.city) { alert('برجاء اختيار المحافظة'); return; }
+      if (!this.form.address.trim()) { alert('برجاء كتابة العنوان بالتفصيل'); return; }
+      if (!this.cart || this.cart.length === 0) { alert('سلة المشتريات فارغة'); return; }
+
       this.isSubmitting = true;
 
+      // Send both flat keys AND customer object for maximum compatibility
       const payload = {
+        // Flat keys (what _checkout.js reads)
+        name:           fullName,
+        firstName:      this.form.firstName.trim(),
+        lastName:       this.form.lastName.trim(),
+        phone:          this.form.phone.trim(),
+        email:          this.form.email.trim(),
+        governorate:    this.form.city,
+        city:           this.form.city,
+        address:        this.form.address.trim(),
+        notes:          this.form.notes.trim(),
+        payment:        'cod',
+        payment_method: 'cod',
+        // Nested object (backward compat)
         customer: {
-          name: this.form.firstName.trim() + ' ' + this.form.lastName.trim(),
-          phone: this.form.phone.trim(),
-          email: this.form.email.trim(),
+          name:        fullName,
+          phone:       this.form.phone.trim(),
+          email:       this.form.email.trim(),
           governorate: this.form.city,
-          address: this.form.address.trim(),
-          notes: this.form.notes.trim()
+          city:        this.form.city,
+          address:     this.form.address.trim(),
+          notes:       this.form.notes.trim()
         },
-        items: this.cart,
+        items:    this.cart,
         subtotal: this.subtotal,
         discount: this.promoDiscount,
         shipping: this.shippingCost,
-        total: this.finalTotal,
-        payment_method: 'cod'
+        total:    this.finalTotal
       };
 
       try {
@@ -409,7 +432,7 @@ function checkoutPage() {
         });
         const data = await res.json();
         if (data.success) {
-          this.orderNumber = data.order_id || 'VX-' + Math.floor(100000 + Math.random() * 900000);
+          this.orderNumber = data.order_number || data.order_id || 'VX-' + Math.floor(100000 + Math.random() * 900000);
           localStorage.removeItem('vexis_cart');
           localStorage.removeItem('vexis_promo');
           localStorage.setItem('vexis_customer_phone', this.form.phone.trim());
