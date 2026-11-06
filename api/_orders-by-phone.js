@@ -4,7 +4,7 @@ import { setCorsHeaders, safeError } from './_auth.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.APISUPABASE_SERVICE_ROLE_KEY
 );
 
 export default async function handler(req, res) {
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabase
       .from('orders')
-      .select('order_number, customer_name, phone, governorate, status, shipping_cost, total, created_at, items')
+      .select('id, order_number, customer_name, phone, governorate, address, notes, payment_method, status, rejection_reason, subtotal, shipping_cost, total, created_at, items')
       .order('created_at', { ascending: false })
       .limit(100);
 

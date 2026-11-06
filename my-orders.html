@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | طلباتي — متابعة حالة الطلب</title>
+<title>VEXIS | متابعة الطلب</title>
 <meta name="robots" content="noindex">
 
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-<link rel="manifest" href="site.webmanifest" />
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
@@ -22,19 +21,17 @@
         colors: {
           'gallery-white': '#ffffff',
           'studio-mist': '#f5f5f7',
-          'paper-frost': '#fafafc',
           'hairline-silver': '#d6d6d6',
-          'control-gray': '#e6e6e8',
           'ink': '#1d1d1f',
-          'slate-apple': '#707070',
-          'steel-apple': '#86868b',
+          'slate-apple': '#4a4a4a',
+          'steel-apple': '#5a5a5a',
           'apple-blue': '#0066cc',
           'pricing-blue': '#0071e3',
-          'launch-orange': '#b64400'
+          'launch-orange': '#b64400',
+          'emerald-vexis': '#059669'
         },
         borderRadius: {
           '28': '28px',
-          '36': '36px',
           '980': '980px',
         }
       }
@@ -45,193 +42,492 @@
 
 <style>
 :root {
-  --color-gallery-white: #ffffff;
-  --color-studio-mist: #f5f5f7;
-  --color-paper-frost: #fafafc;
-  --color-hairline-silver: #d6d6d6;
-  --color-control-gray: #e6e6e8;
-  --color-ink: #1d1d1f;
-  --color-slate: #707070;
-  --color-steel: #86868b;
-  --color-apple-blue: #0066cc;
-  --color-pricing-blue: #0071e3;
-  --color-launch-orange: #b64400;
-
-  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cairo", sans-serif;
+  --font: "Cairo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --ink: #1d1d1f;
+  --slate: #4a4a4a;
+  --steel: #5a5a5a;
+  --mist: #f5f5f7;
+  --silver: #d6d6d6;
+  --blue: #0071e3;
+  --green: #059669;
 }
-
-* {
-  font-family: var(--font-apple);
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--color-studio-mist);
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Scrollbar */
+* { font-family: var(--font); box-sizing: border-box; text-rendering: optimizeLegibility; }
+body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antialiased; }
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
 
-/* Apple Buttons */
-.apple-pricing-pill {
-  background-color: var(--color-pricing-blue);
-  color: #ffffff;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-pricing-pill:hover {
-  background-color: #0077ed;
-  transform: scale(1.01);
+.apple-card {
+  background: #fff;
+  border-radius: 28px;
+  border: 1px solid var(--silver);
 }
 
 .apple-input {
-  background-color: #ffffff;
-  border: 1px solid var(--color-steel);
-  border-radius: 980px;
-  padding: 10px 18px;
-  font-size: 13px;
-  color: var(--color-ink);
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-size: 14px;
+  color: var(--ink);
   outline: none;
-  transition: border-color .15s ease;
+  transition: border-color .15s;
   width: 100%;
+  font-weight: 500;
 }
-.apple-input:focus {
-  border-color: var(--color-pricing-blue);
+.apple-input:focus { border-color: var(--blue); }
+
+.apple-btn {
+  background: var(--blue);
+  color: #fff;
+  border-radius: 9999px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background .15s, transform .1s;
+  white-space: nowrap;
+}
+.apple-btn:hover { background: #0077ed; transform: scale(1.01); }
+
+/* ─── ORDER STATUS TRACKER ─── */
+.tracker-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0;
+  position: relative;
+  padding: 0 8px;
 }
 
-.apple-card {
-  background-color: #ffffff;
-  border-radius: 28px;
-  border: 1px solid var(--color-hairline-silver);
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+
+/* Connecting line between steps */
+.tracker-step::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--silver);
+  z-index: 0;
+  transition: background .4s ease;
+}
+.tracker-step:last-child::before { display: none; }
+.tracker-step.done::before { background: var(--green); }
+.tracker-step.active::before { background: var(--silver); }
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--silver);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--steel);
+  position: relative;
+  z-index: 3;
+  transition: all .3s ease;
+  flex-shrink: 0;
+}
+.step-circle.done {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+.step-circle.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
+  animation: pulse-ring 2s infinite;
+}
+.step-circle.rejected-step {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: #fff;
+}
+@keyframes pulse-ring {
+  0%,100% { box-shadow: 0 0 0 4px rgba(0,113,227,0.15); }
+  50%      { box-shadow: 0 0 0 8px rgba(0,113,227,0.08); }
+}
+
+.step-label {
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--steel);
+  text-align: center;
+  line-height: 1.3;
+}
+.step-label.done  { color: var(--green); }
+.step-label.active { color: var(--blue); font-weight: 700; }
+.step-label.rejected-label { color: #ef4444; font-weight: 700; }
+
+/* Mobile compact */
+@media (max-width: 480px) {
+  .step-circle { width: 30px; height: 30px; font-size: 11px; }
+  .step-circle::before { top: 15px; }
+  .step-label { font-size: 9px; }
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* Live dot */
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
+  display: inline-block; animation: blink-live 1.2s ease-in-out infinite;
+}
+@keyframes blink-live { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* Item row */
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--silver);
+}
+.item-row:last-child { border-bottom: none; }
+
+.item-thumb {
+  width: 44px; height: 44px; border-radius: 10px;
+  object-fit: cover; background: var(--mist);
+  border: 1px solid var(--silver); flex-shrink: 0;
+}
+
+/* Shimmer skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f2 25%, #e8e8ea 50%, #f0f0f2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 </style>
 </head>
-<body class="bg-studio-mist text-ink min-h-screen flex flex-col" x-data="myOrders()" x-init="init()">
 
-<!-- ============================================== -->
-<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
-<!-- ============================================== -->
-<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
-  <div class="max-w-xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
-    
-    <a href="index.html" class="flex items-center gap-2 group">
-      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
+<body class="min-h-screen flex flex-col" x-data="myOrders()" x-init="init()">
+
+<!-- ── HEADER ── -->
+<header class="bg-white/90 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
+  <div class="max-w-2xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
+
+    <a href="index.html" class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver">
         <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
       </div>
-      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
+      <span class="font-bold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
 
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-semibold text-slate-apple">
         <span>🇪🇬</span>
-        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
+        <span class="text-ink tracking-wider">EGYPT</span>
       </div>
-
-      <a href="index.html" class="text-xs text-apple-blue hover:underline">
-        العودة للمتجر
+      <a href="index.html" class="text-xs text-apple-blue hover:underline font-medium">المتجر</a>
+      <a href="cart.html" class="text-slate-apple hover:text-ink transition">
+        <i class="fas fa-shopping-bag text-sm"></i>
       </a>
     </div>
 
   </div>
 </header>
 
-<main class="max-w-xl mx-auto px-4 py-10 flex-1 w-full space-y-6">
+<!-- ── MAIN ── -->
+<main class="max-w-2xl mx-auto px-4 py-10 flex-1 w-full space-y-6">
 
-  <div class="border-b border-hairline-silver pb-4">
-    <h1 class="text-2xl font-semibold text-ink tracking-tight">طلباتي — My Orders</h1>
-    <p class="text-xs text-slate-apple mt-1">متابعة وتتبع جميع طلباتك السابقة من VEXIS.</p>
+  <!-- Page Title -->
+  <div class="border-b border-hairline-silver pb-5">
+    <h1 class="text-2xl font-bold text-ink tracking-tight">طلباتي</h1>
+    <p class="text-sm text-slate-apple mt-1 font-medium">تتبّع حالة طلبك بشكل فوري — يتحدث تلقائياً كل 15 ثانية</p>
   </div>
 
-  <!-- Phone Search Card -->
-  <div x-show="!phone" class="apple-card p-6 space-y-4">
-    <div>
-      <h2 class="text-sm font-semibold text-ink">البحث برقم الهاتف</h2>
-      <p class="text-xs text-slate-apple">أدخل رقم الموبايل المستخدم أثناء إتمام الطلب:</p>
+  <!-- ── PHONE SEARCH ── -->
+  <div x-show="!phone" class="apple-card p-7 space-y-5">
+    <div class="space-y-1">
+      <h2 class="text-base font-bold text-ink">ابحث عن طلبك</h2>
+      <p class="text-sm text-slate-apple font-medium">أدخل رقم الموبايل اللي استخدمته عند الطلب:</p>
     </div>
-    
-    <div class="flex gap-2">
+
+    <div class="flex gap-3">
       <input type="tel"
              x-model="inputPhone"
              placeholder="01xxxxxxxxx"
              class="apple-input flex-1 font-mono"
              @keyup.enter="searchByPhone()">
-      <button @click="searchByPhone()" class="apple-pricing-pill px-6 py-2.5 text-xs">
-        بحث
+      <button @click="searchByPhone()" class="apple-btn">
+        <i class="fas fa-search ml-1"></i> بحث
       </button>
     </div>
   </div>
 
-  <!-- Loading State -->
-  <div x-show="loading" class="flex justify-center py-12">
-    <div class="flex flex-col items-center gap-2 text-slate-apple">
-      <i class="fas fa-spinner fa-spin text-xl text-ink"></i>
-      <span class="text-xs">جاري تحميل تفاصيل طلباتك...</span>
+  <!-- ── LOADING SKELETON ── -->
+  <template x-if="loading">
+    <div class="apple-card p-6 space-y-4">
+      <div class="skeleton h-5 w-48 rounded"></div>
+      <div class="skeleton h-4 w-32 rounded"></div>
+      <div class="skeleton h-24 w-full rounded-2xl mt-4"></div>
+      <div class="skeleton h-4 w-full rounded"></div>
+      <div class="skeleton h-4 w-3/4 rounded"></div>
     </div>
-  </div>
+  </template>
 
-  <!-- Orders List -->
+  <!-- ── ORDERS LIST ── -->
   <template x-if="!loading && phone && orders.length > 0">
-    <div class="space-y-4">
-      
-      <div class="flex items-center justify-between text-xs text-slate-apple">
-        <span>تم العثور على <strong class="text-ink" x-text="orders.length"></strong> طلب</span>
-        <button @click="phone = ''; orders = []" class="text-apple-blue hover:underline text-xs">
+    <div class="space-y-5">
+
+      <!-- Header row -->
+      <div class="flex items-center justify-between text-xs text-slate-apple px-1 font-medium">
+        <span>
+          <span class="live-dot"></span>
+          <span class="mr-1">مباشر —</span>
+          <strong class="text-ink" x-text="orders.length"></strong> طلب
+        </span>
+        <button @click="phone=''; orders=[]; stopPolling()" class="text-apple-blue hover:underline">
           تغيير رقم الهاتف
         </button>
       </div>
 
-      <template x-for="ord in orders" :key="ord.order_number">
-        <div class="apple-card p-6 space-y-4">
-          
-          <div class="flex items-center justify-between border-b border-hairline-silver pb-3">
+      <template x-for="ord in orders" :key="ord.id || ord.order_number">
+        <div class="apple-card overflow-hidden">
+
+          <!-- ── Order Header ── -->
+          <div class="px-6 pt-5 pb-4 border-b border-hairline-silver flex items-start justify-between gap-3">
             <div>
-              <span class="text-[10px] text-steel-apple block uppercase tracking-wider">Order No.</span>
-              <span class="font-mono font-semibold text-sm text-ink tracking-wider" x-text="ord.order_number"></span>
+              <span class="text-[10px] text-steel-apple uppercase tracking-widest block font-semibold">Order</span>
+              <span class="font-mono font-bold text-base text-ink tracking-wider" x-text="ord.order_number"></span>
+              <div class="text-[11px] text-steel-apple mt-0.5 font-medium"
+                   x-text="ord.created_at ? new Date(ord.created_at).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : ''">
+              </div>
             </div>
-            <span class="px-3 py-1 rounded-full text-[11px] font-medium"
-                  :class="ord.status === 'delivered' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-studio-mist text-slate-apple border border-hairline-silver'"
+            <!-- Status badge -->
+            <span class="status-badge flex-shrink-0"
+                  :class="{
+                    'bg-emerald-50 text-emerald-700 border border-emerald-200': ord.status==='delivered',
+                    'bg-blue-50 text-blue-700 border border-blue-200': ord.status==='shipped' || ord.status==='review',
+                    'bg-red-50 text-red-600 border border-red-200': ord.status==='rejected',
+                    'bg-studio-mist text-slate-apple border border-hairline-silver': !['delivered','shipped','review','rejected'].includes(ord.status)
+                  }"
                   x-text="getStatusLabel(ord.status)">
             </span>
           </div>
 
-          <div class="space-y-2 text-xs">
-            <div class="flex justify-between text-slate-apple">
-              <span>المحافظة</span>
-              <span class="font-medium text-ink" x-text="ord.governorate"></span>
+          <!-- ── Amazon Progress Bar ── -->
+          <div class="px-6 py-6 border-b border-hairline-silver"
+               x-show="ord.status !== 'rejected'">
+            <div class="tracker-wrap">
+
+              <!-- Step 1: Pending -->
+              <div class="tracker-step"
+                   :class="getStepState(ord.status, 'pending')">
+                <div class="step-circle"
+                     :class="getStepState(ord.status, 'pending')">
+                  <i class="fas"
+                     :class="isStepDone(ord.status, 'pending') ? 'fa-check' : 'fa-clock'"></i>
+                </div>
+                <span class="step-label"
+                      :class="getStepState(ord.status, 'pending')">
+                  استلام<br>الطلب
+                </span>
+              </div>
+
+              <!-- Step 2: Review -->
+              <div class="tracker-step"
+                   :class="getStepState(ord.status, 'review')">
+                <div class="step-circle"
+                     :class="getStepState(ord.status, 'review')">
+                  <i class="fas"
+                     :class="isStepDone(ord.status, 'review') ? 'fa-check' : 'fa-clipboard-check'"></i>
+                </div>
+                <span class="step-label"
+                      :class="getStepState(ord.status, 'review')">
+                  جاري<br>المراجعة
+                </span>
+              </div>
+
+              <!-- Step 3: Shipped -->
+              <div class="tracker-step"
+                   :class="getStepState(ord.status, 'shipped')">
+                <div class="step-circle"
+                     :class="getStepState(ord.status, 'shipped')">
+                  <i class="fas"
+                     :class="isStepDone(ord.status, 'shipped') ? 'fa-check' : 'fa-truck'"></i>
+                </div>
+                <span class="step-label"
+                      :class="getStepState(ord.status, 'shipped')">
+                  خرج<br>للشحن
+                </span>
+              </div>
+
+              <!-- Step 4: Delivered -->
+              <div class="tracker-step"
+                   :class="getStepState(ord.status, 'delivered')">
+                <div class="step-circle"
+                     :class="getStepState(ord.status, 'delivered')">
+                  <i class="fas"
+                     :class="isStepDone(ord.status, 'delivered') ? 'fa-check' : 'fa-box-open'"></i>
+                </div>
+                <span class="step-label"
+                      :class="getStepState(ord.status, 'delivered')">
+                  تم<br>التسليم
+                </span>
+              </div>
+
             </div>
-            <div class="flex justify-between text-slate-apple">
+
+            <!-- Current Status Message -->
+            <div class="mt-6 rounded-2xl px-4 py-3 text-sm font-semibold text-center"
+                 :class="{
+                   'bg-blue-50 text-blue-700': ['pending','review','shipped'].includes(ord.status),
+                   'bg-emerald-50 text-emerald-700': ord.status === 'delivered'
+                 }"
+                 x-text="getStatusMessage(ord.status)">
+            </div>
+          </div>
+
+          <!-- Rejected Banner -->
+          <div x-show="ord.status === 'rejected'"
+               class="mx-6 my-4 rounded-2xl bg-red-50 border border-red-200 px-5 py-4 text-sm text-red-700 space-y-1">
+            <div class="font-bold flex items-center gap-2">
+              <i class="fas fa-times-circle"></i> تم رفض الطلب
+            </div>
+            <div class="text-xs font-medium text-red-600"
+                 x-text="ord.rejection_reason ? 'السبب: ' + ord.rejection_reason : 'تواصل معنا عبر واتساب لمزيد من التفاصيل.'">
+            </div>
+            <a href="https://wa.me/201061927815" target="_blank"
+               class="inline-block mt-2 bg-red-600 text-white text-xs px-4 py-1.5 rounded-full font-semibold hover:bg-red-700 transition">
+              <i class="fab fa-whatsapp ml-1"></i> تواصل معنا
+            </a>
+          </div>
+
+          <!-- ── Order Items ── -->
+          <div class="px-6 py-4 border-b border-hairline-silver space-y-0">
+            <h3 class="text-xs font-bold text-steel-apple uppercase tracking-widest mb-3">المنتجات</h3>
+            <template x-for="(item, idx) in (ord.items || [])" :key="idx">
+              <div class="item-row">
+                <div class="item-thumb bg-studio-mist flex items-center justify-center">
+                  <i class="fas fa-tshirt text-hairline-silver text-sm"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-semibold text-ink truncate" x-text="item.name || 'منتج VEXIS'"></div>
+                  <div class="text-xs text-slate-apple font-medium mt-0.5">
+                    <span x-show="item.size">المقاس: <span x-text="item.size"></span></span>
+                    <span x-show="item.color" class="mr-3">اللون: <span x-text="item.color"></span></span>
+                    <span class="mr-3">الكمية: <span x-text="item.qty || 1"></span></span>
+                  </div>
+                </div>
+                <div class="text-sm font-bold text-ink font-mono flex-shrink-0"
+                     x-text="((item.finalPrice || item.price || 0) * (item.qty || 1)) + ' EGP'">
+                </div>
+              </div>
+            </template>
+          </div>
+
+          <!-- ── Pricing Summary ── -->
+          <div class="px-6 py-4 space-y-2 text-sm border-b border-hairline-silver">
+            <div class="flex justify-between text-slate-apple font-medium">
+              <span>المجموع الفرعي</span>
+              <span class="font-mono text-ink" x-text="(ord.subtotal || 0) + ' EGP'"></span>
+            </div>
+            <div class="flex justify-between text-slate-apple font-medium">
               <span>مصاريف الشحن</span>
               <span class="font-mono text-ink" x-text="(ord.shipping_cost || 0) + ' EGP'"></span>
             </div>
-            <div class="flex justify-between text-slate-apple pt-2 border-t border-hairline-silver">
-              <span class="font-semibold text-ink">إجمالي الفاتورة</span>
-              <span class="font-mono font-semibold text-sm text-ink" x-text="(ord.total || 0) + ' EGP'"></span>
+            <div class="flex justify-between text-ink font-bold pt-2 border-t border-hairline-silver text-base">
+              <span>الإجمالي</span>
+              <span class="font-mono" x-text="(ord.total || 0) + ' EGP'"></span>
+            </div>
+          </div>
+
+          <!-- ── Delivery Info ── -->
+          <div class="px-6 py-4 space-y-2 text-xs font-medium">
+            <div class="flex items-center gap-2 text-slate-apple">
+              <i class="fas fa-map-marker-alt text-ink w-4 text-center"></i>
+              <span>
+                <span x-text="ord.governorate"></span>
+                — <span x-text="ord.address"></span>
+              </span>
+            </div>
+            <div class="flex items-center gap-2 text-slate-apple">
+              <i class="fas fa-phone text-ink w-4 text-center"></i>
+              <span class="font-mono" x-text="ord.phone"></span>
+            </div>
+            <div class="flex items-center gap-2 text-slate-apple" x-show="ord.payment_method">
+              <i class="fas fa-wallet text-ink w-4 text-center"></i>
+              <span x-text="ord.payment_method === 'cod' ? 'الدفع عند الاستلام (COD)' : ord.payment_method"></span>
+            </div>
+            <div class="flex items-center gap-2 text-slate-apple" x-show="ord.notes">
+              <i class="fas fa-comment-dots text-ink w-4 text-center"></i>
+              <span x-text="ord.notes"></span>
             </div>
           </div>
 
         </div>
       </template>
 
+      <!-- WhatsApp Support -->
+      <div class="apple-card p-5 flex items-center gap-4">
+        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0">
+          <i class="fab fa-whatsapp text-emerald-600 text-lg"></i>
+        </div>
+        <div class="flex-1">
+          <div class="text-sm font-bold text-ink">تحتاج مساعدة؟</div>
+          <div class="text-xs text-slate-apple font-medium mt-0.5">فريق VEXIS موجود على واتساب 24/7</div>
+        </div>
+        <a href="https://wa.me/201061927815" target="_blank"
+           class="apple-btn text-sm py-2 px-4 flex-shrink-0">
+          تواصل
+        </a>
+      </div>
+
     </div>
   </template>
 
-  <!-- No Orders Found -->
+  <!-- ── NO ORDERS ── -->
   <template x-if="!loading && phone && orders.length === 0">
-    <div class="apple-card p-10 text-center space-y-3">
-      <i class="fas fa-box-open text-3xl text-steel-apple"></i>
-      <h3 class="font-semibold text-sm text-ink">لم يتم العثور على طلبات</h3>
-      <p class="text-xs text-slate-apple">لم نجد أي طلبات مسجلة برقم الهاتف المدخل.</p>
-      <button @click="phone = ''; orders = []" class="apple-pricing-pill px-5 py-2 text-xs inline-block mt-2">
-        المحاولة برقم آخر
+    <div class="apple-card p-12 text-center space-y-4">
+      <div class="w-16 h-16 rounded-full bg-studio-mist flex items-center justify-center mx-auto">
+        <i class="fas fa-box-open text-2xl text-steel-apple"></i>
+      </div>
+      <div>
+        <h3 class="font-bold text-base text-ink">لم يتم العثور على طلبات</h3>
+        <p class="text-sm text-slate-apple font-medium mt-1">لم نجد طلبات برقم <span class="font-mono text-ink" x-text="phone"></span></p>
+      </div>
+      <button @click="phone=''; orders=[]; stopPolling()" class="apple-btn inline-block mt-2 text-sm">
+        البحث برقم آخر
       </button>
     </div>
   </template>
 
 </main>
+
+<!-- ── FOOTER ── -->
+<footer class="border-t border-hairline-silver bg-gallery-white mt-12 py-6 text-center text-xs text-steel-apple font-medium">
+  © 2026 VEXIS — جميع الحقوق محفوظة
+</footer>
 
 <script>
 function myOrders() {
@@ -240,11 +536,15 @@ function myOrders() {
     inputPhone: '',
     loading: false,
     orders: [],
+    pollingInterval: null,
+
+    // Status flow: pending → review → shipped → delivered
+    statusOrder: ['pending', 'review', 'shipped', 'delivered'],
 
     init() {
       const saved = localStorage.getItem('vexis_customer_phone');
       if (saved) {
-        this.phone = saved;
+        this.phone      = saved;
         this.inputPhone = saved;
         this.fetchOrders();
       }
@@ -261,7 +561,7 @@ function myOrders() {
     async fetchOrders() {
       this.loading = true;
       try {
-        const res = await fetch('/api/orders?phone=' + encodeURIComponent(this.phone));
+        const res  = await fetch('/api/orders-by-phone?phone=' + encodeURIComponent(this.phone));
         const data = await res.json();
         if (data.success) {
           this.orders = data.orders || [];
@@ -273,19 +573,86 @@ function myOrders() {
       } finally {
         this.loading = false;
       }
+      this.startPolling();
+    },
+
+    // Live polling every 15s to sync with Telegram bot status updates
+    startPolling() {
+      this.stopPolling();
+      this.pollingInterval = setInterval(async () => {
+        if (!this.phone) return;
+        try {
+          const res  = await fetch('/api/orders-by-phone?phone=' + encodeURIComponent(this.phone));
+          const data = await res.json();
+          if (data.success) {
+            // Merge: update status/fields without full re-render flicker
+            const newOrders = data.orders || [];
+            newOrders.forEach(newOrd => {
+              const idx = this.orders.findIndex(o => o.order_number === newOrd.order_number);
+              if (idx !== -1) {
+                // Update in-place to avoid template re-render
+                this.orders[idx] = { ...this.orders[idx], ...newOrd };
+              }
+            });
+            // Add any brand new orders
+            const existingNums = new Set(this.orders.map(o => o.order_number));
+            newOrders.filter(o => !existingNums.has(o.order_number)).forEach(o => this.orders.unshift(o));
+          }
+        } catch {}
+      }, 15000);
+    },
+
+    stopPolling() {
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+        this.pollingInterval = null;
+      }
+    },
+
+    // ─── Status step helpers ───
+    getStepIndex(status) {
+      const idx = this.statusOrder.indexOf(status);
+      return idx === -1 ? 0 : idx;
+    },
+
+    isStepDone(currentStatus, stepStatus) {
+      if (currentStatus === 'rejected') return false;
+      return this.getStepIndex(currentStatus) > this.getStepIndex(stepStatus);
+    },
+
+    isStepActive(currentStatus, stepStatus) {
+      if (currentStatus === 'rejected') return false;
+      return this.getStepIndex(currentStatus) === this.getStepIndex(stepStatus);
+    },
+
+    getStepState(currentStatus, stepStatus) {
+      if (currentStatus === 'rejected') return '';
+      if (this.isStepDone(currentStatus, stepStatus))   return 'done';
+      if (this.isStepActive(currentStatus, stepStatus)) return 'active';
+      return '';
     },
 
     getStatusLabel(s) {
       const map = {
-        pending: 'قيد المراجعة',
-        processing: 'جاري التجهيز',
-        shipped: 'في الطريق إليك',
-        delivered: 'تم التوصيل بنجاح',
-        cancelled: 'ملغي'
+        pending:   'قيد المراجعة ⏳',
+        review:    'جاري التجهيز ✅',
+        shipped:   'في الطريق 🚚',
+        delivered: 'تم التسليم 🎉',
+        rejected:  'مرفوض ❌'
       };
       return map[s] || 'قيد المعالجة';
+    },
+
+    getStatusMessage(s) {
+      const map = {
+        pending:   'تم استلام طلبك بنجاح وسيتم مراجعته قريباً.',
+        review:    'طلبك جاري تجهيزه وسيخرج للشحن قريباً.',
+        shipped:   '🚚 طلبك في الطريق إليك — جاري التوصيل!',
+        delivered: '🎉 تم توصيل طلبك بنجاح. شكراً لثقتك في VEXIS!'
+      };
+      return map[s] || 'طلبك قيد المعالجة.';
     }
-  }
+  };
 }
 </script>
 

@@ -61,8 +61,8 @@
           'hairline-silver': '#d6d6d6',
           'control-gray': '#e6e6e8',
           'ink': '#1d1d1f',
-          'slate-apple': '#707070',
-          'steel-apple': '#86868b',
+          'slate-apple': '#4a4a4a',
+          'steel-apple': '#5a5a5a',
           'apple-blue': '#0066cc',
           'pricing-blue': '#0071e3',
           'launch-orange': '#b64400'
@@ -92,12 +92,13 @@
   --color-pricing-blue: #0071e3;
   --color-launch-orange: #b64400;
 
-  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Cairo", sans-serif;
+  --font-apple: "Cairo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 }
 
 * {
   font-family: var(--font-apple);
   box-sizing: border-box;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -118,8 +119,8 @@ body {
 }
 
 .body-editorial {
-  letter-spacing: -0.015em;
-  line-height: 1.47;
+  letter-spacing: -0.01em;
+  line-height: 1.65;
 }
 
 /* Apple Buttons */
@@ -311,8 +312,8 @@ body {
       VEXIS - Let Your Power Speak
     </h1>
 
-    <p class="text-base sm:text-lg text-slate-apple body-editorial max-w-xl mx-auto">
-      Ultra-dense combed cotton compression wear. Designed to define your silhouette with uncompromising comfort.
+    <p class="text-base sm:text-lg text-ink/80 body-editorial max-w-xl mx-auto font-medium">
+      قطن طبيعي مشبوك بكثافة عالية. مصمم يعرّف جسمك بكل راحة.
     </p>
 
     <!-- Hero CTA Buttons -->
@@ -566,8 +567,8 @@ const translations = {
     feat_shipping_sub: 'لجميع محافظات مصر',
     feat_cod: 'دفع عند الاستلام',
     feat_cod_sub: 'معاينة قبل الدفع',
-    feat_quality: 'خامات بريميوم',
-    feat_quality_sub: 'قطن عالي الجودة',
+    feat_quality: 'قطن طبيعي',
+    feat_quality_sub: 'مريح وعالي الجودة',
     feat_return: 'استبدال مرن',
     feat_return_sub: 'خلال 14 يوماً بسلاسة',
     products_title: 'التشكيلة الكاملة',
@@ -586,8 +587,8 @@ const translations = {
     feat_shipping_sub: 'Nationwide shipping',
     feat_cod: 'Cash on Delivery',
     feat_cod_sub: 'Inspect before paying',
-    feat_quality: 'Premium Cotton',
-    feat_quality_sub: 'Compression durability',
+    feat_quality: 'قطن طبيعي',
+    feat_quality_sub: 'مريح وعالي الجودة',
     feat_return: 'Flexible Returns',
     feat_return_sub: '14-day hassle-free',
     products_title: 'The Collection',
