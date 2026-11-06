@@ -169,7 +169,8 @@ export default async function handler(req, res) {
         return;
       }
 
-      if (text === '/start' || text === '/help') {
+      const cmd = text.split(' ')[0].toLowerCase().split('@')[0];
+      if (cmd === '/start' || cmd === '/help') {
         const helpText = `🔥 <b>أهلاً بك في نظام بوت VEXIS الذكي!</b> 🔥\n\n` +
           `<b>📊 أوامر التحليل والاستخراج:</b>\n` +
           `🔹 /stats — إحصائيات المبيعات والأرباح والطلبات\n` +
@@ -181,7 +182,7 @@ export default async function handler(req, res) {
           `<i>الحالات: pending, review, shipped, delivered, rejected</i>`;
         await tgRequest('sendMessage', { chat_id: chatId, text: helpText, parse_mode: 'HTML' });
 
-      } else if (text === '/stats' || text === '/today') {
+      } else if (cmd === '/stats' || cmd === '/today') {
         let query = supabase.from('orders').select('*');
         if (text === '/today') {
           const todayStart = new Date();
@@ -234,7 +235,7 @@ export default async function handler(req, res) {
           reply_markup: inlineKeyboard.length ? { inline_keyboard: inlineKeyboard } : undefined
         });
 
-      } else if (text.startsWith('/search ')) {
+      } else if (cmd === '/search') {
         const queryTerm = text.substring(8).trim();
         if (!queryTerm) {
           await tgRequest('sendMessage', { chat_id: chatId, text: '⚠️ يرجى إدخال كلمة البحث بعد /search' });
@@ -272,7 +273,7 @@ export default async function handler(req, res) {
           }
         }
 
-      } else if (text === '/orders' || text === '/pending') {
+      } else if (cmd === '/orders' || cmd === '/pending') {
         let query = supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(5);
         if (text === '/pending') query = query.eq('status', 'pending');
         const { data: orders } = await query;
@@ -302,7 +303,7 @@ export default async function handler(req, res) {
           }
         }
 
-      } else if (text.startsWith('/status ')) {
+      } else if (cmd === '/status') {
         const parts = text.split(' ');
         if (parts.length >= 3) {
           const orderNum = parts[1];
@@ -316,6 +317,11 @@ export default async function handler(req, res) {
         } else {
           await tgRequest('sendMessage', { chat_id: chatId, text: '⚠️ الاستخدام: /status [رقم الطلب] [الحالة]' });
         }
+      } else {
+        await tgRequest('sendMessage', {
+          chat_id: chatId,
+          text: '👋 أهلاً بك في متجر VEXIS! للتحكم أو الاستفسار عن الأوامر، اكتب /start أو تفضل بزيارة موقعنا: https://vexis1.store'
+        });
       }
     }
 
