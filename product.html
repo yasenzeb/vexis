@@ -976,6 +976,26 @@ function productPage() {
         this.product = {};
       }
 
+      // Default featured product fallback if opened directly
+      if (!this.product || !this.product.id) {
+        this.product = {
+          id: 'vexis-compression-pro',
+          name: 'VEXIS Pro Athletic Compression T-Shirt',
+          description: 'تيشرت رياضي قطني ممشط بقصّة ضاغطة محكمة على الصدر والذراعين ومريحة عند الخصر. مصمم لتمارين كمال الأجسام والتمارين المكثفة وأعلى أداء رياضي.',
+          price: 499,
+          discount_type: 'percent',
+          discount_value: 20,
+          image_url: 'shrt.jpeg',
+          gallery: ['shrt.jpeg', 'بدايه.jpeg'],
+          sizes: ['S', 'M', 'L', 'XL'],
+          colors: [
+            { name: 'أسود', hex: '#111111' },
+            { name: 'أبيض', hex: '#ffffff' },
+            { name: 'كحلي', hex: '#1e3a8a' }
+          ]
+        };
+      }
+
       if (Array.isArray(this.product.sizes) && this.product.sizes.length) {
         this.sizes = this.product.sizes;
       } else {
@@ -997,7 +1017,7 @@ function productPage() {
       if (mainImg) { imgs.push(mainImg); seen.add(mainImg); }
       gallery.forEach(u => { if (u && !seen.has(u)) { imgs.push(u); seen.add(u); } });
 
-      this.allImages = imgs.length ? imgs : ['logo.jpeg'];
+      this.allImages = imgs.length ? imgs : ['shrt.jpeg', 'بدايه.jpeg'];
       this.activeImage = this.allImages[0];
 
       this.cartCount = this.getCart().length;

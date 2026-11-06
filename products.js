@@ -60,9 +60,40 @@ async function loadProducts() {
     window.dispatchEvent(new CustomEvent('productsLoaded', { detail: window.mockProducts }));
   } catch (err) {
     console.error('Failed to load products from API:', err);
-    window.mockProducts = [];
+    window.mockProducts = [
+      {
+        id: 'vx-compression-black',
+        name: 'VEXIS Pro Compression T-Shirt - Black',
+        type: 'compression',
+        price: 499,
+        discount_type: 'percent',
+        discount_value: 20,
+        image_url: 'shrt.jpeg',
+        image_hover: 'shrt.jpeg',
+        gallery: ['shrt.jpeg', 'بدايه.jpeg'],
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: [{ name: 'أسود', hex: '#111111' }, { name: 'أبيض', hex: '#ffffff' }],
+        created_at: new Date().toISOString(),
+        description: 'تيشرت رياضي قطني ممشط بقصّة ضاغطة محكمة على الصدر والذراعين ومريحة عند الخصر.'
+      },
+      {
+        id: 'vx-series-pack',
+        name: 'VEXIS Athletic Compression Wear - Navy',
+        type: 'compression',
+        price: 450,
+        discount_type: 'none',
+        discount_value: 0,
+        image_url: 'shrt.jpeg',
+        image_hover: 'بدايه.jpeg',
+        gallery: ['shrt.jpeg', 'بدايه.jpeg'],
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: [{ name: 'كحلي', hex: '#1e3a8a' }, { name: 'أسود', hex: '#111111' }],
+        created_at: new Date().toISOString(),
+        description: 'خامة مطاطية عالية الكثافة مع درزات خياطة مسطحة تمنع الاحتكاك وتوفر أقصى درجات الثبات.'
+      }
+    ];
     window.productsReady = true;
-    window.dispatchEvent(new CustomEvent('productsLoaded', { detail: [] }));
+    window.dispatchEvent(new CustomEvent('productsLoaded', { detail: window.mockProducts }));
   }
 }
 

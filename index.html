@@ -325,21 +325,22 @@ body {
       </a>
     </div>
 
-    <!-- Center Product Render -->
-    <div class="pt-8 relative max-w-2xl mx-auto">
-      <div class="aspect-[16/10] flex items-center justify-center">
-        <img src="intro_tshirt.jpg" alt="VEXIS Athletic Wear" class="w-full h-full object-contain rounded-28 border border-hairline-silver bg-studio-mist"/>
-      </div>
-
-      <!-- Floating Pricing Callout Capsule (Apple 28px Capsule) -->
-      <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-gallery-white px-6 py-3 rounded-full border border-hairline-silver flex items-center gap-4 text-xs">
-        <div>
-          <span class="text-ink font-semibold">From 399 EGP</span>
-          <span class="text-slate-apple text-[11px] block">Free exchange nationwide</span>
+    <!-- Center Product Render: Cinematic Full-Width 28px Card (Replaces the square logo) -->
+    <div class="pt-6 relative max-w-5xl mx-auto">
+      <div class="relative rounded-28 overflow-hidden border border-hairline-silver aspect-[2.2/1] sm:aspect-[2.7/1] bg-black group">
+        <img src="بدايه.jpeg" alt="VEXIS Compression Wear" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-102"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex items-end p-6 md:p-10 justify-between">
+          <div class="text-left text-white space-y-1">
+            <span class="text-launch-orange text-[11px] font-semibold tracking-wider uppercase block">Athletic Compression</span>
+            <span class="font-semibold text-lg sm:text-2xl md:text-3xl block text-white tracking-tight">VEXIS Pro Compression Series</span>
+            <span class="text-zinc-300 text-xs sm:text-sm block">Engineered for durability, flexibility, and athletic silhouette.</span>
+          </div>
+          <div class="hidden sm:flex items-center gap-3">
+            <a href="#products" class="apple-pricing-pill px-5 py-2.5 text-xs flex items-center gap-2 shadow-sm">
+              <span>Order Now</span> <i class="fas fa-arrow-down text-[10px]"></i>
+            </a>
+          </div>
         </div>
-        <a href="#products" class="apple-pricing-pill px-4 py-1.5 text-[11px]">
-          Order
-        </a>
       </div>
     </div>
 
