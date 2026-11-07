@@ -35,9 +35,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
-  // Always return 200 to Telegram immediately
-  res.status(200).json({ ok: true });
-
   try {
     const update = req.body || {};
 
@@ -327,5 +324,7 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error('[Telegram Webhook Error]', err);
+  } finally {
+    if (!res.headersSent) res.status(200).json({ ok: true });
   }
 }

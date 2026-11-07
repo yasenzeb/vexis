@@ -1,17 +1,40 @@
 {
-  "rewrites": [
-    { "source": "/api/send_invoice", "destination": "/api/router.js?__path=send_invoice" },
-    { "source": "/api/(.*)", "destination": "/api/router.js?__path=$1" }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin",  "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, x-admin-token, x-admin-password" },
-        { "key": "Access-Control-Max-Age",       "value": "86400" }
-      ]
-    }
-  ]
+    "rewrites":  [
+                     {
+                         "source":  "/api/send_invoice",
+                         "destination":  "/api/router.js?__path=send_invoice"
+                     },
+                     {
+                         "source":  "/api/(.*)",
+                         "destination":  "/api/router.js?__path=$1"
+                     }
+                 ],
+    "headers":  [
+                    {
+                        "source":  "/api/(.*)",
+                        "headers":  [
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Methods",
+                                            "value":  "GET,POST,PUT,DELETE,OPTIONS"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Headers",
+                                            "value":  "Content-Type, x-admin-token, x-admin-password"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Max-Age",
+                                            "value":  "86400"
+                                        }
+                                    ]
+                    }
+                ],
+    "functions":  {
+                      "api/router.js":  {
+                                            "maxDuration":  30
+                                        }
+                  }
 }
