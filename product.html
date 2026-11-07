@@ -77,6 +77,13 @@
   -webkit-font-smoothing: antialiased;
 }
 
+@media (min-width: 1024px) {
+  html { font-size: 16.5px; }
+}
+@media (min-width: 1280px) {
+  html { font-size: 17px; }
+}
+
 body {
   background-color: var(--color-gallery-white);
   color: var(--color-ink);
@@ -233,11 +240,11 @@ body {
 
     <!-- Nav Links (Compact Apple SF Pro Text 12px) -->
     <nav class="hidden md:flex items-center gap-8 text-[12px] text-slate-apple">
-      <a href="index.html" class="hover:text-ink transition">الرئيسية</a>
-      <a href="index.html#products" class="hover:text-ink transition">المنتجات</a>
-      <button type="button" @click="showSizeChart = true" class="hover:text-ink transition">دليل المقاسات</button>
-      <a href="#reviews-section" class="hover:text-ink transition">آراء العملاء</a>
-      <a href="my-orders.html" class="hover:text-ink transition">طلباتي</a>
+      <a href="index.html" class="hover:text-ink transition">Home</a>
+      <a href="index.html#products" class="hover:text-ink transition">Products</a>
+      <button type="button" @click="showSizeChart = true" class="hover:text-ink transition">Size Guide</button>
+      <a href="#reviews-section" class="hover:text-ink transition">Reviews</a>
+      <a href="my-orders.html" class="hover:text-ink transition">My Orders</a>
     </nav>
 
     <!-- Controls (EGYPT indicator + Account + Cart) -->
@@ -252,14 +259,14 @@ body {
 
       <!-- Account Icon -->
       <a href="my-orders.html"
-         title="حسابي / طلباتي"
+         title="My Orders"
          class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition">
         <i class="far fa-user text-sm"></i>
       </a>
 
       <!-- Shopping Bag -->
       <a href="cart.html"
-         title="سلة المشتريات"
+         title="Shopping Bag"
          class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition relative">
         <i class="fas fa-shopping-bag text-sm"></i>
         <span x-show="cartCount > 0"
@@ -281,7 +288,7 @@ body {
     
     <div class="flex items-center gap-3 truncate">
       <span class="font-semibold text-sm text-ink truncate" x-text="product.name || 'VEXIS Athletic Wear'"></span>
-      <span class="text-launch-orange font-medium text-[11px] hidden sm:inline">جديد</span>
+      <span class="text-launch-orange font-medium text-[11px] hidden sm:inline">NEW</span>
     </div>
 
     <div class="flex items-center gap-3 flex-shrink-0">
@@ -289,7 +296,7 @@ body {
       <button type="button"
               @click="buyNow()"
               class="apple-pricing-pill text-[12px] px-4 py-1.5">
-        شراء
+        Buy Now
       </button>
     </div>
 
@@ -328,7 +335,7 @@ body {
             <div @click="activeImage = img"
                  :class="activeImage === img ? 'thumb-frame active' : 'thumb-frame'"
                  class="w-20 h-20 rounded-2xl bg-studio-mist flex-shrink-0 flex items-center justify-center p-2">
-              <img :src="img" :alt="'معاينة ' + (idx + 1)" class="w-full h-full object-contain rounded-xl"/>
+              <img :src="img" :alt="'Preview ' + (idx + 1)" class="w-full h-full object-contain rounded-xl"/>
             </div>
           </template>
         </div>
@@ -336,16 +343,16 @@ body {
         <!-- Editorial feature statements row -->
         <div class="grid grid-cols-3 gap-3 pt-4 border-t border-hairline-silver">
           <div class="text-center p-3">
-            <span class="text-xs font-semibold text-ink block">قطن مضغوط 100%</span>
-            <span class="text-[11px] text-slate-apple block mt-0.5">مرونة تدوم طويلاً</span>
+            <span class="text-xs font-semibold text-ink block">Dri-Fit Fabric</span>
+            <span class="text-[11px] text-slate-apple block mt-0.5">Engineered for durability</span>
           </div>
           <div class="text-center p-3 border-x border-hairline-silver">
-            <span class="text-xs font-semibold text-ink block">قصّة Compression</span>
-            <span class="text-[11px] text-slate-apple block mt-0.5">ثبات محكم أثناء التمرين</span>
+            <span class="text-xs font-semibold text-ink block">Compression Fit</span>
+            <span class="text-[11px] text-slate-apple block mt-0.5">Locked-in athletic feel</span>
           </div>
           <div class="text-center p-3">
-            <span class="text-xs font-semibold text-ink block">شحن لكل مصر</span>
-            <span class="text-[11px] text-slate-apple block mt-0.5">دفع عند الاستلام</span>
+            <span class="text-xs font-semibold text-ink block">Nationwide Shipping</span>
+            <span class="text-[11px] text-slate-apple block mt-0.5">Cash on delivery</span>
           </div>
         </div>
 
@@ -358,7 +365,7 @@ body {
 
         <!-- Kicker & Title -->
         <div class="space-y-2">
-          <p class="text-launch-orange text-xs font-semibold tracking-wide">جديد • NEW RELEASE</p>
+          <p class="text-launch-orange text-xs font-semibold tracking-wide">NEW RELEASE</p>
           <h1 class="text-3xl md:text-4xl font-semibold text-ink headline-editorial" x-text="product.name"></h1>
           
           <!-- Rating link in Apple Blue -->
@@ -367,7 +374,7 @@ body {
               <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
             </div>
             <a href="#reviews-section" class="text-apple-blue hover:underline text-xs font-normal">
-              4.82 من 5 (151 تقييم موثق)
+              4.82 out of 5 (151 verified reviews)
             </a>
           </div>
         </div>
@@ -388,7 +395,7 @@ body {
         <!-- ========================================== -->
         <div x-show="colors && colors.length > 0" class="space-y-3">
           <div class="text-xs text-slate-apple">
-            اللون — <span class="text-ink font-semibold" x-text="selectedColor || 'اختر اللون'"></span>
+            Color — <span class="text-ink font-semibold" x-text="selectedColor || 'Select Color'"></span>
           </div>
           <div class="flex items-center gap-3 flex-wrap">
             <template x-for="c in colors" :key="c.name">
@@ -404,7 +411,7 @@ body {
               </button>
             </template>
           </div>
-          <p x-show="colorError" class="text-launch-orange text-xs">يرجى تحديد اللون للمتابعة</p>
+          <p x-show="colorError" class="text-launch-orange text-xs">Please select a color to continue</p>
         </div>
 
         <!-- ========================================== -->
@@ -413,7 +420,7 @@ body {
         <div x-show="sizes && sizes.length > 0" class="space-y-3">
           <div class="flex items-center justify-between text-xs">
             <span class="text-slate-apple">
-              المقاس — <span class="text-ink font-semibold" x-text="selectedSize || 'اختر المقاس'"></span>
+              Size — <span class="text-ink font-semibold" x-text="selectedSize || 'Select Size'"></span>
             </span>
             <button type="button"
                     @click="showSizeChart = true"
@@ -432,7 +439,7 @@ body {
               </button>
             </template>
           </div>
-          <p x-show="sizeError" class="text-launch-orange text-xs">يرجى تحديد المقاس المناسب</p>
+          <p x-show="sizeError" class="text-launch-orange text-xs">Please select a size to continue</p>
         </div>
 
         <!-- ======================================================== -->
@@ -443,19 +450,19 @@ body {
           <div class="space-y-1">
             <div class="flex items-center gap-2">
               <i class="fas fa-ruler-combined text-slate-apple text-xs"></i>
-              <h3 class="font-semibold text-sm text-ink">ساعدني أختار مقاسي</h3>
+              <h3 class="font-semibold text-sm text-ink">Smart Size Calculator</h3>
             </div>
-            <p class="text-xs text-slate-apple">الطول · الوزن · شكل اللبس اللي بتحبه</p>
+            <p class="text-xs text-slate-apple">Height · Weight · Preferred Fit</p>
           </div>
 
           <p class="text-xs text-slate-apple leading-relaxed">
-            نقطة بداية من جدول مقاسات المنتج نفسه. شكل الجسم وقَصّة القطعة بيأثروا كمان على المقاس المناسب.
+            Calibrated to the VEXIS fit profile. Physique and body proportions also influence your ideal size.
           </p>
 
           <!-- Input fields with Apple 980px pill radius -->
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-[11px] font-medium text-slate-apple mb-1">الطول (سم)</label>
+              <label class="block text-[11px] font-medium text-slate-apple mb-1">Height (cm)</label>
               <input type="number"
                      x-model="finderHeight"
                      @input="autoCalculateFit()"
@@ -464,7 +471,7 @@ body {
                      min="140" max="220"/>
             </div>
             <div>
-              <label class="block text-[11px] font-medium text-slate-apple mb-1">الوزن (كجم)</label>
+              <label class="block text-[11px] font-medium text-slate-apple mb-1">Weight (kg)</label>
               <input type="number"
                      x-model="finderWeight"
                      @input="autoCalculateFit()"
@@ -476,13 +483,13 @@ body {
 
           <!-- Fit preference -->
           <div>
-            <label class="block text-[11px] font-medium text-slate-apple mb-1">بتحب اللبس يكون إزاي؟</label>
+            <label class="block text-[11px] font-medium text-slate-apple mb-1">How do you prefer the fit?</label>
             <select x-model="finderFitPreference"
                     @change="autoCalculateFit()"
                     class="apple-input w-full text-xs cursor-pointer bg-white">
-              <option value="regular">زي قصة المنتج الأصلية</option>
-              <option value="oversize">أوفر سايز (واسع ومريح)</option>
-              <option value="slim">سليم فيت (مشدود على الجسم)</option>
+              <option value="regular">True to fit (Athletic compression)</option>
+              <option value="oversize">Relaxed fit (Roomier feel)</option>
+              <option value="slim">Extra tight compression</option>
             </select>
           </div>
 
@@ -490,32 +497,32 @@ body {
           <button type="button"
                   @click="calculateFitButton()"
                   class="apple-ink-pill w-full py-2.5 text-xs">
-            اعرف المقاس المبدئي
+            Find My Size
           </button>
 
           <p class="text-[11px] text-steel-apple text-center">
-            قياساتك بتفضل في الصفحة دي، والمساعد مش بيحفظها.
+            Your measurements stay private and are not stored.
           </p>
 
           <!-- Live Result Box -->
           <div x-show="finderRecommendedSize"
                x-transition
                class="bg-gallery-white rounded-2xl p-4 border border-hairline-silver text-center space-y-2">
-            <span class="text-xs text-slate-apple block">المقاس المقترح لك:</span>
+            <span class="text-xs text-slate-apple block">Recommended Size:</span>
             <div class="text-3xl font-semibold text-ink" x-text="finderRecommendedSize"></div>
             <p class="text-[11px] text-slate-apple" x-text="finderExplanation"></p>
             <button type="button"
                     @click="applyRecommendedSize()"
                     class="apple-pricing-pill text-xs px-4 py-1.5 mt-1 inline-flex items-center gap-1">
-              <span>تأكيد اختيار مقاس</span> <span x-text="finderRecommendedSize"></span>
+              <span>Confirm Size</span> <span x-text="finderRecommendedSize"></span>
             </button>
           </div>
 
           <!-- Editorial: About the cut -->
           <div class="pt-3 border-t border-hairline-silver space-y-1 text-xs">
             <div class="flex items-center justify-between">
-              <span class="font-semibold text-ink">عن قصّة القطعة</span>
-              <button type="button" @click="showSizeChart = true" class="text-apple-blue hover:underline text-[11px]">جدول القياسات</button>
+              <span class="font-semibold text-ink">About the cut</span>
+              <button type="button" @click="showSizeChart = true" class="text-apple-blue hover:underline text-[11px]">Size Chart</button>
             </div>
             <p class="text-[11.5px] text-slate-apple font-mono leading-relaxed">
               body-hugging compression cut through the chest and waist. Choose this style for a defined silhouette; use the size guide to select your fit rather than relying on your usual T-shirt size.
@@ -531,7 +538,7 @@ body {
           
           <!-- Quantity Row -->
           <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-apple">الكمية</span>
+            <span class="text-xs text-slate-apple">Quantity</span>
             <div class="flex items-center border border-hairline-silver rounded-full overflow-hidden bg-studio-mist">
               <button type="button"
                       @click="qty = Math.max(1, qty - 1)"
@@ -552,19 +559,19 @@ body {
             <button type="button"
                     @click="buyNow()"
                     class="apple-pricing-pill w-full py-3.5 text-sm flex items-center justify-center gap-2">
-              <i class="fas fa-bolt text-xs"></i> اشتري الآن
+              <i class="fas fa-bolt text-xs"></i> Buy Now
             </button>
             <button type="button"
                     @click="addToCart()"
                     class="apple-explore-pill w-full py-3 text-sm flex items-center justify-center gap-2">
-              <i class="fas fa-shopping-bag text-xs"></i> أضف إلى حقيبة التسوق
+              <i class="fas fa-shopping-bag text-xs"></i> Add to Bag
             </button>
           </div>
 
           <!-- Subtle Trust Footnote -->
           <div class="text-[11px] text-slate-apple text-center space-y-1 pt-2">
-            <div>شحن لجميع المحافظات • دفع عند الاستلام • إمكانية المعاينة قبل الاستلام</div>
-            <div class="text-steel-apple">ضمان استبدال واسترجاع خلال 14 يوماً</div>
+            <div>Nationwide delivery across Egypt • Cash on delivery • Inspect before paying</div>
+            <div class="text-steel-apple">14-day hassle-free returns & exchanges</div>
           </div>
 
         </div>
@@ -585,13 +592,13 @@ body {
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-hairline-silver pb-6">
       <div>
         <span class="text-xs text-slate-apple uppercase tracking-wider block mb-1">Ratings & Reviews</span>
-        <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">آراء العملاء — CUSTOMER REVIEWS</h2>
+        <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">Customer Reviews</h2>
       </div>
 
       <button type="button"
               @click="showWriteReviewModal = true"
               class="apple-pricing-pill text-xs px-5 py-2.5 self-start md:self-auto">
-        Write a review • كتابة تقييم
+        Write a Review
       </button>
     </div>
 
@@ -604,14 +611,14 @@ body {
         <div class="flex items-center justify-center md:justify-start text-amber-400 text-sm gap-1">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
         </div>
-        <div class="text-xs text-slate-apple">من 5 نجوم (بناءً على 151 تقييم)</div>
+        <div class="text-xs text-slate-apple">out of 5 (based on 151 verified ratings)</div>
       </div>
 
       <!-- Star Distribution Bars -->
       <div class="md:col-span-8 space-y-2 text-xs">
         <!-- 5 Stars -->
         <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">5 نجوم</span>
+          <span class="w-12 text-slate-apple font-mono">5 Stars</span>
           <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
             <div class="bg-ink h-full rounded-full" style="width: 77%"></div>
           </div>
@@ -619,7 +626,7 @@ body {
         </div>
         <!-- 4 Stars -->
         <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">4 نجوم</span>
+          <span class="w-12 text-slate-apple font-mono">4 Stars</span>
           <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
             <div class="bg-ink h-full rounded-full" style="width: 12%"></div>
           </div>
@@ -627,7 +634,7 @@ body {
         </div>
         <!-- 3 Stars -->
         <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">3 نجوم</span>
+          <span class="w-12 text-slate-apple font-mono">3 Stars</span>
           <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
             <div class="bg-ink h-full rounded-full" style="width: 2%"></div>
           </div>
@@ -635,7 +642,7 @@ body {
         </div>
         <!-- 2 Stars -->
         <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">نجمتان</span>
+          <span class="w-12 text-slate-apple font-mono">2 Stars</span>
           <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
             <div class="bg-ink h-full rounded-full" style="width: 2%"></div>
           </div>
@@ -643,7 +650,7 @@ body {
         </div>
         <!-- 1 Star -->
         <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">نجمة</span>
+          <span class="w-12 text-slate-apple font-mono">1 Star</span>
           <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
             <div class="bg-ink h-full rounded-full" style="width: 8%"></div>
           </div>
@@ -701,9 +708,9 @@ body {
           </div>
 
           <div class="pt-3 border-t border-hairline-silver flex items-center justify-between text-[11px] text-steel-apple">
-            <span>مشتري موثق للقطعة</span>
+            <span>Verified Purchase</span>
             <button @click="rev.helpful = (rev.helpful || 0) + 1" class="hover:text-ink transition flex items-center gap-1">
-              <i class="far fa-thumbs-up"></i> مفيد (<span x-text="rev.helpful || 0"></span>)
+              <i class="far fa-thumbs-up"></i> Helpful (<span x-text="rev.helpful || 0"></span>)
             </button>
           </div>
 
@@ -712,7 +719,73 @@ body {
     </div>
 
   </div>
-</section>
+
+<!-- ============================================== -->
+<!-- GLOBAL STORE FOOTER                            -->
+<!-- ============================================== -->
+<footer class="bg-studio-mist border-t border-hairline-silver py-12 text-slate-apple text-xs mt-16">
+  <div class="max-w-6xl mx-auto px-4 space-y-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="space-y-3">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
+            <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
+          </div>
+          <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
+        </div>
+        <p class="text-xs text-slate-apple leading-relaxed">
+          Premium athletic wear engineered for peak performance and athletic physique.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <span class="font-semibold text-xs text-ink block">Navigation</span>
+        <div class="flex flex-col gap-1.5 text-xs">
+          <a href="index.html" class="hover:text-ink transition">Home</a>
+          <a href="index.html#products" class="hover:text-ink transition">Collection</a>
+          <a href="cart.html" class="hover:text-ink transition">Bag</a>
+          <a href="my-orders.html" class="hover:text-ink transition">Order Tracking</a>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <span class="font-semibold text-xs text-ink block">Service</span>
+        <div class="flex flex-col gap-1.5 text-xs">
+          <span>Nationwide Delivery across Egypt</span>
+          <span>Cash on Delivery</span>
+          <span>14-day Flexible Returns</span>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <span class="font-semibold text-xs text-ink block">Connect</span>
+        <div class="flex items-center gap-2">
+          <a href="https://wa.me/201007720554" target="_blank" title="WhatsApp" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" title="TikTok" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-steel-apple border-t border-hairline-silver pt-6">
+      <div>Copyright © 2026 VEXIS Inc. All rights reserved.</div>
+      <div class="flex items-center gap-4">
+        <span>Cairo, Egypt</span>
+        <span>•</span>
+        <span>Dri-Fit Fabric</span>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <!-- ======================================================== -->
 <!-- SIZE CHART MODAL (Apple 28px Gallery Modal - Image 4)    -->
@@ -747,19 +820,19 @@ body {
           <thead>
             <tr class="bg-studio-mist border-b border-hairline-silver text-[11px]">
               <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
-                <div>المقاس</div>
+                <div>SIZE</div>
                 <div class="text-[9px] text-steel-apple uppercase">SIZE</div>
               </th>
               <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
-                <div>العرض (سم)</div>
+                <div>WIDTH (CM)</div>
                 <div class="text-[9px] text-steel-apple uppercase">WIDTH (CM)</div>
               </th>
               <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
-                <div>الطول (سم)</div>
+                <div>LENGTH (CM)</div>
                 <div class="text-[9px] text-steel-apple uppercase">LENGTH (CM)</div>
               </th>
               <th class="py-3 px-3 font-semibold text-ink">
-                <div>الوزن المقترح (كجم)</div>
+                <div>WEIGHT (KG)</div>
                 <div class="text-[9px] text-steel-apple uppercase">WEIGHT (KG)</div>
               </th>
             </tr>
@@ -769,7 +842,7 @@ body {
             <tr :class="finderRecommendedSize === 'S' ? 'bg-studio-mist font-bold' : ''">
               <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 S
-                <span x-show="finderRecommendedSize === 'S'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'S'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
               </td>
               <td class="py-3 px-3 border-l border-hairline-silver">48.5</td>
               <td class="py-3 px-3 border-l border-hairline-silver">66.5</td>
@@ -779,7 +852,7 @@ body {
             <tr :class="finderRecommendedSize === 'M' ? 'bg-studio-mist font-bold' : ''">
               <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 M
-                <span x-show="finderRecommendedSize === 'M'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'M'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
               </td>
               <td class="py-3 px-3 border-l border-hairline-silver">51</td>
               <td class="py-3 px-3 border-l border-hairline-silver">68</td>
@@ -789,7 +862,7 @@ body {
             <tr :class="finderRecommendedSize === 'L' ? 'bg-studio-mist font-bold' : ''">
               <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 L
-                <span x-show="finderRecommendedSize === 'L'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'L'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
               </td>
               <td class="py-3 px-3 border-l border-hairline-silver">53.5</td>
               <td class="py-3 px-3 border-l border-hairline-silver">69.5</td>
@@ -799,7 +872,7 @@ body {
             <tr :class="finderRecommendedSize === 'XL' ? 'bg-studio-mist font-bold' : ''">
               <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
                 XL
-                <span x-show="finderRecommendedSize === 'XL'" class="text-[9px] text-apple-blue block font-normal">مقترح لك</span>
+                <span x-show="finderRecommendedSize === 'XL'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
               </td>
               <td class="py-3 px-3 border-l border-hairline-silver">56</td>
               <td class="py-3 px-3 border-l border-hairline-silver">71</td>
@@ -811,17 +884,17 @@ body {
 
       <template x-if="finderRecommendedSize">
         <div class="flex items-center justify-between bg-studio-mist p-3 rounded-xl border border-hairline-silver text-xs">
-          <span>المقاس الأنسب لك: <strong class="text-ink" x-text="finderRecommendedSize"></strong></span>
+          <span>Your recommended size: <strong class="text-ink" x-text="finderRecommendedSize"></strong></span>
           <button type="button"
                   @click="applyRecommendedSize(); showSizeChart = false;"
                   class="apple-pricing-pill text-xs px-3 py-1">
-            اختيار هذا المقاس
+            Select This Size
           </button>
         </div>
       </template>
 
       <p class="text-[11px] text-slate-apple text-center leading-relaxed">
-        * المقاسات مأخوذة بشكل مسطح على القطعة نفسها. في حال كنت بين مقاسين، نوصي باختيار المقاس الأكبر.
+        * Measurements taken flat across garment. If you are between sizes, we recommend sizing up.
       </p>
 
     </div>
@@ -846,7 +919,7 @@ body {
   <div class="bg-gallery-white text-ink max-w-md w-full rounded-28 border border-hairline-silver shadow-2xl p-6 space-y-4 modal-enter-apple" @click.stop>
     
     <div class="flex items-center justify-between border-b border-hairline-silver pb-3">
-      <h3 class="font-semibold text-sm text-ink">كتابة تقييم للمنتج</h3>
+      <h3 class="font-semibold text-sm text-ink">Write a Product Review</h3>
       <button @click="showWriteReviewModal = false" class="text-slate-apple hover:text-ink">
         <i class="fas fa-times text-xs"></i>
       </button>
@@ -855,7 +928,7 @@ body {
     <form @submit.prevent="submitReview()" class="space-y-3">
       
       <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">التقييم العام</label>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">Overall Rating</label>
         <div class="flex gap-2 text-xl text-amber-400 cursor-pointer">
           <template x-for="n in 5" :key="n">
             <i :class="n <= newReviewRating ? 'fas fa-star' : 'far fa-star'"
@@ -866,22 +939,22 @@ body {
       </div>
 
       <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">الاسم</label>
-        <input type="text" x-model="newReviewAuthor" placeholder="مثال: عمر خليل أو Anonymous" required class="apple-input w-full text-xs"/>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">Your Name</label>
+        <input type="text" x-model="newReviewAuthor" placeholder="e.g. Omar K. or Anonymous" required class="apple-input w-full text-xs"/>
       </div>
 
       <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">عنوان التقييم</label>
-        <input type="text" x-model="newReviewTitle" placeholder="مثال: خامة ممتازة ومريحة" required class="apple-input w-full text-xs"/>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">Review Title</label>
+        <input type="text" x-model="newReviewTitle" placeholder="e.g. Great compression and fabric quality" required class="apple-input w-full text-xs"/>
       </div>
 
       <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">تفاصيل تجربتك</label>
-        <textarea x-model="newReviewContent" rows="3" placeholder="اكتب رأيك عن جودة الخامة والمقاس..." required class="apple-input w-full text-xs rounded-2xl resize-none"></textarea>
+        <label class="block text-[11px] font-medium text-slate-apple mb-1">Your Review</label>
+        <textarea x-model="newReviewContent" rows="3" placeholder="Describe the fabric quality, compression feel, and fit..." required class="apple-input w-full text-xs rounded-2xl resize-none"></textarea>
       </div>
 
       <button type="submit" class="apple-pricing-pill w-full py-2.5 text-xs">
-        نشر التقييم
+        Submit Review
       </button>
 
     </form>
@@ -983,7 +1056,7 @@ function productPage() {
         this.product = {
           id: 'vexis-compression-pro',
           name: 'VEXIS Pro Athletic Compression T-Shirt',
-          description: 'تيشرت رياضي قطني ممشط بقصّة ضاغطة محكمة على الصدر والذراعين ومريحة عند الخصر. مصمم لتمارين كمال الأجسام والتمارين المكثفة وأعلى أداء رياضي.',
+          description: 'Engineered Dri-Fit high-performance compression wear with body-hugging athletic cut through the chest and arms. Built for elite training, gym workouts, and maximum durability.',
           price: 499,
           discount_type: 'percent',
           discount_value: 20,
@@ -991,9 +1064,9 @@ function productPage() {
           gallery: ['shrt.jpeg', 'بدايه.jpeg'],
           sizes: ['S', 'M', 'L', 'XL'],
           colors: [
-            { name: 'أسود', hex: '#111111' },
-            { name: 'أبيض', hex: '#ffffff' },
-            { name: 'كحلي', hex: '#1e3a8a' }
+            { name: 'Black', hex: '#111111' },
+            { name: 'White', hex: '#ffffff' },
+            { name: 'Navy', hex: '#1e3a8a' }
           ]
         };
       }
@@ -1146,23 +1219,23 @@ function productPage() {
       this.finderRecommendedSize = sizesList[idx];
 
       const fitLabels = {
-        regular: 'مقاس يمنحك التوازن والراحة الأصلية',
-        oversize: 'مقاس واسع وعصري',
-        slim: 'مقاس سليم فيت محكم'
+        regular: 'balanced athletic compression',
+        oversize: 'relaxed fit',
+        slim: 'ultra-tight compression'
       };
 
-      this.finderExplanation = `بناءً على وزن (${w} كجم) وطول (${h} سم) ونمط (${fitLabels[this.finderFitPreference] || ''}).`;
+      this.finderExplanation = `Based on weight (${w} kg), height (${h} cm), and ${fitLabels[this.finderFitPreference] || 'athletic'} profile.`;
     },
 
     calculateFitButton() {
       if (!this.finderHeight || !this.finderWeight) {
-        this.showToast('يرجى إدخال الطول والوزن');
+        this.showToast('Please enter both height and weight');
         return;
       }
       this.autoCalculateFit();
       if (this.finderRecommendedSize) {
         this.applyRecommendedSize();
-        this.showToast(`المقاس المقترح: ${this.finderRecommendedSize}`);
+        this.showToast(`Recommended Size: ${this.finderRecommendedSize}`);
       }
     },
 
@@ -1206,7 +1279,7 @@ function productPage() {
       this.newReviewContent = '';
       this.newReviewRating  = 5;
       this.showWriteReviewModal = false;
-      this.showToast('شكراً! تم إرسال تقييمك بنجاح');
+      this.showToast('Thank you! Review submitted successfully');
 
       // Persist to Supabase via API (fire & forget)
       fetch('/api/reviews', {

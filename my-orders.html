@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -247,7 +247,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
         <span>🇪🇬</span>
         <span class="text-ink tracking-wider">EGYPT</span>
       </div>
-      <a href="index.html" class="text-xs text-apple-blue hover:underline font-medium">المتجر</a>
+      <a href="index.html" class="text-xs text-apple-blue hover:underline font-medium">Store</a>
       <a href="cart.html" class="text-slate-apple hover:text-ink transition">
         <i class="fas fa-shopping-bag text-sm"></i>
       </a>
@@ -261,15 +261,15 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
 
   <!-- Page Title -->
   <div class="border-b border-hairline-silver pb-5">
-    <h1 class="text-2xl font-bold text-ink tracking-tight">طلباتي</h1>
-    <p class="text-sm text-slate-apple mt-1 font-medium">تتبّع حالة طلبك بشكل فوري — يتحدث تلقائياً كل 15 ثانية</p>
+    <h1 class="text-2xl font-bold text-ink tracking-tight">Order Tracking</h1>
+    <p class="text-sm text-slate-apple mt-1 font-medium">Live real-time order tracking — updates every 15 seconds</p>
   </div>
 
   <!-- ── PHONE SEARCH ── -->
   <div x-show="!phone" class="apple-card p-7 space-y-5">
     <div class="space-y-1">
-      <h2 class="text-base font-bold text-ink">ابحث عن طلبك</h2>
-      <p class="text-sm text-slate-apple font-medium">أدخل رقم الموبايل اللي استخدمته عند الطلب:</p>
+      <h2 class="text-base font-bold text-ink">Track Your Order</h2>
+      <p class="text-sm text-slate-apple font-medium">Enter the phone number used at checkout:</p>
     </div>
 
     <div class="flex gap-3">
@@ -279,7 +279,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
              class="apple-input flex-1 font-mono"
              @keyup.enter="searchByPhone()">
       <button @click="searchByPhone()" class="apple-btn">
-        <i class="fas fa-search ml-1"></i> بحث
+        <i class="fas fa-search mr-1"></i> Search
       </button>
     </div>
   </div>
@@ -303,11 +303,11 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
       <div class="flex items-center justify-between text-xs text-slate-apple px-1 font-medium">
         <span>
           <span class="live-dot"></span>
-          <span class="mr-1">مباشر —</span>
+          <span class="mr-1">Live —</span>
           <strong class="text-ink" x-text="orders.length"></strong> طلب
         </span>
         <button @click="phone=''; orders=[]; stopPolling()" class="text-apple-blue hover:underline">
-          تغيير رقم الهاتف
+          Change phone number
         </button>
       </div>
 
@@ -320,7 +320,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
               <span class="text-[10px] text-steel-apple uppercase tracking-widest block font-semibold">Order</span>
               <span class="font-mono font-bold text-base text-ink tracking-wider" x-text="ord.order_number"></span>
               <div class="text-[11px] text-steel-apple mt-0.5 font-medium"
-                   x-text="ord.created_at ? new Date(ord.created_at).toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}) : ''">
+                   x-text="ord.created_at ? new Date(ord.created_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : ''">
               </div>
             </div>
             <!-- Status badge -->
@@ -350,7 +350,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
                 </div>
                 <span class="step-label"
                       :class="getStepState(ord.status, 'pending')">
-                  استلام<br>الطلب
+                  Order<br>Placed
                 </span>
               </div>
 
@@ -364,7 +364,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
                 </div>
                 <span class="step-label"
                       :class="getStepState(ord.status, 'review')">
-                  جاري<br>المراجعة
+                  Under<br>Review
                 </span>
               </div>
 
@@ -378,7 +378,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
                 </div>
                 <span class="step-label"
                       :class="getStepState(ord.status, 'shipped')">
-                  خرج<br>للشحن
+                  Out for<br>Delivery
                 </span>
               </div>
 
@@ -392,7 +392,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
                 </div>
                 <span class="step-label"
                       :class="getStepState(ord.status, 'delivered')">
-                  تم<br>التسليم
+                  Order<br>Delivered
                 </span>
               </div>
 
@@ -412,20 +412,20 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
           <div x-show="ord.status === 'rejected'"
                class="mx-6 my-4 rounded-2xl bg-red-50 border border-red-200 px-5 py-4 text-sm text-red-700 space-y-1">
             <div class="font-bold flex items-center gap-2">
-              <i class="fas fa-times-circle"></i> تم رفض الطلب
+              <i class="fas fa-times-circle"></i> Order Cancelled
             </div>
             <div class="text-xs font-medium text-red-600"
-                 x-text="ord.rejection_reason ? 'السبب: ' + ord.rejection_reason : 'تواصل معنا عبر واتساب لمزيد من التفاصيل.'">
+                 x-text="ord.rejection_reason ? 'Reason: ' + ord.rejection_reason : 'Please reach out via WhatsApp for details.'">
             </div>
             <a href="https://wa.me/201061927815" target="_blank"
                class="inline-block mt-2 bg-red-600 text-white text-xs px-4 py-1.5 rounded-full font-semibold hover:bg-red-700 transition">
-              <i class="fab fa-whatsapp ml-1"></i> تواصل معنا
+              <i class="fab fa-whatsapp mr-1"></i> Contact Support
             </a>
           </div>
 
           <!-- ── Order Items ── -->
           <div class="px-6 py-4 border-b border-hairline-silver space-y-0">
-            <h3 class="text-xs font-bold text-steel-apple uppercase tracking-widest mb-3">المنتجات</h3>
+            <h3 class="text-xs font-bold text-steel-apple uppercase tracking-widest mb-3">Order Items</h3>
             <template x-for="(item, idx) in (ord.items || [])" :key="idx">
               <div class="item-row">
                 <div class="item-thumb bg-studio-mist flex items-center justify-center">
@@ -434,9 +434,9 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
                 <div class="flex-1 min-w-0">
                   <div class="text-sm font-semibold text-ink truncate" x-text="item.name || 'منتج VEXIS'"></div>
                   <div class="text-xs text-slate-apple font-medium mt-0.5">
-                    <span x-show="item.size">المقاس: <span x-text="item.size"></span></span>
-                    <span x-show="item.color" class="mr-3">اللون: <span x-text="item.color"></span></span>
-                    <span class="mr-3">الكمية: <span x-text="item.qty || 1"></span></span>
+                    <span x-show="item.size">Size: <span x-text="item.size"></span></span>
+                    <span x-show="item.color" class="mr-3">Color: <span x-text="item.color"></span></span>
+                    <span class="mr-3">Qty: <span x-text="item.qty || 1"></span></span>
                   </div>
                 </div>
                 <div class="text-sm font-bold text-ink font-mono flex-shrink-0"
@@ -449,15 +449,15 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
           <!-- ── Pricing Summary ── -->
           <div class="px-6 py-4 space-y-2 text-sm border-b border-hairline-silver">
             <div class="flex justify-between text-slate-apple font-medium">
-              <span>المجموع الفرعي</span>
+              <span>Subtotal</span>
               <span class="font-mono text-ink" x-text="(ord.subtotal || 0) + ' EGP'"></span>
             </div>
             <div class="flex justify-between text-slate-apple font-medium">
-              <span>مصاريف الشحن</span>
+              <span>Shipping</span>
               <span class="font-mono text-ink" x-text="(ord.shipping_cost || 0) + ' EGP'"></span>
             </div>
             <div class="flex justify-between text-ink font-bold pt-2 border-t border-hairline-silver text-base">
-              <span>الإجمالي</span>
+              <span>Total</span>
               <span class="font-mono" x-text="(ord.total || 0) + ' EGP'"></span>
             </div>
           </div>
@@ -477,7 +477,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
             </div>
             <div class="flex items-center gap-2 text-slate-apple" x-show="ord.payment_method">
               <i class="fas fa-wallet text-ink w-4 text-center"></i>
-              <span x-text="ord.payment_method === 'cod' ? 'الدفع عند الاستلام (COD)' : ord.payment_method"></span>
+              <span x-text="ord.payment_method === 'cod' ? 'Cash on Delivery (COD)' : ord.payment_method"></span>
             </div>
             <div class="flex items-center gap-2 text-slate-apple" x-show="ord.notes">
               <i class="fas fa-comment-dots text-ink w-4 text-center"></i>
@@ -494,8 +494,8 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
           <i class="fab fa-whatsapp text-emerald-600 text-lg"></i>
         </div>
         <div class="flex-1">
-          <div class="text-sm font-bold text-ink">تحتاج مساعدة؟</div>
-          <div class="text-xs text-slate-apple font-medium mt-0.5">فريق VEXIS موجود على واتساب 24/7</div>
+          <div class="text-sm font-bold text-ink">Need Help?</div>
+          <div class="text-xs text-slate-apple font-medium mt-0.5">VEXIS support team is available on WhatsApp 24/7</div>
         </div>
         <a href="https://wa.me/201061927815" target="_blank"
            class="apple-btn text-sm py-2 px-4 flex-shrink-0">
@@ -513,11 +513,11 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
         <i class="fas fa-box-open text-2xl text-steel-apple"></i>
       </div>
       <div>
-        <h3 class="font-bold text-base text-ink">لم يتم العثور على طلبات</h3>
-        <p class="text-sm text-slate-apple font-medium mt-1">لم نجد طلبات برقم <span class="font-mono text-ink" x-text="phone"></span></p>
+        <h3 class="font-bold text-base text-ink">No Orders Found</h3>
+        <p class="text-sm text-slate-apple font-medium mt-1">No orders found for <span class="font-mono text-ink" x-text="phone"></span></p>
       </div>
       <button @click="phone=''; orders=[]; stopPolling()" class="apple-btn inline-block mt-2 text-sm">
-        البحث برقم آخر
+        Search another number
       </button>
     </div>
   </template>
@@ -526,7 +526,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
 
 <!-- ── FOOTER ── -->
 <footer class="border-t border-hairline-silver bg-gallery-white mt-12 py-6 text-center text-xs text-steel-apple font-medium">
-  © 2026 VEXIS — جميع الحقوق محفوظة
+  © 2026 VEXIS — All rights reserved
 </footer>
 
 <script>
@@ -640,23 +640,23 @@ function myOrders() {
 
     getStatusLabel(s) {
       const map = {
-        pending:   'قيد المراجعة ⏳',
-        review:    'جاري التجهيز ✅',
-        shipped:   'في الطريق 🚚',
-        delivered: 'تم التسليم 🎉',
-        rejected:  'مرفوض ❌'
+        pending:   'Pending Review ⏳',
+        review:    'Processing ✅',
+        shipped:   'Out for Delivery 🚚',
+        delivered: 'Delivered 🎉',
+        rejected:  'Cancelled ❌'
       };
-      return map[s] || 'قيد المعالجة';
+      return map[s] || 'Processing';
     },
 
     getStatusMessage(s) {
       const map = {
-        pending:   'تم استلام طلبك بنجاح وسيتم مراجعته قريباً.',
-        review:    'طلبك جاري تجهيزه وسيخرج للشحن قريباً.',
-        shipped:   '🚚 طلبك في الطريق إليك — جاري التوصيل!',
-        delivered: '🎉 تم توصيل طلبك بنجاح. شكراً لثقتك في VEXIS!'
+        pending:   'Your order has been received and is being prepared.',
+        review:    'Your order is verified and ready for shipping.',
+        shipped:   '🚚 Your order is on the way — out for delivery!',
+        delivered: '🎉 Delivered! Thank you for choosing VEXIS.'
       };
-      return map[s] || 'طلبك قيد المعالجة.';
+      return map[s] || 'Order is being processed.';
     }
   };
 }

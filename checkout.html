@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -135,7 +135,7 @@ body {
         <span class="text-ink font-semibold tracking-wider">EGYPT</span>
       </div>
 
-      <a href="my-orders.html" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition" title="طلباتي">
+      <a href="my-orders.html" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition" title="My Orders">
         <i class="far fa-user text-sm"></i>
       </a>
 
@@ -173,41 +173,41 @@ body {
         </div>
 
         <div>
-          <label class="block text-slate-apple mb-1 font-medium">رقم الموبايل *</label>
+          <label class="block text-slate-apple mb-1 font-medium">Phone Number *</label>
           <input type="tel" x-model="form.phone" required class="apple-input" placeholder="01xxxxxxxxx">
         </div>
 
         <div>
-          <label class="block text-slate-apple mb-1 font-medium">البريد الإلكتروني (اختياري)</label>
+          <label class="block text-slate-apple mb-1 font-medium">Email Address (Optional)</label>
           <input type="email" x-model="form.email" class="apple-input" placeholder="example@domain.com">
         </div>
 
         <div>
           <label class="block text-slate-apple mb-1 font-medium">المحافظة / المدينة *</label>
           <select x-model="form.city" @change="updateShipping" required class="apple-input cursor-pointer bg-white">
-            <option value="">اختر المحافظة</option>
-            <option value="cairo">القاهرة (75 EGP)</option>
-            <option value="giza">الجيزة (75 EGP)</option>
-            <option value="alex">الإسكندرية (85 EGP)</option>
-            <option value="qalyubia">القليوبية (85 EGP)</option>
-            <option value="monufia">المنوفية (85 EGP)</option>
-            <option value="gharbia">الغربية (85 EGP)</option>
-            <option value="dakahlia">الدقهلية (85 EGP)</option>
-            <option value="sharqia">الشرقية (85 EGP)</option>
-            <option value="kafr_el_sheikh">كفر الشيخ (85 EGP)</option>
-            <option value="damietta">دمياط (85 EGP)</option>
-            <option value="beheira">البحيرة (85 EGP)</option>
-            <option value="ismailia">الإسماعيلية (85 EGP)</option>
-            <option value="port_said">بورسعيد (85 EGP)</option>
-            <option value="suez">السويس (85 EGP)</option>
-            <option value="fayoum">الفيوم (95 EGP)</option>
-            <option value="beni_suef">بني سويف (95 EGP)</option>
-            <option value="minya">المنيا (95 EGP)</option>
-            <option value="asyut">أسيوط (95 EGP)</option>
-            <option value="sohag">سوهاج (95 EGP)</option>
-            <option value="qena">قنا (95 EGP)</option>
-            <option value="luxor">الأقصر (95 EGP)</option>
-            <option value="aswan">أسوان (95 EGP)</option>
+            <option value="">Select Governorate</option>
+            <option value="cairo">Cairo (75 EGP)</option>
+            <option value="giza">Giza (75 EGP)</option>
+            <option value="alex">Alexandria (85 EGP)</option>
+            <option value="qalyubia">Qalyubia (85 EGP)</option>
+            <option value="monufia">Monufia (85 EGP)</option>
+            <option value="gharbia">Gharbia (85 EGP)</option>
+            <option value="dakahlia">Dakahlia (85 EGP)</option>
+            <option value="sharqia">Sharqia (85 EGP)</option>
+            <option value="kafr_el_sheikh">Kafr El Sheikh (85 EGP)</option>
+            <option value="damietta">Damietta (85 EGP)</option>
+            <option value="beheira">Beheira (85 EGP)</option>
+            <option value="ismailia">Ismailia (85 EGP)</option>
+            <option value="port_said">Port Said (85 EGP)</option>
+            <option value="suez">Suez (85 EGP)</option>
+            <option value="fayoum">Fayoum (95 EGP)</option>
+            <option value="beni_suef">Beni Suef (95 EGP)</option>
+            <option value="minya">Minya (95 EGP)</option>
+            <option value="asyut">Asyut (95 EGP)</option>
+            <option value="sohag">Sohag (95 EGP)</option>
+            <option value="qena">Qena (95 EGP)</option>
+            <option value="luxor">Luxor (95 EGP)</option>
+            <option value="aswan">Aswan (95 EGP)</option>
             <option value="north_sinai">شمال سيناء (145 EGP)</option>
             <option value="south_sinai">جنوب سيناء (145 EGP)</option>
             <option value="red_sea">البحر الأحمر (145 EGP)</option>
@@ -217,22 +217,22 @@ body {
         </div>
 
         <div>
-          <label class="block text-slate-apple mb-1 font-medium">العنوان بالتفصيل *</label>
-          <input type="text" x-model="form.address" required class="apple-input" placeholder="اسم الشارع، رقم العمارة، الدور، الشقة">
+          <label class="block text-slate-apple mb-1 font-medium">Detailed Address *</label>
+          <input type="text" x-model="form.address" required class="apple-input" placeholder="Street name, building number, floor, apartment">
         </div>
 
         <div>
-          <label class="block text-slate-apple mb-1 font-medium">ملاحظات إضافية (اختياري)</label>
-          <textarea x-model="form.notes" class="apple-input rounded-2xl resize-none" rows="2" placeholder="أي تفاصيل خاصة بموعد الاستلام..."></textarea>
+          <label class="block text-slate-apple mb-1 font-medium">Delivery Notes (Optional)</label>
+          <textarea x-model="form.notes" class="apple-input rounded-2xl resize-none" rows="2" placeholder="Any delivery instructions or preferred time..."></textarea>
         </div>
 
         <div class="pt-2">
-          <label class="block text-slate-apple mb-2 font-medium">طريقة الدفع</label>
+          <label class="block text-slate-apple mb-2 font-medium">Payment Method</label>
           <div class="bg-studio-mist border border-hairline-silver rounded-2xl p-4 flex items-center gap-3">
             <i class="fas fa-hand-holding-usd text-slate-apple text-lg"></i>
             <div>
-              <span class="font-semibold text-ink block">الدفع نقداً عند الاستلام (Cash on Delivery)</span>
-              <span class="text-[11px] text-slate-apple">يمكنك معاينة المنتج قبل السداد للمندوب</span>
+              <span class="font-semibold text-ink block">Cash on Delivery (COD)</span>
+              <span class="text-[11px] text-slate-apple">Inspect the product before paying the courier</span>
             </div>
           </div>
         </div>
@@ -240,8 +240,8 @@ body {
         <button type="submit"
                 :disabled="isSubmitting"
                 class="apple-pricing-pill w-full py-4 text-sm mt-4 disabled:opacity-50 flex items-center justify-center gap-2">
-          <span x-show="!isSubmitting">تأكيد الطلب الآن</span>
-          <span x-show="isSubmitting"><i class="fas fa-spinner fa-spin"></i> جاري تأكيد الطلب...</span>
+          <span x-show="!isSubmitting">Place Order Now</span>
+          <span x-show="isSubmitting"><i class="fas fa-spinner fa-spin"></i> Placing your order...</span>
         </button>
 
       </form>
@@ -250,7 +250,7 @@ body {
     <!-- Summary 28px Card -->
     <div class="w-full lg:w-1/3">
       <div class="apple-card p-6 space-y-4 sticky top-20">
-        <h2 class="text-sm font-semibold text-ink">ملخص الطلب</h2>
+        <h2 class="text-sm font-semibold text-ink">Order Summary</h2>
         
         <div class="space-y-3 max-h-60 overflow-y-auto pr-1 text-xs">
           <template x-for="item in cart" :key="item._key">
@@ -258,11 +258,11 @@ body {
               <img :src="item.image_url" class="w-12 h-12 rounded-xl object-contain bg-studio-mist border border-hairline-silver p-1">
               <div class="flex-1 min-w-0">
                 <p class="font-semibold text-ink truncate" x-text="item.name"></p>
-                <p class="text-[11px] text-slate-apple" x-text="'المقاس: ' + item.size + (item.color ? ' • ' + item.color : '')"></p>
+                <p class="text-[11px] text-slate-apple" x-text="'Size: ' + item.size + (item.color ? ' • ' + item.color : '')"></p>
               </div>
               <div class="text-left font-mono">
                 <p class="font-semibold text-ink" x-text="(item.finalPrice * item.qty) + ' EGP'"></p>
-                <p class="text-[10px] text-steel-apple" x-text="'الكمية: ' + item.qty"></p>
+                <p class="text-[10px] text-steel-apple" x-text="'Qty: ' + item.qty"></p>
               </div>
             </div>
           </template>
@@ -270,22 +270,22 @@ body {
 
         <div class="border-t border-hairline-silver pt-4 space-y-2 text-xs">
           <div class="flex justify-between text-slate-apple">
-            <span>المجموع الفرعي</span>
+            <span>Subtotal</span>
             <span class="text-ink font-semibold" x-text="subtotal + ' EGP'"></span>
           </div>
 
           <div x-show="promoDiscount > 0" class="flex justify-between text-emerald-600 font-medium">
-            <span>الخصم (<span x-text="appliedPromo?.code"></span>)</span>
+            <span>Discount (<span x-text="appliedPromo?.code"></span>)</span>
             <span x-text="'- ' + promoDiscount + ' EGP'"></span>
           </div>
 
           <div class="flex justify-between text-slate-apple">
-            <span>الشحن</span>
-            <span class="text-ink font-semibold" x-text="shippingCost ? (shippingCost + ' EGP') : 'اختر المحافظة'"></span>
+            <span>Shipping</span>
+            <span class="text-ink font-semibold" x-text="shippingCost ? (shippingCost + ' EGP') : 'Select governorate'"></span>
           </div>
 
           <div class="flex justify-between text-base font-semibold text-ink pt-3 border-t border-hairline-silver">
-            <span>الإجمالي النهائي</span>
+            <span>Final Total</span>
             <span class="text-xl" x-text="finalTotal + ' EGP'"></span>
           </div>
         </div>

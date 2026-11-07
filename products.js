@@ -74,7 +74,7 @@ async function loadProducts() {
         sizes: ['S', 'M', 'L', 'XL'],
         colors: [{ name: 'أسود', hex: '#111111' }, { name: 'أبيض', hex: '#ffffff' }],
         created_at: new Date().toISOString(),
-        description: 'تيشرت رياضي قطني ممشط بقصّة ضاغطة محكمة على الصدر والذراعين ومريحة عند الخصر.'
+        description: 'Engineered Dri-Fit high-performance compression wear designed for physique definition and elite gym training.'
       },
       {
         id: 'vx-series-pack',
@@ -89,7 +89,7 @@ async function loadProducts() {
         sizes: ['S', 'M', 'L', 'XL'],
         colors: [{ name: 'كحلي', hex: '#1e3a8a' }, { name: 'أسود', hex: '#111111' }],
         created_at: new Date().toISOString(),
-        description: 'خامة مطاطية عالية الكثافة مع درزات خياطة مسطحة تمنع الاحتكاك وتوفر أقصى درجات الثبات.'
+        description: 'Engineered Dri-Fit high-performance compression wear designed for physique definition and elite gym training.'
       }
     ];
     window.productsReady = true;

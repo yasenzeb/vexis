@@ -113,6 +113,13 @@ body {
 ::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
 
 /* Apple-style typography */
+@media (min-width: 1024px) {
+  html { font-size: 16.5px; }
+}
+@media (min-width: 1280px) {
+  html { font-size: 17px; }
+}
+
 .headline-editorial {
   letter-spacing: -0.025em;
   line-height: 1.05;
@@ -313,7 +320,7 @@ body {
     </h1>
 
     <p class="text-base sm:text-lg text-ink/80 body-editorial max-w-xl mx-auto font-medium">
-      Engineered for performance. Designed for your physique. Experience the perfect balance of compression, comfort, and freedom of movement.
+      Built For You. Designed to Move With You. Experience Performance Without Compromise.
     </p>
 
     <!-- Hero CTA Buttons -->
@@ -385,8 +392,8 @@ body {
         <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
           <i class="fas fa-gem"></i>
         </div>
-        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_quality')"></h3>
-        <p class="text-xs text-slate-apple" x-text="t('feat_quality_sub')"></p>
+        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_quality')">Dri-Fit Fabric</h3>
+        <p class="text-xs text-slate-apple" x-text="t('feat_quality_sub')">Compression durability</p>
       </div>
 
       <!-- Card 4 -->
@@ -529,8 +536,11 @@ body {
           <a href="https://wa.me/201007720554" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
             <i class="fab fa-whatsapp"></i>
           </a>
-          <a href="https://instagram.com/vexisoo.eg" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+          <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
             <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
+            <i class="fab fa-facebook-f"></i>
           </a>
           <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
             <i class="fab fa-tiktok"></i>
@@ -555,24 +565,24 @@ body {
 <script>
 const translations = {
   ar: {
-    topbar_shipping: 'شحن لجميع المحافظات',
-    topbar_quality: 'خامات بجودة عالمية',
-    topbar_guarantee: 'جودة مضمونة 100%',
-    topbar_support: 'دعم العملاء 24/7 عبر الواتساب',
-    nav_home: 'الرئيسية',
-    nav_products: 'المنتجات',
-    nav_about: 'من نحن',
-    nav_cart: 'السلة',
-    feat_shipping: 'شحن سريع',
-    feat_shipping_sub: 'لجميع محافظات مصر',
-    feat_cod: 'دفع عند الاستلام',
-    feat_cod_sub: 'معاينة قبل الدفع',
-    feat_quality: 'Fabrics',
-    feat_quality_sub: 'Premium performance materials',
-    feat_return: 'استبدال مرن',
-    feat_return_sub: 'خلال 14 يوماً بسلاسة',
-    products_title: 'التشكيلة الكاملة',
-    about_text: 'في VEXIS احنا بنؤمن أن الملابس الرياضية مش مجرد لبس وقت التمرين، هو جزء من رحلتك للتطور. عشان كدا عملنا VEXIS اهتمينا بالراحة، والشكل، عشان نديك الثقة في كل تمرين. VEXIS مش مجرد فكرة، دي بداية جديدة في عالم الرياضة.',
+    topbar_shipping: 'Nationwide shipping across Egypt',
+    topbar_quality: 'World-class fabric standards',
+    topbar_guarantee: '100% Quality Guaranteed',
+    topbar_support: '24/7 Support via WhatsApp',
+    nav_home: 'Home',
+    nav_products: 'Products',
+    nav_about: 'About',
+    nav_cart: 'Bag',
+    feat_shipping: 'Fast Delivery',
+    feat_shipping_sub: 'Nationwide shipping',
+    feat_cod: 'Cash on Delivery',
+    feat_cod_sub: 'Inspect before paying',
+    feat_quality: 'Dri-Fit Fabric',
+    feat_quality_sub: 'Compression durability',
+    feat_return: 'Flexible Returns',
+    feat_return_sub: '14-day hassle-free',
+    products_title: 'The Collection',
+    about_text: "At VEXIS, we believe sportswear isn't just clothes for the gym — it's part of your journey to evolve. That's why we built VEXIS with a focus on comfort and style, to give you confidence in every workout. VEXIS isn't just an idea, it's a new beginning in the world of sports.",
   },
   en: {
     topbar_shipping: 'Nationwide shipping across Egypt',
@@ -587,8 +597,8 @@ const translations = {
     feat_shipping_sub: 'Nationwide shipping',
     feat_cod: 'Cash on Delivery',
     feat_cod_sub: 'Inspect before paying',
-    feat_quality: 'Fabrics',
-    feat_quality_sub: 'Premium performance materials',
+    feat_quality: 'Dri-Fit Fabric',
+    feat_quality_sub: 'Compression durability',
     feat_return: 'Flexible Returns',
     feat_return_sub: '14-day hassle-free',
     products_title: 'The Collection',
