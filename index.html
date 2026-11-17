@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>VEXIS | Premium Gym Sportswear for Men — Official Store</title>
-<meta name="description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, nationwide shipping and cash on delivery.">
-<meta name="keywords" content="VEXIS, gym t-shirts, men's sportswear, training clothes, gym wear Egypt, sport t-shirt, bodybuilding clothes">
+<title>VEXIS | Premium Gym Sportswear for Men — High Performance Compression Wear</title>
+<meta name="description" content="VEXIS is Egypt's premier gym sportswear brand for men. High performance Dri-Fit compression fabrics, athletic fit, nationwide delivery and cash on delivery.">
+<meta name="keywords" content="VEXIS, gym t-shirts, men's sportswear, training clothes, gym wear Egypt, compression t-shirt, bodybuilding clothes">
 
 <!-- Favicon & Touch Icons -->
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
@@ -17,7 +17,7 @@
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="VEXIS | Premium Gym Sportswear for Men" />
-<meta property="og:description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, and nationwide shipping." />
+<meta property="og:description" content="Built For You. Designed to Move With You. Experience Performance Without Compromise." />
 <meta property="og:url" content="https://vexis1.store" />
 <meta property="og:image" content="https://vexis1.store/logo.jpeg" />
 <meta property="og:image:width" content="1200" />
@@ -26,10 +26,10 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="VEXIS | Premium Gym Sportswear for Men" />
-<meta name="twitter:description" content="VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, nationwide shipping." />
+<meta name="twitter:description" content="Built For You. Designed to Move With You. Experience Performance Without Compromise." />
 <meta name="twitter:image" content="https://vexis1.store/logo.jpeg" />
 
-<!-- JSON-LD -->
+<!-- Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,8 +37,7 @@
   "name": "VEXIS",
   "url": "https://vexis1.store",
   "logo": "https://vexis1.store/logo.jpeg",
-  "description": "VEXIS is Egypt's premier gym sportswear store for men. Premium quality fabrics, modern designs, nationwide shipping.",
-  "image": "https://vexis1.store/logo.jpeg",
+  "description": "VEXIS is Egypt's premier gym sportswear brand for men. High performance Dri-Fit fabrics, athletic fit, nationwide shipping.",
   "priceRange": "EGP",
   "address": {
     "@type": "PostalAddress",
@@ -47,30 +46,27 @@
 }
 </script>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<!-- Fonts & Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
-        colors: {
-          'gallery-white': '#ffffff',
-          'studio-mist': '#f5f5f7',
-          'paper-frost': '#fafafc',
-          'hairline-silver': '#d6d6d6',
-          'control-gray': '#e6e6e8',
-          'ink': '#1d1d1f',
-          'slate-apple': '#4a4a4a',
-          'steel-apple': '#5a5a5a',
-          'apple-blue': '#0066cc',
-          'pricing-blue': '#0071e3',
-          'launch-orange': '#b64400'
+        fontFamily: {
+          brand: ['Montserrat', 'Cairo', 'sans-serif'],
+          sans: ['Cairo', 'Montserrat', 'sans-serif'],
         },
-        borderRadius: {
-          '28': '28px',
-          '36': '36px',
-          '980': '980px',
+        colors: {
+          vexis: {
+            black: '#0a0a0c',
+            dark: '#141418',
+            accent: '#0066cc',
+            orange: '#e65100',
+          }
         }
       }
     }
@@ -79,355 +75,289 @@
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <style>
-:root {
-  --color-gallery-white: #ffffff;
-  --color-studio-mist: #f5f5f7;
-  --color-paper-frost: #fafafc;
-  --color-hairline-silver: #d6d6d6;
-  --color-control-gray: #e6e6e8;
-  --color-ink: #1d1d1f;
-  --color-slate: #707070;
-  --color-steel: #86868b;
-  --color-apple-blue: #0066cc;
-  --color-pricing-blue: #0071e3;
-  --color-launch-orange: #b64400;
+  * { font-family: 'Cairo', 'Montserrat', sans-serif; box-sizing: border-box; }
+  .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+  html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
 
-  --font-apple: "Cairo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-}
+  /* Desktop Font Scaling for sharp readability */
+  @media (min-width: 1024px) {
+    html { font-size: 16.5px; }
+  }
+  @media (min-width: 1280px) {
+    html { font-size: 17px; }
+  }
 
-* {
-  font-family: var(--font-apple);
-  box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-}
+  /* Card hover */
+  .card-hover {
+    transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+  }
+  @media(hover:hover){
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.12);
+    }
+  }
 
-body {
-  background-color: var(--color-gallery-white);
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* Marquee */
+  .marquee-wrap { overflow: hidden; }
+  .marquee-inner { display: inline-flex; animation: marquee 24s linear infinite; white-space: nowrap; }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
+  /* Scrollbar */
+  ::-webkit-scrollbar{ width: 5px; }
+  ::-webkit-scrollbar-thumb{ background: #555; border-radius: 3px; }
 
-/* Apple-style typography */
-@media (min-width: 1024px) {
-  html { font-size: 16.5px; }
-}
-@media (min-width: 1280px) {
-  html { font-size: 17px; }
-}
+  /* Nav link hover underline */
+  .nav-link { transition: color .2s; position: relative; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#000; transition: width .3s; }
+  .nav-link:hover::after { width:100%; }
 
-.headline-editorial {
-  letter-spacing: -0.025em;
-  line-height: 1.05;
-}
+  /* Image hover flip */
+  .product-img-container { position: relative; overflow: hidden; }
+  .product-img-front, .product-img-back {
+    transition: opacity .5s ease, transform .5s ease;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .product-img-front { z-index: 2; opacity: 1; }
+  .product-img-back { z-index: 1; opacity: 0; transform: scale(1.05); }
+  .product-img-container:hover .product-img-front { opacity: 0; transform: scale(1.05); }
+  .product-img-container:hover .product-img-back { opacity: 1; transform: scale(1); }
 
-.body-editorial {
-  letter-spacing: -0.01em;
-  line-height: 1.65;
-}
-
-/* Apple Buttons */
-.apple-pricing-pill {
-  background-color: var(--color-pricing-blue);
-  color: #ffffff;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-pricing-pill:hover {
-  background-color: #0077ed;
-  transform: scale(1.01);
-}
-
-.apple-explore-pill {
-  background-color: transparent;
-  color: var(--color-ink);
-  border: 1px solid var(--color-steel);
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-explore-pill:hover {
-  border-color: var(--color-ink);
-  background-color: var(--color-studio-mist);
-}
-
-.apple-ink-pill {
-  background-color: var(--color-ink);
-  color: #ffffff;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-ink-pill:hover {
-  background-color: #333336;
-}
-
-/* 28px Media & Product Cards (Shadowless) */
-.apple-card {
-  background-color: #ffffff;
-  border-radius: 28px;
-  border: 1px solid var(--color-hairline-silver);
-  transition: border-color .2s ease;
-}
-.apple-card:hover {
-  border-color: var(--color-steel);
-}
-
-/* Line clamp */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* Product img flip */
-.product-img-container { position: relative; overflow: hidden; border-radius: 24px; }
-.product-img-front, .product-img-back {
-  transition: opacity .4s ease, transform .4s ease;
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 12px;
-}
-.product-img-front { z-index: 2; opacity: 1; }
-.product-img-back { z-index: 1; opacity: 0; transform: scale(1.03); }
-.product-img-container:hover .product-img-front { opacity: 0; transform: scale(1.03); }
-.product-img-container:hover .product-img-back { opacity: 1; transform: scale(1); }
-
-/* Marquee */
-.marquee-wrap { overflow: hidden; }
-.marquee-inner { display: inline-flex; animation: marquee 26s linear infinite; white-space: nowrap; }
-@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  /* Hero Gradient */
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.92) 100%);
+  }
 </style>
 </head>
-<body class="bg-gallery-white text-ink min-h-screen flex flex-col" x-data="store()" x-init="init()">
+<body class="bg-white text-zinc-900 antialiased selection:bg-black selection:text-white" x-data="store()" x-init="init()">
 
 <!-- ============================================== -->
-<!-- TOP ANNOUNCEMENT TICKER (Subtle Apple Bar)     -->
+<!-- TOP ANNOUNCEMENT MARQUEE (Black Athletic Bar)  -->
 <!-- ============================================== -->
-<div class="bg-black text-xs py-2 text-white marquee-wrap">
-  <div class="marquee-inner text-[12px] font-semibold tracking-widest uppercase">
-    <span class="px-4">🚚 <span x-text="t('topbar_shipping')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">⚡ <span x-text="t('topbar_quality')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">✓ <span x-text="t('topbar_guarantee')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">📞 <span x-text="t('topbar_support')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">🚚 <span x-text="t('topbar_shipping')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">⚡ <span x-text="t('topbar_quality')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">✓ <span x-text="t('topbar_guarantee')"></span></span>
-    <span class="px-3 text-white/40">|</span>
-    <span class="px-4">📞 <span x-text="t('topbar_support')"></span></span>
-    <span class="px-3 text-white/40">|</span>
+<div class="bg-black text-white text-xs py-2 marquee-wrap border-b border-zinc-800">
+  <div class="marquee-inner text-[11px] sm:text-xs font-semibold tracking-wider uppercase">
+    <span class="px-4">🚚 Nationwide Delivery Across Egypt</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">⚡ 100% Performance Dri-Fit Fabric</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">✓ 14-Day Flexible Exchange Guarantee</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">📞 24/7 Support via WhatsApp</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">🚚 Nationwide Delivery Across Egypt</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">⚡ 100% Performance Dri-Fit Fabric</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">✓ 14-Day Flexible Exchange Guarantee</span>
+    <span class="px-3 text-zinc-600">|</span>
+    <span class="px-4">📞 24/7 Support via WhatsApp</span>
+    <span class="px-3 text-zinc-600">|</span>
   </div>
 </div>
 
 <!-- ============================================== -->
-<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
+<!-- NAVBAR (Classic Athletic Look + Modern Icons)  -->
 <!-- ============================================== -->
-<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
+<nav class="bg-white/95 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-50 shadow-sm transition-all">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
     
-    <!-- Brand Logo -->
-    <a href="index.html" class="flex items-center gap-2 group">
-      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
-        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
+    <!-- Left: Brand Logo -->
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <div class="bg-black text-white rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm group-hover:scale-105 transition transform">
+        <img src="logo.jpeg" alt="VEXIS" class="w-7 h-7 rounded-full object-cover border border-zinc-700">
+        <span class="font-brand font-black text-base md:text-lg tracking-widest text-white uppercase">VEXIS</span>
       </div>
-      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
 
-    <!-- Nav Links (Compact SF Pro Text 12px) -->
-    <nav class="hidden md:flex items-center gap-8 text-[12px] text-slate-apple">
-      <a href="index.html" class="text-ink font-semibold">Store</a>
-      <a href="#products" class="hover:text-ink transition">T-Shirts</a>
-      <a href="#features" class="hover:text-ink transition">Performance</a>
-      <a href="#about" class="hover:text-ink transition">About</a>
-      <a href="my-orders.html" x-show="hasOrders" class="hover:text-ink transition">My Orders</a>
-    </nav>
+    <!-- Center: Nav Links -->
+    <div class="hidden md:flex items-center gap-8 text-sm font-bold text-zinc-700">
+      <a href="index.html" class="nav-link text-black font-black">Home</a>
+      <a href="#products" class="nav-link hover:text-black">Collection</a>
+      <a href="product.html" class="nav-link hover:text-black">Featured</a>
+      <a href="#about" class="nav-link hover:text-black">About</a>
+      <a href="my-orders.html" class="nav-link hover:text-black flex items-center gap-1.5 text-zinc-800" x-show="hasOrders">
+        <i class="fas fa-box-open text-xs text-blue-600"></i> My Orders
+      </a>
+    </div>
 
-    <!-- Controls (EGYPT indicator + Account + Cart) -->
-    <div class="flex items-center gap-3">
+    <!-- Right Controls: Country + Orders + Cart + Mobile Menu -->
+    <div class="flex items-center gap-2 md:gap-3">
       
-      <!-- Country / Currency indicator: EGYPT (Image 3) -->
-      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
-        <span>🇪🇬</span>
-        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
-        <i class="fas fa-chevron-down text-[8px] text-steel-apple ml-0.5"></i>
+      <!-- Country Pill -->
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-200 text-xs font-bold text-zinc-700 cursor-default bg-zinc-50">
+        <span class="text-sm">🇪🇬</span>
+        <span class="font-brand font-black text-[11px] tracking-wider">EGYPT</span>
+        <i class="fas fa-chevron-down text-[8px] text-zinc-400 ml-0.5"></i>
       </div>
 
-      <!-- Account Icon -->
+      <!-- Account / My Orders -->
       <a href="my-orders.html"
-         title="My Orders / Account"
-         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition">
-        <i class="far fa-user text-sm"></i>
+         title="My Orders & Tracking"
+         class="w-10 h-10 rounded-xl flex items-center justify-center text-zinc-700 hover:text-black hover:bg-zinc-100 transition">
+        <i class="far fa-user text-base"></i>
       </a>
 
       <!-- Shopping Bag -->
       <a href="cart.html"
          title="Shopping Bag"
-         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition relative">
-        <i class="fas fa-shopping-bag text-sm"></i>
+         class="relative w-10 h-10 rounded-xl flex items-center justify-center text-zinc-700 hover:text-black hover:bg-zinc-100 transition">
+        <i class="fas fa-shopping-bag text-base"></i>
         <span x-show="cartCount > 0"
               x-text="cartCount"
-              class="absolute -top-0.5 -left-0.5 bg-pricing-blue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-        </span>
+              class="absolute top-1 right-1 bg-black text-white font-brand font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow"></span>
       </a>
 
       <!-- Mobile menu toggle -->
-      <button @click="mobileMenu = !mobileMenu" class="md:hidden w-8 h-8 flex items-center justify-center text-slate-apple">
-        <i :class="mobileMenu ? 'fa-times' : 'fa-bars'" class="fas text-sm"></i>
+      <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 text-zinc-800">
+        <i :class="mobileMenu ? 'fa-times' : 'fa-bars'" class="fas text-xl"></i>
       </button>
-
     </div>
 
   </div>
 
-  <!-- Mobile Menu Dropdown -->
+  <!-- Mobile Dropdown Menu -->
   <div x-show="mobileMenu"
-       x-transition
-       class="md:hidden bg-paper-frost border-b border-hairline-silver px-6 py-4 flex flex-col gap-3 text-xs font-medium"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0 -translate-y-2"
+       x-transition:enter-end="opacity-100 translate-y-0"
+       class="md:hidden bg-white border-t border-zinc-200 px-5 py-5 flex flex-col gap-4 text-sm font-bold shadow-xl"
        style="display:none;">
-    <a href="index.html" class="text-ink font-semibold py-1">Store</a>
-    <a href="#products" @click="mobileMenu = false" class="text-slate-apple py-1">T-Shirts & Apparel</a>
-    <a href="#features" @click="mobileMenu = false" class="text-slate-apple py-1">Performance Details</a>
-    <a href="#about" @click="mobileMenu = false" class="text-slate-apple py-1">About VEXIS</a>
-    <a href="my-orders.html" class="text-slate-apple py-1">My Orders</a>
-    <a href="cart.html" class="apple-pricing-pill py-2 text-center text-xs mt-2">
-      View Bag (<span x-text="cartCount"></span>)
+    <a href="index.html" class="text-black flex items-center gap-3 py-1"><i class="fas fa-home w-5"></i> Home</a>
+    <a href="#products" @click="mobileMenu=false" class="text-zinc-600 hover:text-black flex items-center gap-3 py-1"><i class="fas fa-box w-5"></i> Collection</a>
+    <a href="product.html" class="text-zinc-600 hover:text-black flex items-center gap-3 py-1"><i class="fas fa-tshirt w-5"></i> Featured Product</a>
+    <a href="#about" @click="mobileMenu=false" class="text-zinc-600 hover:text-black flex items-center gap-3 py-1"><i class="fas fa-info-circle w-5"></i> About VEXIS</a>
+    <a href="my-orders.html" class="text-blue-600 flex items-center gap-3 py-1 font-black">
+      <i class="fas fa-box-open w-5"></i> My Orders Tracking
+    </a>
+    <a href="cart.html" class="bg-black text-white font-black py-3 rounded-xl text-center flex items-center justify-center gap-2 mt-2">
+      <i class="fas fa-shopping-bag"></i> View Bag (<span x-text="cartCount"></span>)
     </a>
   </div>
-</header>
+</nav>
 
 <!-- ============================================== -->
-<!-- HERO LAUNCH STAGE (Apple White Gallery Hero)   -->
+<!-- HERO BANNER (Classic Cinematic Full-Width Look) -->
 <!-- ============================================== -->
-<section class="bg-gallery-white text-ink text-center pt-14 pb-16 md:pt-20 md:pb-24 border-b border-hairline-silver relative overflow-hidden">
-  <div class="max-w-4xl mx-auto px-4 space-y-4">
-    
-    <!-- Launch status label -->
-    <p class="text-launch-orange text-xs font-semibold tracking-wider">NEW COLLECTION</p>
-    
-    <!-- Hero display statement: SF Pro Display 80px/600 -->
-    <h1 class="text-3xl sm:text-5xl md:text-6xl font-semibold text-ink headline-editorial tracking-tight">
-      VEXIS - Let Your Power Speak
-    </h1>
-
-    <p class="text-base sm:text-lg text-ink/80 body-editorial max-w-xl mx-auto font-medium">
-      Built For You. Designed to Move With You. Experience Performance Without Compromise.
-    </p>
-
-    <!-- Hero CTA Buttons -->
-    <div class="flex items-center justify-center gap-3 pt-2">
-      <a href="#products" class="apple-pricing-pill px-6 py-2.5 text-xs sm:text-sm">
-        Explore Collection
-      </a>
-      <a href="product.html" class="apple-explore-pill px-6 py-2.5 text-xs sm:text-sm">
-        Buy Featured T-Shirt
-      </a>
-    </div>
-
-    <!-- Center Product Render: Cinematic Full-Width 28px Card (Replaces the square logo) -->
-    <div class="pt-6 relative max-w-5xl mx-auto">
-      <div class="relative rounded-28 overflow-hidden border border-hairline-silver aspect-[2.2/1] sm:aspect-[2.7/1] bg-black group">
-        <img src="بدايه.jpeg" alt="VEXIS Compression Wear" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-102"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent flex items-end p-6 md:p-10 justify-between">
-          <div class="text-left text-white space-y-1">
-            <span class="text-launch-orange text-[11px] font-semibold tracking-wider uppercase block">ATHLETIC COMPRESSION</span>
-            <span class="font-semibold text-lg sm:text-2xl md:text-3xl block text-white tracking-tight">DROP-001 IS HERE</span>
-            <span class="text-zinc-300 text-xs sm:text-sm block">Engineered for durability, flexibility, and athletic silhouette.</span>
+<section class="bg-black text-white relative overflow-hidden border-b border-zinc-900">
+  <div class="relative w-full max-w-7xl mx-auto overflow-hidden">
+    <div class="relative w-full h-[60vh] min-h-[380px] max-h-[620px] bg-black">
+      <img src="بدايه.jpeg"
+           alt="VEXIS Athletic Compression Wear"
+           class="w-full h-full object-cover object-center"/>
+      
+      <!-- Gradient overlay for text contrast -->
+      <div class="absolute inset-0 hero-overlay flex flex-col justify-end p-6 sm:p-10 md:p-14">
+        <div class="max-w-2xl space-y-3">
+          
+          <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase border border-white/20">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>DROP-001 • NEW COLLECTION</span>
           </div>
-          <div class="hidden sm:flex items-center gap-3">
-            <a href="#products" class="apple-pricing-pill px-5 py-2.5 text-xs flex items-center gap-2 shadow-sm">
-              <span>Order Now</span> <i class="fas fa-arrow-down text-[10px]"></i>
+
+          <h1 class="text-3xl sm:text-5xl md:text-6xl font-brand font-black tracking-tight text-white uppercase drop-shadow-lg leading-none">
+            VEXIS
+          </h1>
+
+          <p class="text-sm sm:text-lg md:text-xl text-zinc-100 font-semibold drop-shadow leading-relaxed max-w-xl">
+            Built For You. Designed to Move With You. Experience Performance Without Compromise.
+          </p>
+
+          <div class="pt-2 flex items-center gap-3 flex-wrap">
+            <a href="#products"
+               class="inline-flex items-center gap-2 bg-white text-black font-brand font-black px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm hover:bg-zinc-200 transition shadow-2xl transform hover:scale-105 active:scale-95">
+              <span>Shop Now</span>
+              <i class="fas fa-arrow-down text-xs"></i>
+            </a>
+
+            <a href="product.html"
+               class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-brand font-bold px-5 sm:px-7 py-3 rounded-full text-xs sm:text-sm border border-white/30 transition">
+              <span>Featured T-Shirt</span>
+              <i class="fas fa-arrow-right text-xs"></i>
             </a>
           </div>
+
         </div>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- ============================================== -->
-<!-- FEATURES STAGE (Studio Mist 28px Cards)        -->
+<!-- FEATURES BAR (High-Contrast Athletic 4-Cards)  -->
 <!-- ============================================== -->
-<section id="features" class="bg-studio-mist py-16 md:py-20 border-b border-hairline-silver">
-  <div class="max-w-6xl mx-auto px-4">
+<section class="bg-zinc-50 py-8 border-b border-zinc-200">
+  <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
     
-    <div class="mb-10 text-center max-w-xl mx-auto space-y-2">
-      <span class="text-xs text-slate-apple uppercase tracking-wider">Engineering Standards</span>
-      <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">Built without compromise.</h2>
-      <p class="text-xs text-slate-apple">كل تفصيلة في ملابس VEXIS مصممة لتواكب تمارينك اليومية بأعلى جودة وثبات.</p>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-      
-      <!-- Card 1 -->
-      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
-        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
-          <i class="fas fa-truck"></i>
-        </div>
-        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_shipping')"></h3>
-        <p class="text-xs text-slate-apple" x-text="t('feat_shipping_sub')"></p>
+    <!-- Feature 1: Fast Shipping -->
+    <div class="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+      <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+        <i class="fas fa-truck-fast"></i>
       </div>
-
-      <!-- Card 2 -->
-      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
-        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
-          <i class="fas fa-hand-holding-usd"></i>
-        </div>
-        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_cod')"></h3>
-        <p class="text-xs text-slate-apple" x-text="t('feat_cod_sub')"></p>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
-        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
-          <i class="fas fa-gem"></i>
-        </div>
-        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_quality')">Dri-Fit Fabric</h3>
-        <p class="text-xs text-slate-apple" x-text="t('feat_quality_sub')">Compression durability</p>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="apple-card p-6 text-center space-y-2 bg-gallery-white">
-        <div class="w-10 h-10 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-ink text-sm">
-          <i class="fas fa-sync-alt"></i>
-        </div>
-        <h3 class="font-semibold text-sm text-ink" x-text="t('feat_return')"></h3>
-        <p class="text-xs text-slate-apple" x-text="t('feat_return_sub')"></p>
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-<!-- ============================================== -->
-<!-- PRODUCTS COLLECTION (Apple 28px Product Cards) -->
-<!-- ============================================== -->
-<section id="products" class="py-16 md:py-24 bg-gallery-white border-b border-hairline-silver">
-  <div class="max-w-6xl mx-auto px-4 space-y-10">
-    
-    <!-- Section Header & Filter Pills -->
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-hairline-silver pb-6">
       <div>
-        <span class="text-xs text-slate-apple uppercase tracking-wider block mb-1">Catalog</span>
-        <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">The Collection</h2>
+        <h4 class="font-brand font-black text-sm text-black">Fast Delivery</h4>
+        <p class="text-xs text-zinc-500 font-medium">Nationwide across Egypt</p>
+      </div>
+    </div>
+
+    <!-- Feature 2: Cash on Delivery -->
+    <div class="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+      <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+        <i class="fas fa-hand-holding-dollar"></i>
+      </div>
+      <div>
+        <h4 class="font-brand font-black text-sm text-black">Cash on Delivery</h4>
+        <p class="text-xs text-zinc-500 font-medium">Inspect before paying</p>
+      </div>
+    </div>
+
+    <!-- Feature 3: Dri-Fit Fabric -->
+    <div class="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+      <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+        <i class="fas fa-dumbbell"></i>
+      </div>
+      <div>
+        <h4 class="font-brand font-black text-sm text-black">Dri-Fit Fabric</h4>
+        <p class="text-xs text-zinc-500 font-medium">Compression durability</p>
+      </div>
+    </div>
+
+    <!-- Feature 4: Easy Return -->
+    <div class="flex items-center gap-3.5 p-4 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+      <div class="w-12 h-12 bg-black text-white rounded-xl flex items-center justify-center flex-shrink-0 text-lg">
+        <i class="fas fa-rotate-left"></i>
+      </div>
+      <div>
+        <h4 class="font-brand font-black text-sm text-black">Flexible Returns</h4>
+        <p class="text-xs text-zinc-500 font-medium">14-day smooth exchange</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================== -->
+<!-- PRODUCTS COLLECTION (Card Hover Flip + Badges) -->
+<!-- ============================================== -->
+<section id="products" class="py-14 md:py-20 px-4 bg-white">
+  <div class="max-w-7xl mx-auto">
+    
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 pb-6 border-b border-zinc-200">
+      <div>
+        <span class="text-xs font-brand font-black uppercase tracking-widest text-zinc-400 block mb-1">Catalog</span>
+        <h2 class="text-2xl md:text-4xl font-brand font-black text-black uppercase tracking-tight">The Collection</h2>
       </div>
 
-      <!-- Filter pills (9999px pills) -->
-      <div class="flex items-center gap-2 flex-wrap">
+      <!-- Category Filter Tabs -->
+      <div class="flex gap-2 flex-wrap">
         <template x-for="cat in categories" :key="cat.slug">
           <button @click="activeFilter = cat.slug"
-                  :class="activeFilter === cat.slug ? 'apple-ink-pill px-4 py-1.5 text-xs' : 'apple-explore-pill px-4 py-1.5 text-xs text-slate-apple'"
+                  :class="activeFilter === cat.slug ? 'bg-black text-white shadow-md' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'"
+                  class="px-5 py-2 rounded-full text-xs font-bold transition-all duration-200"
                   x-text="cat.name">
           </button>
         </template>
@@ -435,55 +365,61 @@ body {
     </div>
 
     <!-- Products Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
       <template x-for="(p, pIdx) in filteredProducts" :key="p.id">
-        <div class="apple-card p-4 flex flex-col justify-between cursor-pointer group"
+        <div class="card-hover bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-black cursor-pointer group transition-all duration-300 flex flex-col justify-between"
              @click="goToProduct(p)">
           
-          <!-- Image Box (Apple-like clean render) -->
-          <div class="product-img-container aspect-square bg-studio-mist mb-4 flex items-center justify-center relative">
+          <!-- Image Container with Hover Flip -->
+          <div class="product-img-container aspect-square bg-zinc-100">
             <img :src="p.image_url" :alt="p.name" class="product-img-front"/>
             <template x-if="p.image_hover">
               <img :src="p.image_hover" :alt="p.name + ' - alternate'" class="product-img-back"/>
             </template>
-
-            <!-- New badge -->
+            
+            <!-- Badges -->
             <template x-if="isNew(p)">
-              <span class="absolute top-3 left-3 text-launch-orange text-[11px] font-semibold tracking-wide">
-                New
+              <span class="absolute top-2.5 left-2.5 z-10 bg-black text-white text-[10px] font-brand font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                NEW
               </span>
             </template>
-            <!-- Discount -->
             <template x-if="hasDiscount(p)">
-              <span class="absolute top-3 right-3 text-slate-apple text-[11px] font-mono" x-text="discountBadge(p)"></span>
+              <span class="absolute top-2.5 right-2.5 z-10 bg-red-600 text-white text-[10px] font-brand font-black px-2.5 py-0.5 rounded-full shadow">
+                <span x-text="discountBadge(p)"></span>
+              </span>
             </template>
           </div>
 
-          <!-- Title & Price -->
-          <div class="space-y-2">
-            <h3 class="font-semibold text-xs sm:text-sm text-ink leading-snug line-clamp-2" x-text="p.name"></h3>
-            
-            <div class="flex items-baseline gap-2">
-              <span class="text-sm sm:text-base font-semibold text-ink" x-text="calcPrice(p) + ' EGP'"></span>
-              <template x-if="hasDiscount(p)">
-                <span class="text-xs text-slate-apple line-through" x-text="p.price + ' EGP'"></span>
-              </template>
+          <!-- Card Content -->
+          <div class="p-4 flex flex-col flex-1 justify-between space-y-3">
+            <div>
+              <span class="text-[10px] font-brand font-black uppercase tracking-widest text-zinc-400 block mb-1">COMPRESSION WEAR</span>
+              <h3 class="font-bold text-xs sm:text-sm text-black leading-snug line-clamp-2" x-text="p.name"></h3>
             </div>
 
-            <!-- Apple Pricing Blue Action Button -->
-            <button type="button"
-                    @click.stop="goToProduct(p)"
-                    class="apple-pricing-pill w-full py-2 text-xs mt-2 flex items-center justify-center gap-1.5">
-              <span>View details</span> <i class="fas fa-chevron-right text-[9px]"></i>
-            </button>
+            <div>
+              <div class="flex items-baseline gap-2 mb-3">
+                <span class="font-brand font-black text-black text-base sm:text-lg" x-text="calcPrice(p) + ' EGP'"></span>
+                <template x-if="hasDiscount(p)">
+                  <span class="text-zinc-400 line-through text-xs font-semibold" x-text="p.price + ' EGP'"></span>
+                </template>
+              </div>
+
+              <button @click.stop="goToProduct(p)"
+                      class="w-full bg-black text-white text-xs py-2.5 rounded-xl hover:bg-zinc-800 transition font-bold flex items-center justify-center gap-2 group-hover:bg-black">
+                <i class="fas fa-eye text-xs"></i>
+                <span>View Details</span>
+              </button>
+            </div>
           </div>
 
         </div>
       </template>
 
-      <!-- Empty state -->
-      <div x-show="filteredProducts.length === 0" class="col-span-2 md:col-span-4 text-center py-20 text-slate-apple">
-        <p class="text-sm">لا توجد منتجات حالياً في هذا القسم</p>
+      <!-- Empty State -->
+      <div x-show="filteredProducts.length === 0" class="col-span-2 md:col-span-4 text-center py-16 text-zinc-400">
+        <i class="fas fa-box-open text-5xl mb-4 block text-zinc-300"></i>
+        <p class="font-bold">No products found in this category.</p>
       </div>
     </div>
 
@@ -491,121 +427,132 @@ body {
 </section>
 
 <!-- ============================================== -->
-<!-- EDITORIAL CHAPTER (Apple Storytelling Section) -->
+<!-- ABOUT SECTION (Athletic Brand Mission)         -->
 <!-- ============================================== -->
-<section id="about" class="bg-studio-mist py-20 md:py-28 border-b border-hairline-silver">
-  <div class="max-w-3xl mx-auto px-4 text-center space-y-4">
-    <p class="text-xs text-slate-apple uppercase tracking-wider">The Philosophy</p>
-    <h2 class="text-3xl md:text-4xl font-semibold text-ink headline-editorial">
-      Clothes that elevate your discipline.
-    </h2>
-    <p class="text-sm md:text-base text-slate-apple body-editorial max-w-2xl mx-auto" x-text="t('about_text')">
+<section id="about" class="py-16 md:py-24 px-4 bg-zinc-50 border-t border-zinc-200">
+  <div class="max-w-3xl mx-auto text-center space-y-6">
+    <div class="inline-block w-12 h-1 bg-black rounded-full mx-auto"></div>
+    <h2 class="text-2xl md:text-3xl font-brand font-black text-black uppercase tracking-tight">About VEXIS</h2>
+    <p class="text-zinc-600 leading-relaxed text-sm md:text-base font-medium">
+      At VEXIS, we believe sportswear isn't just clothes for the gym — it's part of your journey to evolve. That's why we engineered VEXIS with a strict focus on comfort, athletic silhouette, and high-tensile durability, giving you unshakeable confidence in every workout. VEXIS isn't just an idea, it's a new standard in high-performance sportswear.
     </p>
-    <div class="pt-2">
-      <a href="product.html" class="text-apple-blue hover:underline text-sm font-medium inline-flex items-center gap-1">
-        <span>Learn more about VEXIS compression</span> <i class="fas fa-chevron-right text-xs"></i>
-      </a>
+    <div class="flex items-center justify-center gap-6 pt-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">
+      <span>• Premium Dri-Fit</span>
+      <span>• Athletic Compression</span>
+      <span>• Made in Egypt</span>
     </div>
   </div>
 </section>
 
 <!-- ============================================== -->
-<!-- FOOTER (Apple Studio Mist Footer Surface)      -->
+<!-- FOOTER (Classic High-Contrast Black Footer)    -->
 <!-- ============================================== -->
-<footer class="bg-studio-mist py-12 px-4 text-xs text-slate-apple">
-  <div class="max-w-6xl mx-auto space-y-8">
+<footer class="bg-black text-white pt-16 pb-8 px-4 border-t border-zinc-900">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-hairline-silver">
-      <div class="space-y-2">
-        <span class="font-semibold text-sm text-ink tracking-widest uppercase block">VEXIS</span>
-        <p class="text-xs text-slate-apple">Built for Performance. Designed for Confidence. Made for Athletes in Egypt.</p>
+    <!-- Brand Info -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2.5">
+        <img src="logo.jpeg" alt="VEXIS" class="w-10 h-10 rounded-full border border-zinc-700">
+        <span class="font-brand font-black text-2xl tracking-widest text-white uppercase">VEXIS</span>
       </div>
+      <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+        Built For You. Designed to Move With You. Experience Performance Without Compromise.
+      </p>
+    </div>
 
-      <div class="space-y-2">
-        <span class="font-semibold text-xs text-ink block">Navigation</span>
-        <div class="flex flex-col gap-1.5 text-xs">
-          <a href="#products" class="hover:text-ink transition">T-Shirts Collection</a>
-          <a href="cart.html" class="hover:text-ink transition">Shopping Bag</a>
-          <a href="my-orders.html" class="hover:text-ink transition">Order Tracking</a>
-        </div>
-      </div>
-
-      <div class="space-y-2">
-        <span class="font-semibold text-xs text-ink block">Connect</span>
-        <div class="flex items-center gap-2">
-          <a href="https://wa.me/201007720554" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-          <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-tiktok"></i>
-          </a>
-        </div>
+    <!-- Quick Links -->
+    <div class="space-y-3">
+      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Navigation</h3>
+      <div class="flex flex-col gap-2 text-zinc-400 text-xs sm:text-sm">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="#products" class="hover:text-white transition">Collection</a>
+        <a href="product.html" class="hover:text-white transition">Featured Product</a>
+        <a href="my-orders.html" class="hover:text-white transition">Order Tracking</a>
+        <a href="cart.html" class="hover:text-white transition">Shopping Bag</a>
       </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-steel-apple">
-      <div>Copyright © 2026 VEXIS Inc. All rights reserved.</div>
-      <div class="flex items-center gap-4">
-        <span>Cairo, Egypt</span>
-        <span>•</span>
-        <span>Cash on Delivery</span>
+    <!-- Guarantees -->
+    <div class="space-y-3">
+      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Service</h3>
+      <div class="flex flex-col gap-2 text-zinc-400 text-xs sm:text-sm">
+        <span>🚚 Nationwide Delivery across Egypt</span>
+        <span>💵 Cash on Delivery (Inspect before payment)</span>
+        <span>🔄 14-Day Smooth Exchange Guarantee</span>
+        <span>⚡ 100% Performance Dri-Fit Fabric</span>
       </div>
     </div>
 
+    <!-- Social Links (All verified active links) -->
+    <div class="space-y-3">
+      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Connect With Us</h3>
+      <div class="flex items-center gap-3 flex-wrap">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/201007720554" target="_blank" title="WhatsApp"
+           class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-whatsapp text-lg"></i>
+        </a>
+        <!-- Instagram (New Link) -->
+        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram"
+           class="w-10 h-10 bg-zinc-800 hover:bg-gradient-to-tr hover:from-purple-600 hover:to-pink-500 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-instagram text-lg"></i>
+        </a>
+        <!-- Facebook (New Link) -->
+        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook"
+           class="w-10 h-10 bg-zinc-800 hover:bg-blue-600 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-facebook-f text-base"></i>
+        </a>
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" title="TikTok"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-tiktok text-base"></i>
+        </a>
+      </div>
+      <p class="text-zinc-500 text-[11px] pt-1">Cairo, Egypt • Support available 24/7</p>
+    </div>
+
+  </div>
+
+  <div class="border-t border-zinc-900 pt-6 text-center text-zinc-500 text-xs">
+    © 2026 VEXIS Inc. All rights reserved.
   </div>
 </footer>
 
+<!-- ============================================== -->
+<!-- MOBILE BOTTOM BAR                              -->
+<!-- ============================================== -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 md:hidden z-50 shadow-2xl">
+  <div class="flex items-center justify-around py-2.5">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 text-black">
+      <i class="fas fa-home text-base"></i>
+      <span class="text-[10px] font-bold">Home</span>
+    </a>
+    <a href="#products" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-box text-base"></i>
+      <span class="text-[10px] font-bold">Collection</span>
+    </a>
+    <a href="my-orders.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-blue-600 relative">
+      <i class="fas fa-box-open text-base"></i>
+      <span class="text-[10px] font-bold">Orders</span>
+      <span x-show="hasOrders" class="absolute -top-1 right-2 w-2 h-2 bg-blue-600 rounded-full"></span>
+    </a>
+    <a href="cart.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black relative">
+      <i class="fas fa-shopping-bag text-base"></i>
+      <span class="text-[10px] font-bold">Bag</span>
+      <span x-show="cartCount > 0"
+            x-text="cartCount"
+            class="absolute -top-1 right-2 bg-black text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold"></span>
+    </a>
+  </div>
+</div>
+<div class="h-16 md:hidden"></div>
+
+<!-- ============================================== -->
+<!-- ALPINE.JS STORE SCRIPT                         -->
+<!-- ============================================== -->
 <script src="products.js"></script>
 <script>
-const translations = {
-  ar: {
-    topbar_shipping: 'Nationwide shipping across Egypt',
-    topbar_quality: 'World-class fabric standards',
-    topbar_guarantee: '100% Quality Guaranteed',
-    topbar_support: '24/7 Support via WhatsApp',
-    nav_home: 'Home',
-    nav_products: 'Products',
-    nav_about: 'About',
-    nav_cart: 'Bag',
-    feat_shipping: 'Fast Delivery',
-    feat_shipping_sub: 'Nationwide shipping',
-    feat_cod: 'Cash on Delivery',
-    feat_cod_sub: 'Inspect before paying',
-    feat_quality: 'Dri-Fit Fabric',
-    feat_quality_sub: 'Compression durability',
-    feat_return: 'Flexible Returns',
-    feat_return_sub: '14-day hassle-free',
-    products_title: 'The Collection',
-    about_text: "At VEXIS, we believe sportswear isn't just clothes for the gym — it's part of your journey to evolve. That's why we built VEXIS with a focus on comfort and style, to give you confidence in every workout. VEXIS isn't just an idea, it's a new beginning in the world of sports.",
-  },
-  en: {
-    topbar_shipping: 'Nationwide shipping across Egypt',
-    topbar_quality: 'World-class fabric standards',
-    topbar_guarantee: '100% Quality Guaranteed',
-    topbar_support: '24/7 Support via WhatsApp',
-    nav_home: 'Home',
-    nav_products: 'Products',
-    nav_about: 'About',
-    nav_cart: 'Bag',
-    feat_shipping: 'Fast Delivery',
-    feat_shipping_sub: 'Nationwide shipping',
-    feat_cod: 'Cash on Delivery',
-    feat_cod_sub: 'Inspect before paying',
-    feat_quality: 'Dri-Fit Fabric',
-    feat_quality_sub: 'Compression durability',
-    feat_return: 'Flexible Returns',
-    feat_return_sub: '14-day hassle-free',
-    products_title: 'The Collection',
-    about_text: "At VEXIS, we believe sportswear isn't just clothes for the gym — it's part of your journey to evolve. That's why we built VEXIS with a focus on comfort and style, to give you confidence in every workout. VEXIS isn't just an idea, it's a new beginning in the world of sports.",
-  }
-};
-
 function store() {
   return {
     products: window.mockProducts || [],
@@ -614,7 +561,6 @@ function store() {
     mobileMenu: false,
     cartCount: 0,
     hasOrders: false,
-    lang: 'en',
 
     init() {
       this.cartCount = this.getCart().length;
@@ -633,14 +579,11 @@ function store() {
         this.categories = e.detail || [];
       });
 
+      // Poll for updates every 5s
       setInterval(() => {
         if (typeof loadProducts === 'function') loadProducts();
         if (typeof loadCategories === 'function') loadCategories();
       }, 5000);
-    },
-
-    t(key) {
-      return translations[this.lang]?.[key] || translations['ar'][key] || key;
     },
 
     get filteredProducts() {
@@ -650,7 +593,7 @@ function store() {
 
     calcPrice(p) {
       if (!p.discount_type || p.discount_type === 'none' || !p.discount_value) return p.price;
-      if (p.discount_type === 'amount') return Math.max(p.price - p.discount_value, 0);
+      if (p.discount_type === 'amount')  return Math.max(p.price - p.discount_value, 0);
       if (p.discount_type === 'percent') return Math.max(Math.round(p.price - (p.price * p.discount_value / 100)), 0);
       return p.price;
     },
@@ -662,24 +605,31 @@ function store() {
     discountBadge(p) {
       if (!this.hasDiscount(p)) return '';
       if (p.discount_type === 'percent') return `-${p.discount_value}%`;
-      if (p.discount_type === 'amount') return `-${p.discount_value} EGP`;
+      if (p.discount_type === 'amount')  return `-${p.discount_value} EGP`;
       return '';
     },
 
     isNew(p) {
-      if (!p.created_at) return false;
-      return (Date.now() - new Date(p.created_at)) < 7 * 24 * 60 * 60 * 1000;
+      if (!p.created_at) return true;
+      const diff = Date.now() - new Date(p.created_at).getTime();
+      return diff < 30 * 24 * 60 * 60 * 1000;
     },
 
     goToProduct(p) {
-      localStorage.setItem('vexis_product', JSON.stringify(p));
-      window.location.href = 'product.html';
+      try {
+        localStorage.setItem('vexis_product', JSON.stringify(p));
+      } catch (e) {}
+      window.location.href = `product.html?id=${encodeURIComponent(p.id)}`;
     },
 
     getCart() {
-      try { return JSON.parse(localStorage.getItem('vexis_cart') || '[]'); } catch { return []; }
+      try {
+        return JSON.parse(localStorage.getItem('vexis_cart') || '[]');
+      } catch {
+        return [];
+      }
     }
-  }
+  };
 }
 </script>
 

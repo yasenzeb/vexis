@@ -225,60 +225,70 @@ body {
 <body class="bg-gallery-white text-ink min-h-screen flex flex-col" x-data="productPage()" x-init="init()">
 
 <!-- ============================================== -->
-<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
+<!-- TOP ANNOUNCEMENT MARQUEE                       -->
 <!-- ============================================== -->
-<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50 transition-all">
-  <div class="max-w-6xl mx-auto px-4 h-12 flex items-center justify-between text-xs font-normal">
+<div class="bg-black text-white text-xs py-2 px-4 border-b border-zinc-800">
+  <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] md:text-xs font-semibold tracking-wider uppercase">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>🚚 Nationwide Delivery Across Egypt • Cash on Delivery</span>
+    </div>
+    <div class="hidden sm:flex items-center gap-4 text-zinc-400">
+      <span>14-Day Flexible Exchanges</span>
+      <span>•</span>
+      <span>100% Performance Dri-Fit</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- NAVBAR (Classic Athletic Look)                 -->
+<!-- ============================================== -->
+<nav class="bg-white/95 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-50 shadow-sm transition-all">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
     
-    <!-- Logo -->
-    <a href="index.html" class="flex items-center gap-2 group">
-      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
-        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
+    <!-- Left: Brand Logo -->
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <div class="bg-black text-white rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm group-hover:scale-105 transition transform">
+        <img src="logo.jpeg" alt="VEXIS" class="w-7 h-7 rounded-full object-cover border border-zinc-700">
+        <span class="font-brand font-black text-base md:text-lg tracking-widest text-white uppercase">VEXIS</span>
       </div>
-      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
 
-    <!-- Nav Links (Compact Apple SF Pro Text 12px) -->
-    <nav class="hidden md:flex items-center gap-8 text-[12px] text-slate-apple">
-      <a href="index.html" class="hover:text-ink transition">Home</a>
-      <a href="index.html#products" class="hover:text-ink transition">Products</a>
-      <button type="button" @click="showSizeChart = true" class="hover:text-ink transition">Size Guide</button>
-      <a href="#reviews-section" class="hover:text-ink transition">Reviews</a>
-      <a href="my-orders.html" class="hover:text-ink transition">My Orders</a>
-    </nav>
+    <!-- Center: Nav Links -->
+    <div class="hidden md:flex items-center gap-8 text-sm font-bold text-zinc-700">
+      <a href="index.html" class="hover:text-black transition">Home</a>
+      <a href="index.html#products" class="hover:text-black transition">Collection</a>
+      <button type="button" @click="showSizeChart = true" class="hover:text-black transition font-bold">Size Guide</button>
+      <a href="#reviews-section" class="hover:text-black transition">Reviews</a>
+      <a href="my-orders.html" class="hover:text-black transition">My Orders</a>
+    </div>
 
-    <!-- Controls (EGYPT indicator + Account + Cart) -->
-    <div class="flex items-center gap-3">
-      
-      <!-- Country indicator: EGYPT (Image 3) -->
-      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
-        <span>🇪🇬</span>
-        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
-        <i class="fas fa-chevron-down text-[8px] text-steel-apple ml-0.5"></i>
+    <!-- Right Controls: Country + Orders + Cart -->
+    <div class="flex items-center gap-2 md:gap-3">
+      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-200 text-xs font-bold text-zinc-700 cursor-default bg-zinc-50">
+        <span class="text-sm">🇪🇬</span>
+        <span class="font-brand font-black text-[11px] tracking-wider">EGYPT</span>
       </div>
 
-      <!-- Account Icon -->
       <a href="my-orders.html"
          title="My Orders"
-         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition">
-        <i class="far fa-user text-sm"></i>
+         class="w-10 h-10 rounded-xl flex items-center justify-center text-zinc-700 hover:text-black hover:bg-zinc-100 transition">
+        <i class="far fa-user text-base"></i>
       </a>
 
-      <!-- Shopping Bag -->
       <a href="cart.html"
          title="Shopping Bag"
-         class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition relative">
-        <i class="fas fa-shopping-bag text-sm"></i>
+         class="relative w-10 h-10 rounded-xl flex items-center justify-center text-zinc-700 hover:text-black hover:bg-zinc-100 transition">
+        <i class="fas fa-shopping-bag text-base"></i>
         <span x-show="cartCount > 0"
               x-text="cartCount"
-              class="absolute -top-0.5 -left-0.5 bg-pricing-blue text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-        </span>
+              class="absolute top-1 right-1 bg-black text-white font-brand font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow"></span>
       </a>
-
     </div>
 
   </div>
-</header>
+</nav>
 
 <!-- ============================================== -->
 <!-- PRODUCT LOCAL SUB-NAVIGATION                   -->
@@ -721,69 +731,72 @@ body {
   </div>
 
 <!-- ============================================== -->
-<!-- GLOBAL STORE FOOTER                            -->
+<!-- FOOTER (Classic High-Contrast Black Footer)    -->
 <!-- ============================================== -->
-<footer class="bg-studio-mist border-t border-hairline-silver py-12 text-slate-apple text-xs mt-16">
-  <div class="max-w-6xl mx-auto px-4 space-y-8">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div class="space-y-3">
-        <div class="flex items-center gap-2">
-          <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
-            <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
-          </div>
-          <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
-        </div>
-        <p class="text-xs text-slate-apple leading-relaxed">
-          Premium athletic wear engineered for peak performance and athletic physique.
-        </p>
+<footer class="bg-black text-white pt-16 pb-8 px-4 border-t border-zinc-900 mt-16">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+    
+    <!-- Brand Info -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2.5">
+        <img src="logo.jpeg" alt="VEXIS" class="w-10 h-10 rounded-full border border-zinc-700">
+        <span class="font-brand font-black text-2xl tracking-widest text-white uppercase">VEXIS</span>
       </div>
+      <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed">
+        Built For You. Designed to Move With You. Experience Performance Without Compromise.
+      </p>
+    </div>
 
-      <div class="space-y-2">
-        <span class="font-semibold text-xs text-ink block">Navigation</span>
-        <div class="flex flex-col gap-1.5 text-xs">
-          <a href="index.html" class="hover:text-ink transition">Home</a>
-          <a href="index.html#products" class="hover:text-ink transition">Collection</a>
-          <a href="cart.html" class="hover:text-ink transition">Bag</a>
-          <a href="my-orders.html" class="hover:text-ink transition">Order Tracking</a>
-        </div>
-      </div>
-
-      <div class="space-y-2">
-        <span class="font-semibold text-xs text-ink block">Service</span>
-        <div class="flex flex-col gap-1.5 text-xs">
-          <span>Nationwide Delivery across Egypt</span>
-          <span>Cash on Delivery</span>
-          <span>14-day Flexible Returns</span>
-        </div>
-      </div>
-
-      <div class="space-y-2">
-        <span class="font-semibold text-xs text-ink block">Connect</span>
-        <div class="flex items-center gap-2">
-          <a href="https://wa.me/201007720554" target="_blank" title="WhatsApp" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-          <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" title="TikTok" class="w-8 h-8 rounded-full bg-gallery-white border border-hairline-silver flex items-center justify-center text-slate-apple hover:text-ink transition">
-            <i class="fab fa-tiktok"></i>
-          </a>
-        </div>
+    <!-- Quick Links -->
+    <div class="space-y-3">
+      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Navigation</h3>
+      <div class="flex flex-col gap-2 text-zinc-400 text-xs sm:text-sm">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#products" class="hover:text-white transition">Collection</a>
+        <a href="my-orders.html" class="hover:text-white transition">Order Tracking</a>
+        <a href="cart.html" class="hover:text-white transition">Shopping Bag</a>
       </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-steel-apple border-t border-hairline-silver pt-6">
-      <div>Copyright © 2026 VEXIS Inc. All rights reserved.</div>
-      <div class="flex items-center gap-4">
-        <span>Cairo, Egypt</span>
-        <span>•</span>
-        <span>Dri-Fit Fabric</span>
+    <!-- Guarantees -->
+    <div class="space-y-3">
+      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Service</h3>
+      <div class="flex flex-col gap-2 text-zinc-400 text-xs sm:text-sm">
+        <span>🚚 Nationwide Delivery across Egypt</span>
+        <span>💵 Cash on Delivery (Inspect before payment)</span>
+        <span>🔄 14-Day Smooth Exchange Guarantee</span>
+        <span>⚡ 100% Performance Dri-Fit Fabric</span>
       </div>
     </div>
+
+    <!-- Social Links -->
+    <div class="space-y-3">
+      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Connect With Us</h3>
+      <div class="flex items-center gap-3 flex-wrap">
+        <a href="https://wa.me/201007720554" target="_blank" title="WhatsApp"
+           class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-whatsapp text-lg"></i>
+        </a>
+        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram"
+           class="w-10 h-10 bg-zinc-800 hover:bg-gradient-to-tr hover:from-purple-600 hover:to-pink-500 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-instagram text-lg"></i>
+        </a>
+        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook"
+           class="w-10 h-10 bg-zinc-800 hover:bg-blue-600 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-facebook-f text-base"></i>
+        </a>
+        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" title="TikTok"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-tiktok text-base"></i>
+        </a>
+      </div>
+      <p class="text-zinc-500 text-[11px] pt-1">Cairo, Egypt • Support available 24/7</p>
+    </div>
+
+  </div>
+
+  <div class="border-t border-zinc-900 pt-6 text-center text-zinc-500 text-xs">
+    © 2026 VEXIS Inc. All rights reserved.
   </div>
 </footer>
 
