@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | إتمام الطلب — الدفع والتوصيل</title>
-<meta name="description" content="أكمل بيانات الشحن والتوصيل لطلب ملابس VEXIS الرياضية. دفع عند الاستلام وشحن سريع.">
+<title>VEXIS | Checkout — Payment & Delivery</title>
+<meta name="description" content="Complete your shipping and delivery details for VEXIS athletic wear. Cash on delivery & fast shipping.">
 <meta name="keywords" content="gym t-shirts, men's sportswear Egypt, checkout, VEXIS">
 
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
@@ -140,7 +140,7 @@ body {
       </a>
 
       <a href="cart.html" class="text-xs text-apple-blue hover:underline">
-        العودة للسلة
+        Back to Cart
       </a>
     </div>
 
@@ -150,24 +150,24 @@ body {
 <div class="max-w-5xl mx-auto px-4 py-10 flex-1 w-full space-y-6">
   
   <div class="border-b border-hairline-silver pb-4">
-    <h1 class="text-3xl font-semibold text-ink tracking-tight">إتمام الطلب — الشحن والتوصيل</h1>
-    <p class="text-xs text-slate-apple mt-1">يرجى كتابة العنوان ورقم الموبايل بدقة لضمان سرعة التسليم.</p>
+    <h1 class="text-3xl font-semibold text-ink tracking-tight">Express Checkout — Shipping & Delivery</h1>
+    <p class="text-xs text-slate-apple mt-1">Please provide your accurate address and phone number for prompt delivery.</p>
   </div>
 
   <div class="flex flex-col lg:flex-row gap-8 items-start">
 
     <!-- Form 28px Card -->
     <div class="w-full lg:w-2/3 apple-card p-6 md:p-8 space-y-5">
-      <h2 class="text-lg font-semibold text-ink">بيانات الشحن</h2>
+      <h2 class="text-lg font-semibold text-ink">Shipping Details</h2>
       
       <form @submit.prevent="submitOrder" class="space-y-4 text-xs">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-slate-apple mb-1 font-medium">الاسم الأول *</label>
+            <label class="block text-slate-apple mb-1 font-medium">First Name *</label>
             <input type="text" x-model="form.firstName" required class="apple-input">
           </div>
           <div>
-            <label class="block text-slate-apple mb-1 font-medium">الاسم الأخير *</label>
+            <label class="block text-slate-apple mb-1 font-medium">Last Name *</label>
             <input type="text" x-model="form.lastName" required class="apple-input">
           </div>
         </div>
@@ -183,7 +183,7 @@ body {
         </div>
 
         <div>
-          <label class="block text-slate-apple mb-1 font-medium">المحافظة / المدينة *</label>
+          <label class="block text-slate-apple mb-1 font-medium">Governorate / City *</label>
           <select x-model="form.city" @change="updateShipping" required class="apple-input cursor-pointer bg-white">
             <option value="">Select Governorate</option>
             <option value="cairo">Cairo (75 EGP)</option>
@@ -208,11 +208,11 @@ body {
             <option value="qena">Qena (95 EGP)</option>
             <option value="luxor">Luxor (95 EGP)</option>
             <option value="aswan">Aswan (95 EGP)</option>
-            <option value="north_sinai">شمال سيناء (145 EGP)</option>
-            <option value="south_sinai">جنوب سيناء (145 EGP)</option>
-            <option value="red_sea">البحر الأحمر (145 EGP)</option>
-            <option value="matrouh">مطروح (145 EGP)</option>
-            <option value="new_valley">الوادي الجديد (145 EGP)</option>
+            <option value="north_sinai">North Sinai (145 EGP)</option>
+            <option value="south_sinai">South Sinai (145 EGP)</option>
+            <option value="red_sea">Red Sea (145 EGP)</option>
+            <option value="matrouh">Matrouh (145 EGP)</option>
+            <option value="new_valley">New Valley (145 EGP)</option>
           </select>
         </div>
 
@@ -305,18 +305,18 @@ body {
     <div class="w-16 h-16 rounded-full bg-studio-mist flex items-center justify-center mx-auto text-emerald-600 text-2xl border border-hairline-silver">
       <i class="fas fa-check"></i>
     </div>
-    <h2 class="text-2xl font-semibold text-ink">تم تأكيد طلبك بنجاح</h2>
+    <h2 class="text-2xl font-semibold text-ink">Order Confirmed Successfully</h2>
     <p class="text-xs text-slate-apple">
-      رقم الطلب الخاص بك هو:
+      Your order number is:
       <br>
       <span class="font-mono font-bold text-ink text-base tracking-wider block mt-1" x-text="orderNumber"></span>
     </p>
     <p class="text-[11px] text-steel-apple leading-relaxed">
-      سيتم التواصل معك عبر الواتساب أو الهاتف لتأكيد موعد التسليم.
+      Our team will contact you via WhatsApp or phone to confirm delivery time.
     </p>
     <div class="pt-2">
       <a href="index.html" class="apple-pricing-pill px-6 py-2.5 text-xs inline-block">
-        العودة إلى المتجر
+        Back to Store
       </a>
     </div>
   </div>
@@ -387,11 +387,11 @@ function checkoutPage() {
 
       // Client-side validation before sending
       const fullName = (this.form.firstName.trim() + ' ' + this.form.lastName.trim()).trim();
-      if (!fullName) { alert('برجاء كتابة الاسم الأول والأخير'); return; }
-      if (!this.form.phone.trim()) { alert('برجاء إدخال رقم الهاتف'); return; }
-      if (!this.form.city) { alert('برجاء اختيار المحافظة'); return; }
-      if (!this.form.address.trim()) { alert('برجاء كتابة العنوان بالتفصيل'); return; }
-      if (!this.cart || this.cart.length === 0) { alert('سلة المشتريات فارغة'); return; }
+      if (!fullName) { alert('Please enter your first and last name'); return; }
+      if (!this.form.phone.trim()) { alert('Please enter your phone number'); return; }
+      if (!this.form.city) { alert('Please select your governorate'); return; }
+      if (!this.form.address.trim()) { alert('Please enter your detailed delivery address'); return; }
+      if (!this.cart || this.cart.length === 0) { alert('Your shopping bag is empty'); return; }
 
       this.isSubmitting = true;
 
@@ -439,14 +439,14 @@ function checkoutPage() {
           localStorage.removeItem('vexis_promo');
           localStorage.setItem('vexis_customer_phone', this.form.phone.trim());
           
-          // الانتقال فوراً لصفحة تتبع حالة الطلب (شريط أمازون الحي)
+          // Redirect immediately to live tracking page
           window.location.href = `my-orders.html?phone=${encodeURIComponent(this.form.phone.trim())}&order=${encodeURIComponent(orderNum)}`;
         } else {
-          alert(data.error || 'حدث خطأ أثناء حفظ الطلب');
+          alert(data.error || 'Error placing order');
         }
       } catch (err) {
         console.error('Checkout error:', err);
-        alert('تعذر إرسال الطلب، تأكد من الاتصال بالإنترنت وحاول مجدداً');
+        alert('Network error. Please check your connection and try again');
       } finally {
         this.isSubmitting = false;
       }

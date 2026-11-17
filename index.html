@@ -79,13 +79,7 @@
   .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
   html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; }
 
-  /* Desktop Font Scaling for sharp readability */
-  @media (min-width: 1024px) {
-    html { font-size: 16.5px; }
-  }
-  @media (min-width: 1280px) {
-    html { font-size: 17px; }
-  }
+  /* Standard desktop font sizing */
 
   /* Card hover */
   .card-hover {
@@ -129,7 +123,8 @@
 
   /* Hero Gradient */
   .hero-overlay {
-    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.92) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.98) 100%),
+                radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.85) 100%);
   }
 </style>
 </head>
@@ -243,14 +238,17 @@
 <!-- HERO BANNER (Classic Cinematic Full-Width Look) -->
 <!-- ============================================== -->
 <section class="bg-black text-white relative overflow-hidden border-b border-zinc-900">
-  <div class="relative w-full max-w-7xl mx-auto overflow-hidden">
-    <div class="relative w-full h-[60vh] min-h-[380px] max-h-[620px] bg-black">
+  <div class="relative w-full h-[65vh] min-h-[420px] max-h-[680px] bg-black overflow-hidden">
+      
       <img src="بدايه.jpeg"
            alt="VEXIS Athletic Compression Wear"
            class="w-full h-full object-cover object-center"/>
       
       <!-- Gradient overlay for text contrast -->
-      <div class="absolute inset-0 hero-overlay flex flex-col justify-end p-6 sm:p-10 md:p-14">
+      
+      <div class="absolute inset-0 hero-overlay flex flex-col justify-end p-6 sm:p-10 md:p-16">
+        <div class="max-w-7xl mx-auto w-full">
+          
         <div class="max-w-2xl space-y-3">
           
           <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase border border-white/20">
@@ -278,10 +276,10 @@
               <span>Featured T-Shirt</span>
               <i class="fas fa-arrow-right text-xs"></i>
             </a>
-          </div>
-
+          
         </div>
       </div>
+    </div>
     </div>
   </div>
 </section>

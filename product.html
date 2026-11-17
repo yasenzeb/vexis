@@ -1,1243 +1,674 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | تفاصيل المنتج الرياضي — المجموعة الرسمية</title>
-<meta name="description" content="تسوق أفضل تيشرتات الجيم والملابس الرياضية الرجالية بتصاميم مريحة وجودة عالمية من VEXIS.">
-<meta name="keywords" content="تيشرتات جيم, ملابس رياضية رجالية, VEXIS, تيشرت كمال أجسام, ملابس تمرين مصر">
-
-<!-- Favicon & Touch Icons -->
+<title>VEXIS | Product Details — Official Collection</title>
+<meta name="description" content="Shop the best gym T-shirts and men's sportswear with high-performance Dri-Fit fabric. VEXIS — Built For You.">
+<meta name="keywords" content="VEXIS, gym t-shirts, men's sportswear, training clothes, gym wear Egypt, compression t-shirt">
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 <link rel="manifest" href="site.webmanifest" />
-
-<!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:title" content="VEXIS | أفضل تيشرتات الجيم والملابس الرياضية" />
-<meta property="og:description" content="تسوق أفضل تيشرتات الجيم والملابس الرياضية الرجالية بتصاميم مريحة وجودة عالمية من VEXIS." />
+<meta property="og:title" content="VEXIS | Premium Gym Sportswear" />
+<meta property="og:description" content="Built For You. Designed to Move With You. Experience Performance Without Compromise." />
 <meta property="og:url" content="https://vexis1.store" />
 <meta property="og:image" content="https://vexis1.store/logo.jpeg" />
-
-<!-- Fonts & Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
-        colors: {
-          'gallery-white': '#ffffff',
-          'studio-mist': '#f5f5f7',
-          'paper-frost': '#fafafc',
-          'hairline-silver': '#d6d6d6',
-          'control-gray': '#e6e6e8',
-          'ink': '#1d1d1f',
-          'slate-apple': '#4a4a4a',
-          'steel-apple': '#5a5a5a',
-          'apple-blue': '#0066cc',
-          'pricing-blue': '#0071e3',
-          'launch-orange': '#b64400'
+        fontFamily: {
+          brand: ['Montserrat', 'Cairo', 'sans-serif'],
+          sans: ['Cairo', 'Montserrat', 'sans-serif'],
         },
-        borderRadius: {
-          '28': '28px',
-          '36': '36px',
-          '980': '980px',
+        colors: {
+          vexis: {
+            black: '#0a0a0c',
+            dark: '#141418',
+          }
         }
       }
     }
   }
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
 <style>
-:root {
-  --color-gallery-white: #ffffff;
-  --color-studio-mist: #f5f5f7;
-  --color-paper-frost: #fafafc;
-  --color-hairline-silver: #d6d6d6;
-  --color-control-gray: #e6e6e8;
-  --color-ink: #1d1d1f;
-  --color-slate: #707070;
-  --color-steel: #86868b;
-  --color-apple-blue: #0066cc;
-  --color-pricing-blue: #0071e3;
-  --color-launch-orange: #b64400;
+  * { font-family: 'Cairo', 'Montserrat', sans-serif; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+  html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; background: #fff; }
+  
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
 
-  --font-apple: "Cairo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-}
+  /* Nav */
+  .nav-link { transition: color .2s; position: relative; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#fff; transition: width .3s; }
+  .nav-link:hover::after { width:100%; }
 
-* {
-  font-family: var(--font-apple);
-  box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
+  /* Thumbnails */
+  .thumb-active { border-color: #000 !important; }
 
-@media (min-width: 1024px) {
-  html { font-size: 16.5px; }
-}
-@media (min-width: 1280px) {
-  html { font-size: 17px; }
-}
+  /* Size/Color selectors */
+  .size-btn {
+    min-width: 48px; height: 48px; border: 1.5px solid #d1d5db; border-radius: 8px;
+    font-weight: 700; font-size: 14px; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; justify-content: center; background: #fff;
+  }
+  .size-btn:hover { border-color: #000; }
+  .size-btn.selected { background: #000; color: #fff; border-color: #000; }
+  .size-btn.disabled { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
 
-body {
-  background-color: var(--color-gallery-white);
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  .color-swatch {
+    width: 36px; height: 36px; border-radius: 50%; border: 2px solid transparent;
+    cursor: pointer; transition: all .2s; position: relative;
+  }
+  .color-swatch:hover { transform: scale(1.1); }
+  .color-swatch.selected { border-color: #000; box-shadow: 0 0 0 3px rgba(0,0,0,0.15); }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
+  /* Buttons */
+  .btn-primary {
+    background: #000; color: #fff; border-radius: 12px; font-weight: 700; font-size: 16px;
+    padding: 15px 24px; width: 100%; cursor: pointer; transition: background .2s, transform .15s;
+    border: none; font-family: 'Montserrat', 'Cairo', sans-serif;
+  }
+  .btn-primary:hover { background: #222; transform: translateY(-1px); }
+  .btn-primary:disabled { background: #999; cursor: not-allowed; transform: none; }
+  .btn-secondary {
+    background: #fff; color: #000; border: 2px solid #000; border-radius: 12px;
+    font-weight: 700; font-size: 15px; padding: 13px 24px; width: 100%;
+    cursor: pointer; transition: all .2s; font-family: 'Montserrat', 'Cairo', sans-serif;
+  }
+  .btn-secondary:hover { background: #f5f5f5; }
 
-/* Apple-style typography */
-.headline-editorial {
-  letter-spacing: -0.025em;
-  line-height: 1.08;
-}
+  /* Toast */
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: #111; color: #fff;
+    padding: 12px 24px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    z-index: 9999; white-space: nowrap; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
 
-.body-editorial {
-  letter-spacing: -0.015em;
-  line-height: 1.47;
-}
+  /* Reviews */
+  .star-filled { color: #f59e0b; }
+  .star-empty { color: #d1d5db; }
+  .review-card { border: 1px solid #f0f0f0; border-radius: 14px; padding: 18px 20px; }
 
-/* Apple Buttons */
-.apple-pricing-pill {
-  background-color: var(--color-pricing-blue);
-  color: #ffffff;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-pricing-pill:hover {
-  background-color: #0077ed;
-  transform: scale(1.01);
-}
+  /* Feature cards */
+  .feat-card { background: #f8f8f8; border-radius: 14px; padding: 20px; text-align: center; border: 1px solid #ebebeb; }
 
-.apple-explore-pill {
-  background-color: transparent;
-  color: var(--color-ink);
-  border: 1px solid var(--color-steel);
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-explore-pill:hover {
-  border-color: var(--color-ink);
-  background-color: var(--color-studio-mist);
-}
+  /* Fit finder */
+  .fit-input { border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 12px 14px; width: 100%; font-size: 15px; outline: none; }
+  .fit-input:focus { border-color: #000; }
 
-.apple-ink-pill {
-  background-color: var(--color-ink);
-  color: #ffffff;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-ink-pill:hover {
-  background-color: #333336;
-}
+  /* Gallery main image */
+  .gallery-main { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; }
 
-/* Apple Inputs */
-.apple-input {
-  background-color: #ffffff;
-  border: 1px solid var(--color-steel);
-  border-radius: 980px;
-  padding: 10px 18px;
-  font-size: 14px;
-  color: var(--color-ink);
-  outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease;
-}
-.apple-input:focus {
-  border-color: var(--color-pricing-blue);
-  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
-}
-
-/* Feature Cards: 28px radius, flat & shadowless */
-.apple-card {
-  background-color: #ffffff;
-  border-radius: 28px;
-  border: 1px solid var(--color-hairline-silver);
-}
-
-/* Image Thumbnails */
-.thumb-frame {
-  border-radius: 18px;
-  border: 1px solid var(--color-hairline-silver);
-  transition: all .15s ease;
-  cursor: pointer;
-}
-.thumb-frame:hover {
-  border-color: var(--color-steel);
-}
-.thumb-frame.active {
-  border-color: var(--color-ink) !important;
-  box-shadow: 0 0 0 1px var(--color-ink);
-}
-
-/* Size Pill Selector */
-.size-pill {
-  border-radius: 9999px;
-  border: 1px solid var(--color-hairline-silver);
-  background-color: #ffffff;
-  color: var(--color-ink);
-  font-size: 13px;
-  font-weight: 500;
-  transition: all .15s ease;
-}
-.size-pill:hover:not(.active) {
-  border-color: var(--color-ink);
-}
-.size-pill.active {
-  background-color: var(--color-ink) !important;
-  color: #ffffff !important;
-  border-color: var(--color-ink) !important;
-}
-
-/* Color Circle */
-.color-circle {
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.color-circle:hover {
-  transform: scale(1.1);
-}
-.color-circle.active {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3.5px var(--color-ink);
-  transform: scale(1.08);
-}
-
-/* Modal Fade Scale */
-.modal-enter-apple {
-  animation: modalApple .2s cubic-bezier(.16, 1, .3, 1) forwards;
-}
-@keyframes modalApple {
-  from { opacity: 0; transform: scale(.98) translateY(6px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
-}
+  .error-shake { animation: shake .4s; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)}
+  }
 </style>
 </head>
-<body class="bg-gallery-white text-ink min-h-screen flex flex-col" x-data="productPage()" x-init="init()">
+<body x-data="productPage()">
 
-<!-- ============================================== -->
-<!-- TOP ANNOUNCEMENT MARQUEE                       -->
-<!-- ============================================== -->
-<div class="bg-black text-white text-xs py-2 px-4 border-b border-zinc-800">
-  <div class="max-w-7xl mx-auto flex items-center justify-between text-[11px] md:text-xs font-semibold tracking-wider uppercase">
-    <div class="flex items-center gap-2">
-      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span>🚚 Nationwide Delivery Across Egypt • Cash on Delivery</span>
+<!-- ============ NAVBAR ============ -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-black shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2 shrink-0">
+      <span class="font-brand font-black text-white text-xl tracking-widest uppercase">VEXIS</span>
+    </a>
+    <div class="hidden md:flex items-center gap-7">
+      <a href="index.html" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">Home</a>
+      <a href="index.html#products" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">Shop</a>
+      <a href="my-orders.html" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">My Orders</a>
+      <a href="return.html" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">Returns</a>
     </div>
-    <div class="hidden sm:flex items-center gap-4 text-zinc-400">
-      <span>14-Day Flexible Exchanges</span>
-      <span>•</span>
-      <span>100% Performance Dri-Fit</span>
+    <div class="flex items-center gap-3">
+      <a href="cart.html" class="relative text-white hover:text-zinc-300 transition">
+        <i class="fas fa-shopping-bag text-lg"></i>
+        <span x-show="cartCount > 0" x-text="cartCount"
+              class="absolute -top-2 -right-2 bg-white text-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black"></span>
+      </a>
+      <button @click="mobileMenu=!mobileMenu" class="md:hidden text-white">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
     </div>
   </div>
-</div>
-
-<!-- ============================================== -->
-<!-- NAVBAR (Classic Athletic Look)                 -->
-<!-- ============================================== -->
-<nav class="bg-white/95 backdrop-blur-md border-b border-zinc-200 sticky top-0 z-50 shadow-sm transition-all">
-  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-    
-    <!-- Left: Brand Logo -->
-    <a href="index.html" class="flex items-center gap-2.5 group">
-      <div class="bg-black text-white rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm group-hover:scale-105 transition transform">
-        <img src="logo.jpeg" alt="VEXIS" class="w-7 h-7 rounded-full object-cover border border-zinc-700">
-        <span class="font-brand font-black text-base md:text-lg tracking-widest text-white uppercase">VEXIS</span>
-      </div>
-    </a>
-
-    <!-- Center: Nav Links -->
-    <div class="hidden md:flex items-center gap-8 text-sm font-bold text-zinc-700">
-      <a href="index.html" class="hover:text-black transition">Home</a>
-      <a href="index.html#products" class="hover:text-black transition">Collection</a>
-      <button type="button" @click="showSizeChart = true" class="hover:text-black transition font-bold">Size Guide</button>
-      <a href="#reviews-section" class="hover:text-black transition">Reviews</a>
-      <a href="my-orders.html" class="hover:text-black transition">My Orders</a>
-    </div>
-
-    <!-- Right Controls: Country + Orders + Cart -->
-    <div class="flex items-center gap-2 md:gap-3">
-      <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-zinc-200 text-xs font-bold text-zinc-700 cursor-default bg-zinc-50">
-        <span class="text-sm">🇪🇬</span>
-        <span class="font-brand font-black text-[11px] tracking-wider">EGYPT</span>
-      </div>
-
-      <a href="my-orders.html"
-         title="My Orders"
-         class="w-10 h-10 rounded-xl flex items-center justify-center text-zinc-700 hover:text-black hover:bg-zinc-100 transition">
-        <i class="far fa-user text-base"></i>
-      </a>
-
-      <a href="cart.html"
-         title="Shopping Bag"
-         class="relative w-10 h-10 rounded-xl flex items-center justify-center text-zinc-700 hover:text-black hover:bg-zinc-100 transition">
-        <i class="fas fa-shopping-bag text-base"></i>
-        <span x-show="cartCount > 0"
-              x-text="cartCount"
-              class="absolute top-1 right-1 bg-black text-white font-brand font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow"></span>
-      </a>
-    </div>
-
+  <div x-show="mobileMenu" x-transition class="md:hidden bg-black border-t border-zinc-800 px-4 py-4 flex flex-col gap-3">
+    <a href="index.html" class="text-zinc-300 font-semibold text-sm">Home</a>
+    <a href="index.html#products" class="text-zinc-300 font-semibold text-sm">Shop</a>
+    <a href="my-orders.html" class="text-zinc-300 font-semibold text-sm">My Orders</a>
+    <a href="return.html" class="text-zinc-300 font-semibold text-sm">Returns</a>
+    <a href="cart.html" class="text-zinc-300 font-semibold text-sm">Cart</a>
   </div>
 </nav>
+<div class="h-14"></div>
 
-<!-- ============================================== -->
-<!-- PRODUCT LOCAL SUB-NAVIGATION                   -->
-<!-- ============================================== -->
-<div class="border-b border-hairline-silver bg-gallery-white/90 backdrop-blur-md sticky top-12 z-40 py-2.5">
-  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between text-xs">
-    
-    <div class="flex items-center gap-3 truncate">
-      <span class="font-semibold text-sm text-ink truncate" x-text="product.name || 'VEXIS Athletic Wear'"></span>
-      <span class="text-launch-orange font-medium text-[11px] hidden sm:inline">NEW</span>
-    </div>
-
-    <div class="flex items-center gap-3 flex-shrink-0">
-      <div class="text-sm font-semibold text-ink" x-text="calcPrice() + ' EGP'"></div>
-      <button type="button"
-              @click="buyNow()"
-              class="apple-pricing-pill text-[12px] px-4 py-1.5">
-        Buy Now
-      </button>
-    </div>
-
-  </div>
+<!-- Breadcrumb -->
+<div class="max-w-7xl mx-auto px-4 md:px-8 py-3">
+  <nav class="flex items-center gap-2 text-xs text-zinc-400">
+    <a href="index.html" class="hover:text-black transition">Home</a>
+    <i class="fas fa-chevron-right text-[9px]"></i>
+    <a href="index.html#products" class="hover:text-black transition">Shop</a>
+    <i class="fas fa-chevron-right text-[9px]"></i>
+    <span class="text-zinc-700 font-semibold" x-text="product.name || 'Product'"></span>
+  </nav>
 </div>
 
-<!-- ============================================== -->
-<!-- MAIN PRODUCT GALLERY STAGE                     -->
-<!-- ============================================== -->
-<main class="max-w-6xl mx-auto px-4 py-10 md:py-16">
-  <template x-if="product && product.id">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+<!-- ============ PRODUCT SECTION ============ -->
+<div class="max-w-7xl mx-auto px-4 md:px-8 pb-16">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14">
 
-      <!-- ========================================== -->
-      <!-- LEFT: WHITE GALLERY HERO PHOTOGRAPHY       -->
-      <!-- ========================================== -->
-      <div class="lg:col-span-7 lg:sticky lg:top-28 space-y-4">
-        
-        <!-- Enormous Product Stage (28px radius, shadowless) -->
-        <div class="bg-studio-mist rounded-28 border border-hairline-silver aspect-square flex items-center justify-center p-8 relative overflow-hidden group">
-          <img :src="activeImage"
-               :alt="product.name"
-               class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-102"/>
-
-          <!-- Launch tag / Discount -->
-          <template x-if="product.discount_value > 0">
-            <span class="absolute top-5 right-5 text-launch-orange font-semibold text-xs tracking-wider"
-                  x-text="product.discount_type === 'percent' ? 'وفر ' + product.discount_value + '%' : 'خصم ' + product.discount_value + ' EGP'">
-            </span>
-          </template>
-        </div>
-
-        <!-- Thumbnails row (28px media cards concept) -->
-        <div x-show="allImages.length > 1" class="flex gap-3 overflow-x-auto pb-1 pt-1">
-          <template x-for="(img, idx) in allImages" :key="idx">
-            <div @click="activeImage = img"
-                 :class="activeImage === img ? 'thumb-frame active' : 'thumb-frame'"
-                 class="w-20 h-20 rounded-2xl bg-studio-mist flex-shrink-0 flex items-center justify-center p-2">
-              <img :src="img" :alt="'Preview ' + (idx + 1)" class="w-full h-full object-contain rounded-xl"/>
-            </div>
-          </template>
-        </div>
-
-        <!-- Editorial feature statements row -->
-        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-hairline-silver">
-          <div class="text-center p-3">
-            <span class="text-xs font-semibold text-ink block">Dri-Fit Fabric</span>
-            <span class="text-[11px] text-slate-apple block mt-0.5">Engineered for durability</span>
-          </div>
-          <div class="text-center p-3 border-x border-hairline-silver">
-            <span class="text-xs font-semibold text-ink block">Compression Fit</span>
-            <span class="text-[11px] text-slate-apple block mt-0.5">Locked-in athletic feel</span>
-          </div>
-          <div class="text-center p-3">
-            <span class="text-xs font-semibold text-ink block">Nationwide Shipping</span>
-            <span class="text-[11px] text-slate-apple block mt-0.5">Cash on delivery</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ========================================== -->
-      <!-- RIGHT: EDITORIAL BUY BOX                   -->
-      <!-- ========================================== -->
-      <div class="lg:col-span-5 space-y-8">
-
-        <!-- Kicker & Title -->
-        <div class="space-y-2">
-          <p class="text-launch-orange text-xs font-semibold tracking-wide">NEW RELEASE</p>
-          <h1 class="text-3xl md:text-4xl font-semibold text-ink headline-editorial" x-text="product.name"></h1>
-          
-          <!-- Rating link in Apple Blue -->
-          <div class="flex items-center gap-2 pt-1">
-            <div class="flex text-amber-400 text-xs">
-              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-            </div>
-            <a href="#reviews-section" class="text-apple-blue hover:underline text-xs font-normal">
-              4.82 out of 5 (151 verified reviews)
-            </a>
-          </div>
-        </div>
-
-        <!-- Price display -->
-        <div class="py-2 border-y border-hairline-silver flex items-baseline gap-3">
-          <span class="text-3xl font-semibold text-ink" x-text="calcPrice() + ' EGP'"></span>
-          <template x-if="product.discount_value > 0">
-            <span class="text-base text-slate-apple line-through" x-text="product.price + ' EGP'"></span>
-          </template>
-        </div>
-
-        <!-- Description -->
-        <p class="text-sm text-slate-apple body-editorial" x-text="product.description"></p>
-
-        <!-- ========================================== -->
-        <!-- COLOR SELECTION                            -->
-        <!-- ========================================== -->
-        <div x-show="colors && colors.length > 0" class="space-y-3">
-          <div class="text-xs text-slate-apple">
-            Color — <span class="text-ink font-semibold" x-text="selectedColor || 'Select Color'"></span>
-          </div>
-          <div class="flex items-center gap-3 flex-wrap">
-            <template x-for="c in colors" :key="c.name">
-              <button type="button"
-                      @click="selectedColor = c.name; colorError = false"
-                      :style="'background-color: ' + (c.hex || '#ffffff')"
-                      :title="c.name"
-                      :class="selectedColor === c.name ? 'color-circle active' : 'color-circle'"
-                      class="w-8 h-8 rounded-full border border-hairline-silver flex items-center justify-center relative">
-                <template x-if="selectedColor === c.name">
-                  <i class="fas fa-check text-[10px]" :class="isLightColor(c.hex || c.name) ? 'text-ink' : 'text-white'"></i>
-                </template>
-              </button>
-            </template>
-          </div>
-          <p x-show="colorError" class="text-launch-orange text-xs">Please select a color to continue</p>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- SIZE SELECTION                             -->
-        <!-- ========================================== -->
-        <div x-show="sizes && sizes.length > 0" class="space-y-3">
-          <div class="flex items-center justify-between text-xs">
-            <span class="text-slate-apple">
-              Size — <span class="text-ink font-semibold" x-text="selectedSize || 'Select Size'"></span>
-            </span>
-            <button type="button"
-                    @click="showSizeChart = true"
-                    class="text-apple-blue hover:underline text-xs flex items-center gap-1">
-              جدول المقاسات
-            </button>
-          </div>
-
-          <div class="flex items-center gap-2 flex-wrap">
-            <template x-for="s in sizes" :key="s">
-              <button type="button"
-                      @click="selectedSize = s; sizeError = false"
-                      :class="selectedSize === s ? 'size-pill active' : 'size-pill'"
-                      class="min-w-[52px] h-10 px-4 flex items-center justify-center">
-                <span x-text="s"></span>
-              </button>
-            </template>
-          </div>
-          <p x-show="sizeError" class="text-launch-orange text-xs">Please select a size to continue</p>
-        </div>
-
-        <!-- ======================================================== -->
-        <!-- SMART SIZE FINDER (Apple 28px Card - Image 1 Spec)      -->
-        <!-- ======================================================== -->
-        <div class="bg-studio-mist rounded-28 p-6 border border-hairline-silver space-y-4">
-          
-          <div class="space-y-1">
-            <div class="flex items-center gap-2">
-              <i class="fas fa-ruler-combined text-slate-apple text-xs"></i>
-              <h3 class="font-semibold text-sm text-ink">Smart Size Calculator</h3>
-            </div>
-            <p class="text-xs text-slate-apple">Height · Weight · Preferred Fit</p>
-          </div>
-
-          <p class="text-xs text-slate-apple leading-relaxed">
-            Calibrated to the VEXIS fit profile. Physique and body proportions also influence your ideal size.
-          </p>
-
-          <!-- Input fields with Apple 980px pill radius -->
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-medium text-slate-apple mb-1">Height (cm)</label>
-              <input type="number"
-                     x-model="finderHeight"
-                     @input="autoCalculateFit()"
-                     placeholder="178"
-                     class="apple-input w-full text-center text-xs"
-                     min="140" max="220"/>
-            </div>
-            <div>
-              <label class="block text-[11px] font-medium text-slate-apple mb-1">Weight (kg)</label>
-              <input type="number"
-                     x-model="finderWeight"
-                     @input="autoCalculateFit()"
-                     placeholder="74"
-                     class="apple-input w-full text-center text-xs"
-                     min="40" max="160"/>
-            </div>
-          </div>
-
-          <!-- Fit preference -->
-          <div>
-            <label class="block text-[11px] font-medium text-slate-apple mb-1">How do you prefer the fit?</label>
-            <select x-model="finderFitPreference"
-                    @change="autoCalculateFit()"
-                    class="apple-input w-full text-xs cursor-pointer bg-white">
-              <option value="regular">True to fit (Athletic compression)</option>
-              <option value="oversize">Relaxed fit (Roomier feel)</option>
-              <option value="slim">Extra tight compression</option>
-            </select>
-          </div>
-
-          <!-- Calculate Button -->
-          <button type="button"
-                  @click="calculateFitButton()"
-                  class="apple-ink-pill w-full py-2.5 text-xs">
-            Find My Size
+    <!-- LEFT: Image Gallery -->
+    <div>
+      <!-- Main Image -->
+      <div class="relative mb-3">
+        <img :src="currentImage" :alt="product.name" class="gallery-main bg-zinc-100" @error="$el.src='logo.jpeg'" loading="lazy"/>
+        <template x-if="hasDiscount(product)">
+          <span class="absolute top-4 left-4 bg-black text-white text-xs font-black px-3 py-1 rounded-full font-brand" x-text="discountBadge(product)"></span>
+        </template>
+        <!-- NEW badge -->
+        <template x-if="isNew(product)">
+          <span class="absolute top-4 right-4 bg-white text-black text-xs font-black px-3 py-1 rounded-full border border-zinc-200 font-brand">NEW</span>
+        </template>
+        <!-- Arrows -->
+        <template x-if="allImages.length > 1">
+          <button @click="prevImage()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow transition">
+            <i class="fas fa-chevron-left text-sm text-black"></i>
           </button>
-
-          <p class="text-[11px] text-steel-apple text-center">
-            Your measurements stay private and are not stored.
-          </p>
-
-          <!-- Live Result Box -->
-          <div x-show="finderRecommendedSize"
-               x-transition
-               class="bg-gallery-white rounded-2xl p-4 border border-hairline-silver text-center space-y-2">
-            <span class="text-xs text-slate-apple block">Recommended Size:</span>
-            <div class="text-3xl font-semibold text-ink" x-text="finderRecommendedSize"></div>
-            <p class="text-[11px] text-slate-apple" x-text="finderExplanation"></p>
-            <button type="button"
-                    @click="applyRecommendedSize()"
-                    class="apple-pricing-pill text-xs px-4 py-1.5 mt-1 inline-flex items-center gap-1">
-              <span>Confirm Size</span> <span x-text="finderRecommendedSize"></span>
-            </button>
-          </div>
-
-          <!-- Editorial: About the cut -->
-          <div class="pt-3 border-t border-hairline-silver space-y-1 text-xs">
-            <div class="flex items-center justify-between">
-              <span class="font-semibold text-ink">About the cut</span>
-              <button type="button" @click="showSizeChart = true" class="text-apple-blue hover:underline text-[11px]">Size Chart</button>
-            </div>
-            <p class="text-[11.5px] text-slate-apple font-mono leading-relaxed">
-              body-hugging compression cut through the chest and waist. Choose this style for a defined silhouette; use the size guide to select your fit rather than relying on your usual T-shirt size.
-            </p>
-          </div>
-
-        </div>
-
-        <!-- ========================================== -->
-        <!-- QUANTITY & CTA PILLS                       -->
-        <!-- ========================================== -->
-        <div class="space-y-4 pt-2">
-          
-          <!-- Quantity Row -->
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-slate-apple">Quantity</span>
-            <div class="flex items-center border border-hairline-silver rounded-full overflow-hidden bg-studio-mist">
-              <button type="button"
-                      @click="qty = Math.max(1, qty - 1)"
-                      class="w-9 h-8 flex items-center justify-center text-slate-apple hover:text-ink transition">
-                −
-              </button>
-              <span class="w-8 text-center text-xs font-semibold text-ink" x-text="qty"></span>
-              <button type="button"
-                      @click="qty++"
-                      class="w-9 h-8 flex items-center justify-center text-slate-apple hover:text-ink transition">
-                +
-              </button>
-            </div>
-          </div>
-
-          <!-- Primary & Secondary CTA Pills -->
-          <div class="space-y-2 pt-1">
-            <button type="button"
-                    @click="buyNow()"
-                    class="apple-pricing-pill w-full py-3.5 text-sm flex items-center justify-center gap-2">
-              <i class="fas fa-bolt text-xs"></i> Buy Now
-            </button>
-            <button type="button"
-                    @click="addToCart()"
-                    class="apple-explore-pill w-full py-3 text-sm flex items-center justify-center gap-2">
-              <i class="fas fa-shopping-bag text-xs"></i> Add to Bag
-            </button>
-          </div>
-
-          <!-- Subtle Trust Footnote -->
-          <div class="text-[11px] text-slate-apple text-center space-y-1 pt-2">
-            <div>Nationwide delivery across Egypt • Cash on delivery • Inspect before paying</div>
-            <div class="text-steel-apple">14-day hassle-free returns & exchanges</div>
-          </div>
-
-        </div>
-
+        </template>
+        <template x-if="allImages.length > 1">
+          <button @click="nextImage()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow transition">
+            <i class="fas fa-chevron-right text-sm text-black"></i>
+          </button>
+        </template>
       </div>
-
+      <!-- Thumbnails -->
+      <div class="flex gap-2 overflow-x-auto pb-1">
+        <template x-for="(img, i) in allImages" :key="i">
+          <button @click="currentImageIndex = i"
+                  :class="currentImageIndex === i ? 'thumb-active' : ''"
+                  class="shrink-0 w-16 h-20 rounded-10 border-2 border-zinc-200 overflow-hidden transition hover:border-zinc-400">
+            <img :src="img" class="w-full h-full object-cover" @error="$el.src='logo.jpeg'" loading="lazy"/>
+          </button>
+        </template>
+      </div>
     </div>
-  </template>
-</main>
 
-<!-- ======================================================== -->
-<!-- CUSTOMER REVIEWS (Apple Studio Mist Highlights Stage)    -->
-<!-- ======================================================== -->
-<section id="reviews-section" class="bg-studio-mist py-16 md:py-24 border-t border-hairline-silver mt-16">
-  <div class="max-w-6xl mx-auto px-4 space-y-12">
-    
-    <!-- Stage Header -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-hairline-silver pb-6">
+    <!-- RIGHT: Product Info -->
+    <div class="flex flex-col gap-5">
+
+      <!-- Brand + Name -->
       <div>
-        <span class="text-xs text-slate-apple uppercase tracking-wider block mb-1">Ratings & Reviews</span>
-        <h2 class="text-2xl md:text-3xl font-semibold text-ink headline-editorial">Customer Reviews</h2>
+        <p class="text-xs font-black tracking-widest text-zinc-400 font-brand uppercase mb-1">VEXIS — DROP-001</p>
+        <h1 class="font-brand font-black text-2xl md:text-3xl leading-tight text-black" x-text="product.name || 'Loading...'"></h1>
+        <!-- Rating -->
+        <div class="flex items-center gap-2 mt-2">
+          <div class="flex gap-0.5">
+            <template x-for="i in 5" :key="i">
+              <i :class="i <= Math.round(avgRating) ? 'star-filled fas fa-star' : 'star-empty fas fa-star'" class="text-sm"></i>
+            </template>
+          </div>
+          <span class="text-sm font-semibold" x-text="avgRating.toFixed(1)"></span>
+          <span class="text-xs text-zinc-400" x-text="'(' + reviewsList.length + ' reviews)'"></span>
+        </div>
       </div>
 
-      <button type="button"
-              @click="showWriteReviewModal = true"
-              class="apple-pricing-pill text-xs px-5 py-2.5 self-start md:self-auto">
-        Write a Review
+      <!-- Price -->
+      <div class="flex items-center gap-3">
+        <span class="font-brand font-black text-3xl text-black" x-text="'EGP ' + calcPrice(product)"></span>
+        <template x-if="hasDiscount(product)">
+          <span class="text-zinc-400 line-through text-lg" x-text="'EGP ' + product.price"></span>
+        </template>
+        <template x-if="hasDiscount(product)">
+          <span class="bg-black text-white text-xs font-black px-2.5 py-1 rounded-full font-brand" x-text="discountBadge(product)"></span>
+        </template>
+      </div>
+
+      <!-- Description -->
+      <p class="text-zinc-600 text-sm leading-relaxed" x-text="product.description || 'High-performance Dri-Fit compression cut through the chest and waist. Designed for the athletic silhouette.'"></p>
+
+      <!-- Color Selector -->
+      <template x-if="product.colors && product.colors.length > 0">
+        <div>
+          <p class="text-sm font-bold mb-2 text-zinc-700">
+            Color: <span class="font-semibold text-black" x-text="selectedColor || 'Select'"></span>
+          </p>
+          <div class="flex gap-2.5 flex-wrap">
+            <template x-for="color in product.colors" :key="color">
+              <button @click="selectColor(color)" :title="color"
+                      :class="selectedColor === color ? 'selected' : ''"
+                      :style="{ background: color.startsWith('#') ? color : '' }"
+                      class="color-swatch border-2 border-zinc-300 hover:border-zinc-500"
+                      x-text="!color.startsWith('#') ? color.substring(0,2) : ''">
+              </button>
+            </template>
+          </div>
+          <p x-show="colorError" class="text-red-500 text-xs mt-1 font-semibold">Please select a color</p>
+        </div>
+      </template>
+
+      <!-- Size Selector -->
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-sm font-bold text-zinc-700">
+            Size: <span class="font-semibold text-black" x-text="selectedSize || 'Select'"></span>
+          </p>
+          <button @click="showFitFinder=!showFitFinder" class="text-xs text-zinc-500 hover:text-black underline underline-offset-2 transition">
+            Size Guide
+          </button>
+        </div>
+        <div class="flex gap-2 flex-wrap">
+          <template x-for="size in availableSizes" :key="size">
+            <button @click="selectSize(size)"
+                    :class="{'selected': selectedSize === size, 'disabled': !isSizeAvailable(size)}"
+                    :disabled="!isSizeAvailable(size)"
+                    class="size-btn" x-text="size">
+            </button>
+          </template>
+        </div>
+        <p x-show="sizeError" class="text-red-500 text-xs mt-1 font-semibold">Please select a size</p>
+      </div>
+
+      <!-- Fit Finder -->
+      <div x-show="showFitFinder" x-transition class="bg-zinc-50 rounded-2xl p-5 border border-zinc-200">
+        <h3 class="font-brand font-bold text-base mb-4 flex items-center gap-2">
+          <i class="fas fa-ruler-combined text-black"></i> Smart Size Finder
+        </h3>
+        <p class="text-xs text-zinc-500 mb-4 leading-relaxed">Starting from the chest and waist. Use the size guide for a more accurate fit rather than relying on your usual T-shirt size.</p>
+        <div class="grid grid-cols-2 gap-3 mb-3">
+          <div>
+            <label class="text-xs font-bold text-zinc-600 mb-1 block">Height (cm)</label>
+            <input x-model="finderHeight" type="number" placeholder="e.g. 175" class="fit-input" @input="autoCalculateFit()"/>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-zinc-600 mb-1 block">Weight (kg)</label>
+            <input x-model="finderWeight" type="number" placeholder="e.g. 75" class="fit-input" @input="autoCalculateFit()"/>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="text-xs font-bold text-zinc-600 mb-1 block">Fit Preference</label>
+          <select x-model="finderFitPreference" @change="autoCalculateFit()" class="fit-input">
+            <option value="regular">Regular (balanced athletic compression)</option>
+            <option value="oversize">Oversize (relaxed fit)</option>
+            <option value="slim">Slim (ultra-tight compression)</option>
+          </select>
+        </div>
+        <template x-if="finderRecommendedSize">
+          <div class="bg-black text-white rounded-xl px-4 py-3 text-center mb-3">
+            <p class="text-xs font-semibold text-zinc-400 mb-1">Recommended Size</p>
+            <p class="font-brand font-black text-3xl" x-text="finderRecommendedSize"></p>
+            <p class="text-xs text-zinc-400 mt-1" x-text="finderExplanation"></p>
+          </div>
+        </template>
+        <button @click="calculateFitButton()"
+                class="w-full bg-black text-white rounded-xl py-3 font-brand font-bold text-sm hover:bg-zinc-800 transition">
+          Find My Size
+        </button>
+        <!-- Size chart -->
+        <div class="mt-4 text-xs text-zinc-500">
+          <p class="font-bold mb-2 text-zinc-700">Size Chart</p>
+          <div class="grid grid-cols-4 gap-1 text-center">
+            <div class="bg-zinc-100 rounded py-1 font-bold text-zinc-700">S</div>
+            <div class="bg-zinc-100 rounded py-1 font-bold text-zinc-700">M</div>
+            <div class="bg-zinc-100 rounded py-1 font-bold text-zinc-700">L</div>
+            <div class="bg-zinc-100 rounded py-1 font-bold text-zinc-700">XL</div>
+            <div>50-60 kg</div><div>60-70 kg</div><div>70-80 kg</div><div>80-90 kg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Qty -->
+      <div class="flex items-center gap-4">
+        <span class="text-sm font-bold text-zinc-700">Qty:</span>
+        <div class="flex items-center border border-zinc-300 rounded-xl overflow-hidden">
+          <button @click="qty > 1 ? qty-- : null" class="w-10 h-10 flex items-center justify-center hover:bg-zinc-100 transition font-bold text-lg">−</button>
+          <span class="w-10 h-10 flex items-center justify-center font-bold text-base" x-text="qty"></span>
+          <button @click="qty++" class="w-10 h-10 flex items-center justify-center hover:bg-zinc-100 transition font-bold text-lg">+</button>
+        </div>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col gap-3">
+        <button @click="buyNow()" class="btn-primary">
+          <i class="fas fa-bolt mr-2"></i> Buy Now
+        </button>
+        <button @click="addToCartUI()" class="btn-secondary">
+          <i class="fas fa-shopping-bag mr-2"></i> Add to Bag
+        </button>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="flex items-center gap-4 text-xs text-zinc-500 pt-1 flex-wrap">
+        <span class="flex items-center gap-1.5"><i class="fas fa-shield-alt text-black"></i> 14-day returns</span>
+        <span class="flex items-center gap-1.5"><i class="fas fa-truck text-black"></i> Nationwide delivery</span>
+        <span class="flex items-center gap-1.5"><i class="fas fa-money-bill-wave text-black"></i> Cash on delivery</span>
+      </div>
+
+      <!-- Features / Specs -->
+      <div class="border-t border-zinc-100 pt-5">
+        <h3 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Product Features</h3>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="feat-card">
+            <i class="fas fa-tint text-2xl text-black mb-2"></i>
+            <p class="font-brand font-bold text-xs mb-1">Dri-Fit Fabric</p>
+            <p class="text-zinc-500 text-[11px]">Moisture wicking performance</p>
+          </div>
+          <div class="feat-card">
+            <i class="fas fa-compress-arrows-alt text-2xl text-black mb-2"></i>
+            <p class="font-brand font-bold text-xs mb-1">Compression Fit</p>
+            <p class="text-zinc-500 text-[11px]">Athletic muscle support</p>
+          </div>
+          <div class="feat-card">
+            <i class="fas fa-star text-2xl text-black mb-2"></i>
+            <p class="font-brand font-bold text-xs mb-1">Premium Build</p>
+            <p class="text-zinc-500 text-[11px]">High durability stitching</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description detail -->
+      <div class="border-t border-zinc-100 pt-5">
+        <button @click="showDesc=!showDesc" class="flex items-center justify-between w-full text-left py-1">
+          <span class="font-brand font-bold text-sm">About this product</span>
+          <i :class="showDesc ? 'fa-chevron-up' : 'fa-chevron-down'" class="fas text-zinc-400 text-xs"></i>
+        </button>
+        <div x-show="showDesc" x-transition class="mt-3 text-sm text-zinc-600 leading-relaxed" x-text="product.description || 'High-performance Dri-Fit compression cut through the chest and waist. Designed for the athletic silhouette; use the size guide to select your fit rather than relying on your usual T-shirt size.'"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ REVIEWS ============ -->
+  <div class="mt-16 border-t border-zinc-100 pt-10">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+      <div>
+        <h2 class="font-brand font-bold text-xl md:text-2xl text-black">Customer Reviews</h2>
+        <div class="flex items-center gap-2 mt-1">
+          <div class="flex gap-0.5">
+            <template x-for="i in 5" :key="i">
+              <i :class="i <= Math.round(avgRating) ? 'star-filled fas fa-star' : 'star-empty fas fa-star'" class="text-sm"></i>
+            </template>
+          </div>
+          <span class="font-bold" x-text="avgRating.toFixed(1)"></span>
+          <span class="text-zinc-400 text-sm" x-text="'(' + reviewsList.length + ' reviews)'"></span>
+        </div>
+      </div>
+      <button @click="showWriteReviewModal=true"
+              class="bg-black text-white font-brand font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-zinc-800 transition">
+        <i class="fas fa-pen mr-2"></i> Write a Review
       </button>
     </div>
 
-    <!-- Rating Summary 28px White Card -->
-    <div class="bg-gallery-white rounded-28 border border-hairline-silver p-6 md:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-      
-      <!-- Big Score -->
-      <div class="md:col-span-4 text-center md:text-right border-b md:border-b-0 md:border-l border-hairline-silver pb-6 md:pb-0 md:pl-8 space-y-2">
-        <div class="text-5xl font-semibold text-ink">4.82</div>
-        <div class="flex items-center justify-center md:justify-start text-amber-400 text-sm gap-1">
-          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-        </div>
-        <div class="text-xs text-slate-apple">out of 5 (based on 151 verified ratings)</div>
-      </div>
-
-      <!-- Star Distribution Bars -->
-      <div class="md:col-span-8 space-y-2 text-xs">
-        <!-- 5 Stars -->
-        <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">5 Stars</span>
-          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
-            <div class="bg-ink h-full rounded-full" style="width: 77%"></div>
-          </div>
-          <span class="w-8 text-left text-steel-apple font-mono">116</span>
-        </div>
-        <!-- 4 Stars -->
-        <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">4 Stars</span>
-          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
-            <div class="bg-ink h-full rounded-full" style="width: 12%"></div>
-          </div>
-          <span class="w-8 text-left text-steel-apple font-mono">18</span>
-        </div>
-        <!-- 3 Stars -->
-        <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">3 Stars</span>
-          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
-            <div class="bg-ink h-full rounded-full" style="width: 2%"></div>
-          </div>
-          <span class="w-8 text-left text-steel-apple font-mono">2</span>
-        </div>
-        <!-- 2 Stars -->
-        <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">2 Stars</span>
-          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
-            <div class="bg-ink h-full rounded-full" style="width: 2%"></div>
-          </div>
-          <span class="w-8 text-left text-steel-apple font-mono">3</span>
-        </div>
-        <!-- 1 Star -->
-        <div class="flex items-center gap-3">
-          <span class="w-12 text-slate-apple font-mono">1 Star</span>
-          <div class="flex-1 bg-studio-mist h-2 rounded-full overflow-hidden border border-hairline-silver">
-            <div class="bg-ink h-full rounded-full" style="width: 8%"></div>
-          </div>
-          <span class="w-8 text-left text-steel-apple font-mono">12</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Verified Authenticity Badges (Image 2) -->
-    <div class="flex items-center justify-center gap-6 flex-wrap">
-      
-      <div class="flex items-center gap-3 bg-gallery-white px-5 py-2.5 rounded-full border border-hairline-silver text-xs">
-        <i class="fas fa-shield-check text-emerald-600 text-sm"></i>
-        <div>
-          <span class="font-semibold text-ink block">100% AUTHENTICITY</span>
-          <span class="text-[10px] text-slate-apple">92.7 Verified Reviews</span>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-3 bg-gallery-white px-5 py-2.5 rounded-full border border-hairline-silver text-xs">
-        <i class="fas fa-medal text-cyan-600 text-sm"></i>
-        <div>
-          <span class="font-semibold text-ink block">PLATINUM TRANSPARENCY</span>
-          <span class="text-[10px] text-slate-apple">99.3% Verified Transparency</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Reviews Grid (28px White Cards, shadowless) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-      <template x-for="(rev, idx) in sortedReviews" :key="idx">
-        <div class="bg-gallery-white rounded-28 border border-hairline-silver p-6 flex flex-col justify-between space-y-4">
-          
-          <div class="space-y-3">
-            <div class="flex items-center justify-between">
-              <div class="text-amber-400 text-xs flex gap-0.5">
-                <template x-for="n in 5">
-                  <i :class="n <= rev.rating ? 'fas fa-star' : 'far fa-star'"></i>
-                </template>
-              </div>
-              <span class="text-[11px] text-steel-apple font-mono" x-text="rev.date"></span>
+    <!-- Review cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" x-show="reviewsList.length > 0">
+      <template x-for="(rev, i) in sortedReviews" :key="i">
+        <div class="review-card">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex gap-0.5">
+              <template x-for="s in 5" :key="s">
+                <i :class="s <= rev.rating ? 'star-filled fas fa-star' : 'star-empty fas fa-star'" class="text-xs"></i>
+              </template>
             </div>
-
-            <div class="flex items-center gap-2 text-xs">
-              <span class="font-semibold text-ink" x-text="rev.author"></span>
-              <span x-show="rev.verified" class="text-[10px] text-slate-apple bg-studio-mist px-2 py-0.5 rounded-full border border-hairline-silver">
-                Verified
+            <span class="text-xs text-zinc-400" x-text="rev.date"></span>
+          </div>
+          <p class="font-bold text-sm mb-1" x-text="rev.title || rev.content"></p>
+          <p class="text-zinc-600 text-xs leading-relaxed" x-text="rev.content"></p>
+          <div class="flex items-center justify-between mt-3">
+            <span class="font-semibold text-xs text-zinc-700" x-text="rev.author"></span>
+            <template x-if="rev.verified">
+              <span class="flex items-center gap-1 text-green-600 text-[10px] font-bold">
+                <i class="fas fa-check-circle"></i> Verified
               </span>
-            </div>
-
-            <h4 class="font-semibold text-sm text-ink" x-text="rev.title"></h4>
-            <p class="text-xs text-slate-apple leading-relaxed body-editorial" x-text="rev.content"></p>
+            </template>
           </div>
-
-          <div class="pt-3 border-t border-hairline-silver flex items-center justify-between text-[11px] text-steel-apple">
-            <span>Verified Purchase</span>
-            <button @click="rev.helpful = (rev.helpful || 0) + 1" class="hover:text-ink transition flex items-center gap-1">
-              <i class="far fa-thumbs-up"></i> Helpful (<span x-text="rev.helpful || 0"></span>)
-            </button>
-          </div>
-
         </div>
       </template>
     </div>
+    <div x-show="reviewsList.length === 0" class="text-center text-zinc-400 py-10">
+      <i class="fas fa-comment-slash text-4xl mb-3"></i>
+      <p>No reviews yet. Be the first!</p>
+    </div>
 
+    <!-- Write Review Modal -->
+    <div x-show="showWriteReviewModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
+      <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-brand font-bold text-lg">Write a Review</h3>
+          <button @click="showWriteReviewModal=false" class="text-zinc-400 hover:text-black"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <!-- Star picker -->
+        <div class="mb-4">
+          <p class="text-sm font-bold mb-2">Rating</p>
+          <div class="flex gap-2">
+            <template x-for="s in 5" :key="s">
+              <button @click="newReviewRating=s" class="text-2xl transition">
+                <i :class="s <= newReviewRating ? 'star-filled fas fa-star' : 'star-empty fas fa-star'"></i>
+              </button>
+            </template>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div>
+            <label class="text-sm font-bold mb-1 block">Your Name</label>
+            <input x-model="newReviewAuthor" type="text" placeholder="e.g. Ahmed M." class="fit-input"/>
+          </div>
+          <div>
+            <label class="text-sm font-bold mb-1 block">Review Title</label>
+            <input x-model="newReviewTitle" type="text" placeholder="e.g. Perfect fit!" class="fit-input"/>
+          </div>
+          <div>
+            <label class="text-sm font-bold mb-1 block">Review</label>
+            <textarea x-model="newReviewContent" rows="3" placeholder="Share your experience..." class="fit-input resize-none"></textarea>
+          </div>
+        </div>
+        <button @click="submitReview()"
+                :disabled="!newReviewAuthor || !newReviewTitle || !newReviewContent"
+                class="btn-primary mt-4">
+          Submit Review
+        </button>
+      </div>
+    </div>
   </div>
+</div>
 
-<!-- ============================================== -->
-<!-- FOOTER (Classic High-Contrast Black Footer)    -->
-<!-- ============================================== -->
-<footer class="bg-black text-white pt-16 pb-8 px-4 border-t border-zinc-900 mt-16">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-    
-    <!-- Brand Info -->
-    <div class="space-y-4">
-      <div class="flex items-center gap-2.5">
-        <img src="logo.jpeg" alt="VEXIS" class="w-10 h-10 rounded-full border border-zinc-700">
-        <span class="font-brand font-black text-2xl tracking-widest text-white uppercase">VEXIS</span>
-      </div>
-      <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-        Built For You. Designed to Move With You. Experience Performance Without Compromise.
-      </p>
+<!-- ============ FOOTER ============ -->
+<footer class="bg-black text-white mt-10 pt-12 pb-6 px-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-zinc-800">
+    <div>
+      <span class="font-brand font-black text-2xl tracking-widest uppercase">VEXIS</span>
+      <p class="text-zinc-400 text-sm mt-3 leading-relaxed">Built For You. Designed to Move With You.<br>Egypt's premier athletic sportswear brand.</p>
     </div>
-
-    <!-- Quick Links -->
-    <div class="space-y-3">
-      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Navigation</h3>
-      <div class="flex flex-col gap-2 text-zinc-400 text-xs sm:text-sm">
-        <a href="index.html" class="hover:text-white transition">Home</a>
-        <a href="index.html#products" class="hover:text-white transition">Collection</a>
-        <a href="my-orders.html" class="hover:text-white transition">Order Tracking</a>
-        <a href="cart.html" class="hover:text-white transition">Shopping Bag</a>
-      </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Quick Links</h4>
+      <ul class="flex flex-col gap-2">
+        <li><a href="index.html" class="text-zinc-300 hover:text-white text-sm transition">Home</a></li>
+        <li><a href="index.html#products" class="text-zinc-300 hover:text-white text-sm transition">Shop</a></li>
+        <li><a href="my-orders.html" class="text-zinc-300 hover:text-white text-sm transition">Track My Order</a></li>
+        <li><a href="return.html" class="text-zinc-300 hover:text-white text-sm transition">Return & Exchange</a></li>
+      </ul>
     </div>
-
-    <!-- Guarantees -->
-    <div class="space-y-3">
-      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Service</h3>
-      <div class="flex flex-col gap-2 text-zinc-400 text-xs sm:text-sm">
-        <span>🚚 Nationwide Delivery across Egypt</span>
-        <span>💵 Cash on Delivery (Inspect before payment)</span>
-        <span>🔄 14-Day Smooth Exchange Guarantee</span>
-        <span>⚡ 100% Performance Dri-Fit Fabric</span>
-      </div>
-    </div>
-
-    <!-- Social Links -->
-    <div class="space-y-3">
-      <h3 class="font-brand font-black text-sm uppercase tracking-wider text-white">Connect With Us</h3>
-      <div class="flex items-center gap-3 flex-wrap">
-        <a href="https://wa.me/201007720554" target="_blank" title="WhatsApp"
-           class="w-10 h-10 bg-zinc-800 hover:bg-emerald-600 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
-          <i class="fab fa-whatsapp text-lg"></i>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Follow Us</h4>
+      <div class="flex gap-3 mb-4">
+        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-instagram text-base"></i>
         </a>
-        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank" title="Instagram"
-           class="w-10 h-10 bg-zinc-800 hover:bg-gradient-to-tr hover:from-purple-600 hover:to-pink-500 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
-          <i class="fab fa-instagram text-lg"></i>
-        </a>
-        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank" title="Facebook"
-           class="w-10 h-10 bg-zinc-800 hover:bg-blue-600 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
           <i class="fab fa-facebook-f text-base"></i>
         </a>
-        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank" title="TikTok"
+        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank"
            class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
           <i class="fab fa-tiktok text-base"></i>
         </a>
       </div>
-      <p class="text-zinc-500 text-[11px] pt-1">Cairo, Egypt • Support available 24/7</p>
+      <p class="text-zinc-500 text-xs">Cairo, Egypt &bull; Support 24/7</p>
     </div>
-
   </div>
-
-  <div class="border-t border-zinc-900 pt-6 text-center text-zinc-500 text-xs">
-    © 2026 VEXIS Inc. All rights reserved.
+  <div class="max-w-7xl mx-auto pt-6 text-center text-zinc-500 text-xs">
+    &copy; 2026 VEXIS Inc. All rights reserved.
   </div>
 </footer>
 
-<!-- ======================================================== -->
-<!-- SIZE CHART MODAL (Apple 28px Gallery Modal - Image 4)    -->
-<!-- ======================================================== -->
-<div x-show="showSizeChart"
-     x-transition.opacity.duration.150ms
-     class="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-     style="display:none;"
-     @click.self="showSizeChart = false">
-
-  <div class="bg-gallery-white text-ink max-w-lg w-full rounded-28 border border-hairline-silver shadow-2xl overflow-hidden modal-enter-apple" @click.stop>
-    
-    <!-- Modal Header -->
-    <div class="flex items-center justify-between px-6 py-4 border-b border-hairline-silver">
-      <div>
-        <h3 class="font-semibold text-base text-ink tracking-widest uppercase">VEXIS</h3>
-        <p class="text-[10px] text-slate-apple tracking-widest uppercase">BE VEXIS • SIZE GUIDE</p>
-      </div>
-
-      <button type="button"
-              @click="showSizeChart = false"
-              class="w-8 h-8 rounded-full bg-studio-mist hover:bg-control-gray flex items-center justify-center text-slate-apple hover:text-ink transition">
-        <i class="fas fa-times text-xs"></i>
-      </button>
-    </div>
-
-    <!-- Table Body (Image 4 Data) -->
-    <div class="p-6 space-y-4">
-      
-      <div class="overflow-hidden rounded-2xl border border-hairline-silver">
-        <table class="w-full text-center border-collapse text-xs">
-          <thead>
-            <tr class="bg-studio-mist border-b border-hairline-silver text-[11px]">
-              <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
-                <div>SIZE</div>
-                <div class="text-[9px] text-steel-apple uppercase">SIZE</div>
-              </th>
-              <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
-                <div>WIDTH (CM)</div>
-                <div class="text-[9px] text-steel-apple uppercase">WIDTH (CM)</div>
-              </th>
-              <th class="py-3 px-3 border-l border-hairline-silver font-semibold text-ink">
-                <div>LENGTH (CM)</div>
-                <div class="text-[9px] text-steel-apple uppercase">LENGTH (CM)</div>
-              </th>
-              <th class="py-3 px-3 font-semibold text-ink">
-                <div>WEIGHT (KG)</div>
-                <div class="text-[9px] text-steel-apple uppercase">WEIGHT (KG)</div>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-hairline-silver font-mono text-xs">
-            <!-- S -->
-            <tr :class="finderRecommendedSize === 'S' ? 'bg-studio-mist font-bold' : ''">
-              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
-                S
-                <span x-show="finderRecommendedSize === 'S'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
-              </td>
-              <td class="py-3 px-3 border-l border-hairline-silver">48.5</td>
-              <td class="py-3 px-3 border-l border-hairline-silver">66.5</td>
-              <td class="py-3 px-3">50 – 60</td>
-            </tr>
-            <!-- M -->
-            <tr :class="finderRecommendedSize === 'M' ? 'bg-studio-mist font-bold' : ''">
-              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
-                M
-                <span x-show="finderRecommendedSize === 'M'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
-              </td>
-              <td class="py-3 px-3 border-l border-hairline-silver">51</td>
-              <td class="py-3 px-3 border-l border-hairline-silver">68</td>
-              <td class="py-3 px-3">60 – 70</td>
-            </tr>
-            <!-- L -->
-            <tr :class="finderRecommendedSize === 'L' ? 'bg-studio-mist font-bold' : ''">
-              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
-                L
-                <span x-show="finderRecommendedSize === 'L'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
-              </td>
-              <td class="py-3 px-3 border-l border-hairline-silver">53.5</td>
-              <td class="py-3 px-3 border-l border-hairline-silver">69.5</td>
-              <td class="py-3 px-3">70 – 80</td>
-            </tr>
-            <!-- XL -->
-            <tr :class="finderRecommendedSize === 'XL' ? 'bg-studio-mist font-bold' : ''">
-              <td class="py-3 px-3 border-l border-hairline-silver font-sans font-semibold text-sm">
-                XL
-                <span x-show="finderRecommendedSize === 'XL'" class="text-[9px] text-apple-blue block font-normal">Recommended</span>
-              </td>
-              <td class="py-3 px-3 border-l border-hairline-silver">56</td>
-              <td class="py-3 px-3 border-l border-hairline-silver">71</td>
-              <td class="py-3 px-3">80 – 90</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <template x-if="finderRecommendedSize">
-        <div class="flex items-center justify-between bg-studio-mist p-3 rounded-xl border border-hairline-silver text-xs">
-          <span>Your recommended size: <strong class="text-ink" x-text="finderRecommendedSize"></strong></span>
-          <button type="button"
-                  @click="applyRecommendedSize(); showSizeChart = false;"
-                  class="apple-pricing-pill text-xs px-3 py-1">
-            Select This Size
-          </button>
-        </div>
-      </template>
-
-      <p class="text-[11px] text-slate-apple text-center leading-relaxed">
-        * Measurements taken flat across garment. If you are between sizes, we recommend sizing up.
-      </p>
-
-    </div>
-
-    <!-- Modal Footer -->
-    <div class="px-6 py-3 bg-studio-mist border-t border-hairline-silver text-center">
-      <span class="text-[11px] text-steel-apple tracking-widest uppercase">BE VEXIS</span>
-    </div>
-
+<!-- Mobile bottom bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 md:hidden z-50 shadow-2xl">
+  <div class="flex items-center justify-around py-2.5">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-home text-base"></i>
+      <span class="text-[10px] font-bold">Home</span>
+    </a>
+    <a href="index.html#products" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-box text-base"></i>
+      <span class="text-[10px] font-bold">Shop</span>
+    </a>
+    <a href="my-orders.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-box-open text-base"></i>
+      <span class="text-[10px] font-bold">Orders</span>
+    </a>
+    <a href="cart.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black relative">
+      <i class="fas fa-shopping-bag text-base"></i>
+      <span class="text-[10px] font-bold">Bag</span>
+      <span x-show="cartCount > 0" x-text="cartCount"
+            class="absolute -top-1 right-2 bg-black text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold"></span>
+    </a>
   </div>
 </div>
+<div class="h-16 md:hidden"></div>
 
-<!-- ======================================================== -->
-<!-- WRITE REVIEW MODAL                                       -->
-<!-- ======================================================== -->
-<div x-show="showWriteReviewModal"
-     x-transition.opacity.duration.150ms
-     class="fixed inset-0 bg-ink/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-     style="display:none;"
-     @click.self="showWriteReviewModal = false">
+<!-- Toast -->
+<div x-show="toast" x-transition class="toast" x-text="toastMessage"></div>
 
-  <div class="bg-gallery-white text-ink max-w-md w-full rounded-28 border border-hairline-silver shadow-2xl p-6 space-y-4 modal-enter-apple" @click.stop>
-    
-    <div class="flex items-center justify-between border-b border-hairline-silver pb-3">
-      <h3 class="font-semibold text-sm text-ink">Write a Product Review</h3>
-      <button @click="showWriteReviewModal = false" class="text-slate-apple hover:text-ink">
-        <i class="fas fa-times text-xs"></i>
-      </button>
-    </div>
-
-    <form @submit.prevent="submitReview()" class="space-y-3">
-      
-      <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">Overall Rating</label>
-        <div class="flex gap-2 text-xl text-amber-400 cursor-pointer">
-          <template x-for="n in 5" :key="n">
-            <i :class="n <= newReviewRating ? 'fas fa-star' : 'far fa-star'"
-               @click="newReviewRating = n"
-               class="hover:scale-110 transition"></i>
-          </template>
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">Your Name</label>
-        <input type="text" x-model="newReviewAuthor" placeholder="e.g. Omar K. or Anonymous" required class="apple-input w-full text-xs"/>
-      </div>
-
-      <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">Review Title</label>
-        <input type="text" x-model="newReviewTitle" placeholder="e.g. Great compression and fabric quality" required class="apple-input w-full text-xs"/>
-      </div>
-
-      <div>
-        <label class="block text-[11px] font-medium text-slate-apple mb-1">Your Review</label>
-        <textarea x-model="newReviewContent" rows="3" placeholder="Describe the fabric quality, compression feel, and fit..." required class="apple-input w-full text-xs rounded-2xl resize-none"></textarea>
-      </div>
-
-      <button type="submit" class="apple-pricing-pill w-full py-2.5 text-xs">
-        Submit Review
-      </button>
-
-    </form>
-  </div>
-</div>
-
-<!-- ============================================== -->
-<!-- TOAST NOTIFICATION                             -->
-<!-- ============================================== -->
-<div x-show="toast"
-     x-transition.opacity.duration.200ms
-     class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-ink text-gallery-white text-xs font-medium px-5 py-2.5 rounded-full shadow-lg z-50 flex items-center gap-2">
-  <i class="fas fa-check-circle text-emerald-400"></i>
-  <span x-text="toastMessage"></span>
-</div>
-
-<!-- ============================================== -->
-<!-- ALPINE.JS LOGIC                                -->
-<!-- ============================================== -->
+<script src="products.js"></script>
 <script>
 function productPage() {
   return {
     product: {},
-    qty: 1,
+    mobileMenu: false,
     selectedSize: '',
     selectedColor: '',
-    sizeError: false,
-    colorError: false,
-    showSizeChart: false,
-    showWriteReviewModal: false,
+    qty: 1,
+    cartCount: 0,
     toast: false,
     toastMessage: '',
-    cartCount: 0,
-    sizes: [],
-    colors: [],
-    activeImage: '',
-    allImages: [],
-
-    // Size finder state (Image 1)
+    sizeError: false,
+    colorError: false,
+    showFitFinder: false,
+    showDesc: true,
+    showWriteReviewModal: false,
+    currentImageIndex: 0,
+    reviewsList: [],
+    newReviewAuthor: '',
+    newReviewTitle: '',
+    newReviewContent: '',
+    newReviewRating: 5,
     finderHeight: '',
     finderWeight: '',
     finderFitPreference: 'regular',
     finderRecommendedSize: '',
     finderExplanation: '',
 
-    // Reviews state (Image 2)
-    newReviewRating: 5,
-    newReviewAuthor: '',
-    newReviewTitle: '',
-    newReviewContent: '',
-    reviewsList: [
-      {
-        rating: 5,
-        date: '11/04/2026',
-        author: 'Anonymous',
-        verified: true,
-        title: 'Thank you',
-        content: 'Thanks for your understanding with exchange, plus the t-shirt material and fit are totally fine.',
-        helpful: 14
-      },
-      {
-        rating: 5,
-        date: '11/04/2026',
-        author: 'Anonymous',
-        verified: true,
-        title: 'خامة',
-        content: 'خامة ممتازة جداً ومريحة في التمرين والتفصيل عالي الجودة.',
-        helpful: 9
-      },
-      {
-        rating: 4,
-        date: '11/04/2026',
-        author: 'Omar Khalil',
-        verified: true,
-        title: 'The design is great the material itself is',
-        content: 'The design is great the material itself is comfortable and feels durable for high-intensity gym sessions.',
-        helpful: 6
-      },
-      {
-        rating: 5,
-        date: '10/04/2026',
-        author: 'Ahmed M.',
-        verified: true,
-        title: 'مقاس مظبوط بالملي',
-        content: 'استخدمت حاسبة المقاسات وطلع المقاس L مناسب جداً لطولي ووزني زي ما مكتوب في الشارت.',
-        helpful: 11
-      }
-    ],
-
-    init() {
-      try {
-        this.product = JSON.parse(localStorage.getItem('vexis_product') || '{}');
-      } catch (e) {
-        this.product = {};
-      }
-
-      // Default featured product fallback if opened directly
-      if (!this.product || !this.product.id) {
-        this.product = {
-          id: 'vexis-compression-pro',
-          name: 'VEXIS Pro Athletic Compression T-Shirt',
-          description: 'Engineered Dri-Fit high-performance compression wear with body-hugging athletic cut through the chest and arms. Built for elite training, gym workouts, and maximum durability.',
-          price: 499,
-          discount_type: 'percent',
-          discount_value: 20,
-          image_url: 'shrt.jpeg',
-          gallery: ['shrt.jpeg', 'بدايه.jpeg'],
-          sizes: ['S', 'M', 'L', 'XL'],
-          colors: [
-            { name: 'Black', hex: '#111111' },
-            { name: 'White', hex: '#ffffff' },
-            { name: 'Navy', hex: '#1e3a8a' }
-          ]
-        };
-      }
-
-      if (Array.isArray(this.product.sizes) && this.product.sizes.length) {
-        this.sizes = this.product.sizes;
-      } else {
-        this.sizes = ['S', 'M', 'L', 'XL'];
-      }
-
-      if (Array.isArray(this.product.colors) && this.product.colors.length) {
-        this.colors = this.product.colors;
-        if (this.colors.length > 0) {
-          this.selectedColor = this.colors[0].name;
-        }
-      }
-
-      const gallery = Array.isArray(this.product.gallery) ? this.product.gallery.filter(Boolean) : [];
-      const mainImg = this.product.image_url || null;
-      const seen = new Set();
+    get allImages() {
       const imgs = [];
-
-      if (mainImg) { imgs.push(mainImg); seen.add(mainImg); }
-      gallery.forEach(u => { if (u && !seen.has(u)) { imgs.push(u); seen.add(u); } });
-
-      this.allImages = imgs.length ? imgs : ['shrt.jpeg', 'بدايه.jpeg'];
-      this.activeImage = this.allImages[0];
-
-      this.cartCount = this.getCart().length;
-
-      // Load reviews from Supabase, merge with fallback list
-      this.loadReviewsFromAPI();
+      if (this.product.image_url) imgs.push(this.product.image_url);
+      if (this.product.image_url_2) imgs.push(this.product.image_url_2);
+      if (this.product.image_url_3) imgs.push(this.product.image_url_3);
+      if (this.product.image_url_4) imgs.push(this.product.image_url_4);
+      return imgs.length ? imgs : ['logo.jpeg'];
     },
 
-    async loadReviewsFromAPI() {
-      try {
-        const res = await fetch('/api/reviews');
-        if (!res.ok) throw new Error('API error');
-        const data = await res.json();
-        if (data.success && Array.isArray(data.reviews) && data.reviews.length) {
-          // Convert Supabase rows to display format
-          const apiReviews = data.reviews.map(r => ({
-            rating:   r.rating,
-            date:     new Date(r.created_at).toLocaleDateString('en-GB').replace(/\//g, '/'),
-            author:   r.name,
-            verified: true,
-            title:    r.text.length > 60 ? r.text.substring(0, 60) + '…' : r.text,
-            content:  r.text,
-            helpful:  0,
-            id:       r.id
-          }));
-          // Merge API reviews at top, then static fallbacks (deduplicate by id)
-          const existingIds = new Set(apiReviews.map(r => r.id));
-          const staticFallbacks = this.reviewsList.filter(r => !r.id || !existingIds.has(r.id));
-          this.reviewsList = [...apiReviews, ...staticFallbacks];
-        }
-      } catch (e) {
-        // If API fails, keep static fallback reviews
-        console.warn('[Reviews] Failed to fetch from API, using fallback.', e.message);
-      }
+    get currentImage() {
+      return this.allImages[this.currentImageIndex] || this.allImages[0];
     },
 
-    calcPrice() {
-      const p = this.product;
-      if (!p.price) return 0;
-      if (!p.discount_value) return p.price;
-      if (p.discount_type === 'percent') return Math.round(p.price * (1 - p.discount_value / 100));
-      return Math.max(0, p.price - p.discount_value);
+    prevImage() {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.allImages.length) % this.allImages.length;
+    },
+    nextImage() {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.allImages.length;
     },
 
-    getCart() {
-      try { return JSON.parse(localStorage.getItem('vexis_cart') || '[]'); } catch { return []; }
+    get availableSizes() {
+      if (this.product.sizes && Array.isArray(this.product.sizes)) return this.product.sizes;
+      return ['S', 'M', 'L', 'XL'];
     },
 
-    addToCart() {
-      this.sizeError = this.sizes.length > 0 && !this.selectedSize;
-      this.colorError = this.colors.length > 0 && !this.selectedColor;
-      if (this.sizeError || this.colorError) return false;
-
-      const cart = this.getCart();
-      const key = (this.product.id || 'prod') + '_' + this.selectedSize + '_' + this.selectedColor;
-      const idx = cart.findIndex(i => i._key === key);
-      const item = {
-        ...this.product,
-        qty: this.qty,
-        size: this.selectedSize,
-        color: this.selectedColor,
-        _key: key,
-        finalPrice: this.calcPrice()
-      };
-
-      if (idx > -1) {
-        cart[idx].qty += this.qty;
-      } else {
-        cart.push(item);
-      }
-
-      localStorage.setItem('vexis_cart', JSON.stringify(cart));
-      this.cartCount = cart.length;
-      this.showToast('تمت الإضافة إلى حقيبة التسوق بنجاح');
-      return true;
+    isSizeAvailable(size) {
+      if (!this.product.stock_by_size) return true;
+      return (this.product.stock_by_size[size] || 0) > 0;
     },
 
-    buyNow() {
-      const success = this.addToCart();
-      if (success) {
-        window.location.href = 'cart.html';
-      }
+    get avgRating() {
+      if (!this.reviewsList.length) return 4.9;
+      return this.reviewsList.reduce((a, r) => a + (r.rating || 5), 0) / this.reviewsList.length;
     },
 
-    showToast(msg) {
-      this.toastMessage = msg;
-      this.toast = true;
-      setTimeout(() => { this.toast = false; }, 2500);
+    get sortedReviews() {
+      return [...this.reviewsList];
     },
 
-    isLightColor(val) {
-      if (!val) return false;
-      const clean = String(val).toLowerCase().trim();
-      return ['#ffffff', '#fff', 'white', 'ابيض', 'أبيض', 'فضي', '#f8fafc', '#eee'].includes(clean);
+    calcPrice(p) {
+      if (!p) return 0;
+      if (!p.discount_type || p.discount_type === 'none' || !p.discount_value) return p.price || 0;
+      if (p.discount_type === 'amount') return Math.max((p.price || 0) - p.discount_value, 0);
+      if (p.discount_type === 'percent') return Math.max(Math.round((p.price || 0) - ((p.price || 0) * p.discount_value / 100)), 0);
+      return p.price || 0;
     },
 
-    // Image 4 Measurements:
-    // S: 50-60 kg | M: 60-70 kg | L: 70-80 kg | XL: 80-90 kg
+    hasDiscount(p) {
+      return p && p.discount_type && p.discount_type !== 'none' && p.discount_value > 0;
+    },
+
+    discountBadge(p) {
+      if (!this.hasDiscount(p)) return '';
+      if (p.discount_type === 'percent') return '-' + p.discount_value + '%';
+      if (p.discount_type === 'amount') return '-' + p.discount_value + ' EGP';
+      return '';
+    },
+
+    isNew(p) {
+      if (!p || !p.created_at) return true;
+      return (Date.now() - new Date(p.created_at).getTime()) < 30 * 24 * 60 * 60 * 1000;
+    },
+
+    selectSize(size) {
+      if (!this.isSizeAvailable(size)) return;
+      this.selectedSize = size;
+      this.sizeError = false;
+    },
+
+    selectColor(color) {
+      this.selectedColor = color;
+      this.colorError = false;
+    },
+
     autoCalculateFit() {
       const h = parseFloat(this.finderHeight);
       const w = parseFloat(this.finderWeight);
-
       if (!h || !w || h < 140 || h > 220 || w < 40 || w > 160) {
         this.finderRecommendedSize = '';
         this.finderExplanation = '';
         return;
       }
-
       let baseSize = 'L';
       if (w < 60) baseSize = 'S';
       else if (w < 70) baseSize = 'M';
       else if (w <= 80) baseSize = 'L';
       else baseSize = 'XL';
-
-      const sizesList = ['S', 'M', 'L', 'XL'];
-      let idx = sizesList.indexOf(baseSize);
-
-      if (h >= 185 && idx < sizesList.length - 1) idx++;
+      const list = ['S','M','L','XL'];
+      let idx = list.indexOf(baseSize);
+      if (h >= 185 && idx < list.length - 1) idx++;
       else if (h <= 165 && idx > 0 && w < 65) idx--;
-
-      if (this.finderFitPreference === 'oversize' && idx < sizesList.length - 1) idx++;
+      if (this.finderFitPreference === 'oversize' && idx < list.length - 1) idx++;
       else if (this.finderFitPreference === 'slim' && idx > 0) idx--;
-
-      this.finderRecommendedSize = sizesList[idx];
-
-      const fitLabels = {
-        regular: 'balanced athletic compression',
-        oversize: 'relaxed fit',
-        slim: 'ultra-tight compression'
-      };
-
-      this.finderExplanation = `Based on weight (${w} kg), height (${h} cm), and ${fitLabels[this.finderFitPreference] || 'athletic'} profile.`;
+      this.finderRecommendedSize = list[idx];
+      const labels = { regular: 'balanced athletic compression', oversize: 'relaxed fit', slim: 'ultra-tight compression' };
+      this.finderExplanation = 'Based on weight (' + w + 'kg), height (' + h + 'cm), ' + (labels[this.finderFitPreference] || 'athletic') + ' profile.';
     },
 
     calculateFitButton() {
@@ -1247,66 +678,103 @@ function productPage() {
       }
       this.autoCalculateFit();
       if (this.finderRecommendedSize) {
-        this.applyRecommendedSize();
-        this.showToast(`Recommended Size: ${this.finderRecommendedSize}`);
-      }
-    },
-
-    applyRecommendedSize() {
-      if (this.finderRecommendedSize) {
         this.selectedSize = this.finderRecommendedSize;
         this.sizeError = false;
+        this.showToast('Recommended Size: ' + this.finderRecommendedSize);
       }
     },
 
-    get sortedReviews() {
-      return [...this.reviewsList];
+    validate() {
+      let ok = true;
+      if (!this.selectedSize) { this.sizeError = true; ok = false; }
+      if (this.product.colors && this.product.colors.length > 0 && !this.selectedColor) {
+        this.colorError = true; ok = false;
+      }
+      return ok;
+    },
+
+    addToCart() {
+      if (!this.validate()) return false;
+      const cart = this.getCart();
+      const key = (this.product.id || 'prod') + '_' + this.selectedSize + '_' + this.selectedColor;
+      const idx = cart.findIndex(i => i._key === key);
+      const item = { ...this.product, qty: this.qty, size: this.selectedSize, color: this.selectedColor, _key: key, finalPrice: this.calcPrice(this.product) };
+      if (idx > -1) cart[idx].qty += this.qty;
+      else cart.push(item);
+      localStorage.setItem('vexis_cart', JSON.stringify(cart));
+      this.cartCount = cart.length;
+      return true;
+    },
+
+    addToCartUI() {
+      if (this.addToCart()) this.showToast('Added to your bag!');
+    },
+
+    buyNow() {
+      if (this.addToCart()) window.location.href = 'cart.html';
+    },
+
+    showToast(msg) {
+      this.toastMessage = msg;
+      this.toast = true;
+      setTimeout(() => { this.toast = false; }, 2500);
+    },
+
+    getCart() {
+      try { return JSON.parse(localStorage.getItem('vexis_cart') || '[]'); } catch { return []; }
+    },
+
+    async loadReviews() {
+      try {
+        const res = await fetch('/api/reviews?product_id=' + encodeURIComponent(this.product.id || ''));
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            this.reviewsList = data.map(r => ({
+              rating: r.rating || 5,
+              date: r.created_at ? new Date(r.created_at).toLocaleDateString('en-US') : '',
+              author: r.name || 'Anonymous',
+              title: r.title || '',
+              content: r.text || r.comment || r.content || '',
+              verified: true
+            }));
+          }
+        }
+      } catch(e) {}
     },
 
     submitReview() {
       if (!this.newReviewAuthor || !this.newReviewTitle || !this.newReviewContent) return;
-
       const today = new Date();
-      const day = String(today.getDate()).padStart(2, '0');
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const year = today.getFullYear();
-      const dateStr = `${day}/${month}/${year}`;
-
-      const reviewText = [this.newReviewTitle.trim(), this.newReviewContent.trim()].filter(Boolean).join(' — ');
-
-      const newRev = {
-        rating:   this.newReviewRating,
-        date:     dateStr,
-        author:   this.newReviewAuthor.trim(),
-        verified: true,
-        title:    this.newReviewTitle.trim(),
-        content:  this.newReviewContent.trim(),
-        helpful:  0
-      };
-
-      // Optimistic UI update immediately
+      const dateStr = String(today.getDate()).padStart(2,'0') + '/' + String(today.getMonth()+1).padStart(2,'0') + '/' + today.getFullYear();
+      const newRev = { rating: this.newReviewRating, date: dateStr, author: this.newReviewAuthor.trim(), verified: true, title: this.newReviewTitle.trim(), content: this.newReviewContent.trim() };
       this.reviewsList.unshift(newRev);
-
-      this.newReviewAuthor  = '';
-      this.newReviewTitle   = '';
-      this.newReviewContent = '';
-      this.newReviewRating  = 5;
+      const reviewText = [newRev.title, newRev.content].filter(Boolean).join(' — ');
+      this.newReviewAuthor = ''; this.newReviewTitle = ''; this.newReviewContent = ''; this.newReviewRating = 5;
       this.showWriteReviewModal = false;
-      this.showToast('Thank you! Review submitted successfully');
+      this.showToast('Thank you! Review submitted.');
+      fetch('/api/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: newRev.author, title: newRev.title, text: reviewText, rating: newRev.rating })
+      }).catch(e => console.warn('[submitReview]', e.message));
+    },
 
-      // Persist to Supabase via API (fire & forget)
-      fetch('/api/reviews', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          name:   newRev.author,
-          title:  newRev.title,
-          text:   reviewText,
-          rating: newRev.rating
-        })
-      }).catch(e => console.warn('[submitReview] API error:', e.message));
+    async init() {
+      this.cartCount = this.getCart().length;
+      let prod = null;
+      try { prod = JSON.parse(localStorage.getItem('vexis_product') || 'null'); } catch {}
+      const params = new URLSearchParams(window.location.search);
+      const idParam = params.get('id');
+      if (idParam && (!prod || String(prod.id) !== idParam)) {
+        try {
+          const res = await fetch('/api/products/' + encodeURIComponent(idParam));
+          if (res.ok) prod = await res.json();
+        } catch {}
+      }
+      if (!prod && window.mockProducts && window.mockProducts.length) prod = window.mockProducts[0];
+      this.product = prod || {};
+      await this.loadReviews();
     }
-  }
+  };
 }
 </script>
 

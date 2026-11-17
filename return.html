@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>VEXIS | Return & Exchange</title>
+<meta name="description" content="Return & Exchange policy — submit your request within 14 days of purchase.">
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style>
+  * { font-family: 'Cairo', 'Montserrat', sans-serif; box-sizing: border-box; }
+  .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+  html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; background: #fff; }
+  
+  ::-webkit-scrollbar{ width: 5px; }
+  ::-webkit-scrollbar-thumb{ background: #555; border-radius: 3px; }
+  .nav-link { transition: color .2s; position: relative; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#fff; transition: width .3s; }
+  .nav-link:hover::after { width:100%; }
+  .form-input {
+    width: 100%; padding: 14px 16px; border: 1.5px solid #e5e7eb; border-radius: 10px;
+    font-size: 15px; outline: none; transition: border-color .2s, box-shadow .2s;
+    background: #fafafa;
+  }
+  .form-input:focus { border-color: #000; box-shadow: 0 0 0 3px rgba(0,0,0,0.08); background: #fff; }
+  .btn-black {
+    background: #000; color: #fff; border: none; border-radius: 10px; padding: 14px 32px;
+    font-size: 16px; font-weight: 700; cursor: pointer; width: 100%;
+    transition: background .2s, transform .15s;
+    font-family: 'Montserrat', 'Cairo', sans-serif;
+  }
+  .btn-black:hover { background: #222; transform: translateY(-1px); }
+  .btn-black:disabled { background: #999; cursor: not-allowed; transform: none; }
+  .alert-success { background: #f0fdf4; border: 1.5px solid #22c55e; color: #15803d; border-radius: 10px; padding: 16px 20px; }
+  .alert-error   { background: #fef2f2; border: 1.5px solid #ef4444; color: #b91c1c; border-radius: 10px; padding: 16px 20px; }
+  .policy-card { background: #f8f8f8; border-radius: 14px; padding: 20px 24px; border: 1px solid #ebebeb; }
+</style>
+</head>
+<body class="bg-white" x-data="returnPage()">
+
+<!-- ============ NAVBAR ============ -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-black shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center gap-2 shrink-0">
+      <span class="font-brand font-black text-white text-xl tracking-widest uppercase">VEXIS</span>
+    </a>
+    <!-- Center Links (desktop) -->
+    <div class="hidden md:flex items-center gap-7">
+      <a href="index.html" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">Home</a>
+      <a href="index.html#products" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">Shop</a>
+      <a href="my-orders.html" class="nav-link text-zinc-300 hover:text-white text-sm font-semibold tracking-wide">My Orders</a>
+      <a href="return.html" class="nav-link text-white text-sm font-semibold tracking-wide border-b-2 border-white pb-0.5">Returns</a>
+    </div>
+    <!-- Right -->
+    <div class="flex items-center gap-3">
+      <a href="cart.html" class="relative text-white hover:text-zinc-300 transition">
+        <i class="fas fa-shopping-bag text-lg"></i>
+      </a>
+      <button @click="mobileMenu=!mobileMenu" class="md:hidden text-white">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div x-show="mobileMenu" x-transition class="md:hidden bg-black border-t border-zinc-800 px-4 py-4 flex flex-col gap-3">
+    <a href="index.html" class="text-zinc-300 font-semibold text-sm">Home</a>
+    <a href="index.html#products" class="text-zinc-300 font-semibold text-sm">Shop</a>
+    <a href="my-orders.html" class="text-zinc-300 font-semibold text-sm">My Orders</a>
+    <a href="return.html" class="text-white font-bold text-sm">Returns</a>
+    <a href="cart.html" class="text-zinc-300 font-semibold text-sm">Cart</a>
+  </div>
+</nav>
+<div class="h-14"></div>
+
+<!-- ============ HERO BANNER ============ -->
+<div class="bg-black text-white py-12 px-4 text-center">
+  <p class="text-xs uppercase tracking-widest text-zinc-400 font-semibold mb-2 font-brand">Customer Care</p>
+  <h1 class="font-brand font-black text-3xl md:text-5xl uppercase tracking-tight mb-3">Return & Exchange</h1>
+  <p class="text-zinc-400 text-sm md:text-base max-w-lg mx-auto">We stand behind our products. Submit your request within 14 days of purchase.</p>
+</div>
+
+<!-- ============ POLICY CARDS ============ -->
+<div class="max-w-4xl mx-auto px-4 py-10">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+    <div class="policy-card text-center">
+      <div class="text-3xl mb-3">📅</div>
+      <div class="font-brand font-bold text-base mb-1">14-Day Window</div>
+      <p class="text-zinc-500 text-sm">Returns accepted within 14 days of your order date.</p>
+    </div>
+    <div class="policy-card text-center">
+      <div class="text-3xl mb-3">📦</div>
+      <div class="font-brand font-bold text-base mb-1">Original Condition</div>
+      <p class="text-zinc-500 text-sm">Item must be unworn, unwashed, with original tags attached.</p>
+    </div>
+    <div class="policy-card text-center">
+      <div class="text-3xl mb-3">💬</div>
+      <div class="font-brand font-bold text-base mb-1">Quick Response</div>
+      <p class="text-zinc-500 text-sm">Our team will respond within 24 hours after your request.</p>
+    </div>
+  </div>
+
+  <!-- ============ FORM ============ -->
+  <div class="max-w-lg mx-auto">
+    <div class="bg-white rounded-2xl border border-zinc-200 shadow-sm p-6 md:p-8">
+      <h2 class="font-brand font-bold text-xl md:text-2xl mb-6 text-center">Submit Return Request</h2>
+
+      <!-- Success -->
+      <div x-show="state==='success'" x-transition class="alert-success mb-5">
+        <div class="flex items-center gap-2 font-bold mb-1"><i class="fas fa-check-circle"></i> Request Submitted!</div>
+        <p class="text-sm">Your return request for order <strong x-text="resultOrderNumber"></strong> has been received. Our team will contact you within 24 hours.</p>
+      </div>
+
+      <!-- Expired -->
+      <div x-show="state==='expired'" x-transition class="alert-error mb-5">
+        <div class="flex items-center gap-2 font-bold mb-1"><i class="fas fa-clock"></i> Return Period Expired</div>
+        <p class="text-sm mb-3">This order is older than 14 days. Unfortunately we cannot accept returns past this window.</p>
+        <a href="https://wa.me/201007720554" target="_blank"
+           class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-lg transition">
+          <i class="fab fa-whatsapp"></i> Contact us on WhatsApp
+        </a>
+      </div>
+
+      <!-- Not Found -->
+      <div x-show="state==='notfound'" x-transition class="alert-error mb-5">
+        <div class="flex items-center gap-2 font-bold mb-1"><i class="fas fa-exclamation-circle"></i> No Orders Found</div>
+        <p class="text-sm">No orders were found with this phone number. Please check and try again, or contact us on WhatsApp.</p>
+        <a href="https://wa.me/201007720554" target="_blank"
+           class="inline-flex items-center gap-2 mt-3 bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-2 rounded-lg transition">
+          <i class="fab fa-whatsapp"></i> WhatsApp Support
+        </a>
+      </div>
+
+      <!-- Error -->
+      <div x-show="state==='error'" x-transition class="alert-error mb-5">
+        <div class="flex items-center gap-2 font-bold mb-1"><i class="fas fa-exclamation-triangle"></i> Something went wrong</div>
+        <p class="text-sm" x-text="errorMsg"></p>
+      </div>
+
+      <!-- Form -->
+      <form @submit.prevent="submitReturn()" x-show="state!=='success'" class="flex flex-col gap-4">
+        <div>
+          <label class="block text-sm font-bold text-zinc-700 mb-1.5">Phone Number <span class="text-red-500">*</span></label>
+          <input x-model="phone" type="tel" placeholder="e.g. 01012345678" class="form-input" required/>
+          <p class="text-xs text-zinc-400 mt-1">The phone number used when placing your order.</p>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-zinc-700 mb-1.5">Order Number <span class="text-zinc-400 font-normal">(Optional)</span></label>
+          <input x-model="orderNumber" type="text" placeholder="e.g. VX-2024-001" class="form-input"/>
+          <p class="text-xs text-zinc-400 mt-1">Found in your order confirmation message.</p>
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-zinc-700 mb-1.5">Reason for Return / Exchange</label>
+          <textarea x-model="reason" rows="3" placeholder="e.g. Wrong size ordered, product defect..." class="form-input resize-none"></textarea>
+        </div>
+        <button type="submit" class="btn-black" :disabled="loading">
+          <span x-show="!loading"><i class="fas fa-paper-plane mr-2"></i>Submit Request</span>
+          <span x-show="loading"><i class="fas fa-spinner fa-spin mr-2"></i>Submitting...</span>
+        </button>
+        <p class="text-center text-xs text-zinc-400">Having issues? <a href="https://wa.me/201007720554" target="_blank" class="text-green-600 font-semibold hover:underline">Contact us on WhatsApp</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-black text-white mt-16 pt-12 pb-6 px-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-zinc-800">
+    <div>
+      <span class="font-brand font-black text-2xl tracking-widest uppercase">VEXIS</span>
+      <p class="text-zinc-400 text-sm mt-3 leading-relaxed">Built For You. Designed to Move With You.<br>Egypt's premier athletic sportswear brand.</p>
+    </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Quick Links</h4>
+      <ul class="flex flex-col gap-2">
+        <li><a href="index.html" class="text-zinc-300 hover:text-white text-sm transition">Home</a></li>
+        <li><a href="index.html#products" class="text-zinc-300 hover:text-white text-sm transition">Shop</a></li>
+        <li><a href="my-orders.html" class="text-zinc-300 hover:text-white text-sm transition">Track My Order</a></li>
+        <li><a href="return.html" class="text-white font-semibold text-sm transition">Return & Exchange</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Follow Us</h4>
+      <div class="flex gap-3 mb-4">
+        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-instagram text-base"></i>
+        </a>
+        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-facebook-f text-base"></i>
+        </a>
+        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-tiktok text-base"></i>
+        </a>
+      </div>
+      <p class="text-zinc-500 text-xs">Cairo, Egypt &bull; Support 24/7</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto pt-6 text-center text-zinc-500 text-xs">
+    &copy; 2026 VEXIS Inc. All rights reserved.
+  </div>
+</footer>
+
+<!-- Mobile bottom bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 md:hidden z-50 shadow-2xl">
+  <div class="flex items-center justify-around py-2.5">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-home text-base"></i>
+      <span class="text-[10px] font-bold">Home</span>
+    </a>
+    <a href="index.html#products" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-box text-base"></i>
+      <span class="text-[10px] font-bold">Shop</span>
+    </a>
+    <a href="my-orders.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-box-open text-base"></i>
+      <span class="text-[10px] font-bold">Orders</span>
+    </a>
+    <a href="return.html" class="flex flex-col items-center gap-0.5 text-black">
+      <i class="fas fa-rotate-left text-base"></i>
+      <span class="text-[10px] font-bold">Returns</span>
+    </a>
+    <a href="cart.html" class="flex flex-col items-center gap-0.5 text-zinc-400 hover:text-black">
+      <i class="fas fa-shopping-bag text-base"></i>
+      <span class="text-[10px] font-bold">Bag</span>
+    </a>
+  </div>
+</div>
+<div class="h-16 md:hidden"></div>
+
+<script>
+function returnPage() {
+  return {
+    mobileMenu: false,
+    phone: '',
+    orderNumber: '',
+    reason: '',
+    loading: false,
+    state: '', // '', 'success', 'expired', 'notfound', 'error'
+    resultOrderNumber: '',
+    errorMsg: '',
+
+    async submitReturn() {
+      if (!this.phone.trim()) return;
+      this.loading = true;
+      this.state = '';
+      try {
+        const res = await fetch('/api/return-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            phone: this.phone.trim(),
+            order_number: this.orderNumber.trim() || undefined,
+            reason: this.reason.trim() || undefined
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          this.resultOrderNumber = data.order_number || '';
+          this.state = 'success';
+        } else if (data.expired) {
+          this.state = 'expired';
+        } else if (res.status === 404) {
+          this.state = 'notfound';
+        } else {
+          this.errorMsg = data.error || 'Unknown error. Please try again.';
+          this.state = 'error';
+        }
+      } catch(e) {
+        this.errorMsg = 'Network error. Please check your connection and try again.';
+        this.state = 'error';
+      } finally {
+        this.loading = false;
+      }
+    }
+  };
+}
+</script>
+
+</body>
+</html>

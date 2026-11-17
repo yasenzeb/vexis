@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | متابعة الطلب</title>
+<title>VEXIS | Order Tracking</title>
 <meta name="robots" content="noindex">
 
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
@@ -304,7 +304,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
         <span>
           <span class="live-dot"></span>
           <span class="mr-1">Live —</span>
-          <strong class="text-ink" x-text="orders.length"></strong> طلب
+          <strong class="text-ink" x-text="orders.length"></strong> order(s)
         </span>
         <button @click="phone=''; orders=[]; stopPolling()" class="text-apple-blue hover:underline">
           Change phone number
@@ -432,7 +432,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
                   <i class="fas fa-tshirt text-hairline-silver text-sm"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <div class="text-sm font-semibold text-ink truncate" x-text="item.name || 'منتج VEXIS'"></div>
+                  <div class="text-sm font-semibold text-ink truncate" x-text="item.name || 'VEXIS Item'"></div>
                   <div class="text-xs text-slate-apple font-medium mt-0.5">
                     <span x-show="item.size">Size: <span x-text="item.size"></span></span>
                     <span x-show="item.color" class="mr-3">Color: <span x-text="item.color"></span></span>
@@ -499,7 +499,7 @@ body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antia
         </div>
         <a href="https://wa.me/201061927815" target="_blank"
            class="apple-btn text-sm py-2 px-4 flex-shrink-0">
-          تواصل
+          Contact
         </a>
       </div>
 
