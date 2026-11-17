@@ -4,40 +4,27 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>VEXIS | Shopping Bag — Review Your Order</title>
-<meta name="description" content="Review your VEXIS gym sportswear purchases in your shopping cart and complete your order now.">
+<meta name="description" content="Review your VEXIS gym sportswear purchases in your shopping bag and complete your order now.">
 <meta name="keywords" content="gym t-shirts, men's sportswear Egypt, training clothes, VEXIS">
 
-<!-- Favicon & Touch Icons -->
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 <link rel="manifest" href="site.webmanifest" />
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
-        colors: {
-          'gallery-white': '#ffffff',
-          'studio-mist': '#f5f5f7',
-          'paper-frost': '#fafafc',
-          'hairline-silver': '#d6d6d6',
-          'control-gray': '#e6e6e8',
-          'ink': '#1d1d1f',
-          'slate-apple': '#4a4a4a',
-          'steel-apple': '#5a5a5a',
-          'apple-blue': '#0066cc',
-          'pricing-blue': '#0071e3',
-          'launch-orange': '#b64400'
-        },
-        borderRadius: {
-          '28': '28px',
-          '36': '36px',
-          '980': '980px',
+        fontFamily: {
+          brand: ['Montserrat', 'Cairo', 'sans-serif'],
+          sans: ['Cairo', 'Montserrat', 'sans-serif'],
         }
       }
     }
@@ -46,336 +33,378 @@
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <style>
-:root {
-  --color-gallery-white: #ffffff;
-  --color-studio-mist: #f5f5f7;
-  --color-paper-frost: #fafafc;
-  --color-hairline-silver: #d6d6d6;
-  --color-control-gray: #e6e6e8;
-  --color-ink: #1d1d1f;
-  --color-slate: #707070;
-  --color-steel: #86868b;
-  --color-apple-blue: #0066cc;
-  --color-pricing-blue: #0071e3;
-  --color-launch-orange: #b64400;
-
-  --font-apple: "Cairo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-}
-
-* {
-  font-family: var(--font-apple);
-  box-sizing: border-box;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
-  background-color: var(--color-studio-mist);
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: #d6d6d6; border-radius: 2px; }
-
-/* Apple Buttons */
-.apple-pricing-pill {
-  background-color: var(--color-pricing-blue);
-  color: #ffffff;
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-pricing-pill:hover {
-  background-color: #0077ed;
-  transform: scale(1.01);
-}
-
-.apple-explore-pill {
-  background-color: transparent;
-  color: var(--color-ink);
-  border: 1px solid var(--color-steel);
-  border-radius: 9999px;
-  font-weight: 500;
-  transition: all .18s cubic-bezier(.4, 0, .2, 1);
-}
-.apple-explore-pill:hover {
-  border-color: var(--color-ink);
-  background-color: var(--color-gallery-white);
-}
-
-.apple-input {
-  background-color: #ffffff;
-  border: 1px solid var(--color-steel);
-  border-radius: 980px;
-  padding: 8px 16px;
-  font-size: 13px;
-  color: var(--color-ink);
-  outline: none;
-  transition: border-color .15s ease;
-}
-.apple-input:focus {
-  border-color: var(--color-pricing-blue);
-}
-
-/* 28px Card */
-.apple-card {
-  background-color: #ffffff;
-  border-radius: 28px;
-  border: 1px solid var(--color-hairline-silver);
-}
+  * { font-family: 'Cairo', 'Montserrat', sans-serif; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+  html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; background: #fafafa; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+  .nav-link { transition: color .2s; position: relative; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#000; transition: width .3s; }
+  .nav-link:hover::after { width:100%; }
 </style>
 </head>
-<body class="bg-studio-mist text-ink min-h-screen flex flex-col" x-data="cartPage()" x-init="init()">
+<body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col" x-data="cartPage()" x-init="init()">
 
 <!-- ============================================== -->
-<!-- GLOBAL STORE NAVIGATION (44px Apple Header)    -->
+<!-- TOP ANNOUNCEMENT TICKER                        -->
 <!-- ============================================== -->
-<header class="bg-gallery-white/85 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
-  <div class="max-w-4xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
-    
-    <!-- Logo -->
+<div class="bg-black text-white text-xs py-2 overflow-hidden border-b border-zinc-800">
+  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between text-[11px] font-bold tracking-wider uppercase">
+    <span>🚚 Nationwide Delivery Across Egypt</span>
+    <span class="hidden sm:inline">⚡ 100% Performance Dri-Fit Fabric</span>
+    <a href="return.html" class="underline underline-offset-2 hover:text-zinc-300">🔄 14-Day Hassle-Free Returns</a>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- NAVBAR                                         -->
+<!-- ============================================== -->
+<nav class="bg-white border-b border-zinc-200 sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2 group">
-      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver flex items-center justify-center">
-        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
+      <div class="bg-black text-white rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm group-hover:scale-105 transition transform">
+        <img src="logo.jpeg" alt="VEXIS" class="w-7 h-7 rounded-full object-cover border border-zinc-700">
+        <span class="font-brand font-black text-base md:text-lg tracking-widest text-white uppercase">VEXIS</span>
       </div>
-      <span class="font-semibold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
 
-    <!-- Controls -->
-    <div class="flex items-center gap-3">
-      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-medium text-slate-apple cursor-default">
-        <span>🇪🇬</span>
-        <span class="text-ink font-semibold tracking-wider">EGYPT</span>
-      </div>
-
-      <a href="my-orders.html" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-apple hover:text-ink transition" title="My Orders">
-        <i class="far fa-user text-sm"></i>
-      </a>
-
-      <a href="index.html" class="text-xs text-apple-blue hover:underline">
-        Back to Store
+    <div class="hidden md:flex items-center gap-8 text-sm font-bold text-zinc-700">
+      <a href="index.html" class="nav-link hover:text-black">Home</a>
+      <a href="index.html#products" class="nav-link hover:text-black">Collection</a>
+      <a href="return.html" class="nav-link hover:text-black text-xs font-black uppercase tracking-wider text-zinc-800">EXCHANGE YOUR ITEM</a>
+      <a href="my-orders.html" class="nav-link hover:text-black flex items-center gap-1.5 text-zinc-800">
+        <i class="fas fa-box-open text-xs text-black"></i> My Orders
       </a>
     </div>
 
+    <div class="flex items-center gap-3">
+      <a href="cart.html" class="relative bg-black text-white p-2.5 rounded-xl flex items-center gap-2 text-xs font-bold shadow-sm">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="hidden sm:inline">Bag</span>
+        <span x-show="cart.length > 0" x-text="cart.length" class="bg-white text-black text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center"></span>
+      </a>
+    </div>
   </div>
-</header>
+</nav>
 
-<div class="max-w-3xl mx-auto px-4 py-12 flex-1 w-full space-y-8">
+<!-- ============================================== -->
+<!-- MAIN CONTENT                                   -->
+<!-- ============================================== -->
+<main class="max-w-7xl mx-auto px-4 md:px-8 py-10 flex-1 w-full">
   
-  <div class="border-b border-hairline-silver pb-4">
-    <h1 class="text-3xl font-semibold text-ink tracking-tight">Review your Bag.</h1>
-    <p class="text-xs text-slate-apple mt-1">Free delivery and flexible exchange on all orders across Egypt.</p>
+  <div class="mb-8">
+    <h1 class="font-brand font-black text-2xl md:text-4xl text-black uppercase tracking-tight">Shopping Bag</h1>
+    <p class="text-zinc-500 text-sm mt-1">Review your items before proceeding to secure checkout.</p>
   </div>
 
+  <!-- EMPTY CART STATE -->
+  <template x-if="cart.length === 0">
+    <div class="bg-white rounded-2xl border border-zinc-200 p-12 text-center max-w-lg mx-auto shadow-sm my-8">
+      <div class="w-20 h-20 bg-zinc-100 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl text-zinc-400">
+        <i class="fas fa-shopping-bag"></i>
+      </div>
+      <h2 class="font-brand font-bold text-xl text-black mb-2">Your Bag is Empty</h2>
+      <p class="text-zinc-500 text-sm mb-6 leading-relaxed">Discover our high-performance Dri-Fit athletic collection built for maximum movement and muscle definition.</p>
+      <a href="index.html#products" class="inline-flex items-center gap-2 bg-black hover:bg-zinc-800 text-white font-brand font-bold px-8 py-3.5 rounded-xl text-sm transition transform hover:scale-105 shadow-md">
+        <span>Explore Collection</span>
+        <i class="fas fa-arrow-right text-xs"></i>
+      </a>
+    </div>
+  </template>
+
+  <!-- FILLED CART LAYOUT -->
   <template x-if="cart.length > 0">
-    <div class="space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
-      <!-- Items 28px White Card -->
-      <div class="apple-card overflow-hidden">
-        <template x-for="(item, idx) in cart" :key="item._key">
-          <div class="p-6 flex items-start gap-5 border-b border-hairline-silver last:border-0 relative">
-            
-            <!-- Remove Button -->
-            <button @click="removeItem(idx)"
-                    class="absolute top-5 right-5 text-steel-apple hover:text-launch-orange transition text-xs"
-                    title="Remove item">
-              <i class="fas fa-times"></i>
-            </button>
-
-            <!-- Image Frame -->
-            <div class="w-20 h-20 md:w-24 md:h-24 bg-studio-mist rounded-2xl border border-hairline-silver flex items-center justify-center p-2 flex-shrink-0">
-              <img :src="item.image_url || 'logo.jpeg'" alt="" class="w-full h-full object-contain">
-            </div>
-
-            <!-- Details -->
-            <div class="flex-1 space-y-2 pr-6">
-              <h3 class="font-semibold text-sm md:text-base text-ink" x-text="item.name"></h3>
+      <!-- LEFT: Items List (7 cols) -->
+      <div class="lg:col-span-7 space-y-4">
+        <div class="bg-white rounded-2xl border border-zinc-200 divide-y divide-zinc-100 shadow-sm overflow-hidden">
+          <template x-for="(item, idx) in cart" :key="item._key || idx">
+            <div class="p-5 sm:p-6 flex items-start gap-4 sm:gap-6 relative group">
               
-              <div class="text-xs text-slate-apple flex gap-4">
-                <span x-show="item.size" x-text="'Size: ' + item.size"></span>
-                <span x-show="item.color" x-text="'Color: ' + item.color"></span>
+              <!-- Thumbnail -->
+              <div class="w-20 h-24 sm:w-24 sm:h-28 bg-zinc-100 rounded-xl overflow-hidden flex-shrink-0 border border-zinc-200">
+                <img :src="item.image_url || 'logo.jpeg'" :alt="item.name" class="w-full h-full object-cover" @error="$el.src='logo.jpeg'">
               </div>
 
-              <div class="flex items-center justify-between pt-2">
-                <div class="text-base font-semibold text-ink" x-text="(item.finalPrice * item.qty) + ' EGP'"></div>
+              <!-- Info -->
+              <div class="flex-1 min-w-0 pr-8">
+                <h3 class="font-brand font-bold text-base text-black truncate mb-1" x-text="item.name"></h3>
                 
-                <!-- Qty Pill -->
-                <div class="flex items-center border border-hairline-silver rounded-full overflow-hidden bg-studio-mist">
-                  <button @click="updateQty(idx, -1)" class="w-8 h-7 flex items-center justify-center text-slate-apple hover:text-ink transition text-xs">−</button>
-                  <span class="w-6 text-center text-xs font-semibold text-ink" x-text="item.qty"></span>
-                  <button @click="updateQty(idx, 1)" class="w-8 h-7 flex items-center justify-center text-slate-apple hover:text-ink transition text-xs">+</button>
+                <div class="flex items-center gap-2 text-xs text-zinc-500 mb-3 flex-wrap">
+                  <span x-show="item.size" class="bg-zinc-100 px-2.5 py-0.5 rounded-md font-semibold text-zinc-700" x-text="'Size: ' + item.size"></span>
+                  <span x-show="item.color" class="bg-zinc-100 px-2.5 py-0.5 rounded-md font-semibold text-zinc-700" x-text="'Color: ' + item.color"></span>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                  <!-- Price -->
+                  <div class="font-brand font-black text-base sm:text-lg text-black" x-text="'EGP ' + (item.finalPrice * item.qty)"></div>
+
+                  <!-- Qty Controls -->
+                  <div class="flex items-center border border-zinc-300 rounded-xl overflow-hidden bg-white shadow-sm">
+                    <button @click="updateQty(idx, -1)" class="w-8 h-8 flex items-center justify-center hover:bg-zinc-100 text-zinc-600 transition font-bold text-sm">−</button>
+                    <span class="w-8 text-center text-xs font-bold text-black" x-text="item.qty"></span>
+                    <button @click="updateQty(idx, 1)" class="w-8 h-8 flex items-center justify-center hover:bg-zinc-100 text-zinc-600 transition font-bold text-sm">+</button>
+                  </div>
                 </div>
               </div>
+
+              <!-- Delete Button -->
+              <button @click="removeItem(idx)"
+                      class="absolute top-5 right-5 text-zinc-400 hover:text-red-600 transition p-1"
+                      title="Remove Item">
+                <i class="fas fa-trash-can text-sm"></i>
+              </button>
+
+            </div>
+          </template>
+        </div>
+
+        <!-- Back to shop link -->
+        <div class="pt-2">
+          <a href="index.html#products" class="inline-flex items-center gap-2 text-xs font-bold text-zinc-600 hover:text-black transition">
+            <i class="fas fa-arrow-left text-[10px]"></i>
+            <span>Continue Shopping</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Order Summary (5 cols) -->
+      <div class="lg:col-span-5 space-y-5">
+        
+        <div class="bg-white rounded-2xl border border-zinc-200 p-6 sm:p-7 shadow-sm space-y-5">
+          <h2 class="font-brand font-bold text-lg text-black uppercase tracking-wide border-b border-zinc-100 pb-3">Order Summary</h2>
+
+          <!-- Promo Code Box -->
+          <div>
+            <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider mb-2">Promo Code</label>
+            <div class="flex gap-2">
+              <input type="text"
+                     x-model="promoInput"
+                     placeholder="Enter discount code"
+                     class="flex-1 bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold uppercase outline-none focus:border-black focus:bg-white transition"
+                     :disabled="appliedPromo !== null"/>
+              <button @click="appliedPromo ? removePromo() : applyPromo()"
+                      :disabled="promoLoading || (!promoInput.trim() && !appliedPromo)"
+                      class="bg-black hover:bg-zinc-800 disabled:bg-zinc-300 text-white font-brand font-bold px-4 py-2.5 rounded-xl text-xs transition uppercase">
+                <span x-show="!promoLoading && !appliedPromo">Apply</span>
+                <span x-show="appliedPromo">Remove</span>
+                <span x-show="promoLoading"><i class="fas fa-spinner fa-spin"></i></span>
+              </button>
+            </div>
+            <p x-show="promoMessage"
+               :class="promoSuccess ? 'text-green-600' : 'text-red-500'"
+               class="text-xs font-semibold mt-1.5"
+               x-text="promoMessage"></p>
+          </div>
+
+          <!-- Price Breakdown -->
+          <div class="space-y-3 pt-3 border-t border-zinc-100 text-sm">
+            <div class="flex items-center justify-between text-zinc-600">
+              <span>Subtotal</span>
+              <span class="font-bold text-black" x-text="'EGP ' + subtotal"></span>
             </div>
 
-          </div>
-        </template>
-      </div>
+            <template x-if="promoDiscount > 0">
+              <div class="flex items-center justify-between text-green-600 font-semibold">
+                <span>Discount (<span x-text="appliedPromo?.code"></span>)</span>
+                <span x-text="'- EGP ' + promoDiscount"></span>
+              </div>
+            </template>
 
-      <!-- Summary 28px White Card -->
-      <div class="apple-card p-6 md:p-8 space-y-6">
-        
-        <!-- Promo Code Pill Box -->
-        <div>
-          <label class="block text-xs text-slate-apple mb-1.5 font-medium">Do you have a promo code?</label>
-          <div class="flex gap-2">
-            <input type="text"
-                   x-model="promoInput"
-                   placeholder="Enter code"
-                   class="apple-input flex-1 text-xs uppercase font-mono"
-                   :disabled="appliedPromo">
-            <button @click="applyPromo()"
-                    class="apple-ink-pill px-5 py-2 text-xs"
-                    x-show="!appliedPromo">
-              Apply
-            </button>
-            <button @click="removePromo()"
-                    class="text-launch-orange text-xs px-3 hover:underline"
-                    x-show="appliedPromo">
-              Remove
-            </button>
+            <div class="flex items-center justify-between text-zinc-600">
+              <span>Shipping</span>
+              <span class="text-xs text-zinc-400">Calculated at checkout</span>
+            </div>
+
+            <div class="flex items-center justify-between text-base font-black text-black pt-3 border-t border-zinc-200">
+              <span>Estimated Total</span>
+              <span class="text-xl font-brand" x-text="'EGP ' + finalTotal"></span>
+            </div>
           </div>
-          <p x-show="promoMsg" :class="promoSuccess ? 'text-emerald-600' : 'text-launch-orange'" class="text-[11px] mt-1.5 font-medium" x-text="promoMsg"></p>
+
+          <!-- Checkout CTA -->
+          <a href="checkout.html"
+             class="w-full bg-black hover:bg-zinc-800 text-white font-brand font-black py-4 rounded-xl text-center flex items-center justify-center gap-2 text-sm uppercase tracking-wider transition shadow-lg transform hover:scale-[1.01] active:scale-[0.99]">
+            <i class="fas fa-lock text-xs"></i>
+            <span>Proceed to Checkout</span>
+          </a>
+
+          <!-- Trust Badges -->
+          <div class="pt-2 border-t border-zinc-100 grid grid-cols-2 gap-3 text-xs text-zinc-500">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-shield-alt text-black"></i>
+              <span>14-Day Returns</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-money-bill-wave text-black"></i>
+              <span>Cash on Delivery</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-truck text-black"></i>
+              <span>Fast Shipping</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fas fa-certificate text-black"></i>
+              <span>100% Dri-Fit</span>
+            </div>
+          </div>
+
         </div>
-
-        <div class="space-y-3 text-xs border-t border-hairline-silver pt-4">
-          <div class="flex justify-between items-center text-slate-apple">
-            <span>Subtotal</span>
-            <span class="text-ink font-semibold" x-text="subtotal + ' EGP'"></span>
-          </div>
-
-          <div x-show="discountAmount > 0" class="flex justify-between items-center text-emerald-600 font-medium">
-            <span>Discount (<span x-text="appliedPromo?.code"></span>)</span>
-            <span x-text="'- ' + discountAmount + ' EGP'"></span>
-          </div>
-
-          <div class="flex justify-between items-center text-slate-apple">
-            <span>Shipping</span>
-            <span class="text-emerald-600 font-medium">Calculated at checkout</span>
-          </div>
-
-          <div class="border-t border-hairline-silver pt-4 flex justify-between items-center">
-            <span class="text-base font-semibold text-ink">Total</span>
-            <span class="text-2xl font-semibold text-ink" x-text="finalTotal + ' EGP'"></span>
-          </div>
-        </div>
-
-        <!-- Checkout Button: Apple Pricing Blue Pill -->
-        <a href="checkout.html"
-           class="apple-pricing-pill w-full py-4 text-sm flex items-center justify-center gap-2 text-center">
-          <span>Check Out</span> <i class="fas fa-chevron-right text-xs"></i>
-        </a>
 
       </div>
 
     </div>
   </template>
 
-  <!-- Empty Bag -->
-  <template x-if="cart.length === 0">
-    <div class="apple-card p-12 text-center space-y-4">
-      <i class="fas fa-shopping-bag text-4xl text-steel-apple"></i>
-      <h2 class="text-xl font-semibold text-ink">Your Bag is empty.</h2>
-      <p class="text-xs text-slate-apple max-w-sm mx-auto">Items added to your bag will appear here.</p>
-      <div class="pt-2">
-        <a href="index.html" class="apple-pricing-pill px-6 py-2.5 text-xs inline-block">
-          Continue Shopping
+</main>
+
+<!-- ============================================== -->
+<!-- FOOTER                                         -->
+<!-- ============================================== -->
+<footer class="bg-black text-white mt-16 pt-12 pb-6 px-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-zinc-800">
+    <div>
+      <span class="font-brand font-black text-2xl tracking-widest uppercase">VEXIS</span>
+      <p class="text-zinc-400 text-sm mt-3 leading-relaxed">Built For You. Designed to Move With You.<br>Egypt's premier athletic compression wear.</p>
+    </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Customer Care</h4>
+      <ul class="flex flex-col gap-2">
+        <li><a href="index.html" class="text-zinc-300 hover:text-white text-sm transition">Home</a></li>
+        <li><a href="index.html#products" class="text-zinc-300 hover:text-white text-sm transition">Shop Collection</a></li>
+        <li><a href="return.html" class="text-zinc-300 hover:text-white text-sm transition">Exchange Your Item</a></li>
+        <li><a href="my-orders.html" class="text-zinc-300 hover:text-white text-sm transition">Track Order</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Follow Us</h4>
+      <div class="flex gap-3 mb-4">
+        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-instagram text-base"></i>
+        </a>
+        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-facebook-f text-base"></i>
+        </a>
+        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-tiktok text-base"></i>
         </a>
       </div>
+      <p class="text-zinc-500 text-xs">Cairo, Egypt &bull; Support available 24/7</p>
     </div>
-  </template>
-
-</div>
+  </div>
+  <div class="max-w-7xl mx-auto pt-6 text-center text-zinc-500 text-xs">
+    &copy; 2026 VEXIS Inc. All rights reserved.
+  </div>
+</footer>
 
 <script>
 function cartPage() {
   return {
     cart: [],
-    subtotal: 0,
     promoInput: '',
-    appliedPromo: null,
-    promoMsg: '',
+    promoMessage: '',
     promoSuccess: false,
-    discountAmount: 0,
+    promoLoading: false,
+    appliedPromo: null,
+    promoDiscount: 0,
+
+    get subtotal() {
+      return this.cart.reduce((acc, item) => acc + ((item.finalPrice || item.price || 0) * (item.qty || 1)), 0);
+    },
 
     get finalTotal() {
-      return Math.max(0, this.subtotal - this.discountAmount);
+      return Math.max(0, this.subtotal - this.promoDiscount);
     },
 
     init() {
-      this.loadCart();
+      try {
+        this.cart = JSON.parse(localStorage.getItem('vexis_cart') || '[]');
+      } catch {
+        this.cart = [];
+      }
+
       const savedPromo = localStorage.getItem('vexis_promo');
       if (savedPromo) {
         try {
           this.appliedPromo = JSON.parse(savedPromo);
-          this.calcDiscount();
+          this.promoInput = this.appliedPromo.code || '';
+          this.calculateDiscount();
         } catch {}
       }
     },
 
-    loadCart() {
-      try { this.cart = JSON.parse(localStorage.getItem('vexis_cart')||'[]'); } catch { this.cart=[]; }
-      this.calc();
-    },
-
-    calc() {
-      this.subtotal = this.cart.reduce((acc, item) => acc + (item.finalPrice * item.qty), 0);
-      this.calcDiscount();
-    },
-
-    calcDiscount() {
-      if (!this.appliedPromo) {
-        this.discountAmount = 0;
-        return;
-      }
-      if (this.appliedPromo.discount_type === 'percent') {
-        this.discountAmount = Math.round(this.subtotal * (this.appliedPromo.discount_value / 100));
-      } else {
-        this.discountAmount = Math.min(this.subtotal, Number(this.appliedPromo.discount_value || 0));
-      }
+    saveCart() {
+      localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
+      this.calculateDiscount();
     },
 
     updateQty(idx, change) {
-      if (this.cart[idx]) {
-        this.cart[idx].qty += change;
-        if (this.cart[idx].qty <= 0) {
-          this.cart.splice(idx, 1);
-        }
-        localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
-        this.calc();
+      if (!this.cart[idx]) return;
+      this.cart[idx].qty += change;
+      if (this.cart[idx].qty <= 0) {
+        this.cart.splice(idx, 1);
       }
+      this.saveCart();
     },
 
     removeItem(idx) {
       this.cart.splice(idx, 1);
-      localStorage.setItem('vexis_cart', JSON.stringify(this.cart));
-      this.calc();
+      this.saveCart();
+    },
+
+    calculateDiscount() {
+      if (!this.appliedPromo) {
+        this.promoDiscount = 0;
+        return;
+      }
+      if (this.appliedPromo.discount_type === 'percent') {
+        this.promoDiscount = Math.round(this.subtotal * (this.appliedPromo.discount_value / 100));
+      } else {
+        this.promoDiscount = Math.min(this.subtotal, Number(this.appliedPromo.discount_value || 0));
+      }
     },
 
     async applyPromo() {
       const code = this.promoInput.trim().toUpperCase();
       if (!code) return;
+
+      this.promoLoading = true;
+      this.promoMessage = '';
+
       try {
-        const res = await fetch('/api/checkout?action=validate_promo&code=' + encodeURIComponent(code));
+        const res = await fetch(`/api/promocodes?code=${encodeURIComponent(code)}`);
         const data = await res.json();
+
         if (data.success && data.promo) {
           this.appliedPromo = data.promo;
           localStorage.setItem('vexis_promo', JSON.stringify(data.promo));
+          this.calculateDiscount();
           this.promoSuccess = true;
-          this.promoMsg = 'Promo code applied!';
-          this.calcDiscount();
+          this.promoMessage = `Promo applied! ${data.promo.discount_type === 'percent' ? data.promo.discount_value + '%' : 'EGP ' + data.promo.discount_value} OFF`;
         } else {
           this.promoSuccess = false;
-          this.promoMsg = data.error || 'Invalid promo code';
+          this.promoMessage = data.error || 'Invalid or expired promo code';
         }
-      } catch {
+      } catch (err) {
         this.promoSuccess = false;
-        this.promoMsg = 'Failed to validate code';
+        this.promoMessage = 'Error validating code. Please try again.';
+      } finally {
+        this.promoLoading = false;
       }
+    },
+
+    removePromo() {
+      this.appliedPromo = null;
+      this.promoInput = '';
+      this.promoDiscount = 0;
+      this.promoMessage = '';
+      localStorage.removeItem('vexis_promo');
     }
-  }
+  };
 }
 </script>
 
