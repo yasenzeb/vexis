@@ -173,6 +173,7 @@
       <a href="index.html" class="nav-link text-black font-black">Home</a>
       <a href="#products" class="nav-link hover:text-black">Collection</a>
       <a href="product.html" class="nav-link hover:text-black">Featured</a>
+      <a href="return.html" class="nav-link hover:text-black text-xs font-black uppercase tracking-wider text-zinc-800">EXCHANGE YOUR ITEM</a>
       <a href="#about" class="nav-link hover:text-black">About</a>
       <a href="my-orders.html" class="nav-link hover:text-black flex items-center gap-1.5 text-zinc-800" x-show="hasOrders">
         <i class="fas fa-box-open text-xs text-blue-600"></i> My Orders
@@ -225,6 +226,9 @@
     <a href="#products" @click="mobileMenu=false" class="text-zinc-600 hover:text-black flex items-center gap-3 py-1"><i class="fas fa-box w-5"></i> Collection</a>
     <a href="product.html" class="text-zinc-600 hover:text-black flex items-center gap-3 py-1"><i class="fas fa-tshirt w-5"></i> Featured Product</a>
     <a href="#about" @click="mobileMenu=false" class="text-zinc-600 hover:text-black flex items-center gap-3 py-1"><i class="fas fa-info-circle w-5"></i> About VEXIS</a>
+    <a href="return.html" class="text-zinc-800 hover:text-black flex items-center gap-3 py-1 font-black uppercase text-xs">
+      <i class="fas fa-rotate-left w-5 text-zinc-500"></i> EXCHANGE YOUR ITEM
+    </a>
     <a href="my-orders.html" class="text-blue-600 flex items-center gap-3 py-1 font-black">
       <i class="fas fa-box-open w-5"></i> My Orders Tracking
     </a>
@@ -235,51 +239,39 @@
 </nav>
 
 <!-- ============================================== -->
-<!-- HERO BANNER (Classic Cinematic Full-Width Look) -->
+<!-- HERO BANNER (Solid Pure Black Athletic Look)   -->
 <!-- ============================================== -->
 <section class="bg-black text-white relative overflow-hidden border-b border-zinc-900">
-  <div class="relative w-full h-[65vh] min-h-[420px] max-h-[680px] bg-black overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-20 sm:py-28 md:py-36 relative z-10">
+    <div class="max-w-2xl space-y-4">
       
-      <img src="بدايه.jpeg"
-           alt="VEXIS Athletic Compression Wear"
-           class="w-full h-full object-cover object-center"/>
-      
-      <!-- Gradient overlay for text contrast -->
-      
-      <div class="absolute inset-0 hero-overlay flex flex-col justify-end p-6 sm:p-10 md:p-16">
-        <div class="max-w-7xl mx-auto w-full">
-          
-        <div class="max-w-2xl space-y-3">
-          
-          <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full text-[11px] font-bold tracking-widest uppercase border border-white/20">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>DROP-001 • NEW COLLECTION</span>
-          </div>
-
-          <h1 class="text-3xl sm:text-5xl md:text-6xl font-brand font-black tracking-tight text-white uppercase drop-shadow-lg leading-none">
-            VEXIS
-          </h1>
-
-          <p class="text-sm sm:text-lg md:text-xl text-zinc-100 font-semibold drop-shadow leading-relaxed max-w-xl">
-            Built For You. Designed to Move With You. Experience Performance Without Compromise.
-          </p>
-
-          <div class="pt-2 flex items-center gap-3 flex-wrap">
-            <a href="#products"
-               class="inline-flex items-center gap-2 bg-white text-black font-brand font-black px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm hover:bg-zinc-200 transition shadow-2xl transform hover:scale-105 active:scale-95">
-              <span>Shop Now</span>
-              <i class="fas fa-arrow-down text-xs"></i>
-            </a>
-
-            <a href="product.html"
-               class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white font-brand font-bold px-5 sm:px-7 py-3 rounded-full text-xs sm:text-sm border border-white/30 transition">
-              <span>Featured T-Shirt</span>
-              <i class="fas fa-arrow-right text-xs"></i>
-            </a>
-          
-        </div>
+      <div class="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3.5 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-zinc-200">DROP-001 • NEW COLLECTION</span>
       </div>
-    </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-brand font-black tracking-tight text-white uppercase leading-none">
+        VEXIS
+      </h1>
+
+      <p class="text-base sm:text-xl text-zinc-300 font-medium leading-relaxed max-w-xl">
+        Built For You. Designed to Move With You. Experience Performance Without Compromise.
+      </p>
+
+      <div class="pt-4 flex items-center gap-3.5 flex-wrap">
+        <a href="#products"
+           class="inline-flex items-center gap-2 bg-white text-black font-brand font-black px-7 sm:px-9 py-3.5 rounded-full text-xs sm:text-sm hover:bg-zinc-200 transition shadow-2xl transform hover:scale-105 active:scale-95">
+          <span>Shop Now</span>
+          <i class="fas fa-arrow-down text-xs"></i>
+        </a>
+
+        <a href="product.html"
+           class="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-brand font-bold px-6 sm:px-8 py-3.5 rounded-full text-xs sm:text-sm border border-zinc-800 transition">
+          <span>Featured T-Shirt</span>
+          <i class="fas fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
     </div>
   </div>
 </section>
