@@ -54,7 +54,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ success: false, error: 'غير مصرح.' });
       }
 
-      const { name, type, price, cost_price, image_url, discount_type, discount_value, sizes, colors, gallery, main_image_index, hover_image_index } = req.body || {};
+      const { name, type, price, cost_price, description, image_url, discount_type, discount_value, sizes, colors, gallery, main_image_index, hover_image_index } = req.body || {};
 
       if (!name || !type || !price) {
         return res.status(400).json({ success: false, error: 'name, type, and price are required.' });
@@ -67,7 +67,7 @@ export default async function handler(req, res) {
         .single();
 
       if (catError || !catData) {
-        return res.status(400).json({ success: false, error: 'الفئة غير موجودة' });
+        return res.status(400).json({ success: false, error: 'Category does not exist' });
       }
 
       const parsedDiscountValue = discount_type === 'none'
@@ -75,13 +75,13 @@ export default async function handler(req, res) {
         : (parseFloat(discount_value) || 0);
 
       if (image_url && !isAllowedUrl(image_url)) {
-        return res.status(400).json({ success: false, error: 'رابط الصورة غير مسموح به' });
+        return res.status(400).json({ success: false, error: 'Invalid image URL' });
       }
 
       if (Array.isArray(gallery)) {
         for (const url of gallery) {
           if (url && !isAllowedUrl(url)) {
-            return res.status(400).json({ success: false, error: 'رابط غير مسموح به في المعرض' });
+            return res.status(400).json({ success: false, error: 'Invalid gallery URL' });
           }
         }
       }
@@ -93,6 +93,7 @@ export default async function handler(req, res) {
           type,
           price: parseInt(price),
           cost_price: parseInt(cost_price) || 0,
+          description: description || null,
           image_url: image_url || null,
           discount_type: discount_type || 'none',
           discount_value: parsedDiscountValue,
@@ -110,7 +111,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'PUT') {
       if (!requireAdmin(req)) {
-        return res.status(401).json({ success: false, error: 'غير مصرح.' });
+        return res.status(401).json({ success: false, error: 'Unauthorized.' });
       }
 
       const { id } = req.query;
@@ -118,13 +119,14 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, error: 'Product ID is required.' });
       }
 
-      const { name, type, price, cost_price, image_url, discount_type, discount_value, sizes, colors, gallery, main_image_index } = req.body || {};
+      const { name, type, price, cost_price, description, image_url, discount_type, discount_value, sizes, colors, gallery, main_image_index } = req.body || {};
       const updates = {};
 
       if (name !== undefined) updates.name = name;
       if (type !== undefined) updates.type = type;
       if (price !== undefined) updates.price = parseInt(price);
       if (cost_price !== undefined) updates.cost_price = parseInt(cost_price);
+      if (description !== undefined) updates.description = description;
       if (image_url !== undefined) updates.image_url = image_url;
 
       if (discount_type !== undefined) updates.discount_type = discount_type;

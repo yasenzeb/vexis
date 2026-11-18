@@ -8,7 +8,7 @@
 // Keep these defined immediately so nothing throws if read
 // before the fetch resolves (e.g. inline scripts running early).
 window.mockProducts = [];
-window.mockCategories = [{ slug: '', name: 'الكل', emoji: '👕' }];
+window.mockCategories = [{ slug: '', name: 'All', emoji: '👕' }];
 
 window.productsReady = false;
 window.categoriesReady = false;
@@ -72,7 +72,7 @@ async function loadProducts() {
         image_hover: 'shrt.jpeg',
         gallery: ['shrt.jpeg', 'بدايه.jpeg'],
         sizes: ['S', 'M', 'L', 'XL'],
-        colors: [{ name: 'أسود', hex: '#111111' }, { name: 'أبيض', hex: '#ffffff' }],
+        colors: [{ name: 'Black', hex: '#111111' }, { name: 'White', hex: '#ffffff' }],
         created_at: new Date().toISOString(),
         description: 'Engineered Dri-Fit high-performance compression wear designed for physique definition and elite gym training.'
       },
@@ -87,7 +87,7 @@ async function loadProducts() {
         image_hover: 'بدايه.jpeg',
         gallery: ['shrt.jpeg', 'بدايه.jpeg'],
         sizes: ['S', 'M', 'L', 'XL'],
-        colors: [{ name: 'كحلي', hex: '#1e3a8a' }, { name: 'أسود', hex: '#111111' }],
+        colors: [{ name: 'Navy', hex: '#1e3a8a' }, { name: 'أسود', hex: '#111111' }],
         created_at: new Date().toISOString(),
         description: 'Engineered Dri-Fit high-performance compression wear designed for physique definition and elite gym training.'
       }

@@ -1,4 +1,4 @@
-// api/checkout.js — إنشاء طلب جديد
+// api/_checkout.js — إنشاء طلب جديد
 import { createClient } from '@supabase/supabase-js';
 import { setCorsHeaders, isRateLimited, safeError } from './_auth.js';
 
@@ -46,7 +46,7 @@ function generateOrderNumber() {
 
 async function sendTelegram(message, replyMarkup = null) {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const chatId = process.env.TELEGRAM_CHAT_ID || '7242279880';
   if (!token || !chatId) return;
   try {
     const body = { chat_id: chatId, text: message, parse_mode: 'HTML' };
@@ -215,6 +215,28 @@ export default async function handler(req, res) {
       `✅ <b>الإجمالي المطلوب:</b> EGP ${parsedTotal}`,
       inlineKeyboard
     );
+
+    // Check total tax threshold on every new order (3 EGP tax / order)
+    try {
+      const { count } = await supabase.from('orders').select('*', { count: 'exact', head: true });
+      const currentTax = (count || 0) * 3;
+      if (currentTax >= 100) {
+        const waUrl = `https://wa.me/201061927815?text=${encodeURIComponent(`مرحباً، أود سداد الضريبة المستحقة قدرها ${currentTax} ج.م الخاصة بمتجر VEXIS.`)}`;
+        sendTelegram(
+          `🚨 <b>تنبيه عاجل: تجاوزت قيمة الضريبة المستحقة 100 ج.م!</b> 🚨\n\n` +
+          `إجمالي عدد الطلبات: <b>${count}</b> طلبات\n` +
+          `إجمالي الضريبة المستحقة: <b>${currentTax} ج.م</b>\n\n` +
+          `اضغط على زر "ادفع الآن" لفتح الواتساب وسداد المستحق مباشرة.`,
+          {
+            inline_keyboard: [
+              [{ text: `💳 ادفع الآن (${currentTax} ج.م)`, url: waUrl }]
+            ]
+          }
+        );
+      }
+    } catch (taxErr) {
+      console.error('[Tax Threshold Check Error]', taxErr);
+    }
 
     return res.status(201).json({
       success:      true,

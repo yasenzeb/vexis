@@ -1,507 +1,136 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | تأكيد الطلب والفاتورة</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<title>VEXIS | Order Receipt & Confirmation</title>
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        fontFamily: { cairo: ['Cairo', 'sans-serif'] },
-        colors: {
-          brandGreen: '#10b981',
-          brandDark: '#0d1117'
-        }
-      }
-    }
-  }
-</script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <style>
-  * { font-family: 'Cairo', sans-serif; box-sizing: border-box; }
-  body { background-color: #f8fafc; color: #1e293b; }
-  .status-step-done { background-color: #10b981; color: white; border-color: #10b981; }
-  .status-step-active { background-color: #3b82f6; color: white; border-color: #3b82f6; animation: pulse 2s infinite; }
-  .status-step-pending { background-color: #e2e8f0; color: #94a3b8; border-color: #cbd5e1; }
-  .status-step-rejected { background-color: #ef4444; color: white; border-color: #ef4444; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
-
-  /* Payment logos */
-  .vf-logo { background: #e60014; }
-  .ip-logo { background: linear-gradient(135deg, #6d28d9, #4f46e5); }
+  * { font-family: 'Cairo', 'Montserrat', sans-serif; box-sizing: border-box; }
+  .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+  body { background: #fafafa; color: #18181b; }
+  @media print {
+    body { background: #fff; }
+    .no-print { display: none !important; }
+  }
 </style>
 </head>
-<body class="bg-gray-50 text-gray-900 pb-16 min-h-screen" x-data="invoicePage()" x-init="init()">
+<body class="py-8 px-4 sm:px-6">
 
-  <!-- NAVBAR -->
-  <nav class="bg-white border-b border-gray-100 sticky top-0 z-40 shadow-sm">
-    <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold text-sm">التأكيد</span>
-        <i class="fas fa-chevron-left text-xs text-gray-400"></i>
-        <span class="text-gray-400 text-sm">الطلب</span>
-        <i class="fas fa-chevron-left text-xs text-gray-400"></i>
-        <span class="text-gray-400 text-sm">السلة</span>
-      </div>
-      <a href="index.html" class="bg-black text-white font-black px-3 py-1 rounded-lg text-sm tracking-widest flex items-center gap-1.5">
-        <img src="logo.jpeg" alt="Vexis" class="w-5 h-5 rounded-full">
+<div class="max-w-2xl mx-auto bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden p-6 sm:p-10 space-y-8">
+  
+  <!-- Header: Brand + Invoice Title -->
+  <div class="flex items-center justify-between border-b border-zinc-100 pb-6 flex-wrap gap-4">
+    <div class="flex items-center gap-3">
+      <div class="bg-black text-white px-3 py-1.5 rounded-xl font-brand font-black text-base uppercase tracking-widest flex items-center gap-2">
+        <img src="logo.jpeg" alt="VEXIS" class="w-6 h-6 rounded-full object-cover border border-zinc-700">
         <span>VEXIS</span>
-      </a>
-    </div>
-  </nav>
-
-  <main class="max-w-md mx-auto px-4 pt-6 space-y-6">
-
-    <!-- SUCCESS ICON & ORDER NUMBER -->
-    <div class="text-center space-y-3">
-      <div class="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/20 text-3xl">
-        <i class="fas fa-check"></i>
-      </div>
-      <div>
-        <h1 class="text-2xl font-black text-gray-900 flex items-center justify-center gap-2">
-          تم استلام طلبك! 🎉
-        </h1>
-        <p class="text-xs font-bold text-gray-500 mt-1">رقم الطلب</p>
-        <div class="mt-1 inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-xl border border-emerald-200 font-extrabold text-sm tracking-wider select-all shadow-sm">
-          <span x-text="'# ' + (order.order_number || '...')"></span>
-        </div>
       </div>
     </div>
-
-    <!-- WHATSAPP NOTICE -->
-    <div class="bg-green-50 border border-green-200 rounded-2xl p-3 flex items-center gap-3">
-      <div class="w-9 h-9 bg-green-500 text-white rounded-full flex items-center justify-center flex-shrink-0">
-        <i class="fab fa-whatsapp text-lg"></i>
-      </div>
-      <p class="text-xs font-bold text-green-800">سيتم التواصل معك عبر الواتساب لتأكيد الطلب وتحديد موعد التوصيل</p>
+    <div class="text-right">
+      <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider font-brand">Receipt / Invoice</p>
+      <p class="font-brand font-black text-sm text-black">{{ invoice_number }}</p>
+      <p class="text-[11px] text-zinc-500 mt-0.5">{{ date }}</p>
     </div>
-
-    <!-- IMPORTANT INFO BOX -->
-    <div class="bg-amber-50/80 border border-amber-200/80 rounded-2xl p-4 text-xs space-y-2.5 shadow-sm">
-      <div class="flex items-center gap-2 font-bold text-amber-800 text-sm mb-1">
-        <i class="fas fa-exclamation-circle text-amber-600"></i>
-        <span>معلومات هامة عن طلبك</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-900 font-semibold">
-        <i class="fas fa-check-circle text-emerald-600"></i>
-        <span>تم حجز طلبك بالفعل وهو محجوز باسمك</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-900 font-semibold">
-        <i class="fas fa-box text-blue-600"></i>
-        <span>جاري تجهيز الطلب للشحن الآن</span>
-      </div>
-      <div class="flex items-center gap-2 text-amber-900 font-semibold">
-        <i class="fas fa-truck text-amber-600"></i>
-        <span>شركة الشحن تشترط سداد رسوم الشحن مقدماً</span>
-      </div>
-      <div class="bg-amber-100/70 border border-amber-300/60 rounded-xl p-2.5 flex items-center justify-between font-black text-amber-950 text-sm mt-2">
-        <span>رسوم الشحن المستحقة:</span>
-        <span class="text-base text-amber-900" x-text="'EGP ' + (order.shipping_cost || 0)"></span>
-      </div>
-    </div>
-
-    <!-- ORDER STATUS TRACKER -->
-    <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="text-sm font-black text-gray-900 flex items-center gap-2">
-          <i class="fas fa-route text-cyan-600"></i> تتبع حالة الطلب
-        </h3>
-        <span class="text-[10px] text-gray-400 flex items-center gap-1">
-          <i class="fas fa-sync-alt" :class="isPolling ? 'animate-spin text-cyan-500' : 'text-gray-300'"></i>
-          تحديث تلقائي
-        </span>
-      </div>
-
-      <!-- Tracker Steps -->
-      <div class="relative py-2">
-        <div class="absolute top-1/2 left-4 right-4 h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
-        <div class="absolute top-1/2 right-4 h-1 bg-emerald-500 -translate-y-1/2 z-0 transition-all duration-700" :style="'width: ' + statusProgressWidth + '%'"></div>
-        <div class="relative z-10 flex justify-between items-center text-center">
-          <!-- Step 1 -->
-          <div class="flex flex-col items-center gap-1.5">
-            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition" :class="getStepClass('pending')">
-              <i class="fas fa-clock" x-show="currentStatusIndex === 0"></i>
-              <i class="fas fa-check" x-show="currentStatusIndex > 0"></i>
-            </div>
-            <span class="text-[11px] font-bold text-gray-700">معلق</span>
-          </div>
-          <!-- Step 2 -->
-          <div class="flex flex-col items-center gap-1.5">
-            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition" :class="getStepClass('review')">
-              <i class="fas fa-search" x-show="currentStatusIndex === 1 && order.status !== 'rejected'"></i>
-              <i class="fas fa-check" x-show="currentStatusIndex > 1 && order.status !== 'rejected'"></i>
-              <i class="fas fa-times" x-show="order.status === 'rejected'"></i>
-            </div>
-            <span class="text-[11px] font-bold text-gray-700">مراجعة</span>
-          </div>
-          <!-- Step 3 -->
-          <div class="flex flex-col items-center gap-1.5">
-            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition" :class="getStepClass('shipped')">
-              <i class="fas fa-truck-fast"></i>
-            </div>
-            <span class="text-[11px] font-bold text-gray-700">خرج للشحن</span>
-          </div>
-          <!-- Step 4 -->
-          <div class="flex flex-col items-center gap-1.5">
-            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold transition" :class="getStepClass('delivered')">
-              <i class="fas fa-check-double" x-show="order.status !== 'rejected'"></i>
-              <i class="fas fa-ban" x-show="order.status === 'rejected'"></i>
-            </div>
-            <span class="text-[11px] font-bold" :class="order.status === 'rejected' ? 'text-red-600' : 'text-gray-700'" x-text="order.status === 'rejected' ? 'مرفوض' : 'تم التسليم'"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Status Badge -->
-      <div class="bg-gray-50 rounded-xl p-3 text-center border border-gray-100 text-xs font-bold text-gray-700">
-        حالة الطلب الحالية:
-        <span class="px-2.5 py-1 rounded-full text-white font-extrabold mr-1 inline-block" :class="getStatusBadgeClass()" x-text="getStatusLabel()"></span>
-      </div>
-
-      <!-- Rejection Reason -->
-      <div x-show="order.status === 'rejected' && order.rejection_reason" class="bg-red-50 border border-red-200 rounded-xl p-3 text-xs text-red-800 font-semibold">
-        <i class="fas fa-info-circle ml-1 text-red-500"></i>
-        <span>سبب الرفض: </span><span x-text="order.rejection_reason" class="font-black"></span>
-      </div>
-    </div>
-
-    <!-- PAYMENT METHODS -->
-    <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-4">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center text-sm">
-          <i class="fas fa-wallet"></i>
-        </div>
-        <div>
-          <h2 class="text-sm font-black text-gray-900">وسائل الدفع المتاحة</h2>
-          <p class="text-[11px] text-gray-400 font-semibold">حول رسوم الشحن عبر أي من الأرقام التالية ثم ارفع صورة الإيصال</p>
-        </div>
-      </div>
-
-      <!-- Vodafone Cash -->
-      <div class="bg-red-50/70 border border-red-100 rounded-2xl p-4 flex items-center justify-between shadow-sm">
-        <div class="flex items-center gap-3">
-          <img src="vs.jpeg" alt="Vodafone Cash" class="w-11 h-11 rounded-2xl object-cover shadow-md flex-shrink-0 border border-red-200">
-          <div>
-            <span class="text-xs font-black text-red-950 block">Vodafone Cash</span>
-            <span class="text-[10px] text-gray-500 font-bold">فودافون كاش</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="font-extrabold text-sm text-gray-900 tracking-wider">01001982117</span>
-          <button @click="copyText('01001982117')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-sm">
-            <i class="fas fa-copy text-[10px]"></i> نسخ
-          </button>
-        </div>
-      </div>
-
-      <!-- InstaPay -->
-      <div class="bg-purple-50/70 border border-purple-100 rounded-2xl p-4 flex items-center justify-between shadow-sm">
-        <div class="flex items-center gap-3">
-          <img src="en.jpeg" alt="InstaPay" class="w-11 h-11 rounded-2xl object-cover shadow-md flex-shrink-0 border border-purple-200">
-          <div>
-            <span class="text-xs font-black text-purple-950 block">InstaPay</span>
-            <span class="text-[10px] text-gray-500 font-bold">انستا باي</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="font-extrabold text-sm text-gray-900 tracking-wider">01001982117</span>
-          <button @click="copyText('01001982117')" class="bg-purple-700 hover:bg-purple-800 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-sm">
-            <i class="fas fa-copy text-[10px]"></i> نسخ
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- RECEIPT UPLOAD -->
-    <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm space-y-3">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center text-sm">
-          <i class="fas fa-image"></i>
-        </div>
-        <div>
-          <h2 class="text-sm font-black text-gray-900">إرسال صورة التحويل <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full font-bold ml-1">اختياري</span></h2>
-          <p class="text-[11px] text-gray-400 font-semibold">ارفع إيصال التحويل لتسريع تجهيز وشحن طلبك</p>
-        </div>
-      </div>
-
-      <!-- Upload Zone -->
-      <label class="block border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50/20 transition relative">
-        <input type="file" @change="uploadReceipt($event)" accept="image/*" class="hidden" :disabled="isUploading">
-
-        <template x-if="!receiptPreview && !order.receipt_url">
-          <div class="space-y-2">
-            <div class="w-12 h-12 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mx-auto text-xl">
-              <i class="fas fa-cloud-upload-alt" x-show="!isUploading"></i>
-              <i class="fas fa-spinner fa-spin text-purple-600" x-show="isUploading"></i>
-            </div>
-            <p class="text-xs font-extrabold text-gray-700" x-text="isUploading ? 'جاري رفع الإيصال...' : 'اضغط هنا لرفع صورة الإيصال'"></p>
-            <p class="text-[10px] text-gray-400">JPG, PNG, GIF, WEBP — حتى 10 MB</p>
-          </div>
-        </template>
-
-        <template x-if="receiptPreview || order.receipt_url">
-          <div class="space-y-3">
-            <img :src="receiptPreview || order.receipt_url" alt="Receipt" class="h-32 object-contain mx-auto rounded-xl border">
-            <span class="inline-block bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">
-              <i class="fas fa-check-circle ml-1"></i> تم رفع الإيصال بنجاح
-            </span>
-          </div>
-        </template>
-      </label>
-    </div>
-
-    <!-- ORDER SUMMARY -->
-    <div class="bg-gray-900 text-white rounded-3xl p-6 shadow-xl space-y-4">
-      <h3 class="text-sm font-black tracking-wider text-gray-200 border-b border-gray-800 pb-3 flex items-center gap-2">
-        <i class="fas fa-receipt text-emerald-400"></i> ملخص الطلب
-      </h3>
-      <div class="space-y-2 text-xs">
-        <div class="flex justify-between">
-          <span class="text-gray-400 font-bold">الاسم</span>
-          <span class="font-extrabold text-gray-100" x-text="order.customer_name || '—'"></span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-gray-400 font-bold">الهاتف</span>
-          <span class="font-extrabold text-gray-100" x-text="order.phone || '—'"></span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-gray-400 font-bold">المحافظة</span>
-          <span class="font-extrabold text-gray-100" x-text="order.governorate || '—'"></span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-gray-400 font-bold">طريقة الدفع</span>
-          <span class="font-extrabold text-gray-100">عند الاستلام</span>
-        </div>
-      </div>
-      <div class="border-t border-gray-800 pt-3 flex justify-between items-center">
-        <span class="text-xs font-bold text-gray-400">إجمالي رسوم الشحن</span>
-        <span class="text-emerald-400 font-black text-lg" x-text="'EGP ' + (order.shipping_cost || 0)"></span>
-      </div>
-      <div class="border-t border-gray-800 pt-3 flex justify-between items-center">
-        <span class="text-xs font-bold text-gray-400">الإجمالي الكلي للطلب</span>
-        <span class="text-white font-black text-xl" x-text="'EGP ' + (order.total || 0)"></span>
-      </div>
-    </div>
-
-    <!-- RETURN BUTTON -->
-    <div class="text-center space-y-4">
-      <a href="index.html" class="block w-full bg-black text-white font-black py-4 rounded-2xl text-sm shadow-xl hover:opacity-90 transition flex items-center justify-center gap-2">
-        <i class="fas fa-home"></i> العودة للمتجر
-      </a>
-      <p class="text-[11px] text-gray-400 font-semibold flex items-center justify-center gap-1">
-        <i class="fas fa-headset text-emerald-500"></i> سيتم التواصل معك عبر الواتساب لتأكيد الطلب
-      </p>
-    </div>
-
-  </main>
-
-  <!-- TOAST NOTIFICATION -->
-  <div x-show="toastShow" x-transition class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-black text-white font-bold px-5 py-2.5 rounded-full shadow-2xl text-xs z-50 flex items-center gap-2">
-    <i class="fas fa-info-circle text-emerald-400"></i>
-    <span x-text="toastMessage"></span>
   </div>
 
-  <script>
-    function invoicePage() {
-      return {
-        order: {},
-        orderNumber: '',
-        receiptPreview: '',
-        isUploading: false,
-        toastShow: false,
-        toastMessage: '',
-        isPolling: false,
-        _pollInterval: null,
+  <!-- Order Status Banner -->
+  <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+    <div class="w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto mb-2 text-base">
+      <i class="fas fa-check"></i>
+    </div>
+    <h2 class="font-brand font-black text-base text-emerald-950 uppercase tracking-tight">Order Confirmed Successfully!</h2>
+    <p class="text-xs text-emerald-800 mt-0.5">Order Number: <strong class="select-all">{{ order_number }}</strong></p>
+    <p class="text-[11px] text-emerald-700 mt-1">Our courier will contact you by phone or WhatsApp before delivery.</p>
+  </div>
 
-        init() {
-          const params = new URLSearchParams(window.location.search);
-          this.orderNumber = params.get('order') || '';
-          if (this.orderNumber) {
-            this.fetchOrderDetails();
-            // Poll every 3 seconds for real-time updates
-            this._pollInterval = setInterval(() => this.fetchOrderDetails(true), 3000);
-          }
-        },
+  <!-- Customer & Delivery Information -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-zinc-50 p-4 rounded-xl border border-zinc-200/80">
+    <div class="space-y-1">
+      <p class="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">Customer Details</p>
+      <p class="font-bold text-black text-sm">{{ customer_name }}</p>
+      <p class="text-zinc-600">Phone: {{ phone }}</p>
+      <p class="text-zinc-600">Email: {{ email }}</p>
+    </div>
+    <div class="space-y-1">
+      <p class="text-zinc-400 font-bold uppercase tracking-wider text-[10px]">Shipping Destination</p>
+      <p class="font-bold text-black">{{ city_display }}</p>
+      <p class="text-zinc-600">{{ address }}</p>
+      <p class="text-zinc-600 font-medium">Payment: Cash on Delivery (COD)</p>
+    </div>
+  </div>
 
-        async fetchOrderDetails(silent = false) {
-          if (!silent) this.isPolling = true;
-          try {
-            const res = await fetch(`/api/order?order_number=${encodeURIComponent(this.orderNumber)}`);
-            if (res.ok) {
-              const data = await res.json();
-              if (data.success && data.order) {
-                const prevStatus = this.order.status;
-                this.order = data.order;
-                // Show toast on status change
-                if (prevStatus && prevStatus !== data.order.status) {
-                  this.showToast('🔔 تم تحديث حالة طلبك: ' + this.getStatusLabel());
-                }
-              }
-            }
-          } catch (e) {
-            if (!silent) console.error('Fetch order error:', e);
-          } finally {
-            this.isPolling = false;
-          }
-        },
+  <!-- Items Table -->
+  <div class="space-y-3">
+    <h3 class="font-brand font-bold text-xs uppercase tracking-wider text-zinc-400">Order Items</h3>
+    
+    <div class="border border-zinc-200 rounded-xl overflow-hidden divide-y divide-zinc-100 text-xs">
+      <div class="bg-zinc-50 p-3 font-bold text-zinc-500 flex justify-between">
+        <span>Item Description</span>
+        <span>Total</span>
+      </div>
 
-        get currentStatusIndex() {
-          const st = (this.order.status || 'pending').toLowerCase();
-          if (st === 'pending') return 0;
-          if (st === 'review' || st === 'under_review' || st === 'processing') return 1;
-          if (st === 'shipped' || st === 'out_for_delivery') return 2;
-          if (st === 'delivered' || st === 'completed' || st === 'rejected') return 3;
-          return 0;
-        },
+      {% for item in items %}
+      <div class="p-3 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <img src="{{ item.image }}" alt="" class="w-10 h-12 object-cover rounded border border-zinc-200" onerror="this.src='logo.jpeg'">
+          <div>
+            <p class="font-bold text-black text-sm">{{ item.name }}</p>
+            <p class="text-zinc-500 text-[11px]">Size: {{ item.size }} &bull; Color: {{ item.color }} &bull; Qty: {{ item.qty }}</p>
+          </div>
+        </div>
+        <div class="font-brand font-black text-sm text-black whitespace-nowrap">
+          EGP {{ item.line_total }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 
-        get statusProgressWidth() {
-          const idx = this.currentStatusIndex;
-          if (idx === 0) return 0;
-          if (idx === 1) return 33;
-          if (idx === 2) return 66;
-          return 100;
-        },
+  <!-- Financial Summary -->
+  <div class="border-t border-zinc-200 pt-4 space-y-2 text-xs">
+    <div class="flex justify-between text-zinc-600">
+      <span>Subtotal</span>
+      <span class="font-bold text-black">EGP {{ subtotal }}</span>
+    </div>
+    <div class="flex justify-between text-zinc-600">
+      <span>Delivery Shipping Fee</span>
+      <span class="font-bold text-black">EGP {{ shipping_cost }}</span>
+    </div>
+    <div class="flex justify-between text-base font-black text-black pt-3 border-t border-zinc-200">
+      <span>Total Amount to Pay</span>
+      <span class="font-brand text-xl">EGP {{ total }}</span>
+    </div>
+  </div>
 
-        getStepClass(stepName) {
-          const idx = this.currentStatusIndex;
-          const isRejected = this.order.status === 'rejected';
-          if (stepName === 'pending') return idx >= 0 ? 'status-step-done' : 'status-step-pending';
-          if (stepName === 'review') {
-            if (isRejected) return 'status-step-rejected';
-            if (idx > 1) return 'status-step-done';
-            if (idx === 1) return 'status-step-active';
-            return 'status-step-pending';
-          }
-          if (stepName === 'shipped') {
-            if (isRejected) return 'status-step-pending';
-            if (idx > 2) return 'status-step-done';
-            if (idx === 2) return 'status-step-active';
-            return 'status-step-pending';
-          }
-          if (stepName === 'delivered') {
-            if (isRejected) return 'status-step-rejected';
-            if (idx === 3) return 'status-step-done';
-            return 'status-step-pending';
-          }
-          return 'status-step-pending';
-        },
+  <!-- Actions -->
+  <div class="pt-2 flex items-center justify-between flex-wrap gap-3 no-print">
+    <a href="my-orders.html?phone={{ phone }}&order={{ order_number }}"
+       class="inline-flex items-center gap-2 bg-black hover:bg-zinc-800 text-white font-brand font-bold text-xs px-5 py-2.5 rounded-xl transition">
+      <i class="fas fa-truck-fast"></i>
+      <span>Track Live Shipment Status</span>
+    </a>
 
-        getStatusBadgeClass() {
-          const st = (this.order.status || 'pending').toLowerCase();
-          if (st === 'pending') return 'bg-amber-500';
-          if (st === 'review' || st === 'under_review' || st === 'processing') return 'bg-blue-600';
-          if (st === 'shipped' || st === 'out_for_delivery') return 'bg-purple-600';
-          if (st === 'delivered' || st === 'completed') return 'bg-emerald-600';
-          if (st === 'rejected') return 'bg-red-600';
-          return 'bg-gray-500';
-        },
+    <button onclick="window.print()"
+            class="inline-flex items-center gap-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 font-brand font-bold text-xs px-4 py-2.5 rounded-xl transition">
+      <i class="fas fa-print"></i>
+      <span>Print Receipt</span>
+    </button>
+  </div>
 
-        getStatusLabel() {
-          const st = (this.order.status || 'pending').toLowerCase();
-          if (st === 'pending') return 'معلق';
-          if (st === 'review' || st === 'under_review' || st === 'processing') return 'جاري المراجعة';
-          if (st === 'shipped' || st === 'out_for_delivery') return 'خرج للشحن';
-          if (st === 'delivered' || st === 'completed') return 'تم التسليم';
-          if (st === 'rejected') return 'مرفوض';
-          return 'معلق';
-        },
+  <!-- Footer note -->
+  <div class="text-center text-zinc-400 text-[11px] pt-4 border-t border-zinc-100">
+    <p>Thank you for shopping with VEXIS &bull; Let Your Power Speak.</p>
+    <p class="mt-0.5">Need help? WhatsApp: +20 100 772 0554 &bull; Support available 24/7</p>
+  </div>
 
-        copyText(text) {
-          navigator.clipboard.writeText(text);
-          this.showToast('تم نسخ الرقم بنجاح ✓');
-        },
+</div>
 
-        showToast(msg) {
-          this.toastMessage = msg;
-          this.toastShow = true;
-          setTimeout(() => this.toastShow = false, 3000);
-        },
-
-        async uploadReceipt(event) {
-          const file = event.target.files[0];
-          if (!file) return;
-
-          this.isUploading = true;
-          this.receiptPreview = URL.createObjectURL(file);
-
-          try {
-            // Compress image client-side to make upload ultra-fast (max 1000px width/height, 0.7 quality)
-            const compressedFile = await new Promise((resolve) => {
-              const img = new Image();
-              img.src = this.receiptPreview;
-              img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let width = img.width;
-                let height = img.height;
-                const maxDim = 1000;
-                if (width > maxDim || height > maxDim) {
-                  if (width > height) {
-                    height = Math.round((height * maxDim) / width);
-                    width = maxDim;
-                  } else {
-                    width = Math.round((width * maxDim) / height);
-                    height = maxDim;
-                  }
-                }
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                canvas.toBlob((blob) => {
-                  resolve(blob ? new File([blob], file.name, { type: 'image/jpeg' }) : file);
-                }, 'image/jpeg', 0.75);
-              };
-              img.onerror = () => resolve(file);
-            });
-
-            const formData = new FormData();
-            formData.append('file', compressedFile);
-            formData.append('order_number', this.orderNumber);
-
-            const uploadRes = await fetch('/api/upload-receipt', {
-              method: 'POST',
-              body: formData
-            });
-
-            const uploadData = await uploadRes.json();
-            if (!uploadRes.ok || !uploadData.success) {
-              throw new Error(uploadData.error || 'فشل رفع الصورة');
-            }
-
-            const receiptUrl = uploadData.url;
-
-            // Save to DB and notify admin via Telegram
-            const updateRes = await fetch('/api/order-receipt', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                order_number: this.orderNumber,
-                receipt_url: receiptUrl
-              })
-            });
-
-            const updateData = await updateRes.json();
-            if (updateData.success) {
-              this.order.receipt_url = receiptUrl;
-              this.showToast('✅ تم إرسال إيصال التحويل للمراجعة!');
-            } else {
-              throw new Error(updateData.error || 'فشل الحفظ');
-            }
-          } catch (err) {
-            console.error('Receipt upload error:', err);
-            this.receiptPreview = '';
-            this.showToast('❌ حدث خطأ: ' + err.message);
-          } finally {
-            this.isUploading = false;
-          }
-        }
-      }
-    }
-  </script>
 </body>
 </html>

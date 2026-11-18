@@ -357,9 +357,9 @@
           
           <!-- Image Container with Hover Flip -->
           <div class="product-img-container aspect-square bg-zinc-100">
-            <img :src="p.image_url" :alt="p.name" class="product-img-front"/>
+            <img :src="p.image_url" :alt="p.name" class="product-img-front" @error="$el.src='logo.jpeg'" loading="lazy"/>
             <template x-if="p.image_hover">
-              <img :src="p.image_hover" :alt="p.name + ' - alternate'" class="product-img-back"/>
+              <img :src="p.image_hover" :alt="p.name + ' - alternate'" class="product-img-back" @error="$el.src='logo.jpeg'" loading="lazy"/>
             </template>
             
             <!-- Badges -->

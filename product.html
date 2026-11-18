@@ -240,12 +240,11 @@
             Color: <span class="font-semibold text-black" x-text="selectedColor || 'Select'"></span>
           </p>
           <div class="flex gap-2.5 flex-wrap">
-            <template x-for="color in product.colors" :key="color">
-              <button @click="selectColor(color)" :title="color"
-                      :class="selectedColor === color ? 'selected' : ''"
-                      :style="{ background: color.startsWith('#') ? color : '' }"
-                      class="color-swatch border-2 border-zinc-300 hover:border-zinc-500"
-                      x-text="!color.startsWith('#') ? color.substring(0,2) : ''">
+            <template x-for="(color, cIdx) in product.colors" :key="cIdx">
+              <button @click="selectColor(getColorName(color))" :title="getColorName(color)"
+                      :class="selectedColor === getColorName(color) ? 'selected' : ''"
+                      :style="{ background: getColorBg(color) }"
+                      class="color-swatch border-2 border-zinc-300 hover:border-zinc-500">
               </button>
             </template>
           </div>
@@ -778,13 +777,29 @@ function productPage() {
       try { return JSON.parse(localStorage.getItem('vexis_cart') || '[]'); } catch { return []; }
     },
 
+    getColorName(c) {
+      if (!c) return '';
+      if (typeof c === 'object') return c.name || c.hex || '';
+      return String(c);
+    },
+
+    getColorBg(c) {
+      if (!c) return '#111';
+      if (typeof c === 'object') return c.hex || '#111';
+      const str = String(c).trim();
+      if (str.startsWith('#')) return str;
+      const map = { black: '#111111', white: '#ffffff', navy: '#1e3a8a', grey: '#6b7280', gray: '#6b7280', red: '#ef4444' };
+      return map[str.toLowerCase()] || str;
+    },
+
     async loadReviews() {
       try {
-        const res = await fetch('/api/reviews?product_id=' + encodeURIComponent(this.product.id || ''));
+        const res = await fetch('/api/reviews');
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data)) {
-            this.reviewsList = data.map(r => ({
+          const list = Array.isArray(data) ? data : (data.reviews || []);
+          if (Array.isArray(list) && list.length > 0) {
+            this.reviewsList = list.map(r => ({
               rating: r.rating || 5,
               date: r.created_at ? new Date(r.created_at).toLocaleDateString('en-US') : '',
               author: r.name || 'Anonymous',
@@ -827,6 +842,19 @@ function productPage() {
       if (!prod && window.mockProducts && window.mockProducts.length) prod = window.mockProducts[0];
       this.product = prod || {};
       await this.loadReviews();
+
+      window.addEventListener('productsLoaded', (e) => {
+        if (!this.product || !this.product.id) {
+          const list = e.detail || [];
+          const params = new URLSearchParams(window.location.search);
+          const idParam = params.get('id');
+          const found = idParam ? list.find(p => String(p.id) === idParam) : list[0];
+          if (found) {
+            this.product = found;
+            this.loadReviews();
+          }
+        }
+      });
     }
   };
 }

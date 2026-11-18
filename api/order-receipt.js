@@ -3,7 +3,7 @@ import { setCorsHeaders, isRateLimited, safeError } from './_auth.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.APISUPABASE_SERVICE_ROLE_KEY
 );
 
 const ALLOWED_URL_PATTERNS = [
@@ -49,16 +49,70 @@ export default async function handler(req, res) {
       return res.status(400).json({ success: false, error: 'رابط الإيصال غير مسموح به.' });
     }
 
-    const { data, error } = await supabase
+    // Try updating receipt_url if column exists, otherwise update status
+    let data;
+    const { data: updateData, error: updateErr } = await supabase
       .from('orders')
-      .update({ receipt_url: receipt_url.substring(0, 1000) })
+      .update({ receipt_url: receipt_url.substring(0, 1000), status: 'review' })
       .eq('order_number', safeOrderNumber)
-      .select('order_number')
-      .single();
+      .select('order_number, customer_name, phone, total')
+      .maybeSingle();
 
-    if (error) throw error;
+    if (updateErr) {
+      // Fallback if receipt_url column doesn't exist in Supabase table schema
+      console.warn('[order-receipt] receipt_url update failed, fallback to status update:', updateErr.message);
+      const { data: fallbackData, error: fallbackErr } = await supabase
+        .from('orders')
+        .update({ status: 'review' })
+        .eq('order_number', safeOrderNumber)
+        .select('order_number, customer_name, phone, total')
+        .single();
+      if (fallbackErr) throw fallbackErr;
+      data = fallbackData;
+    } else {
+      data = updateData;
+    }
+
     if (!data) {
       return res.status(404).json({ success: false, error: 'الطلب غير موجود.' });
+    }
+
+    // Telegram photo notification with inline action buttons
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+    if (token && chatId) {
+      try {
+        const caption = `🧾 <b>إيصال تحويل جديد!</b>\n` +
+          `🆔 <b>رقم الطلب:</b> <code>${data.order_number}</code>\n` +
+          `👤 <b>العميل:</b> ${data.customer_name}\n` +
+          `📞 <b>الهاتف:</b> ${data.phone}\n` +
+          `💰 <b>الإجمالي:</b> EGP ${data.total}`;
+
+        const inlineKeyboard = {
+          inline_keyboard: [
+            [
+              { text: '✅ قبول الإيصال وتأكيد الطلب', callback_data: `acc_${data.order_number}` },
+            ],
+            [
+              { text: '❌ رفض الإيصال', callback_data: `rej_${data.order_number}` }
+            ]
+          ]
+        };
+
+        await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            photo: receipt_url,
+            caption: caption,
+            parse_mode: 'HTML',
+            reply_markup: inlineKeyboard
+          })
+        });
+      } catch (tgErr) {
+        console.error('[Telegram Receipt Photo Error]', tgErr);
+      }
     }
 
     return res.status(200).json({
