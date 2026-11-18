@@ -3,36 +3,28 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>VEXIS | Order Tracking</title>
+<title>VEXIS | Order Tracking — Live Shipment Status</title>
+<meta name="description" content="Track your VEXIS gym sportswear order status in real time. Fast nationwide delivery and cash on delivery across Egypt.">
 <meta name="robots" content="noindex">
 
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="shortcut icon" href="favicon.ico" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
       extend: {
-        colors: {
-          'gallery-white': '#ffffff',
-          'studio-mist': '#f5f5f7',
-          'hairline-silver': '#d6d6d6',
-          'ink': '#1d1d1f',
-          'slate-apple': '#4a4a4a',
-          'steel-apple': '#5a5a5a',
-          'apple-blue': '#0066cc',
-          'pricing-blue': '#0071e3',
-          'launch-orange': '#b64400',
-          'emerald-vexis': '#059669'
-        },
-        borderRadius: {
-          '28': '28px',
-          '980': '980px',
+        fontFamily: {
+          brand: ['Montserrat', 'Cairo', 'sans-serif'],
+          sans: ['Cairo', 'Montserrat', 'sans-serif'],
         }
       }
     }
@@ -41,492 +33,399 @@
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <style>
-:root {
-  --font: "Cairo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
-  --ink: #1d1d1f;
-  --slate: #4a4a4a;
-  --steel: #5a5a5a;
-  --mist: #f5f5f7;
-  --silver: #d6d6d6;
-  --blue: #0071e3;
-  --green: #059669;
-}
-* { font-family: var(--font); box-sizing: border-box; text-rendering: optimizeLegibility; }
-body { background: var(--mist); color: var(--ink); -webkit-font-smoothing: antialiased; }
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+  * { font-family: 'Cairo', 'Montserrat', sans-serif; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  .font-brand { font-family: 'Montserrat', 'Cairo', sans-serif; }
+  html, body { overflow-x: hidden; width: 100%; scroll-behavior: smooth; background: #fafafa; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+  .nav-link { transition: color .2s; position: relative; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#000; transition: width .3s; }
+  .nav-link:hover::after { width:100%; }
 
-.apple-card {
-  background: #fff;
-  border-radius: 28px;
-  border: 1px solid var(--silver);
-}
+  .form-input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #e4e4e7;
+    border-radius: 12px;
+    font-size: 14px;
+    background: #ffffff;
+    outline: none;
+    transition: all .15s ease;
+  }
+  .form-input:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  }
 
-.apple-input {
-  background: #fff;
-  border: 1px solid #aaa;
-  border-radius: 9999px;
-  padding: 10px 20px;
-  font-size: 14px;
-  color: var(--ink);
-  outline: none;
-  transition: border-color .15s;
-  width: 100%;
-  font-weight: 500;
-}
-.apple-input:focus { border-color: var(--blue); }
-
-.apple-btn {
-  background: var(--blue);
-  color: #fff;
-  border-radius: 9999px;
-  padding: 10px 24px;
-  font-weight: 600;
-  font-size: 14px;
-  transition: background .15s, transform .1s;
-  white-space: nowrap;
-}
-.apple-btn:hover { background: #0077ed; transform: scale(1.01); }
-
-/* ─── ORDER STATUS TRACKER ─── */
-.tracker-wrap {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0;
-  position: relative;
-  padding: 0 8px;
-}
-
-.tracker-step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  position: relative;
-  z-index: 2;
-}
-
-/* Connecting line between steps */
-.tracker-step::before {
-  content: '';
-  position: absolute;
-  top: 18px;
-  right: 50%;
-  width: 100%;
-  height: 2px;
-  background: var(--silver);
-  z-index: 0;
-  transition: background .4s ease;
-}
-.tracker-step:last-child::before { display: none; }
-.tracker-step.done::before { background: var(--green); }
-.tracker-step.active::before { background: var(--silver); }
-
-.step-circle {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 2px solid var(--silver);
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  color: var(--steel);
-  position: relative;
-  z-index: 3;
-  transition: all .3s ease;
-  flex-shrink: 0;
-}
-.step-circle.done {
-  background: var(--green);
-  border-color: var(--green);
-  color: #fff;
-}
-.step-circle.active {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: #fff;
-  box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
-  animation: pulse-ring 2s infinite;
-}
-.step-circle.rejected-step {
-  background: #ef4444;
-  border-color: #ef4444;
-  color: #fff;
-}
-@keyframes pulse-ring {
-  0%,100% { box-shadow: 0 0 0 4px rgba(0,113,227,0.15); }
-  50%      { box-shadow: 0 0 0 8px rgba(0,113,227,0.08); }
-}
-
-.step-label {
-  margin-top: 8px;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--steel);
-  text-align: center;
-  line-height: 1.3;
-}
-.step-label.done  { color: var(--green); }
-.step-label.active { color: var(--blue); font-weight: 700; }
-.step-label.rejected-label { color: #ef4444; font-weight: 700; }
-
-/* Mobile compact */
-@media (max-width: 480px) {
-  .step-circle { width: 30px; height: 30px; font-size: 11px; }
-  .step-circle::before { top: 15px; }
-  .step-label { font-size: 9px; }
-}
-
-/* Status badge */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-
-/* Live dot */
-.live-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: #22c55e;
-  display: inline-block; animation: blink-live 1.2s ease-in-out infinite;
-}
-@keyframes blink-live { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-/* Item row */
-.item-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--silver);
-}
-.item-row:last-child { border-bottom: none; }
-
-.item-thumb {
-  width: 44px; height: 44px; border-radius: 10px;
-  object-fit: cover; background: var(--mist);
-  border: 1px solid var(--silver); flex-shrink: 0;
-}
-
-/* Shimmer skeleton */
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f2 25%, #e8e8ea 50%, #f0f0f2 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-  border-radius: 8px;
-}
-@keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+  /* Timeline styling - Pure Black & Emerald (ZERO BLUE) */
+  .step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all .2s;
+    background: #ffffff;
+    border: 2px solid #e4e4e7;
+    color: #a1a1aa;
+    position: relative;
+    z-index: 10;
+  }
+  .step-circle.done {
+    background: #000000;
+    border-color: #000000;
+    color: #ffffff;
+  }
+  .step-circle.active {
+    background: #000000;
+    border-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.15);
+  }
+  .step-line {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #e4e4e7;
+    z-index: 1;
+  }
+  .step-line-fill {
+    height: 100%;
+    background: #000000;
+    transition: width .4s cubic-bezier(.4, 0, .2, 1);
+  }
 </style>
 </head>
+<body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col" x-data="myOrders()" x-init="init()">
 
-<body class="min-h-screen flex flex-col" x-data="myOrders()" x-init="init()">
+<!-- ============ TOP TICKER ============ -->
+<div class="bg-black text-white text-xs py-2 overflow-hidden border-b border-zinc-800">
+  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between text-[11px] font-bold tracking-wider uppercase">
+    <span>🚚 Live Nationwide Shipment Tracking</span>
+    <span class="hidden sm:inline">⚡ Real-Time Status Sync</span>
+    <a href="return.html" class="underline underline-offset-2 hover:text-zinc-300">🔄 Exchange Your Item</a>
+  </div>
+</div>
 
-<!-- ── HEADER ── -->
-<header class="bg-white/90 backdrop-blur-xl border-b border-hairline-silver sticky top-0 z-50">
-  <div class="max-w-2xl mx-auto px-4 h-12 flex items-center justify-between text-xs">
-
-    <a href="index.html" class="flex items-center gap-2">
-      <div class="w-6 h-6 rounded-full overflow-hidden border border-hairline-silver">
-        <img src="logo.jpeg" alt="VEXIS" class="w-full h-full object-cover">
+<!-- ============ NAVBAR ============ -->
+<nav class="bg-white border-b border-zinc-200 sticky top-0 z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2 group">
+      <div class="bg-black text-white rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-sm group-hover:scale-105 transition transform">
+        <img src="logo.jpeg" alt="VEXIS" class="w-7 h-7 rounded-full object-cover border border-zinc-700">
+        <span class="font-brand font-black text-base md:text-lg tracking-widest text-white uppercase">VEXIS</span>
       </div>
-      <span class="font-bold text-sm tracking-widest text-ink uppercase">VEXIS</span>
     </a>
 
-    <div class="flex items-center gap-4">
-      <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-hairline-silver text-[11px] font-semibold text-slate-apple">
-        <span>🇪🇬</span>
-        <span class="text-ink tracking-wider">EGYPT</span>
-      </div>
-      <a href="index.html" class="text-xs text-apple-blue hover:underline font-medium">Store</a>
-      <a href="cart.html" class="text-slate-apple hover:text-ink transition">
-        <i class="fas fa-shopping-bag text-sm"></i>
+    <div class="hidden md:flex items-center gap-8 text-sm font-bold text-zinc-700">
+      <a href="index.html" class="nav-link hover:text-black">Home</a>
+      <a href="index.html#products" class="nav-link hover:text-black">Collection</a>
+      <a href="return.html" class="nav-link hover:text-black text-xs font-black uppercase tracking-wider text-zinc-800">EXCHANGE YOUR ITEM</a>
+      <a href="my-orders.html" class="nav-link text-black font-black flex items-center gap-1.5">
+        <i class="fas fa-box-open text-xs"></i> My Orders
       </a>
     </div>
 
-  </div>
-</header>
-
-<!-- ── MAIN ── -->
-<main class="max-w-2xl mx-auto px-4 py-10 flex-1 w-full space-y-6">
-
-  <!-- Page Title -->
-  <div class="border-b border-hairline-silver pb-5">
-    <h1 class="text-2xl font-bold text-ink tracking-tight">Order Tracking</h1>
-    <p class="text-sm text-slate-apple mt-1 font-medium">Live real-time order tracking — updates every 15 seconds</p>
-  </div>
-
-  <!-- ── PHONE SEARCH ── -->
-  <div x-show="!phone" class="apple-card p-7 space-y-5">
-    <div class="space-y-1">
-      <h2 class="text-base font-bold text-ink">Track Your Order</h2>
-      <p class="text-sm text-slate-apple font-medium">Enter the phone number used at checkout:</p>
-    </div>
-
-    <div class="flex gap-3">
-      <input type="tel"
-             x-model="inputPhone"
-             placeholder="01xxxxxxxxx"
-             class="apple-input flex-1 font-mono"
-             @keyup.enter="searchByPhone()">
-      <button @click="searchByPhone()" class="apple-btn">
-        <i class="fas fa-search mr-1"></i> Search
-      </button>
+    <div class="flex items-center gap-3">
+      <a href="cart.html" class="relative text-black hover:text-zinc-600 transition p-2">
+        <i class="fas fa-shopping-bag text-lg"></i>
+      </a>
     </div>
   </div>
+</nav>
 
-  <!-- ── LOADING SKELETON ── -->
-  <template x-if="loading">
-    <div class="apple-card p-6 space-y-4">
-      <div class="skeleton h-5 w-48 rounded"></div>
-      <div class="skeleton h-4 w-32 rounded"></div>
-      <div class="skeleton h-24 w-full rounded-2xl mt-4"></div>
-      <div class="skeleton h-4 w-full rounded"></div>
-      <div class="skeleton h-4 w-3/4 rounded"></div>
+<!-- ============ MAIN CONTENT ============ -->
+<main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 flex-1 w-full space-y-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between flex-wrap gap-4 border-b border-zinc-200 pb-5">
+    <div>
+      <h1 class="font-brand font-black text-2xl md:text-4xl text-black uppercase tracking-tight">Order Tracking</h1>
+      <p class="text-zinc-500 text-xs sm:text-sm mt-1">Real-time status tracking for your VEXIS shipments.</p>
     </div>
-  </template>
 
-  <!-- ── ORDERS LIST ── -->
-  <template x-if="!loading && phone && orders.length > 0">
-    <div class="space-y-5">
-
-      <!-- Header row -->
-      <div class="flex items-center justify-between text-xs text-slate-apple px-1 font-medium">
-        <span>
-          <span class="live-dot"></span>
-          <span class="mr-1">Live —</span>
-          <strong class="text-ink" x-text="orders.length"></strong> order(s)
-        </span>
-        <button @click="phone=''; orders=[]; stopPolling()" class="text-apple-blue hover:underline">
-          Change phone number
+    <!-- Active phone pill + change button -->
+    <template x-if="phone">
+      <div class="flex items-center gap-2.5 bg-white border border-zinc-200 px-3.5 py-1.5 rounded-full shadow-sm">
+        <i class="fas fa-phone text-xs text-zinc-500"></i>
+        <span class="text-xs font-bold text-black" x-text="phone"></span>
+        <button @click="phone=''; orders=[]; stopPolling()" class="text-[11px] font-bold text-zinc-500 hover:text-black underline ml-1">
+          Change
         </button>
       </div>
+    </template>
+  </div>
 
-      <template x-for="ord in orders" :key="ord.id || ord.order_number">
-        <div class="apple-card overflow-hidden">
+  <!-- SEARCH BY PHONE CARD (Shown when no phone is active) -->
+  <div x-show="!phone" class="bg-white rounded-2xl border border-zinc-200 p-6 sm:p-10 shadow-sm max-w-lg mx-auto text-center space-y-5 my-8">
+    <div class="w-16 h-16 bg-zinc-100 rounded-full flex items-center justify-center mx-auto text-2xl text-black">
+      <i class="fas fa-box-archive"></i>
+    </div>
+    
+    <div>
+      <h2 class="font-brand font-bold text-xl text-black">Find Your Orders</h2>
+      <p class="text-zinc-500 text-xs sm:text-sm mt-1">Enter the mobile phone number used when placing your order to see live tracking.</p>
+    </div>
 
-          <!-- ── Order Header ── -->
-          <div class="px-6 pt-5 pb-4 border-b border-hairline-silver flex items-start justify-between gap-3">
-            <div>
-              <span class="text-[10px] text-steel-apple uppercase tracking-widest block font-semibold">Order</span>
-              <span class="font-mono font-bold text-base text-ink tracking-wider" x-text="ord.order_number"></span>
-              <div class="text-[11px] text-steel-apple mt-0.5 font-medium"
-                   x-text="ord.created_at ? new Date(ord.created_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : ''">
-              </div>
+    <form @submit.prevent="searchByPhone" class="space-y-3">
+      <input type="tel"
+             x-model="inputPhone"
+             required
+             placeholder="e.g. 01012345678"
+             class="form-input text-center text-base tracking-wider font-bold">
+      <button type="submit"
+              class="w-full bg-black hover:bg-zinc-800 text-white font-brand font-black py-3.5 rounded-xl text-sm uppercase tracking-wider transition shadow-md">
+        Track My Orders
+      </button>
+    </form>
+  </div>
+
+  <!-- LOADING STATE -->
+  <div x-show="loading" class="text-center py-16">
+    <i class="fas fa-spinner fa-spin text-3xl text-black mb-3"></i>
+    <p class="text-sm font-bold text-zinc-600">Connecting to tracking server...</p>
+  </div>
+
+  <!-- ORDERS LIST -->
+  <div x-show="!loading && phone" class="space-y-6">
+
+    <!-- NO ORDERS FOUND -->
+    <template x-if="orders.length === 0">
+      <div class="bg-white rounded-2xl border border-zinc-200 p-10 text-center space-y-4">
+        <div class="w-16 h-16 bg-zinc-100 rounded-full flex items-center justify-center mx-auto text-2xl text-zinc-400">
+          <i class="fas fa-magnifying-glass"></i>
+        </div>
+        <h3 class="font-brand font-bold text-lg text-black">No Orders Found</h3>
+        <p class="text-zinc-500 text-xs sm:text-sm max-w-md mx-auto leading-relaxed">
+          We couldn't find any orders matching phone <strong class="text-black" x-text="phone"></strong>. Please check your number or contact our WhatsApp support team.
+        </p>
+        <div class="pt-2 flex items-center justify-center gap-3 flex-wrap">
+          <button @click="phone=''; inputPhone=''" class="bg-black text-white font-brand font-bold text-xs px-5 py-2.5 rounded-xl hover:bg-zinc-800 transition">
+            Try Another Number
+          </button>
+          <a :href="'https://wa.me/201007720554?text=' + encodeURIComponent('Hi VEXIS, I need help finding my order for phone: ' + phone)"
+             target="_blank"
+             class="bg-emerald-600 hover:bg-emerald-700 text-white font-brand font-bold text-xs px-5 py-2.5 rounded-xl inline-flex items-center gap-2 transition">
+            <i class="fab fa-whatsapp"></i> WhatsApp Support
+          </a>
+        </div>
+      </div>
+    </template>
+
+    <!-- ORDERS CARDS -->
+    <template x-for="order in orders" :key="order.order_number || order.id">
+      <div class="bg-white rounded-2xl border border-zinc-200 shadow-sm overflow-hidden divide-y divide-zinc-100">
+        
+        <!-- Card Top: Order Number, Date, Status Badge -->
+        <div class="p-5 sm:p-6 flex items-center justify-between flex-wrap gap-4 bg-zinc-50/50">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-zinc-400 uppercase tracking-wider font-brand">Order</span>
+              <span class="font-brand font-black text-base sm:text-lg text-black" x-text="order.order_number"></span>
             </div>
-            <!-- Status badge -->
-            <span class="status-badge flex-shrink-0"
-                  :class="{
-                    'bg-emerald-50 text-emerald-700 border border-emerald-200': ord.status==='delivered',
-                    'bg-blue-50 text-blue-700 border border-blue-200': ord.status==='shipped' || ord.status==='review',
-                    'bg-red-50 text-red-600 border border-red-200': ord.status==='rejected',
-                    'bg-studio-mist text-slate-apple border border-hairline-silver': !['delivered','shipped','review','rejected'].includes(ord.status)
-                  }"
-                  x-text="getStatusLabel(ord.status)">
-            </span>
+            <p class="text-xs text-zinc-500 mt-0.5" x-text="order.created_at ? new Date(order.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) : ''"></p>
           </div>
 
-          <!-- ── Amazon Progress Bar ── -->
-          <div class="px-6 py-6 border-b border-hairline-silver"
-               x-show="ord.status !== 'rejected'">
-            <div class="tracker-wrap">
+          <!-- Status Badge -->
+          <div class="flex items-center gap-2">
+            <span :class="{
+              'bg-amber-100 text-amber-800 border-amber-200': order.status === 'pending',
+              'bg-zinc-100 text-zinc-800 border-zinc-300': order.status === 'review',
+              'bg-emerald-100 text-emerald-800 border-emerald-300': order.status === 'shipped',
+              'bg-black text-white border-black': order.status === 'delivered',
+              'bg-red-100 text-red-700 border-red-200': order.status === 'rejected'
+            }" class="px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border" x-text="getStatusLabel(order.status)"></span>
+          </div>
+        </div>
 
-              <!-- Step 1: Pending -->
-              <div class="tracker-step"
-                   :class="getStepState(ord.status, 'pending')">
-                <div class="step-circle"
-                     :class="getStepState(ord.status, 'pending')">
-                  <i class="fas"
-                     :class="isStepDone(ord.status, 'pending') ? 'fa-check' : 'fa-clock'"></i>
-                </div>
-                <span class="step-label"
-                      :class="getStepState(ord.status, 'pending')">
-                  Order<br>Placed
-                </span>
+        <!-- LIVE AMAZON-STYLE TRACKER (Zero Blue!) -->
+        <template x-if="order.status !== 'rejected'">
+          <div class="p-6 sm:p-8">
+            <div class="relative max-w-xl mx-auto">
+              
+              <!-- Background / Fill Line -->
+              <div class="step-line">
+                <div class="step-line-fill" :style="'width: ' + (getStepIndex(order.status) / 3 * 100) + '%'"></div>
               </div>
 
-              <!-- Step 2: Review -->
-              <div class="tracker-step"
-                   :class="getStepState(ord.status, 'review')">
-                <div class="step-circle"
-                     :class="getStepState(ord.status, 'review')">
-                  <i class="fas"
-                     :class="isStepDone(ord.status, 'review') ? 'fa-check' : 'fa-clipboard-check'"></i>
+              <!-- Steps Grid -->
+              <div class="relative flex items-center justify-between">
+                
+                <!-- Step 1: Placed -->
+                <div class="flex flex-col items-center text-center">
+                  <div class="step-circle" :class="getStepState(order.status, 'pending')">
+                    <i class="fas fa-receipt text-xs"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-black mt-2">Order Placed</span>
                 </div>
-                <span class="step-label"
-                      :class="getStepState(ord.status, 'review')">
-                  Under<br>Review
-                </span>
-              </div>
 
-              <!-- Step 3: Shipped -->
-              <div class="tracker-step"
-                   :class="getStepState(ord.status, 'shipped')">
-                <div class="step-circle"
-                     :class="getStepState(ord.status, 'shipped')">
-                  <i class="fas"
-                     :class="isStepDone(ord.status, 'shipped') ? 'fa-check' : 'fa-truck'"></i>
+                <!-- Step 2: Processing -->
+                <div class="flex flex-col items-center text-center">
+                  <div class="step-circle" :class="getStepState(order.status, 'review')">
+                    <i class="fas fa-boxes-packing text-xs"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-black mt-2">Processing</span>
                 </div>
-                <span class="step-label"
-                      :class="getStepState(ord.status, 'shipped')">
-                  Out for<br>Delivery
-                </span>
-              </div>
 
-              <!-- Step 4: Delivered -->
-              <div class="tracker-step"
-                   :class="getStepState(ord.status, 'delivered')">
-                <div class="step-circle"
-                     :class="getStepState(ord.status, 'delivered')">
-                  <i class="fas"
-                     :class="isStepDone(ord.status, 'delivered') ? 'fa-check' : 'fa-box-open'"></i>
+                <!-- Step 3: Shipped -->
+                <div class="flex flex-col items-center text-center">
+                  <div class="step-circle" :class="getStepState(order.status, 'shipped')">
+                    <i class="fas fa-truck-fast text-xs"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-black mt-2">Out for Delivery</span>
                 </div>
-                <span class="step-label"
-                      :class="getStepState(ord.status, 'delivered')">
-                  Order<br>Delivered
-                </span>
+
+                <!-- Step 4: Delivered -->
+                <div class="flex flex-col items-center text-center">
+                  <div class="step-circle" :class="getStepState(order.status, 'delivered')">
+                    <i class="fas fa-house-chimney text-xs"></i>
+                  </div>
+                  <span class="text-[11px] font-bold text-black mt-2">Delivered</span>
+                </div>
+
               </div>
 
             </div>
 
-            <!-- Current Status Message -->
-            <div class="mt-6 rounded-2xl px-4 py-3 text-sm font-semibold text-center"
-                 :class="{
-                   'bg-blue-50 text-blue-700': ['pending','review','shipped'].includes(ord.status),
-                   'bg-emerald-50 text-emerald-700': ord.status === 'delivered'
-                 }"
-                 x-text="getStatusMessage(ord.status)">
+            <!-- Status Explanation Box -->
+            <div class="mt-6 bg-zinc-50 border border-zinc-200 rounded-xl p-3.5 text-center text-xs font-semibold text-zinc-700 max-w-md mx-auto">
+              <span x-text="getStatusMessage(order.status)"></span>
             </div>
           </div>
+        </template>
 
-          <!-- Rejected Banner -->
-          <div x-show="ord.status === 'rejected'"
-               class="mx-6 my-4 rounded-2xl bg-red-50 border border-red-200 px-5 py-4 text-sm text-red-700 space-y-1">
-            <div class="font-bold flex items-center gap-2">
-              <i class="fas fa-times-circle"></i> Order Cancelled
-            </div>
-            <div class="text-xs font-medium text-red-600"
-                 x-text="ord.rejection_reason ? 'Reason: ' + ord.rejection_reason : 'Please reach out via WhatsApp for details.'">
-            </div>
-            <a href="https://wa.me/201061927815" target="_blank"
-               class="inline-block mt-2 bg-red-600 text-white text-xs px-4 py-1.5 rounded-full font-semibold hover:bg-red-700 transition">
-              <i class="fab fa-whatsapp mr-1"></i> Contact Support
-            </a>
+        <!-- REJECTED/CANCELLED ALERT -->
+        <template x-if="order.status === 'rejected'">
+          <div class="p-6 bg-red-50 text-red-700 text-xs space-y-1 text-center">
+            <p class="font-bold text-sm"><i class="fas fa-circle-xmark mr-1"></i> Order Cancelled</p>
+            <p x-text="order.rejection_reason || 'This order was cancelled by customer support.'"></p>
           </div>
+        </template>
 
-          <!-- ── Order Items ── -->
-          <div class="px-6 py-4 border-b border-hairline-silver space-y-0">
-            <h3 class="text-xs font-bold text-steel-apple uppercase tracking-widest mb-3">Order Items</h3>
-            <template x-for="(item, idx) in (ord.items || [])" :key="idx">
-              <div class="item-row">
-                <div class="item-thumb bg-studio-mist flex items-center justify-center">
-                  <i class="fas fa-tshirt text-hairline-silver text-sm"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="text-sm font-semibold text-ink truncate" x-text="item.name || 'VEXIS Item'"></div>
-                  <div class="text-xs text-slate-apple font-medium mt-0.5">
-                    <span x-show="item.size">Size: <span x-text="item.size"></span></span>
-                    <span x-show="item.color" class="mr-3">Color: <span x-text="item.color"></span></span>
-                    <span class="mr-3">Qty: <span x-text="item.qty || 1"></span></span>
+        <!-- ORDER ITEMS -->
+        <div class="p-6 space-y-4">
+          <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-wider font-brand">Items Ordered</h4>
+          
+          <div class="space-y-3 divide-y divide-zinc-100">
+            <template x-for="item in (order.items || [])" :key="item.id || item.name">
+              <div class="pt-3 first:pt-0 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-12 h-14 bg-zinc-100 rounded-lg overflow-hidden flex-shrink-0 border border-zinc-200">
+                    <img :src="item.image_url || 'logo.jpeg'" :alt="item.name" class="w-full h-full object-cover" @error="$el.src='logo.jpeg'">
+                  </div>
+                  <div class="min-w-0">
+                    <p class="font-bold text-sm text-black truncate" x-text="item.name || 'VEXIS Performance Tee'"></p>
+                    <p class="text-xs text-zinc-500 mt-0.5">
+                      <span x-show="item.size" x-text="'Size: ' + item.size + ' • '"></span>
+                      <span x-text="'Qty: ' + (item.qty || 1)"></span>
+                    </p>
                   </div>
                 </div>
-                <div class="text-sm font-bold text-ink font-mono flex-shrink-0"
-                     x-text="((item.finalPrice || item.price || 0) * (item.qty || 1)) + ' EGP'">
-                </div>
+                <div class="font-brand font-black text-sm text-black whitespace-nowrap" x-text="'EGP ' + ((item.finalPrice || item.price || 0) * (item.qty || 1))"></div>
               </div>
             </template>
           </div>
+        </div>
 
-          <!-- ── Pricing Summary ── -->
-          <div class="px-6 py-4 space-y-2 text-sm border-b border-hairline-silver">
-            <div class="flex justify-between text-slate-apple font-medium">
-              <span>Subtotal</span>
-              <span class="font-mono text-ink" x-text="(ord.subtotal || 0) + ' EGP'"></span>
-            </div>
-            <div class="flex justify-between text-slate-apple font-medium">
-              <span>Shipping</span>
-              <span class="font-mono text-ink" x-text="(ord.shipping_cost || 0) + ' EGP'"></span>
-            </div>
-            <div class="flex justify-between text-ink font-bold pt-2 border-t border-hairline-silver text-base">
-              <span>Total</span>
-              <span class="font-mono" x-text="(ord.total || 0) + ' EGP'"></span>
+        <!-- DELIVERY & FINANCIAL SUMMARY -->
+        <div class="p-6 bg-zinc-50/50 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+          
+          <!-- Delivery Details -->
+          <div class="space-y-2">
+            <h4 class="font-brand font-bold text-zinc-400 uppercase tracking-wider text-[11px]">Delivery Information</h4>
+            <div class="space-y-1 text-zinc-700">
+              <p><strong class="text-black">Recipient:</strong> <span x-text="order.customer_name || 'N/A'"></span></p>
+              <p><strong class="text-black">Phone:</strong> <span x-text="order.phone"></span></p>
+              <p><strong class="text-black">Address:</strong> <span x-text="order.address + (order.governorate ? ', ' + order.governorate : '')"></span></p>
+              <p><strong class="text-black">Payment:</strong> Cash on Delivery (COD)</p>
             </div>
           </div>
 
-          <!-- ── Delivery Info ── -->
-          <div class="px-6 py-4 space-y-2 text-xs font-medium">
-            <div class="flex items-center gap-2 text-slate-apple">
-              <i class="fas fa-map-marker-alt text-ink w-4 text-center"></i>
-              <span>
-                <span x-text="ord.governorate"></span>
-                — <span x-text="ord.address"></span>
-              </span>
-            </div>
-            <div class="flex items-center gap-2 text-slate-apple">
-              <i class="fas fa-phone text-ink w-4 text-center"></i>
-              <span class="font-mono" x-text="ord.phone"></span>
-            </div>
-            <div class="flex items-center gap-2 text-slate-apple" x-show="ord.payment_method">
-              <i class="fas fa-wallet text-ink w-4 text-center"></i>
-              <span x-text="ord.payment_method === 'cod' ? 'Cash on Delivery (COD)' : ord.payment_method"></span>
-            </div>
-            <div class="flex items-center gap-2 text-slate-apple" x-show="ord.notes">
-              <i class="fas fa-comment-dots text-ink w-4 text-center"></i>
-              <span x-text="ord.notes"></span>
+          <!-- Total Breakdown -->
+          <div class="space-y-2 md:border-l md:border-zinc-200 md:pl-6">
+            <h4 class="font-brand font-bold text-zinc-400 uppercase tracking-wider text-[11px]">Summary</h4>
+            <div class="space-y-1.5 text-zinc-600">
+              <div class="flex justify-between">
+                <span>Subtotal</span>
+                <span class="font-bold text-black" x-text="'EGP ' + (order.subtotal || order.total)"></span>
+              </div>
+              <div class="flex justify-between">
+                <span>Shipping</span>
+                <span class="font-bold text-black" x-text="'EGP ' + (order.shipping_cost || 0)"></span>
+              </div>
+              <div class="flex justify-between text-base font-black text-black pt-2 border-t border-zinc-200">
+                <span>Total</span>
+                <span class="font-brand text-lg" x-text="'EGP ' + order.total"></span>
+              </div>
             </div>
           </div>
 
         </div>
-      </template>
 
-      <!-- WhatsApp Support -->
-      <div class="apple-card p-5 flex items-center gap-4">
-        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center flex-shrink-0">
-          <i class="fab fa-whatsapp text-emerald-600 text-lg"></i>
+        <!-- ACTIONS: WhatsApp Support + Exchange Button -->
+        <div class="p-4 sm:p-5 bg-white flex items-center justify-between flex-wrap gap-3">
+          <a href="return.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-black hover:underline">
+            <i class="fas fa-rotate-left"></i>
+            <span>Need to return or exchange this order?</span>
+          </a>
+
+          <a :href="'https://wa.me/201007720554?text=' + encodeURIComponent('Hi VEXIS, I am inquiring about order: ' + order.order_number)"
+             target="_blank"
+             class="inline-flex items-center gap-2 bg-black hover:bg-zinc-800 text-white font-brand font-bold text-xs px-4 py-2 rounded-xl transition">
+            <i class="fab fa-whatsapp text-emerald-400"></i>
+            <span>WhatsApp Support</span>
+          </a>
         </div>
-        <div class="flex-1">
-          <div class="text-sm font-bold text-ink">Need Help?</div>
-          <div class="text-xs text-slate-apple font-medium mt-0.5">VEXIS support team is available on WhatsApp 24/7</div>
-        </div>
-        <a href="https://wa.me/201061927815" target="_blank"
-           class="apple-btn text-sm py-2 px-4 flex-shrink-0">
-          Contact
-        </a>
-      </div>
 
-    </div>
-  </template>
+      </div>
+    </template>
 
-  <!-- ── NO ORDERS ── -->
-  <template x-if="!loading && phone && orders.length === 0">
-    <div class="apple-card p-12 text-center space-y-4">
-      <div class="w-16 h-16 rounded-full bg-studio-mist flex items-center justify-center mx-auto">
-        <i class="fas fa-box-open text-2xl text-steel-apple"></i>
-      </div>
-      <div>
-        <h3 class="font-bold text-base text-ink">No Orders Found</h3>
-        <p class="text-sm text-slate-apple font-medium mt-1">No orders found for <span class="font-mono text-ink" x-text="phone"></span></p>
-      </div>
-      <button @click="phone=''; orders=[]; stopPolling()" class="apple-btn inline-block mt-2 text-sm">
-        Search another number
-      </button>
-    </div>
-  </template>
+  </div>
 
 </main>
 
-<!-- ── FOOTER ── -->
-<footer class="border-t border-hairline-silver bg-gallery-white mt-12 py-6 text-center text-xs text-steel-apple font-medium">
-  © 2026 VEXIS — All rights reserved
+<!-- ============ FOOTER ============ -->
+<footer class="bg-black text-white mt-16 pt-12 pb-6 px-4">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-zinc-800">
+    <div>
+      <span class="font-brand font-black text-2xl tracking-widest uppercase">VEXIS</span>
+      <p class="text-zinc-400 text-sm mt-3 leading-relaxed">Let Your Power Speak.<br>Egypt's premier athletic compression wear.</p>
+    </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Customer Care</h4>
+      <ul class="flex flex-col gap-2">
+        <li><a href="index.html" class="text-zinc-300 hover:text-white text-sm transition">Home</a></li>
+        <li><a href="index.html#products" class="text-zinc-300 hover:text-white text-sm transition">Shop Collection</a></li>
+        <li><a href="return.html" class="text-zinc-300 hover:text-white text-sm transition">Exchange Your Item</a></li>
+        <li><a href="my-orders.html" class="text-zinc-300 hover:text-white text-sm transition">Track Order</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-brand font-bold text-sm uppercase tracking-widest text-zinc-400 mb-4">Follow Us</h4>
+      <div class="flex gap-3 mb-4">
+        <a href="https://www.instagram.com/vexiswear?dlrf=bDJ0MGoxMDVmNmg1" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-instagram text-base"></i>
+        </a>
+        <a href="https://www.facebook.com/share/1FHf8GFfMS/?mibextid=wwXIfr" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-facebook-f text-base"></i>
+        </a>
+        <a href="https://www.tiktok.com/@vexiso.eg" target="_blank"
+           class="w-10 h-10 bg-zinc-800 hover:bg-zinc-700 rounded-full flex items-center justify-center text-white transition hover:-translate-y-1 transform">
+          <i class="fab fa-tiktok text-base"></i>
+        </a>
+      </div>
+      <p class="text-zinc-500 text-xs">Cairo, Egypt &bull; Support available 24/7</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto pt-6 text-center text-zinc-500 text-xs">
+    &copy; 2026 VEXIS Inc. All rights reserved.
+  </div>
 </footer>
 
 <script>
@@ -537,19 +436,16 @@ function myOrders() {
     loading: false,
     orders: [],
     pollingInterval: null,
-
-    // Status flow: pending → review → shipped → delivered
     statusOrder: ['pending', 'review', 'shipped', 'delivered'],
 
     init() {
-      // Check URL parameters first (e.g. ?phone=01xxxxxxxxx or ?order=VNT-...)
       const urlParams = new URLSearchParams(window.location.search);
       const urlPhone = urlParams.get('phone');
       const saved = localStorage.getItem('vexis_customer_phone');
       
       const phoneToUse = urlPhone || saved;
       if (phoneToUse) {
-        this.phone      = phoneToUse;
+        this.phone = phoneToUse;
         this.inputPhone = phoneToUse;
         localStorage.setItem('vexis_customer_phone', phoneToUse);
         this.fetchOrders();
@@ -567,7 +463,7 @@ function myOrders() {
     async fetchOrders() {
       this.loading = true;
       try {
-        const res  = await fetch('/api/orders-by-phone?phone=' + encodeURIComponent(this.phone));
+        const res = await fetch('/api/orders-by-phone?phone=' + encodeURIComponent(this.phone));
         const data = await res.json();
         if (data.success) {
           this.orders = data.orders || [];
@@ -582,25 +478,21 @@ function myOrders() {
       this.startPolling();
     },
 
-    // Live polling every 15s to sync with Telegram bot status updates
     startPolling() {
       this.stopPolling();
       this.pollingInterval = setInterval(async () => {
         if (!this.phone) return;
         try {
-          const res  = await fetch('/api/orders-by-phone?phone=' + encodeURIComponent(this.phone));
+          const res = await fetch('/api/orders-by-phone?phone=' + encodeURIComponent(this.phone));
           const data = await res.json();
           if (data.success) {
-            // Merge: update status/fields without full re-render flicker
             const newOrders = data.orders || [];
             newOrders.forEach(newOrd => {
               const idx = this.orders.findIndex(o => o.order_number === newOrd.order_number);
               if (idx !== -1) {
-                // Update in-place to avoid template re-render
                 this.orders[idx] = { ...this.orders[idx], ...newOrd };
               }
             });
-            // Add any brand new orders
             const existingNums = new Set(this.orders.map(o => o.order_number));
             newOrders.filter(o => !existingNums.has(o.order_number)).forEach(o => this.orders.unshift(o));
           }
@@ -615,7 +507,6 @@ function myOrders() {
       }
     },
 
-    // ─── Status step helpers ───
     getStepIndex(status) {
       const idx = this.statusOrder.indexOf(status);
       return idx === -1 ? 0 : idx;
@@ -633,27 +524,27 @@ function myOrders() {
 
     getStepState(currentStatus, stepStatus) {
       if (currentStatus === 'rejected') return '';
-      if (this.isStepDone(currentStatus, stepStatus))   return 'done';
+      if (this.isStepDone(currentStatus, stepStatus)) return 'done';
       if (this.isStepActive(currentStatus, stepStatus)) return 'active';
       return '';
     },
 
     getStatusLabel(s) {
       const map = {
-        pending:   'Pending Review ⏳',
-        review:    'Processing ✅',
-        shipped:   'Out for Delivery 🚚',
-        delivered: 'Delivered 🎉',
-        rejected:  'Cancelled ❌'
+        pending: 'Pending Review',
+        review: 'Processing',
+        shipped: 'Out for Delivery',
+        delivered: 'Delivered',
+        rejected: 'Cancelled'
       };
       return map[s] || 'Processing';
     },
 
     getStatusMessage(s) {
       const map = {
-        pending:   'Your order has been received and is being prepared.',
-        review:    'Your order is verified and ready for shipping.',
-        shipped:   '🚚 Your order is on the way — out for delivery!',
+        pending: 'Your order has been received and is being prepared.',
+        review: 'Your order is verified and ready for shipping.',
+        shipped: '🚚 Your order is on the way — out for delivery!',
         delivered: '🎉 Delivered! Thank you for choosing VEXIS.'
       };
       return map[s] || 'Order is being processed.';
