@@ -1,3 +1,13 @@
+function optimizeCloudinary(url, width = 1000) {
+  if (!url || typeof url !== 'string') return url;
+  if (url.includes('res.cloudinary.com') && url.includes('/image/upload/')) {
+    if (!url.includes('/f_auto') && !url.includes('/q_auto')) {
+      return url.replace('/image/upload/', `/image/upload/f_auto,q_auto,w_${width},c_limit/`);
+    }
+  }
+  return url;
+}
+
 /* ══════════════════════════════════════════════
    Live data loader — replaces the old mock arrays.
    Fetches real products/categories from the PHP API
@@ -49,11 +59,17 @@ async function loadProducts() {
         price: Number(p.price),
         discount_type: p.discount_type || 'none',
         discount_value: Number(p.discount_value || 0),
-        image_url: (p.image_url && p.image_url !== "0" && p.image_url !== 0)
-          ? p.image_url
-          : (Array.isArray(p.gallery) && p.gallery.length ? p.gallery[0] : null),
-        image_hover: Array.isArray(p.gallery) && p.gallery.length > 1 ? p.gallery[1] : (p.image_url || null),
-        gallery: Array.isArray(p.gallery) ? p.gallery : (p.image_url ? [p.image_url] : []),
+        image_url: optimizeCloudinary(
+          (p.image_url && p.image_url !== "0" && p.image_url !== 0)
+            ? p.image_url
+            : (Array.isArray(p.gallery) && p.gallery.length ? p.gallery[0] : null),
+          1000
+        ),
+        image_hover: optimizeCloudinary(
+          Array.isArray(p.gallery) && p.gallery.length > 1 ? p.gallery[1] : (p.image_url || null),
+          1000
+        ),
+        gallery: (Array.isArray(p.gallery) && p.gallery.length ? p.gallery : (p.image_url ? [p.image_url] : [])).map(u => optimizeCloudinary(u, 1200)),
         sizes: Array.isArray(p.sizes) ? p.sizes : [],
         colors: Array.isArray(p.colors) ? p.colors : [],
         created_at: p.created_at || new Date().toISOString(),

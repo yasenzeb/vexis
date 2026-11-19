@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { setCorsHeaders, requireAdmin } from './_auth.js';
+import { setCorsHeaders, requireAdmin, safeError } from './_auth.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -11,43 +11,50 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
 
   try {
-    if (req.method === 'POST') {
-      const { code } = req.body || {};
-      if (!code) {
+    // 1. PUBLIC VALIDATION (GET with ?code=... OR POST with { code })
+    const queryCode = req.query?.code;
+    const bodyCode = req.body?.code;
+    const lookupCode = queryCode || (req.method === 'POST' ? bodyCode : null);
+
+    if (lookupCode) {
+      const cleanCode = String(lookupCode).trim().toUpperCase();
+      if (!cleanCode) {
         return res.status(400).json({ success: false, error: 'Promo code is required' });
       }
-
-      const cleanCode = String(code).trim().toUpperCase();
 
       const { data, error } = await supabase
         .from('promocodes')
         .select('*')
-        .eq('code', cleanCode)
+        .ilike('code', cleanCode)
         .single();
 
       if (error || !data) {
-        return res.status(404).json({ success: false, error: 'Invalid promo code' });
+        return res.status(404).json({ success: false, error: 'كود الخصم غير صحيح (Invalid promo code)' });
       }
 
-      if (!data.is_active) {
-        return res.status(400).json({ success: false, error: 'This promo code is inactive' });
+      if (data.is_active === false) {
+        return res.status(400).json({ success: false, error: 'هذا الكود غير مفعّل حالياً (Inactive promo code)' });
       }
 
       if (data.expiry_date && new Date(data.expiry_date) < new Date()) {
-        return res.status(400).json({ success: false, error: 'This promo code has expired' });
+        return res.status(400).json({ success: false, error: 'هذا الكود منتهي الصلاحية (Expired promo code)' });
       }
+
+      const promoPayload = {
+        code: data.code,
+        discount_type: data.discount_type || 'percent',
+        discount_value: Number(data.discount_value),
+        min_spend: Number(data.min_spend || 0)
+      };
 
       return res.status(200).json({
         success: true,
-        promocode: {
-          code: data.code,
-          discount_type: data.discount_type, // 'fixed' or 'percent'
-          discount_value: Number(data.discount_value),
-          min_spend: Number(data.min_spend || 0)
-        }
+        promo: promoPayload,
+        promocode: promoPayload
       });
     }
 
+    // 2. ADMIN: List all promo codes (GET without code)
     if (req.method === 'GET') {
       if (!requireAdmin(req)) {
         return res.status(401).json({ success: false, error: 'Unauthorized' });
@@ -59,13 +66,13 @@ export default async function handler(req, res) {
         .order('created_at', { ascending: false });
 
       if (error) {
-        // If table doesn't exist yet, return empty list
         return res.status(200).json({ success: true, promocodes: [] });
       }
 
       return res.status(200).json({ success: true, promocodes: data || [] });
     }
 
+    // 3. ADMIN: Create or Update promo code (PUT)
     if (req.method === 'PUT') {
       if (!requireAdmin(req)) {
         return res.status(401).json({ success: false, error: 'Unauthorized' });
@@ -95,20 +102,21 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, promocode: data });
     }
 
+    // 4. ADMIN: Delete promo code (DELETE)
     if (req.method === 'DELETE') {
       if (!requireAdmin(req)) {
         return res.status(401).json({ success: false, error: 'Unauthorized' });
       }
 
-      const { code } = req.query;
-      if (!code) {
+      const codeToDelete = req.query?.code || req.body?.code;
+      if (!codeToDelete) {
         return res.status(400).json({ success: false, error: 'Code is required' });
       }
 
       const { error } = await supabase
         .from('promocodes')
         .delete()
-        .eq('code', String(code).trim().toUpperCase());
+        .eq('code', String(codeToDelete).trim().toUpperCase());
 
       if (error) throw error;
       return res.status(200).json({ success: true, message: 'Promo code deleted' });
@@ -118,6 +126,6 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error('[API /promocodes]', err);
-    return res.status(500).json({ success: false, error: err.message || 'Internal server error' });
+    return res.status(500).json({ success: false, error: safeError(err) });
   }
 }

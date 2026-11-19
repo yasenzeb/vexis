@@ -283,12 +283,11 @@ tbody td{padding:12px 14px;vertical-align:middle}
     <section class="panel active" id="panel-dashboard">
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-icon gold"><i class="fas fa-tshirt"></i></div><div><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">إجمالي المنتجات</div></div></div>
-        <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-tshirt"></i></div><div><div class="stat-val" id="stat-sneakers">—</div><div class="stat-lbl">تيشيرتات رياضية</div></div></div>
-        <div class="stat-card"><div class="stat-icon green"><i class="fas fa-mitten"></i></div><div><div class="stat-val" id="stat-slippers">—</div><div class="stat-lbl">هوديز</div></div></div>
-        <div class="stat-card"><div class="stat-icon red"><i class="fas fa-running"></i></div><div><div class="stat-val" id="stat-sports">—</div><div class="stat-lbl">شورتات رياضية</div></div></div>
+        <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-shopping-bag"></i></div><div><div class="stat-val" id="stat-orders">—</div><div class="stat-lbl">إجمالي الطلبات</div></div></div>
+        <div class="stat-card"><div class="stat-icon gold"><i class="fas fa-sack-dollar"></i></div><div><div class="stat-val" id="stat-revenue">—</div><div class="stat-lbl">إجمالي الإيرادات</div></div></div>
+        <div class="stat-card"><div class="stat-icon green"><i class="fas fa-coins"></i></div><div><div class="stat-val" id="stat-profit">—</div><div class="stat-lbl">صافي الأرباح</div></div></div>
         <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-tags"></i></div><div><div class="stat-val" id="stat-cats">—</div><div class="stat-lbl">الفئات</div></div></div>
         <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-star"></i></div><div><div class="stat-val" id="stat-reviews">—</div><div class="stat-lbl">الآراء</div></div></div>
-        <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-shopping-bag"></i></div><div><div class="stat-val" id="stat-orders">—</div><div class="stat-lbl">الطلبات</div></div></div>
       </div>
       <div class="table-wrap">
         <div class="table-toolbar">
@@ -490,17 +489,20 @@ tbody td{padding:12px 14px;vertical-align:middle}
     <section class="panel" id="panel-orders">
 
       <!-- SALES SUMMARY -->
-      <div class="stats-grid" id="orders-summary-stats">
-        <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-shopping-bag"></i></div><div><div class="stat-val" id="sum-order-count">—</div><div class="stat-lbl">عدد الطلبات (المسلمة)</div></div></div>
-        <div class="stat-card"><div class="stat-icon red"><i class="fas fa-tags"></i></div><div><div class="stat-val" id="sum-wholesale">—</div><div class="stat-lbl">إجمالي البيع بالجملة (التكلفة)</div></div></div>
-        <div class="stat-card"><div class="stat-icon gold"><i class="fas fa-sack-dollar"></i></div><div><div class="stat-val" id="sum-revenue">—</div><div class="stat-lbl">إجمالي البيع بالقطاعي (بعد المكسب)</div></div></div>
-        <div class="stat-card"><div class="stat-icon green"><i class="fas fa-coins"></i></div><div><div class="stat-val" id="sum-profit">—</div><div class="stat-lbl">صافي الأرباح</div></div></div>
-        <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-crown"></i></div><div><div class="stat-val" id="sum-top-product" style="font-size:1rem">—</div><div class="stat-lbl">الأكثر مبيعاً</div></div></div>
-        <div class="stat-card"><div class="stat-icon red" style="background:rgba(239,68,68,.1);color:#ef4444"><i class="fas fa-search-dollar"></i></div><div><div class="stat-val" id="sum-seo-tax">—</div><div class="stat-lbl">ضرايب خدمة SEO من جوجل</div></div></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+        <h3 style="font-size:1.05rem;font-weight:900;margin:0"><i class="fas fa-chart-line" style="color:var(--gold);margin-left:8px"></i> مؤشرات الأرباح والمبيعات</h3>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-sm btn-gold" id="btn-calc-delivered" onclick="setSalesFilterMode('delivered')"><i class="fas fa-check-circle"></i> الطلبات المسلمة فقط</button>
+          <button class="btn btn-sm btn-ghost" id="btn-calc-all" onclick="setSalesFilterMode('all')"><i class="fas fa-layer-group"></i> جميع الطلبات النشطة</button>
+        </div>
       </div>
-      <div style="font-size:.75rem;color:var(--muted);margin:-10px 0 18px;display:flex;align-items:center;gap:6px">
-        <i class="fas fa-info-circle" style="color:var(--gold)"></i>
-        تنبيه: لا يتم إضافة أي مبالغ في الإيرادات أو الأرباح إلا بعد تعيين الطلب كـ "تم تسليمه" أولاً.
+      <div class="stats-grid" id="orders-summary-stats">
+        <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-shopping-bag"></i></div><div><div class="stat-val" id="sum-order-count">—</div><div class="stat-lbl" id="sum-order-lbl">الطلبات المسلمة</div></div></div>
+        <div class="stat-card"><div class="stat-icon red"><i class="fas fa-tags"></i></div><div><div class="stat-val" id="sum-wholesale">—</div><div class="stat-lbl">إجمالي تكلفة البضاعة (الجملة)</div></div></div>
+        <div class="stat-card"><div class="stat-icon gold"><i class="fas fa-sack-dollar"></i></div><div><div class="stat-val" id="sum-revenue">—</div><div class="stat-lbl">صافي مبيعات المنتجات</div></div></div>
+        <div class="stat-card"><div class="stat-icon green"><i class="fas fa-coins"></i></div><div><div class="stat-val" id="sum-profit">—</div><div class="stat-lbl">صافي الأرباح الحقيقية</div></div></div>
+        <div class="stat-card"><div class="stat-icon orange"><i class="fas fa-percent"></i></div><div><div class="stat-val" id="sum-margin">—</div><div class="stat-lbl">هامش الربح</div></div></div>
+        <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-crown"></i></div><div><div class="stat-val" id="sum-top-product" style="font-size:1rem">—</div><div class="stat-lbl">الأكثر مبيعاً</div></div></div>
       </div>
 
       <div class="table-wrap" style="margin-bottom:24px">
@@ -524,7 +526,7 @@ tbody td{padding:12px 14px;vertical-align:middle}
         </div>
         <div class="table-responsive">
           <table>
-            <thead><tr><th>رقم الطلب</th><th>الاسم</th><th>الهاتف</th><th>المحافظة</th><th>الإجمالي</th><th>الدفع</th><th>الحالة</th><th>التاريخ</th><th>ضرايب خدمة seo من جوجل</th><th>الإجراءات</th></tr></thead>
+            <thead><tr><th>رقم الطلب</th><th>الاسم</th><th>الهاتف</th><th>المحافظة</th><th>الإجمالي</th><th>الدفع</th><th>الحالة</th><th>التاريخ</th><th>صافي ربح الطلب</th><th>الإجراءات</th></tr></thead>
             <tbody id="orders-table-body">
               <tr><td colspan="10"><div class="empty-state"><i class="fas fa-spinner fa-spin" style="color:var(--gold)"></i>جارٍ التحميل...</div></td></tr>
             </tbody>
@@ -1103,14 +1105,71 @@ async function loadAllProducts(){
   }
 }
 
+var salesFilterMode = 'delivered'; // 'delivered' or 'all'
+
+function setSalesFilterMode(mode) {
+  salesFilterMode = mode;
+  const btnDelivered = document.getElementById('btn-calc-delivered');
+  const btnAll = document.getElementById('btn-calc-all');
+  if (btnDelivered && btnAll) {
+    if (mode === 'delivered') {
+      btnDelivered.className = 'btn btn-sm btn-gold';
+      btnAll.className = 'btn btn-sm btn-ghost';
+    } else {
+      btnDelivered.className = 'btn btn-sm btn-ghost';
+      btnAll.className = 'btn btn-sm btn-gold';
+    }
+  }
+  renderSalesSummary();
+}
+
+function calculateOrderFinancials(o) {
+  const subtotal = Number(o.subtotal || 0);
+  const shipping = Number(o.shipping_cost || 0);
+  const total = Number(o.total || 0);
+  const discount = Math.max(0, (subtotal + shipping) - total);
+  const netRevenue = Math.max(0, total - shipping);
+
+  let items = o.items || o.order_items || [];
+  if (typeof items === 'string') {
+    try { items = JSON.parse(items); } catch(e) { items = []; }
+  }
+
+  let totalCost = 0;
+  if (Array.isArray(items)) {
+    items.forEach(it => {
+      const qty = Number(it.quantity || it.qty || 1);
+      const match = allProducts.find(p => p.id === it.id || p.id === it.product_id || (p.name && it.name && p.name.trim().toLowerCase() === it.name.trim().toLowerCase()));
+      const cost = Number(it.cost_price || (match ? match.cost_price : 0)) || 0;
+      totalCost += cost * qty;
+    });
+  }
+
+  const profit = Math.round(netRevenue - totalCost);
+  return { subtotal, shipping, total, discount, netRevenue, totalCost, profit, items };
+}
+
 function updateStats(){
-  document.getElementById('stat-total').textContent=(allProducts||[]).length;
-  document.getElementById('stat-cats').textContent=(allCategories||[]).length;
-  document.getElementById('stat-reviews').textContent=(allReviews||[]).length;
-  document.getElementById('stat-sneakers').textContent=(allProducts||[]).filter(p=>p.type==='sneakers').length;
-  document.getElementById('stat-slippers').textContent=(allProducts||[]).filter(p=>p.type==='slippers').length;
-  document.getElementById('stat-sports').textContent=(allProducts||[]).filter(p=>p.type==='sports').length;
-  document.getElementById('stat-orders').textContent=(allOrders||[]).length;
+  document.getElementById('stat-total').textContent = (allProducts || []).length;
+  document.getElementById('stat-cats').textContent = (allCategories || []).length;
+  document.getElementById('stat-reviews').textContent = (allReviews || []).length;
+  document.getElementById('stat-orders').textContent = (allOrders || []).length;
+
+  // Calculate total revenue and profit across valid orders
+  const validOrders = (allOrders || []).filter(o => o.status !== 'cancelled');
+  let dashRevenue = 0;
+  let dashProfit = 0;
+
+  validOrders.forEach(o => {
+    const fin = calculateOrderFinancials(o);
+    dashRevenue += fin.netRevenue;
+    dashProfit += fin.profit;
+  });
+
+  const revEl = document.getElementById('stat-revenue');
+  const profEl = document.getElementById('stat-profit');
+  if (revEl) revEl.textContent = dashRevenue.toLocaleString('ar-EG') + ' ج.م';
+  if (profEl) profEl.textContent = dashProfit.toLocaleString('ar-EG') + ' ج.م';
 }
 
 function renderRecentTable(){
@@ -1504,40 +1563,36 @@ async function loadOrders(){
 
 /* ══ SALES SUMMARY (نفس صفحة الطلبات) ══ */
 function renderSalesSummary(){
-  const body=document.getElementById('sales-summary-table-body');
-  if(!body)return;
-  
+  const body = document.getElementById('sales-summary-table-body');
+  if (!body) return;
+
   const orders = allOrders || [];
-  const deliveredOrders = orders.filter(o => o.status === 'delivered');
-  const orderCount = deliveredOrders.length;
-  
-  let retailTotal = 0;
+  const targetOrders = salesFilterMode === 'delivered'
+    ? orders.filter(o => o.status === 'delivered')
+    : orders.filter(o => o.status !== 'cancelled');
+
+  const orderCount = targetOrders.length;
   let wholesaleTotal = 0;
-  
+  let revenueTotal = 0;
+  let profitTotal = 0;
+
   const salesByKey = {};
   let hasItemData = false;
-  
-  deliveredOrders.forEach(o => {
-    let items = o.items || o.order_items || o.products || null;
-    if (typeof items === 'string') {
-      try { items = JSON.parse(items); } catch(e) {}
-    }
-    
-    if (Array.isArray(items) && items.length) {
+
+  targetOrders.forEach(o => {
+    const fin = calculateOrderFinancials(o);
+    wholesaleTotal += fin.totalCost;
+    revenueTotal += fin.netRevenue;
+    profitTotal += fin.profit;
+
+    if (Array.isArray(fin.items) && fin.items.length) {
       hasItemData = true;
-      items.forEach(it => {
+      fin.items.forEach(it => {
         const key = it.id || it.product_id || it.name || it.product_name;
         if (!key) return;
-        
         const qty = Number(it.quantity || it.qty || 1);
         const sellPrice = Number(it.finalPrice || it.price || 0);
-        
-        const matchingProduct = allProducts.find(p => p.id === it.id || p.name === it.name);
-        const costPrice = Number(it.cost_price !== undefined ? it.cost_price : (matchingProduct ? matchingProduct.cost_price : 0)) || 0;
-        
-        wholesaleTotal += costPrice * qty;
-        retailTotal += sellPrice * qty;
-        
+
         if (!salesByKey[key]) {
           salesByKey[key] = { name: it.name || it.product_name || 'منتج', qty: 0, revenue: 0 };
         }
@@ -1547,14 +1602,18 @@ function renderSalesSummary(){
     }
   });
 
-  const profitTotal = retailTotal - wholesaleTotal;
-  const totalSeoTax = allOrders.length * 3;
+  const marginPct = revenueTotal > 0 ? ((profitTotal / revenueTotal) * 100).toFixed(1) : '0';
+
+  const lblEl = document.getElementById('sum-order-lbl');
+  if (lblEl) lblEl.textContent = salesFilterMode === 'delivered' ? 'الطلبات المسلمة' : 'جميع الطلبات النشطة';
 
   document.getElementById('sum-order-count').textContent = orderCount;
   document.getElementById('sum-wholesale').textContent = wholesaleTotal.toLocaleString('ar-EG') + ' ج.م';
-  document.getElementById('sum-revenue').textContent = retailTotal.toLocaleString('ar-EG') + ' ج.م';
+  document.getElementById('sum-revenue').textContent = revenueTotal.toLocaleString('ar-EG') + ' ج.م';
   document.getElementById('sum-profit').textContent = profitTotal.toLocaleString('ar-EG') + ' ج.م';
-  document.getElementById('sum-seo-tax').textContent = totalSeoTax.toLocaleString('ar-EG') + ' ج.م';
+  
+  const marginEl = document.getElementById('sum-margin');
+  if (marginEl) marginEl.textContent = marginPct + '%';
 
   const products = allProducts || [];
   if (!products.length) {
@@ -1588,30 +1647,34 @@ function renderSalesSummary(){
     <td>${r.rev.toLocaleString('ar-EG')} ج.م</td>
     <td>${r.pct.toFixed(1)}%</td>
   </tr>`).join('');
-  if(!hasItemData){
-    body.innerHTML+='<tr><td colspan="5" style="color:var(--muted);font-size:.78rem;text-align:center;padding:12px">* الـ API الحالي لا يرجّع تفاصيل المنتجات داخل كل طلب، فالنسب هنا غير متاحة حتى تُضاف بيانات العناصر (items) في استجابة الطلبات.</td></tr>';
-  }
 }
 
 function renderOrdersTable(){
-  const tbody=document.getElementById('orders-table-body');
-  if(!tbody)return;
-  if(!allOrders.length){tbody.innerHTML='<tr><td colspan="10"><div class="empty-state"><i class="fas fa-shopping-bag"></i>لا توجد طلبات بعد.</div></td></tr>';return;}
-  tbody.innerHTML=allOrders.map(o=>{
-    const date=new Date(o.created_at).toLocaleDateString('ar-EG',{year:'numeric',month:'short',day:'numeric'});
-    const statusLabel=ORDER_STATUS_LABELS[o.status]||htmlEsc(o.status);
-    const statusColor=ORDER_STATUS_COLORS[o.status]||'var(--muted)';
-    const payLabel=o.payment_method==='cod'?'عند الاستلام':'تحويل';
+  const tbody = document.getElementById('orders-table-body');
+  if (!tbody) return;
+  if (!allOrders.length) {
+    tbody.innerHTML = '<tr><td colspan="10"><div class="empty-state"><i class="fas fa-shopping-bag"></i>لا توجد طلبات بعد.</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = allOrders.map(o => {
+    const date = new Date(o.created_at).toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' });
+    const statusLabel = ORDER_STATUS_LABELS[o.status] || htmlEsc(o.status);
+    const statusColor = ORDER_STATUS_COLORS[o.status] || 'var(--muted)';
+    const payLabel = o.payment_method === 'cod' ? 'عند الاستلام' : 'تحويل';
+    const fin = calculateOrderFinancials(o);
+    const profitColor = fin.profit >= 0 ? '#22c55e' : '#ef4444';
+    const profitPrefix = fin.profit >= 0 ? '+' : '';
+
     return `<tr>
       <td><strong>${htmlEsc(o.order_number)}</strong></td>
       <td>${htmlEsc(o.customer_name)}</td>
-      <td dir="ltr">${htmlEsc(o.customer_phone)}</td>
-      <td>${htmlEsc(o.governorate)}</td>
+      <td dir="ltr">${htmlEsc(o.phone || o.customer_phone || '—')}</td>
+      <td>${htmlEsc(o.governorate || '—')}</td>
       <td class="price-col">${htmlEsc(String(o.total))} ج.م</td>
       <td>${htmlEsc(payLabel)}</td>
       <td><span class="badge" style="background:${statusColor}22;color:${statusColor}">${statusLabel}</span></td>
       <td>${htmlEsc(date)}</td>
-      <td><strong style="color:var(--gold)">3 ج.م</strong></td>
+      <td><strong style="color:${profitColor}">${profitPrefix}${fin.profit.toLocaleString('ar-EG')} ج.م</strong></td>
       <td><div class="actions-col">
         <select class="form-group" style="background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Cairo',sans-serif;font-size:.78rem;padding:5px 8px;border-radius:8px;outline:none"
           onchange="updateOrderStatus('${htmlEsc(o.id)}',this.value)">

@@ -84,6 +84,8 @@ export default async function handler(req, res) {
     targetHandler = ordersByPhone;
   } else if (__path === 'promocodes') {
     targetHandler = promocodes;
+  } else if (__path === 'return-request') {
+    targetHandler = returnRequest;
   }
 
   if (targetHandler) {

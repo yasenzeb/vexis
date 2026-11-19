@@ -105,8 +105,18 @@
   .fit-input { border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 12px 14px; width: 100%; font-size: 15px; outline: none; }
   .fit-input:focus { border-color: #000; }
 
-  /* Gallery main image */
-  .gallery-main { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; }
+  /* Gallery main image - anti-aliased & crisp */
+  .gallery-main {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 16px;
+    image-rendering: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
 
   .error-shake { animation: shake .4s; }
   @keyframes shake {
@@ -606,6 +616,16 @@
 
 <script src="products.js"></script>
 <script>
+function optimizeCloudinary(url, width = 1200) {
+  if (!url || typeof url !== 'string') return url;
+  if (url.includes('res.cloudinary.com') && url.includes('/image/upload/')) {
+    if (!url.includes('/f_auto') && !url.includes('/q_auto')) {
+      return url.replace('/image/upload/', `/image/upload/f_auto,q_auto,w_${width},c_limit/`);
+    }
+  }
+  return url;
+}
+
 function productPage() {
   return {
     product: {},
@@ -638,11 +658,15 @@ function productPage() {
       const imgs = [];
       // Use gallery array (which is the correct DB field)
       if (Array.isArray(this.product.gallery) && this.product.gallery.length) {
-        this.product.gallery.forEach(url => { if (url && !imgs.includes(url)) imgs.push(url); });
+        this.product.gallery.forEach(url => {
+          const opt = optimizeCloudinary(url, 1200);
+          if (opt && !imgs.includes(opt)) imgs.push(opt);
+        });
       }
       // Always ensure image_url is first (if not already in gallery)
-      if (this.product.image_url && !imgs.includes(this.product.image_url)) {
-        imgs.unshift(this.product.image_url);
+      if (this.product.image_url) {
+        const optMain = optimizeCloudinary(this.product.image_url, 1200);
+        if (!imgs.includes(optMain)) imgs.unshift(optMain);
       }
       return imgs.length ? imgs : ['logo.jpeg'];
     },

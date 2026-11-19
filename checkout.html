@@ -250,6 +250,29 @@
           </template>
         </div>
 
+        <!-- Promo Code Input in Checkout -->
+        <div class="pt-3 pb-2 border-t border-zinc-100">
+          <label class="block text-xs font-bold text-zinc-600 uppercase tracking-wider mb-1.5">Promo Code</label>
+          <div class="flex gap-2">
+            <input type="text"
+                   x-model="promoInput"
+                   placeholder="ENTER CODE"
+                   class="flex-1 bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2 text-xs font-bold uppercase tracking-wider outline-none focus:border-black focus:bg-white transition"
+                   :disabled="appliedPromo !== null"/>
+            <button @click="appliedPromo ? removePromo() : applyPromo()"
+                    :disabled="promoLoading || (!promoInput.trim() && !appliedPromo)"
+                    class="bg-black hover:bg-zinc-800 disabled:bg-zinc-300 text-white font-brand font-bold px-4 py-2 rounded-xl text-xs transition uppercase">
+              <span x-show="!promoLoading && !appliedPromo">Apply</span>
+              <span x-show="appliedPromo">Remove</span>
+              <span x-show="promoLoading"><i class="fas fa-spinner fa-spin"></i></span>
+            </button>
+          </div>
+          <p x-show="promoMessage"
+             :class="promoSuccess ? 'text-green-600' : 'text-red-500'"
+             class="text-xs font-semibold mt-1.5"
+             x-text="promoMessage"></p>
+        </div>
+
         <!-- Totals Breakdown -->
         <div class="space-y-3 pt-3 border-t border-zinc-100 text-sm">
           <div class="flex items-center justify-between text-zinc-600">
@@ -351,6 +374,10 @@ function checkoutPage() {
     shippingCost: 0,
     promoDiscount: 0,
     appliedPromo: null,
+    promoInput: '',
+    promoMessage: '',
+    promoSuccess: false,
+    promoLoading: false,
     isSubmitting: false,
     form: {
       firstName: '',
@@ -382,11 +409,8 @@ function checkoutPage() {
       if (savedPromo) {
         try {
           this.appliedPromo = JSON.parse(savedPromo);
-          if (this.appliedPromo.discount_type === 'percent') {
-            this.promoDiscount = Math.round(this.subtotal * (this.appliedPromo.discount_value / 100));
-          } else {
-            this.promoDiscount = Math.min(this.subtotal, Number(this.appliedPromo.discount_value || 0));
-          }
+          this.promoInput = this.appliedPromo.code || '';
+          this.calculateDiscount();
         } catch {}
       }
 

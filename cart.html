@@ -361,10 +361,21 @@ function cartPage() {
         this.promoDiscount = 0;
         return;
       }
-      if (this.appliedPromo.discount_type === 'percent') {
-        this.promoDiscount = Math.round(this.subtotal * (this.appliedPromo.discount_value / 100));
+      const type = this.appliedPromo.discount_type;
+      const val = Number(this.appliedPromo.discount_value || 0);
+      const min = Number(this.appliedPromo.min_spend || 0);
+
+      if (min > 0 && this.subtotal < min) {
+        this.promoDiscount = 0;
+        this.promoMessage = `Minimum order of EGP ${min} required for this code`;
+        this.promoSuccess = false;
+        return;
+      }
+
+      if (type === 'percent') {
+        this.promoDiscount = Math.round(this.subtotal * (val / 100));
       } else {
-        this.promoDiscount = Math.min(this.subtotal, Number(this.appliedPromo.discount_value || 0));
+        this.promoDiscount = Math.min(this.subtotal, val);
       }
     },
 
@@ -378,13 +389,24 @@ function cartPage() {
       try {
         const res = await fetch(`/api/promocodes?code=${encodeURIComponent(code)}`);
         const data = await res.json();
+        const promo = data.promo || data.promocode;
 
-        if (data.success && data.promo) {
-          this.appliedPromo = data.promo;
-          localStorage.setItem('vexis_promo', JSON.stringify(data.promo));
+        if (data.success && promo) {
+          const min = Number(promo.min_spend || 0);
+          if (min > 0 && this.subtotal < min) {
+            this.appliedPromo = null;
+            this.promoDiscount = 0;
+            this.promoSuccess = false;
+            this.promoMessage = `Minimum order of EGP ${min} required for this code`;
+            localStorage.removeItem('vexis_promo');
+            return;
+          }
+
+          this.appliedPromo = promo;
+          localStorage.setItem('vexis_promo', JSON.stringify(promo));
           this.calculateDiscount();
           this.promoSuccess = true;
-          this.promoMessage = `Promo applied! ${data.promo.discount_type === 'percent' ? data.promo.discount_value + '%' : 'EGP ' + data.promo.discount_value} OFF`;
+          this.promoMessage = `Promo applied! ${promo.discount_type === 'percent' ? promo.discount_value + '%' : 'EGP ' + promo.discount_value} OFF`;
         } else {
           this.promoSuccess = false;
           this.promoMessage = data.error || 'Invalid or expired promo code';
