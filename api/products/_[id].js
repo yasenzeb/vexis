@@ -45,7 +45,8 @@ export default async function handler(req, res) {
         sizes:            Array.isArray(data.sizes) && data.sizes.length ? data.sizes : [38,39,40,41,42,43,44,45],
         colors:           Array.isArray(data.colors) ? data.colors : [],
         gallery:          Array.isArray(data.gallery) ? data.gallery : [],
-        main_image_index: data.main_image_index || 0
+        main_image_index: data.main_image_index || 0,
+        is_out_of_stock:  Boolean(data.is_out_of_stock)
       };
 
       return res.status(200).json({ success: true, product });
@@ -56,7 +57,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ success: false, error: 'غير مصرح.' });
       }
 
-      const { name, type, price, cost_price, image_url, discount_type, discount_value, sizes, colors, gallery, main_image_index } = req.body || {};
+      const { name, type, price, cost_price, image_url, discount_type, discount_value, sizes, colors, gallery, main_image_index, is_out_of_stock } = req.body || {};
       const updates = {};
 
       if (name !== undefined) updates.name = name;
@@ -64,6 +65,7 @@ export default async function handler(req, res) {
       if (price !== undefined) updates.price = parseInt(price);
       if (cost_price !== undefined) updates.cost_price = parseInt(cost_price);
       if (image_url !== undefined) updates.image_url = image_url;
+      if (is_out_of_stock !== undefined) updates.is_out_of_stock = Boolean(is_out_of_stock);
 
       if (discount_type !== undefined) updates.discount_type = discount_type;
       if (discount_value !== undefined) {
@@ -103,14 +105,27 @@ export default async function handler(req, res) {
         }
       }
 
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('products')
         .update(updates)
         .eq('id', id)
         .select()
         .single();
 
-      if (error) throw error;
+      if (error && error.message && error.message.includes('is_out_of_stock')) {
+        delete updates.is_out_of_stock;
+        const retry = await supabase
+          .from('products')
+          .update(updates)
+          .eq('id', id)
+          .select()
+          .single();
+        if (retry.error) throw retry.error;
+        data = retry.data;
+      } else if (error) {
+        throw error;
+      }
+
       return res.status(200).json({ success: true, product: data });
     }
 

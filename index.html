@@ -363,12 +363,19 @@
             </template>
             
             <!-- Badges -->
-            <template x-if="isNew(p)">
+            <template x-if="p.is_out_of_stock">
+              <span class="absolute inset-0 bg-black/60 z-20 flex items-center justify-center">
+                <span class="bg-red-600 text-white text-[11px] font-brand font-black px-3.5 py-1 rounded-full uppercase tracking-wider shadow">
+                  SOLD OUT
+                </span>
+              </span>
+            </template>
+            <template x-if="isNew(p) && !p.is_out_of_stock">
               <span class="absolute top-2.5 left-2.5 z-10 bg-black text-white text-[10px] font-brand font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 NEW
               </span>
             </template>
-            <template x-if="hasDiscount(p)">
+            <template x-if="hasDiscount(p) && !p.is_out_of_stock">
               <span class="absolute top-2.5 right-2.5 z-10 bg-red-600 text-white text-[10px] font-brand font-black px-2.5 py-0.5 rounded-full shadow">
                 <span x-text="discountBadge(p)"></span>
               </span>
@@ -391,9 +398,10 @@
               </div>
 
               <button @click.stop="goToProduct(p)"
-                      class="w-full bg-black text-white text-xs py-2.5 rounded-xl hover:bg-zinc-800 transition font-bold flex items-center justify-center gap-2 group-hover:bg-black">
-                <i class="fas fa-eye text-xs"></i>
-                <span>View Details</span>
+                      :class="p.is_out_of_stock ? 'bg-zinc-800 text-zinc-400' : 'bg-black text-white hover:bg-zinc-800'"
+                      class="w-full text-xs py-2.5 rounded-xl transition font-bold flex items-center justify-center gap-2">
+                <i :class="p.is_out_of_stock ? 'fas fa-ban' : 'fas fa-eye'" class="text-xs"></i>
+                <span x-text="p.is_out_of_stock ? 'Sold Out' : 'View Details'"></span>
               </button>
             </div>
           </div>

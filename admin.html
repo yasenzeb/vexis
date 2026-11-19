@@ -615,6 +615,22 @@ tbody td{padding:12px 14px;vertical-align:middle}
           <input type="number" id="edit-discount-value" min="0" placeholder="0">
         </div>
 
+        <!-- OUT OF STOCK TOGGLE -->
+        <div class="form-group full" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);">
+          <div>
+            <div style="font-weight:700;font-size:.88rem;color:var(--text);display:flex;align-items:center;gap:6px">
+              <i class="fas fa-ban" style="color:var(--red)"></i>
+              حالة المنتج: نفاد المخزون (Out of Stock)
+            </div>
+            <div style="font-size:.78rem;color:var(--muted);margin-top:2px">عند التفعيل يظهر تنبيه SOLD OUT للعميل ويتعطل زر الطلب</div>
+          </div>
+          <label style="position:relative;display:inline-block;width:48px;height:26px;cursor:pointer;margin:0">
+            <input type="checkbox" id="edit-out-of-stock" style="opacity:0;width:0;height:0;position:absolute">
+            <span id="edit-oos-track" style="position:absolute;inset:0;border-radius:13px;background:var(--border);transition:.3s"></span>
+            <span id="edit-oos-thumb" style="position:absolute;width:20px;height:20px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.3s"></span>
+          </label>
+        </div>
+
         <!-- EDIT GALLERY -->
         <div class="form-group full">
           <label>صور المنتج (حتى 4 صور — اضغط "رئيسية" لتحديد صورة الواجهة)</label>
@@ -1105,7 +1121,12 @@ function renderRecentTable(){
     <thead><tr><th>الصور</th><th>الاسم</th><th>الفئة</th><th>السعر</th><th>الخصم</th></tr></thead>
     <tbody>${recent.map(p=>`<tr>
       <td>${buildThumbsHtml(p)}</td>
-      <td><div class="prod-name">${htmlEsc(p.name)}</div></td>
+      <td>
+      <div class="prod-name">
+        ${htmlEsc(p.name)}
+        ${p.is_out_of_stock ? '<span class="badge" style="background:#dc2626;color:#fff;font-size:10px;margin-right:6px;font-weight:700;padding:2px 6px;border-radius:4px">نفد المخزون</span>' : ''}
+      </div>
+    </td>
       <td>${badgeHTML(p.type)}</td>
       <td class="price-col">${htmlEsc(String(p.price))} ج.م</td>
       <td class="discount-col">${discountLabel(p)}</td>
@@ -1140,7 +1161,12 @@ function renderProductsTable(){
   const page=filteredProducts.slice(start,start+PER_PAGE);
   tbody.innerHTML=page.map(p=>`<tr>
     <td>${buildThumbsHtml(p)}</td>
-    <td><div class="prod-name">${htmlEsc(p.name)}</div></td>
+    <td>
+      <div class="prod-name">
+        ${htmlEsc(p.name)}
+        ${p.is_out_of_stock ? '<span class="badge" style="background:#dc2626;color:#fff;font-size:10px;margin-right:6px;font-weight:700;padding:2px 6px;border-radius:4px">نفد المخزون</span>' : ''}
+      </div>
+    </td>
     <td>${badgeHTML(p.type)}</td>
     <td class="price-col">${htmlEsc(String(p.price))} ج.م</td>
     <td class="discount-col">${discountLabel(p)}</td>
@@ -1285,6 +1311,29 @@ function resetAddForm(){
   initGalleryGrid('new-gallery-grid','new');
 }
 
+function updateOosVisual(checked) {
+  const track = document.getElementById('edit-oos-track');
+  const thumb = document.getElementById('edit-oos-thumb');
+  if (!track || !thumb) return;
+  if (checked) {
+    track.style.background = '#dc2626';
+    thumb.style.transform = 'translateX(22px)';
+  } else {
+    track.style.background = 'var(--border)';
+    thumb.style.transform = 'translateX(0px)';
+  }
+}
+
+// Bind OOS checkbox change
+document.addEventListener('DOMContentLoaded', () => {
+  const oosCheckbox = document.getElementById('edit-out-of-stock');
+  if (oosCheckbox) {
+    oosCheckbox.addEventListener('change', function() {
+      updateOosVisual(this.checked);
+    });
+  }
+});
+
 /* ══ EDIT PRODUCT ══ */
 function openEditModal(id){
   const p=allProducts.find(x=>x.id===id);if(!p)return;
@@ -1297,6 +1346,13 @@ function openEditModal(id){
   document.getElementById('edit-discount-value').value=p.discount_value||'';
   document.getElementById('edit-sizes').value=(Array.isArray(p.sizes)&&p.sizes.length)?p.sizes.join(','):'';
   setColorsInContainer('edit-colors-builder',p.colors||[]);
+
+  // Out of stock state
+  const oosCheckbox = document.getElementById('edit-out-of-stock');
+  if (oosCheckbox) {
+    oosCheckbox.checked = !!p.is_out_of_stock;
+    updateOosVisual(oosCheckbox.checked);
+  }
 
   // Build existing gallery
   const existingGallery=Array.isArray(p.gallery)&&p.gallery.length?p.gallery:(p.image_url?[p.image_url]:[]);
@@ -1322,6 +1378,7 @@ async function submitEditProduct(){
   const gallery=getGalleryUrls('edit');
   const mainImgUrl=getMainImageUrl('edit');
   const mIdx=mainIndex['edit']||0;
+  const isOutOfStock = document.getElementById('edit-out-of-stock') ? document.getElementById('edit-out-of-stock').checked : false;
   const payload={
     name,type:document.getElementById('edit-type').value,
     price:parseInt(price),
@@ -1331,7 +1388,8 @@ async function submitEditProduct(){
     sizes:parseSizes(document.getElementById('edit-sizes').value),
     colors:getColorsFromContainer('edit-colors-builder'),
     gallery:gallery,
-    main_image_index:mIdx
+    main_image_index:mIdx,
+    is_out_of_stock:isOutOfStock
   };
   console.log('[submitEditProduct] → PUT /api/products/'+editingProductId+' payload:', payload);
   try{

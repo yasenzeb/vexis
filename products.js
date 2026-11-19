@@ -54,6 +54,7 @@ async function loadProducts() {
       colors: Array.isArray(p.colors) ? p.colors : [],
       created_at: p.created_at || new Date().toISOString(),
       description: p.description || '',
+      is_out_of_stock: Boolean(p.is_out_of_stock),
     }));
 
     window.productsReady = true;

@@ -332,12 +332,20 @@
         </div>
       </div>
 
+      <!-- OUT OF STOCK BADGE -->
+      <template x-if="product.is_out_of_stock">
+        <div class="flex items-center gap-2 bg-red-600 text-white font-brand font-black text-sm px-5 py-3 rounded-2xl">
+          <i class="fas fa-ban"></i>
+          <span>SOLD OUT — OUT OF STOCK</span>
+        </div>
+      </template>
+
       <!-- CTA Buttons -->
       <div class="flex flex-col gap-3">
-        <button @click="buyNow()" class="btn-primary">
+        <button @click="buyNow()" class="btn-primary" :disabled="product.is_out_of_stock" :class="product.is_out_of_stock ? 'opacity-40 cursor-not-allowed' : ''">
           <i class="fas fa-bolt mr-2"></i> Buy Now
         </button>
-        <button @click="addToCartUI()" class="btn-secondary">
+        <button @click="addToCartUI()" class="btn-secondary" :disabled="product.is_out_of_stock" :class="product.is_out_of_stock ? 'opacity-40 cursor-not-allowed' : ''">
           <i class="fas fa-shopping-bag mr-2"></i> Add to Bag
         </button>
       </div>
@@ -628,10 +636,14 @@ function productPage() {
 
     get allImages() {
       const imgs = [];
-      if (this.product.image_url) imgs.push(this.product.image_url);
-      if (this.product.image_url_2) imgs.push(this.product.image_url_2);
-      if (this.product.image_url_3) imgs.push(this.product.image_url_3);
-      if (this.product.image_url_4) imgs.push(this.product.image_url_4);
+      // Use gallery array (which is the correct DB field)
+      if (Array.isArray(this.product.gallery) && this.product.gallery.length) {
+        this.product.gallery.forEach(url => { if (url && !imgs.includes(url)) imgs.push(url); });
+      }
+      // Always ensure image_url is first (if not already in gallery)
+      if (this.product.image_url && !imgs.includes(this.product.image_url)) {
+        imgs.unshift(this.product.image_url);
+      }
       return imgs.length ? imgs : ['logo.jpeg'];
     },
 
@@ -836,7 +848,10 @@ function productPage() {
       if (idParam && (!prod || String(prod.id) !== idParam)) {
         try {
           const res = await fetch('/api/products/' + encodeURIComponent(idParam));
-          if (res.ok) prod = await res.json();
+          if (res.ok) {
+            const data = await res.json();
+            prod = data.product || data;
+          }
         } catch {}
       }
       if (!prod && window.mockProducts && window.mockProducts.length) prod = window.mockProducts[0];
@@ -844,15 +859,13 @@ function productPage() {
       await this.loadReviews();
 
       window.addEventListener('productsLoaded', (e) => {
-        if (!this.product || !this.product.id) {
-          const list = e.detail || [];
-          const params = new URLSearchParams(window.location.search);
-          const idParam = params.get('id');
-          const found = idParam ? list.find(p => String(p.id) === idParam) : list[0];
-          if (found) {
-            this.product = found;
-            this.loadReviews();
-          }
+        const list = e.detail || [];
+        const params = new URLSearchParams(window.location.search);
+        const idParam = params.get('id') || (this.product && this.product.id);
+        const found = idParam ? list.find(p => String(p.id) === String(idParam)) : list[0];
+        if (found) {
+          this.product = found;
+          this.loadReviews();
         }
       });
     }
