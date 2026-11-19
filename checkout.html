@@ -409,9 +409,15 @@ function checkoutPage() {
       if (savedPromo) {
         try {
           this.appliedPromo = JSON.parse(savedPromo);
-          this.promoInput = this.appliedPromo.code || '';
+          this.promoInput   = this.appliedPromo.code || '';
           this.calculateDiscount();
-        } catch {}
+          if (this.promoDiscount > 0) {
+            this.promoSuccess = true;
+            this.promoMessage = `Promo applied! ${this.appliedPromo.discount_type === 'percent' ? this.appliedPromo.discount_value + '%' : 'EGP ' + this.appliedPromo.discount_value} OFF`;
+          }
+        } catch {
+          localStorage.removeItem('vexis_promo');
+        }
       }
 
       // Pre-fill phone if customer has saved before
@@ -419,6 +425,81 @@ function checkoutPage() {
       if (savedPhone) {
         this.form.phone = savedPhone;
       }
+    },
+
+    calculateDiscount() {
+      if (!this.appliedPromo) {
+        this.promoDiscount = 0;
+        return;
+      }
+      const type = this.appliedPromo.discount_type;
+      const val  = Number(this.appliedPromo.discount_value || 0);
+      const min  = Number(this.appliedPromo.min_spend || 0);
+
+      if (min > 0 && this.subtotal < min) {
+        this.promoDiscount = 0;
+        this.promoMessage  = `Minimum order of EGP ${min} required for this code`;
+        this.promoSuccess  = false;
+        return;
+      }
+
+      if (type === 'percent') {
+        this.promoDiscount = Math.round(this.subtotal * (val / 100));
+      } else {
+        this.promoDiscount = Math.min(this.subtotal, val);
+      }
+    },
+
+    async applyPromo() {
+      const code = this.promoInput.trim().toUpperCase();
+      if (!code) return;
+
+      this.promoLoading = true;
+      this.promoMessage = '';
+      this.promoSuccess = false;
+
+      try {
+        const res  = await fetch(`/api/promocodes?code=${encodeURIComponent(code)}`);
+        const data = await res.json();
+        const promo = data.promo || data.promocode;
+
+        if (data.success && promo) {
+          const min = Number(promo.min_spend || 0);
+          if (min > 0 && this.subtotal < min) {
+            this.appliedPromo  = null;
+            this.promoDiscount = 0;
+            this.promoSuccess  = false;
+            this.promoMessage  = `Minimum order of EGP ${min} required`;
+            localStorage.removeItem('vexis_promo');
+            return;
+          }
+          this.appliedPromo = promo;
+          localStorage.setItem('vexis_promo', JSON.stringify(promo));
+          this.calculateDiscount();
+          this.promoSuccess = true;
+          this.promoMessage = `Promo applied! ${promo.discount_type === 'percent' ? promo.discount_value + '%' : 'EGP ' + promo.discount_value} OFF`;
+        } else {
+          this.appliedPromo  = null;
+          this.promoDiscount = 0;
+          this.promoSuccess  = false;
+          this.promoMessage  = data.error || 'Invalid or expired promo code';
+          localStorage.removeItem('vexis_promo');
+        }
+      } catch (err) {
+        this.promoSuccess = false;
+        this.promoMessage = 'Error validating code. Please try again.';
+      } finally {
+        this.promoLoading = false;
+      }
+    },
+
+    removePromo() {
+      this.appliedPromo  = null;
+      this.promoInput    = '';
+      this.promoDiscount = 0;
+      this.promoMessage  = '';
+      this.promoSuccess  = false;
+      localStorage.removeItem('vexis_promo');
     },
 
     updateShipping() {
