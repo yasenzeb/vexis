@@ -35,17 +35,23 @@ export default async function handler(req, res) {
       const { data, error } = await query;
       if (error) throw error;
 
-      const products = (data || []).map(p => ({
-        ...p,
-        cost_price:       Number(p.cost_price || 0),
-        discount_type:    p.discount_type  || 'none',
-        discount_value:   p.discount_value || 0,
-        sizes:            Array.isArray(p.sizes) && p.sizes.length ? p.sizes : ['S','M','L','XL','XXL'],
-        colors:           Array.isArray(p.colors) ? p.colors : [],
-        gallery:          Array.isArray(p.gallery) ? p.gallery : [],
-        main_image_index: p.main_image_index || 0,
-        is_out_of_stock:  Boolean(p.is_out_of_stock)
-      }));
+      const products = (data || []).map(p => {
+        const rawDesc = p.description || '';
+        const isOos = rawDesc.includes('[OUT_OF_STOCK]') || Boolean(p.is_out_of_stock);
+        const cleanDesc = rawDesc.replace(/\[OUT_OF_STOCK\]\s*/g, '').trim();
+        return {
+          ...p,
+          description: cleanDesc,
+          cost_price:       Number(p.cost_price || 0),
+          discount_type:    p.discount_type  || 'none',
+          discount_value:   p.discount_value || 0,
+          sizes:            Array.isArray(p.sizes) && p.sizes.length ? p.sizes : ['S','M','L','XL','XXL'],
+          colors:           Array.isArray(p.colors) ? p.colors : [],
+          gallery:          Array.isArray(p.gallery) ? p.gallery : [],
+          main_image_index: p.main_image_index || 0,
+          is_out_of_stock:  isOos
+        };
+      });
 
       return res.status(200).json({ success: true, products });
     }
@@ -115,7 +121,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ success: false, error: 'Unauthorized.' });
       }
 
-      const { id } = req.query;
+      const id = req.query?.id || req.body?.id;
       if (!id) {
         return res.status(400).json({ success: false, error: 'Product ID is required.' });
       }
@@ -127,9 +133,20 @@ export default async function handler(req, res) {
       if (type !== undefined) updates.type = type;
       if (price !== undefined) updates.price = parseInt(price);
       if (cost_price !== undefined) updates.cost_price = parseInt(cost_price);
-      if (description !== undefined) updates.description = description;
       if (image_url !== undefined) updates.image_url = image_url;
-      if (is_out_of_stock !== undefined) updates.is_out_of_stock = Boolean(is_out_of_stock);
+
+      if (is_out_of_stock !== undefined) {
+        updates.is_out_of_stock = Boolean(is_out_of_stock);
+        let currentDesc = description;
+        if (currentDesc === undefined) {
+          const { data: pData } = await supabase.from('products').select('description').eq('id', id).single();
+          currentDesc = pData?.description || '';
+        }
+        let baseDesc = (currentDesc || '').replace(/\[OUT_OF_STOCK\]\s*/g, '').trim();
+        updates.description = Boolean(is_out_of_stock) ? (baseDesc ? `[OUT_OF_STOCK]\n${baseDesc}` : '[OUT_OF_STOCK]') : baseDesc;
+      } else if (description !== undefined) {
+        updates.description = description;
+      }
 
       if (discount_type !== undefined) updates.discount_type = discount_type;
       if (discount_value !== undefined) {
@@ -198,7 +215,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ success: false, error: 'غير مصرح.' });
       }
 
-      const { id } = req.query;
+      const id = req.query?.id || req.body?.id;
       if (!id) {
         return res.status(400).json({ success: false, error: 'Product ID is required.' });
       }

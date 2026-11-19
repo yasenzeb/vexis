@@ -1170,9 +1170,17 @@ function renderProductsTable(){
     <td>${badgeHTML(p.type)}</td>
     <td class="price-col">${htmlEsc(String(p.price))} ج.م</td>
     <td class="discount-col">${discountLabel(p)}</td>
-    <td><div class="actions-col">
+    <td style="white-space:nowrap"><div class="actions-col" style="display:flex;align-items:center;gap:6px">
+      <button class="btn btn-sm ${p.is_out_of_stock ? 'btn-red' : 'btn-ghost'}" 
+              onclick="quickToggleOos('${htmlEsc(p.id)}')" 
+              id="oos-btn-${htmlEsc(p.id)}"
+              title="تبديل حالة التوفر"
+              style="${p.is_out_of_stock ? 'background:#dc2626;color:#fff;border-color:#dc2626;' : 'border:1px solid var(--border);color:var(--text);'}font-weight:700;padding:6px 10px;font-size:12px">
+        <i class="fas ${p.is_out_of_stock ? 'fa-ban' : 'fa-box-open'}"></i>
+        ${p.is_out_of_stock ? 'سولد أوت (نفد)' : 'متاح (متوفر)'}
+      </button>
       <button class="btn btn-blue btn-sm" onclick="openEditModal('${htmlEsc(p.id)}')"><i class="fas fa-edit"></i> تعديل</button>
-      <button class="btn btn-red btn-sm" onclick="openDeleteModal('${htmlEsc(p.id)}',\`${esc(p.name)}\`)"><i class="fas fa-trash"></i> حذف</button>
+      <button class="btn btn-red btn-sm" onclick="openDeleteModal('${htmlEsc(p.id)}')"><i class="fas fa-trash"></i> حذف</button>
     </div></td>
   </tr>`).join('');
   updatePagination();
@@ -1407,25 +1415,65 @@ async function submitEditProduct(){
   finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-save"></i> حفظ التعديلات';}
 }
 
+/* ══ QUICK TOGGLE OUT OF STOCK ══ */
+async function quickToggleOos(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  const newStatus = !p.is_out_of_stock;
+  const btn = document.getElementById(`oos-btn-${id}`);
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  }
+  try {
+    const data = await api('PUT', `/api/products?id=${id}`, {
+      is_out_of_stock: newStatus
+    });
+    if (!data.success) throw new Error(data.error || 'فشل التحديث');
+    p.is_out_of_stock = newStatus;
+    toast(newStatus ? 'تم تحديد المنتج: نفد المخزون (سولد أوت)' : 'تم تحديد المنتج: متاح في المخزون', 'success');
+    renderProductsTable();
+  } catch (err) {
+    console.error('[quickToggleOos] error:', err);
+    toast('خطأ: ' + err.message, 'error');
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fas ${p.is_out_of_stock ? 'fa-ban' : 'fa-box-open'}"></i> ${p.is_out_of_stock ? 'سولد أوت (نفد)' : 'متاح (متوفر)'}`;
+    }
+  }
+}
+
 /* ══ DELETE PRODUCT ══ */
-function openDeleteModal(id,name){deletingProductId=id;document.getElementById('delete-product-name').textContent=name;document.getElementById('delete-modal').style.display='';}
+function openDeleteModal(id){
+  const p = allProducts.find(x => x.id === id);
+  if (!p) return;
+  deletingProductId = id;
+  document.getElementById('delete-product-name').textContent = p.name;
+  document.getElementById('delete-modal').style.display = '';
+}
 function closeDeleteModal(e){if(e&&e.target!==document.querySelector('#delete-modal .modal-overlay'))return;document.getElementById('delete-modal').style.display='none';deletingProductId=null;}
 async function confirmDelete(){
-  const btn=document.getElementById('btn-delete-confirm');
-  btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i>';
-  console.log('[confirmDelete] → DELETE /api/products/'+deletingProductId);
+  if (!deletingProductId) return;
+  const btn = document.getElementById('btn-delete-confirm');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحذف...';
+  console.log('[confirmDelete] → DELETE /api/products?id=' + deletingProductId);
   try{
-   const data=await api('DELETE',`/api/products?id=${deletingProductId}`);
-
+    const data = await api('DELETE', `/api/products?id=${deletingProductId}`, { id: deletingProductId });
     console.log('[confirmDelete] ← response:', data);
-    if(!data.success)throw new Error(data.error);
-    toast('✓ تم الحذف','success');document.getElementById('delete-modal').style.display='none';
+    if (!data.success) throw new Error(data.error);
+    toast('✓ تم حذف المنتج نهائياً', 'success');
+    document.getElementById('delete-modal').style.display = 'none';
+    deletingProductId = null;
     await loadAllProducts();
   }catch(err){
     console.error('[confirmDelete] ✗ error:', err);
-    toast('خطأ: '+err.message,'error');
+    toast('خطأ في الحذف: ' + err.message, 'error');
   }
-  finally{btn.disabled=false;btn.innerHTML='<i class="fas fa-trash"></i> حذف نهائياً';}
+  finally{
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-trash"></i> حذف نهائياً';
+  }
 }
 
 /* ══ ORDERS ══ */

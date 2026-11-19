@@ -20,6 +20,15 @@ import promocodes from './_promocodes.js';
 import returnRequest from './_return-request.js';
 
 export default async function handler(req, res) {
+  if (!req.query) req.query = {};
+  try {
+    const parsed = new URL(req.url, 'http://localhost');
+    for (const [key, val] of parsed.searchParams.entries()) {
+      if (key !== '__path' && req.query[key] === undefined) {
+        req.query[key] = val;
+      }
+    }
+  } catch (e) {}
   let { __path } = req.query;
   
   if (!__path) {

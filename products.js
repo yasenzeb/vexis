@@ -38,24 +38,29 @@ async function loadProducts() {
 
     if (!data.success) throw new Error(data.error || 'Failed to load products');
 
-    window.mockProducts = (data.products || []).map(p => ({
-      id: p.id,
-      name: p.name,
-      type: p.type,
-      price: Number(p.price),
-      discount_type: p.discount_type || 'none',
-      discount_value: Number(p.discount_value || 0),
-     image_url: (p.image_url && p.image_url !== "0" && p.image_url !== 0)
-  ? p.image_url
-  : (Array.isArray(p.gallery) && p.gallery.length ? p.gallery[0] : null),
-      image_hover: Array.isArray(p.gallery) && p.gallery.length > 1 ? p.gallery[1] : (p.image_url || null),
-      gallery: Array.isArray(p.gallery) ? p.gallery : (p.image_url ? [p.image_url] : []),
-      sizes: Array.isArray(p.sizes) ? p.sizes : [],
-      colors: Array.isArray(p.colors) ? p.colors : [],
-      created_at: p.created_at || new Date().toISOString(),
-      description: p.description || '',
-      is_out_of_stock: Boolean(p.is_out_of_stock),
-    }));
+    window.mockProducts = (data.products || []).map(p => {
+      const rawDesc = p.description || '';
+      const isOos = rawDesc.includes('[OUT_OF_STOCK]') || Boolean(p.is_out_of_stock);
+      const cleanDesc = rawDesc.replace(/\[OUT_OF_STOCK\]\s*/g, '').trim();
+      return {
+        id: p.id,
+        name: p.name,
+        type: p.type,
+        price: Number(p.price),
+        discount_type: p.discount_type || 'none',
+        discount_value: Number(p.discount_value || 0),
+        image_url: (p.image_url && p.image_url !== "0" && p.image_url !== 0)
+          ? p.image_url
+          : (Array.isArray(p.gallery) && p.gallery.length ? p.gallery[0] : null),
+        image_hover: Array.isArray(p.gallery) && p.gallery.length > 1 ? p.gallery[1] : (p.image_url || null),
+        gallery: Array.isArray(p.gallery) ? p.gallery : (p.image_url ? [p.image_url] : []),
+        sizes: Array.isArray(p.sizes) ? p.sizes : [],
+        colors: Array.isArray(p.colors) ? p.colors : [],
+        created_at: p.created_at || new Date().toISOString(),
+        description: cleanDesc,
+        is_out_of_stock: isOos,
+      };
+    });
 
     window.productsReady = true;
     window.dispatchEvent(new CustomEvent('productsLoaded', { detail: window.mockProducts }));
