@@ -57,6 +57,25 @@ export default async function handler(req, res) {
         .single();
 
       if (error) throw error;
+
+      // WhatsApp status notification (fire and forget)
+      if (process.env.WA_SERVICE_URL && process.env.WA_API_SECRET && (status === 'shipped' || status === 'delivered')) {
+        fetch(`${process.env.WA_SERVICE_URL}/send-status`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-secret': process.env.WA_API_SECRET,
+          },
+          body: JSON.stringify({
+            phone:        data.phone,
+            customerName: data.customer_name,
+            orderNumber:  data.order_number,
+            status:       status
+          }),
+          signal: AbortSignal.timeout(6000),
+        }).catch(err => console.warn('[WA Status]', err.message));
+      }
+
       return res.status(200).json({ success: true, order: data });
     }
 

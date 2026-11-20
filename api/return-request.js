@@ -88,6 +88,23 @@ export default async function handler(req, res) {
     parse_mode: 'HTML'
   });
 
+  // Send WhatsApp confirmation to customer (fire and forget)
+  if (process.env.WA_SERVICE_URL && process.env.WA_API_SECRET && (order.phone || phone)) {
+    fetch(`${process.env.WA_SERVICE_URL}/send-return`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-secret': process.env.WA_API_SECRET,
+      },
+      body: JSON.stringify({
+        phone:        order.phone || phone,
+        customerName: order.customer_name || 'عميلنا العزيز',
+        orderNumber:  order.order_number
+      }),
+      signal: AbortSignal.timeout(6000),
+    }).catch(err => console.warn('[WA Return Confirmation]', err.message));
+  }
+
   return res.json({
     success: true,
     order_number: order.order_number,
