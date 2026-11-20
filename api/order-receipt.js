@@ -115,6 +115,33 @@ export default async function handler(req, res) {
       }
     }
 
+    // WhatsApp Admin Notification
+    if (process.env.WA_SERVICE_URL && process.env.WA_API_SECRET) {
+      try {
+        await fetch(`${process.env.WA_SERVICE_URL}/send`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-secret': process.env.WA_API_SECRET,
+          },
+          body: JSON.stringify({
+            phone: '201061927815',
+            message: `🧾 *إيصال تحويل جديد تم رفعه!* 📸\n\n` +
+              `🆔 *رقم الطلب:* \`${data.order_number}\`\n` +
+              `👤 *العميل:* ${data.customer_name}\n` +
+              `📞 *الهاتف:* ${data.phone}\n` +
+              `💰 *المبلغ:* EGP ${data.total}\n` +
+              `🔗 *رابط صورة الإيصال:*\n${receipt_url}\n\n` +
+              `⚙️ *لتأكيد الطلب:* \`قبول ${data.order_number}\`\n` +
+              `❌ *للرفض:* \`رفض ${data.order_number} إيصال غير صحيح\``
+          }),
+          signal: AbortSignal.timeout(6000),
+        });
+      } catch (waErr) {
+        console.warn('[WA Receipt Alert Error]', waErr.message);
+      }
+    }
+
     return res.status(200).json({
       success: true,
       order: { order_number: data.order_number },

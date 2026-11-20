@@ -68,6 +68,31 @@ async function sendWhatsAppReceipt(orderData) {
   }
 }
 
+// ── WhatsApp Admin Notification ──────────────────────────────
+async function sendWhatsAppAdmin(message) {
+  const waServiceUrl    = process.env.WA_SERVICE_URL;
+  const waServiceSecret = process.env.WA_API_SECRET;
+  if (!waServiceUrl || !waServiceSecret) return;
+
+  try {
+    await fetch(`${waServiceUrl}/send`, {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'x-api-secret':  waServiceSecret,
+      },
+      body: JSON.stringify({
+        phone:   '201061927815',
+        message: message,
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+    console.log('[WA Admin] ✅ Order alert sent to 01061927815');
+  } catch (err) {
+    console.warn('[WA Admin Alert]', err.message);
+  }
+}
+
 async function sendTelegram(message, replyMarkup = null) {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID || '7242279880';
@@ -253,6 +278,32 @@ export default async function handler(req, res) {
       `🚚 <b>الشحن:</b> EGP ${parsedShipping}\n` +
       `✅ <b>الإجمالي المطلوب:</b> EGP ${parsedTotal}`,
       inlineKeyboard
+    );
+
+    // WhatsApp Admin Notification to 01061927815
+    const waItemsList = safeItems
+      .map(i => `• *${i.name}* [${i.size || 'N/A'}] ×${i.qty} — EGP ${i.finalPrice * i.qty}`)
+      .join('\n');
+    const waDiscountText = parsedDiscount > 0 ? `\n🏷️ *الخصم:* -EGP ${parsedDiscount}` : '';
+
+    sendWhatsAppAdmin(
+      `🚨 *طلب جديد في VEXIS!* 🛒\n\n` +
+      `🆔 *رقم الطلب:* \`${orderNumber}\`\n` +
+      `👤 *العميل:* ${name}\n` +
+      `📞 *الهاتف:* ${phone}\n` +
+      `📍 *العنوان:* ${gov} — ${address}\n` +
+      `💳 *طريقة الدفع:* ${payment === 'cod' ? 'عند الاستلام (COD)' : payment}\n` +
+      (notes ? `📝 *ملاحظات:* ${notes}\n` : '') +
+      `\n📦 *المنتجات:*\n${waItemsList}\n` +
+      waDiscountText +
+      `🚚 *الشحن:* EGP ${parsedShipping}\n` +
+      `💵 *المطلوب عند الاستلام:* *EGP ${parsedTotal}*\n\n` +
+      `━━━━━━━━━━━━━━━━━━━\n` +
+      `⚙️ *تحكم سريع (رد على الرسالة بالطلب):*\n` +
+      `• \`قبول ${orderNumber}\`\n` +
+      `• \`شحن ${orderNumber}\`\n` +
+      `• \`تسليم ${orderNumber}\`\n` +
+      `• \`رفض ${orderNumber} [السبب]\``
     );
 
     // Check total tax threshold on every new order (3 EGP tax / order)

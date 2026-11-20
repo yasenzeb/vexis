@@ -89,20 +89,42 @@ export default async function handler(req, res) {
   });
 
   // Send WhatsApp confirmation to customer (fire and forget)
-  if (process.env.WA_SERVICE_URL && process.env.WA_API_SECRET && (order.phone || phone)) {
-    fetch(`${process.env.WA_SERVICE_URL}/send-return`, {
+  if (process.env.WA_SERVICE_URL && process.env.WA_API_SECRET) {
+    if (order.phone || phone) {
+      fetch(`${process.env.WA_SERVICE_URL}/send-return`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-secret': process.env.WA_API_SECRET,
+        },
+        body: JSON.stringify({
+          phone:        order.phone || phone,
+          customerName: order.customer_name || 'عميلنا العزيز',
+          orderNumber:  order.order_number
+        }),
+        signal: AbortSignal.timeout(6000),
+      }).catch(err => console.warn('[WA Return Confirmation]', err.message));
+    }
+
+    // Send WhatsApp notification to Admin (01061927815)
+    fetch(`${process.env.WA_SERVICE_URL}/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-secret': process.env.WA_API_SECRET,
       },
       body: JSON.stringify({
-        phone:        order.phone || phone,
-        customerName: order.customer_name || 'عميلنا العزيز',
-        orderNumber:  order.order_number
+        phone: '201061927815',
+        message: `🔄 *طلب استبدال / استرجاع جديد!* 📦\n\n` +
+          `🆔 *رقم الطلب:* \`${order.order_number}\`\n` +
+          `👤 *العميل:* ${order.customer_name || 'N/A'}\n` +
+          `📞 *الهاتف:* ${order.phone || phone}\n` +
+          `💰 *إجمالي الأوردر:* EGP ${order.total}\n` +
+          `📝 *سبب الطلب:* ${reason || 'غير محدد'}\n\n` +
+          `⚙️ *للبحث عن تفاصيل الطلب:* \`بحث ${order.order_number}\``
       }),
       signal: AbortSignal.timeout(6000),
-    }).catch(err => console.warn('[WA Return Confirmation]', err.message));
+    }).catch(err => console.warn('[WA Admin Return Alert]', err.message));
   }
 
   return res.json({
