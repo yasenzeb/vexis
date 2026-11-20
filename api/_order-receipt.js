@@ -118,20 +118,26 @@ export default async function handler(req, res) {
     // WhatsApp Admin Notification
     if (process.env.WA_SERVICE_URL && process.env.WA_API_SECRET) {
       try {
-        await fetch(`${process.env.WA_SERVICE_URL}/send`, {
+        const cleanPhone = (data.phone || '').toString().replace(/\D/g, '');
+        const chatLink = cleanPhone.startsWith('01') ? `https://wa.me/2${cleanPhone}` : `https://wa.me/${cleanPhone}`;
+
+        await fetch(`${process.env.WA_SERVICE_URL}/send-admin-order`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'x-api-secret': process.env.WA_API_SECRET,
           },
           body: JSON.stringify({
-            phone: '201061927815',
+            phone:         '201001982117',
+            orderNumber:   data.order_number,
+            customerPhone: cleanPhone,
             message: `🧾 *إيصال تحويل جديد تم رفعه!* 📸\n\n` +
               `🆔 *رقم الطلب:* \`${data.order_number}\`\n` +
               `👤 *العميل:* ${data.customer_name}\n` +
               `📞 *الهاتف:* ${data.phone}\n` +
               `💰 *المبلغ:* EGP ${data.total}\n` +
               `🔗 *رابط صورة الإيصال:*\n${receipt_url}\n\n` +
+              `💬 *دردشة فورية مع العميل:*\n${chatLink}\n\n` +
               `⚙️ *لتأكيد الطلب:* \`قبول ${data.order_number}\`\n` +
               `❌ *للرفض:* \`رفض ${data.order_number} إيصال غير صحيح\``
           }),

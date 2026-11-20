@@ -106,7 +106,10 @@ export default async function handler(req, res) {
       }).catch(err => console.warn('[WA Return Confirmation]', err.message));
     }
 
-    // Send WhatsApp notification to Admin (01061927815)
+    // Send WhatsApp notification to Admin (01001982117)
+    const cleanPhone = (order.phone || phone || '').toString().replace(/\D/g, '');
+    const chatLink = cleanPhone.startsWith('01') ? `https://wa.me/2${cleanPhone}` : `https://wa.me/${cleanPhone}`;
+
     fetch(`${process.env.WA_SERVICE_URL}/send`, {
       method: 'POST',
       headers: {
@@ -114,13 +117,14 @@ export default async function handler(req, res) {
         'x-api-secret': process.env.WA_API_SECRET,
       },
       body: JSON.stringify({
-        phone: '201061927815',
+        phone: '201001982117',
         message: `🔄 *طلب استبدال / استرجاع جديد!* 📦\n\n` +
           `🆔 *رقم الطلب:* \`${order.order_number}\`\n` +
           `👤 *العميل:* ${order.customer_name || 'N/A'}\n` +
           `📞 *الهاتف:* ${order.phone || phone}\n` +
           `💰 *إجمالي الأوردر:* EGP ${order.total}\n` +
           `📝 *سبب الطلب:* ${reason || 'غير محدد'}\n\n` +
+          `💬 *دردشة فورية مع العميل:*\n${chatLink}\n\n` +
           `⚙️ *للبحث عن تفاصيل الطلب:* \`بحث ${order.order_number}\``
       }),
       signal: AbortSignal.timeout(6000),

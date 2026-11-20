@@ -1,4 +1,4 @@
-// api/_whatsapp-admin.js — WhatsApp Admin Bot Control System for 01061927815
+// api/_whatsapp-admin.js — WhatsApp Admin Bot Control System for 01001982117
 import { createClient } from '@supabase/supabase-js';
 import { setCorsHeaders } from './_auth.js';
 
@@ -9,7 +9,7 @@ const supabase = createClient(
 
 const WA_API_SECRET = process.env.WA_API_SECRET || 'vexis-wa-2024-secret';
 const WA_SERVICE_URL = process.env.WA_SERVICE_URL || 'https://vexis-whatsapp-service.onrender.com';
-const ADMIN_PHONE = '201061927815';
+const ADMIN_PHONE = '201001982117';
 
 // Helper to notify customer via WhatsApp when status changes to shipped/delivered
 async function notifyCustomerStatus(phone, customerName, orderNumber, status) {
@@ -29,6 +29,26 @@ async function notifyCustomerStatus(phone, customerName, orderNumber, status) {
   }
 }
 
+// Helper to send a direct WhatsApp message to any customer
+async function sendDirectWAMessage(phone, text) {
+  if (!WA_SERVICE_URL || !phone || !text) return false;
+  try {
+    const res = await fetch(`${WA_SERVICE_URL}/send`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-secret': WA_API_SECRET,
+      },
+      body: JSON.stringify({ phone, message: text }),
+      signal: AbortSignal.timeout(8000),
+    });
+    const d = await res.json();
+    return d.success;
+  } catch (e) {
+    return false;
+  }
+}
+
 export default async function handler(req, res) {
   setCorsHeaders(req, res);
   if (req.method === 'OPTIONS') return res.status(204).end();
@@ -45,8 +65,8 @@ export default async function handler(req, res) {
   const { from, message } = req.body || {};
   const cleanFrom = (from || '').toString().replace(/\D/g, '');
 
-  // 2. Verify Admin Phone
-  if (!cleanFrom.endsWith('1061927815')) {
+  // 2. Verify Admin Phone (01001982117)
+  if (!cleanFrom.endsWith('1001982117')) {
     return res.status(403).json({ success: false, error: 'Forbidden: sender is not admin' });
   }
 
@@ -55,7 +75,6 @@ export default async function handler(req, res) {
     return res.json({ success: true, reply: '⚠️ لم يتم استلام أي نص.' });
   }
 
-  const lower = text.toLowerCase();
   const parts = text.split(/\s+/);
   const firstWord = parts[0].toLowerCase();
 
@@ -64,24 +83,28 @@ export default async function handler(req, res) {
     if (['/start', '/help', 'مساعدة', 'اوامر', 'أوامر', 'منيو', 'قائمة'].includes(firstWord)) {
       const reply = `👑 *لوحة تحكم إدارة VEXIS على واتساب* 🏋️🔥
 
-*📊 أوامر التحليل والإحصائيات:*
-• \`احصائيات\` أو \`/stats\` — إجمالي المبيعات، الأرباح، والضرائب
-• \`اليوم\` أو \`/today\` — ملخص مبيعات وطلبات اليوم
+*📊 أوامر التحليل والمبيعات:*
+• \`احصائيات\` أو \`/stats\` — إجمالي الأرباح، الشحن، الضرائب وتوزيع الحالات
+• \`اليوم\` أو \`/today\` — مبيعات وطلبات اليوم
 
-*📦 أوامر الطلبات والاستعلام:*
-• \`طلبات\` أو \`/orders\` — أحدث 5 طلبات في المتجر
-• \`معلق\` أو \`/pending\` — الطلبات المعلقة في انتظار المراجعة
+*📦 أوامر الطلبات:*
+• \`طلبات\` أو \`/orders\` — أحدث 5 طلبات مسجلة
+• \`معلق\` أو \`/pending\` — الطلبات المعلقة في انتظار الإجراء
 • \`بحث [رقم/هاتف/اسم]\` — بحث شامل في الطلبات
 
-*⚡ أوامر سريعة لتحديث حالة أي أوردر:*
+*⚡ أوامر سريعة لتحديث حالة أي طلب:*
 • \`قبول [رقم الطلب]\` — تأكيد الأوردر ومراجعته
-• \`شحن [رقم الطلب]\` — تحويل لحالة "خرج للشحن" + إشعار العميل فوراً
-• \`تسليم [رقم الطلب]\` — تحويل لحالة "تم التسليم" + إشعار العميل
-• \`رفض [رقم الطلب] [سبب الرفض]\` — رفض الطلب مع تسجيل السبب
+• \`شحن [رقم الطلب]\` — تحويل لـ "خرج للشحن" + إشعار العميل برابط التتبع
+• \`تسليم [رقم الطلب]\` — تحويل لـ "تم التسليم" + إشعار العميل بالضمان
+• \`رفض [رقم الطلب] [السبب]\` — رفض الطلب وتسجيل السبب
 
-*مثال:*
-\`شحن VEXIS-1234\`
-\`بحث 01001234567\``;
+*🏷️ إدارة أكواد الخصم والمنتجات:*
+• \`اكواد\` — عرض كل أكواد الخصم النشطة
+• \`كود [الاسم] [النسبة%]\` — إنشاء كود خصم جديد (مثال: \`كود VEXIS15 15\`)
+• \`منتجات\` — عرض قائمة المنتجات المتوفرة
+
+*💬 مراسلة عميل:*
+• \`رسالة [رقم الهاتف] [النص]\` — إرسال واتساب مباشر لأي عميل`;
 
       return res.json({ success: true, reply });
     }
@@ -150,9 +173,14 @@ export default async function handler(req, res) {
       }
 
       const list = orders.map((o, idx) => {
+        const cleanPhone = (o.phone || '').toString().replace(/\D/g, '');
+        const chatLink = cleanPhone.startsWith('01') ? `https://wa.me/2${cleanPhone}` : `https://wa.me/${cleanPhone}`;
         const items = Array.isArray(o.items) ? o.items.map(i => `${i.name} [${i.size || 'M'}]×${i.qty || 1}`).join('، ') : '';
+
         return `*${idx + 1}.* 🆔 \`${o.order_number}\`
-👤 *${o.customer_name}* (${o.phone})
+👤 *${o.customer_name}*
+📞 ${o.phone}
+💬 [دردشة مع العميل](${chatLink})
 📍 ${o.governorate} — ${o.address}
 💰 *EGP ${o.total}* | حالة: *${o.status}*
 📦 ${items}
@@ -183,8 +211,11 @@ export default async function handler(req, res) {
       }
 
       const list = orders.map(o => {
+        const cleanPhone = (o.phone || '').toString().replace(/\D/g, '');
+        const chatLink = cleanPhone.startsWith('01') ? `https://wa.me/2${cleanPhone}` : `https://wa.me/${cleanPhone}`;
         return `🆔 \`${o.order_number}\`
 👤 *${o.customer_name}* (${o.phone})
+💬 ${chatLink}
 📍 ${o.governorate} — ${o.address}
 💰 *EGP ${o.total}* | حالة: *${o.status}*
 ⚙️ \`قبول ${o.order_number}\` | \`شحن ${o.order_number}\` | \`تسليم ${o.order_number}\``;
@@ -206,7 +237,6 @@ export default async function handler(req, res) {
 
       const reason = parts.slice(2).join(' ').trim();
 
-      // Find order
       const { data: order, error: findErr } = await supabase
         .from('orders')
         .select('*')
@@ -218,7 +248,6 @@ export default async function handler(req, res) {
         return res.json({ success: true, reply: `❌ لم يتم العثور على طلب بهذا الرقم: \`${orderNumberArg}\`` });
       }
 
-      // Update in DB
       const updateData = { status: targetStatus };
       if (targetStatus === 'rejected' && reason) {
         updateData.rejection_reason = reason;
@@ -231,7 +260,6 @@ export default async function handler(req, res) {
 
       if (updateErr) throw updateErr;
 
-      // Status labels for response
       const statusLabels = {
         review: '✅ قيد المراجعة والتأكيد (review)',
         shipped: '🚚 خرج للشحن مع المندوب (shipped)',
@@ -239,7 +267,6 @@ export default async function handler(req, res) {
         rejected: '❌ مرفوض (rejected)',
       };
 
-      // Automatically notify customer via WhatsApp if shipped or delivered
       if (['shipped', 'delivered'].includes(targetStatus)) {
         await notifyCustomerStatus(order.phone, order.customer_name, order.order_number, targetStatus);
       }
@@ -252,48 +279,60 @@ export default async function handler(req, res) {
       if (targetStatus === 'rejected') {
         reply += `\n📝 *سبب الرفض:* ${reason || 'لم يُحدد سبب'}`;
       } else if (['shipped', 'delivered'].includes(targetStatus)) {
-        reply += `\n📲 *تم إرسال إشعار فوري للعميل على واتساب!*`;
+        reply += `\n📲 *تم إرسال إشعار فوري للعميل على واتساب بتحديث الشحنة!*`;
       }
 
       return res.json({ success: true, reply });
     }
 
-    // ── Command 6: Explicit /status command ───────────────────
-    if (firstWord === '/status' || firstWord === 'حالة') {
-      const orderNum = parts[1];
-      const newStatus = (parts[2] || '').toLowerCase();
-      const valid = ['pending', 'review', 'confirmed', 'shipped', 'delivered', 'rejected', 'cancelled'];
+    // ── Command 6: Promo Codes Management (اكواد / كود) ───────
+    if (['اكواد', 'أكواد', 'بروموكود', 'promos'].includes(firstWord)) {
+      const { data: promos } = await supabase.from('promocodes').select('*').order('created_at', { ascending: false });
+      if (!promos || promos.length === 0) {
+        return res.json({ success: true, reply: '🏷️ لا توجد أكواد خصم مسجلة حالياً.' });
+      }
+      const list = promos.map(p => `• \`${p.code}\` — خصم *${p.discount_value}${p.discount_type === 'percent' ? '%' : ' EGP'}* | ${p.is_active ? '✅ نشط' : '❌ معطل'}`).join('\n');
+      return res.json({ success: true, reply: `🏷️ *أكواد الخصم في المتجر:*\n\n${list}\n\n💡 لإنشاء كود جديد اكتب:\n\`كود [الاسم] [القيمة]\` مثال: \`كود VEXIS20 20\`` });
+    }
 
-      if (!orderNum || !newStatus || !valid.includes(newStatus)) {
-        return res.json({
-          success: true,
-          reply: `⚠️ الاستخدام الصحيح:
-\`/status [رقم الطلب] [الحالة]\`
-الحالات المتاحة: \`pending\`, \`review\`, \`shipped\`, \`delivered\`, \`rejected\``
-        });
+    if (firstWord === 'كود' && parts.length >= 3) {
+      const newCode = parts[1].toUpperCase().trim();
+      const val = parseFloat(parts[2].replace(/[^\d.]/g, ''));
+      if (!newCode || isNaN(val) || val <= 0) {
+        return res.json({ success: true, reply: '⚠️ طريقة الاستخدام:\n`كود [الاسم] [النسبة]`\nمثال: `كود VEXIS20 20`' });
       }
 
-      const { data: order, error: findErr } = await supabase
-        .from('orders')
-        .select('*')
-        .ilike('order_number', `%${orderNum}%`)
-        .limit(1)
-        .single();
+      const { error: insErr } = await supabase.from('promocodes').upsert({
+        code: newCode,
+        discount_type: 'percent',
+        discount_value: val,
+        is_active: true,
+      }, { onConflict: 'code' });
 
-      if (findErr || !order) {
-        return res.json({ success: true, reply: `❌ لم يتم العثور على طلب برقم: \`${orderNum}\`` });
+      if (insErr) throw insErr;
+      return res.json({ success: true, reply: `✅ *تم تفعيل كود الخصم بنجاح!*\n🏷️ الكود: \`${newCode}\`\n💰 نسبة الخصم: *${val}%*` });
+    }
+
+    // ── Command 7: Products List (منتجات / مخزون) ──────────────
+    if (['منتجات', 'المنتجات', 'مخزون', 'المخزون'].includes(firstWord)) {
+      const { data: prods } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+      if (!prods || prods.length === 0) {
+        return res.json({ success: true, reply: '📦 لا توجد منتجات مسجلة.' });
       }
+      const list = prods.map(p => `• *${p.name}* — EGP ${p.price} | ${p.is_out_of_stock ? '🔴 نفد المخزون' : '🟢 متوفر'}`).join('\n');
+      return res.json({ success: true, reply: `📦 *منتجات المتجر:*\n\n${list}` });
+    }
 
-      await supabase.from('orders').update({ status: newStatus }).eq('order_number', order.order_number);
-
-      if (['shipped', 'delivered'].includes(newStatus)) {
-        await notifyCustomerStatus(order.phone, order.customer_name, order.order_number, newStatus);
+    // ── Command 8: Direct Message to Customer (رسالة [phone] [text]) ──
+    if (firstWord === 'رسالة' && parts.length >= 3) {
+      const targetPhone = parts[1].replace(/\D/g, '');
+      const msgText = parts.slice(2).join(' ');
+      const sent = await sendDirectWAMessage(targetPhone, msgText);
+      if (sent) {
+        return res.json({ success: true, reply: `✅ تم إرسال الرسالة بنجاح إلى العميل (${targetPhone})!` });
+      } else {
+        return res.json({ success: true, reply: `❌ فشل إرسال الرسالة إلى (${targetPhone}). تحقق من الرقم.` });
       }
-
-      return res.json({
-        success: true,
-        reply: `✅ تم تحديث حالة الطلب \`${order.order_number}\` إلى: *${newStatus}*`
-      });
     }
 
     // Default Fallback for Admin

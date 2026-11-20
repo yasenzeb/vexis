@@ -69,25 +69,27 @@ async function sendWhatsAppReceipt(orderData) {
 }
 
 // ── WhatsApp Admin Notification ──────────────────────────────
-async function sendWhatsAppAdmin(message) {
+async function sendWhatsAppAdmin(orderData, message) {
   const waServiceUrl    = process.env.WA_SERVICE_URL;
   const waServiceSecret = process.env.WA_API_SECRET;
   if (!waServiceUrl || !waServiceSecret) return;
 
   try {
-    await fetch(`${waServiceUrl}/send`, {
+    await fetch(`${waServiceUrl}/send-admin-order`, {
       method:  'POST',
       headers: {
         'Content-Type':  'application/json',
         'x-api-secret':  waServiceSecret,
       },
       body: JSON.stringify({
-        phone:   '201061927815',
-        message: message,
+        phone:         '201001982117',
+        orderNumber:   orderData.orderNumber,
+        customerPhone: orderData.phone,
+        message:       message,
       }),
       signal: AbortSignal.timeout(8000),
     });
-    console.log('[WA Admin] ✅ Order alert sent to 01061927815');
+    console.log('[WA Admin] ✅ Order alert sent to 01001982117');
   } catch (err) {
     console.warn('[WA Admin Alert]', err.message);
   }
@@ -280,13 +282,16 @@ export default async function handler(req, res) {
       inlineKeyboard
     );
 
-    // WhatsApp Admin Notification to 01061927815
+    // WhatsApp Admin Notification to 01001982117
     const waItemsList = safeItems
       .map(i => `• *${i.name}* [${i.size || 'N/A'}] ×${i.qty} — EGP ${i.finalPrice * i.qty}`)
       .join('\n');
     const waDiscountText = parsedDiscount > 0 ? `\n🏷️ *الخصم:* -EGP ${parsedDiscount}` : '';
+    const cleanCustomerPhone = (phone || '').toString().replace(/\D/g, '');
+    const directChatUrl = cleanCustomerPhone.startsWith('01') ? `https://wa.me/2${cleanCustomerPhone}` : `https://wa.me/${cleanCustomerPhone}`;
 
     sendWhatsAppAdmin(
+      { orderNumber, phone: cleanCustomerPhone },
       `🚨 *طلب جديد في VEXIS!* 🛒\n\n` +
       `🆔 *رقم الطلب:* \`${orderNumber}\`\n` +
       `👤 *العميل:* ${name}\n` +
@@ -298,8 +303,9 @@ export default async function handler(req, res) {
       waDiscountText +
       `🚚 *الشحن:* EGP ${parsedShipping}\n` +
       `💵 *المطلوب عند الاستلام:* *EGP ${parsedTotal}*\n\n` +
+      `🔗 *بدء محادثة مباشرة مع العميل:*\n${directChatUrl}\n\n` +
       `━━━━━━━━━━━━━━━━━━━\n` +
-      `⚙️ *تحكم سريع (رد على الرسالة بالطلب):*\n` +
+      `⚙️ *أوامر سريعة للتحكم:*\n` +
       `• \`قبول ${orderNumber}\`\n` +
       `• \`شحن ${orderNumber}\`\n` +
       `• \`تسليم ${orderNumber}\`\n` +
@@ -311,7 +317,7 @@ export default async function handler(req, res) {
       const { count } = await supabase.from('orders').select('*', { count: 'exact', head: true });
       const currentTax = (count || 0) * 3;
       if (currentTax >= 100) {
-        const waUrl = `https://wa.me/201061927815?text=${encodeURIComponent(`مرحباً، أود سداد الضريبة المستحقة قدرها ${currentTax} ج.م الخاصة بمتجر VEXIS.`)}`;
+        const waUrl = `https://wa.me/201001982117?text=${encodeURIComponent(`مرحباً، أود سداد الضريبة المستحقة قدرها ${currentTax} ج.م الخاصة بمتجر VEXIS.`)}`;
         sendTelegram(
           `🚨 <b>تنبيه عاجل: تجاوزت قيمة الضريبة المستحقة 100 ج.م!</b> 🚨\n\n` +
           `إجمالي عدد الطلبات: <b>${count}</b> طلبات\n` +
