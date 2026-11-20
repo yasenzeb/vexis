@@ -44,6 +44,30 @@ function generateOrderNumber() {
   return `VNT-${date}-${rand}`;
 }
 
+// ── WhatsApp Customer Notification ──────────────────────────
+async function sendWhatsAppReceipt(orderData) {
+  const waServiceUrl    = process.env.WA_SERVICE_URL;
+  const waServiceSecret = process.env.WA_API_SECRET;
+  if (!waServiceUrl || !waServiceSecret) return; // silent skip if not configured
+
+  try {
+    const res = await fetch(`${waServiceUrl}/send-order`, {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'x-api-secret':  waServiceSecret,
+      },
+      body: JSON.stringify(orderData),
+      signal: AbortSignal.timeout(8000), // 8 seconds max
+    });
+    const data = await res.json();
+    if (!data.success) console.warn('[WA] Send failed:', data.error);
+    else console.log('[WA] ✅ Receipt sent to', orderData.phone);
+  } catch (err) {
+    console.warn('[WA] Service unreachable (non-blocking):', err.message);
+  }
+}
+
 async function sendTelegram(message, replyMarkup = null) {
   const token  = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID || '7242279880';
@@ -178,6 +202,21 @@ export default async function handler(req, res) {
       .single();
 
     if (error) throw error;
+
+    // ── WhatsApp customer receipt (fire and forget) ──────────
+    sendWhatsAppReceipt({
+      phone:        phone,
+      customerName: name,
+      orderNumber:  orderNumber,
+      items:        safeItems,
+      subtotal:     calcSubtotal,
+      shipping:     parsedShipping,
+      discount:     parsedDiscount,
+      total:        parsedTotal,
+      address:      address,
+      governorate:  gov,
+      notes:        notes || '',
+    });
 
     // Telegram notification (fire and forget)
     const itemsText = safeItems
